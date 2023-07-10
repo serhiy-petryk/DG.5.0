@@ -30,9 +30,6 @@ namespace DGCore.DB {
     public static DbConnection GetConnection(string shortOrLongNamespace, string connectionString) {
       return GetMetaDataObject(shortOrLongNamespace).GetConnection(connectionString);
     }
-    public static DbDataAdapter GetDataAdapter(string dbProviderNamespace) {
-      return GetMetaDataObject(dbProviderNamespace).GetDataAdapter();
-    }
     public static string QuotedColumnName(string dbProviderNamespace, string unquotedColumnName) {
       return GetMetaDataObject(dbProviderNamespace).QuotedColumnName(unquotedColumnName);
     }
@@ -75,7 +72,6 @@ namespace DGCore.DB {
     public abstract class DbMetaDataBase {
       public abstract string Namespace { get;}
       public abstract DbConnection GetConnection(string connectionString); //to get connection by short or long namespace (commonly you need use the DataFactory)
-      public abstract DbDataAdapter GetDataAdapter(); //Commonly to get DataAdapter you need found DataFactory (by namespace name)
       //Quoted(Column/Table)Name/ParameterNamePattern may depend on Provider/version which can obtain fron Connection object (for Odbc/OleDb)
       public abstract string QuotedColumnName(string unquotedColumnName);//DbCommandBuilder.QuoteIdentifier//Suffix/Prefix does not work correctly for OleDb
       public abstract string QuotedTableName(string unquotedTableName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
@@ -91,9 +87,6 @@ namespace DGCore.DB {
       }
       public override DbConnection GetConnection(string connectionString) {
         return new System.Data.OleDb.OleDbConnection(connectionString);
-      }
-      public override DbDataAdapter GetDataAdapter() {
-        return new System.Data.OleDb.OleDbDataAdapter();
       }
       public override string QuotedColumnName(string unquotedColumnName) {
         return "[" + unquotedColumnName + "]";
@@ -122,10 +115,6 @@ namespace DGCore.DB {
       public override DbConnection GetConnection(string connectionString)
       {
         return new Microsoft.Data.SqlClient.SqlConnection(connectionString);
-      }
-      public override DbDataAdapter GetDataAdapter()
-      {
-        return new Microsoft.Data.SqlClient.SqlDataAdapter();
       }
       public override string QuotedColumnName(string unquotedColumnName)
       {
@@ -160,10 +149,6 @@ namespace DGCore.DB {
       {
         return new MySql.Data.MySqlClient.MySqlConnection(connectionString);
       }
-      public override DbDataAdapter GetDataAdapter()
-      {
-        return new MySql.Data.MySqlClient.MySqlDataAdapter();
-      }
       public override string QuotedColumnName(string unquotedColumnName)
       {
         return "`" + unquotedColumnName + "`";
@@ -193,9 +178,6 @@ namespace DGCore.DB {
             }
             public override DbConnection GetConnection(string connectionString) {
               return new System.Data.OracleClient.OracleConnection(connectionString);
-            }
-            public override DbDataAdapter GetDataAdapter() {
-              return new System.Data.OracleClient.OracleDataAdapter();
             }
             public override string QuotedColumnName(string unquotedColumnName) {
               return "\"" + unquotedColumnName + "\"";

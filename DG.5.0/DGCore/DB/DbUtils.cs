@@ -115,19 +115,6 @@ namespace DGCore.DB {
       }
       AdjustParameters(cmd);
     }
-    // =============  Fill =============
-    public static void Fill(string connectionString, string sql, IEnumerable paramValues, IEnumerable<string> paramNames, DataTable dt) {
-      DbConnection conn = Connection_Get(connectionString);
-      DbCommand cmd = Command_Get(conn, sql, paramValues, paramNames);
-      AdjustParameters(cmd);
-      using (DbDataAdapter da = DbMetaData.GetDataAdapter(cmd.GetType().Namespace))
-      {
-        da.SelectCommand = cmd;
-        Connection_Open(cmd.Connection);
-        cmd.Prepare();
-        da.Fill(dt);
-      }
-    }
 
     //===================== Private section (GetDataAdapter/Schema/DbProviderFactory) ==============
     internal static DataTable GetSchemaTable(DbCommand cmd) {
