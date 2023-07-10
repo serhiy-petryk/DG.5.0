@@ -1,0 +1,111 @@
+﻿<DataGrid x:Class="DGView.Controls.CustomDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:DGView.Helpers"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:common1="clr-namespace:DGCore.Common;assembly=DGCore"
+             xmlns:controls="clr-namespace:DGView.Controls"
+             x:Name="Root"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             IsReadOnly="True"
+             HeadersVisibility="All"
+             AutoGenerateColumns="False"
+             SelectionMode="Extended"
+             SelectionUnit="CellOrRowHeader"
+             CanUserReorderColumns="True"
+             CanUserResizeColumns="True"
+             CanUserResizeRows="False"
+             GridLinesVisibility="None"
+             ColumnWidth="Auto"
+             MaxColumnWidth="2000"
+             Style="{StaticResource MonochromeDGStyle}"
+             Background="#FFFFFFFF"
+
+             ScrollViewer.CanContentScroll="True"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+             ScrollViewer.ScrollChanged="OnScrollChanged"
+             EnableRowVirtualization="True"
+             EnableColumnVirtualization="True">
+
+    <DataGrid.Resources>
+        <!-- need proxy because sometimes there are binding errors -->
+        <common:BindingProxy x:Key="IsGridLinesVisibleProxy" Value="{Binding IsGridLinesVisible}"/>
+        <common:LocalizationProxy x:Key="GroupItemCountColumnHeaderProxy" InputValue="{DynamicResource Loc:DGV.GroupItemCountColumnHeader}"/>
+
+        <Style x:Key="DataGridCheckBoxColumnElementStyle" TargetType="CheckBox">
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="{x:Null}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataGridTemplateColumn x:Key="GroupColumn" x:Shared="False"
+                                IsReadOnly="True" CanUserReorder="False" CanUserResize="False" CanUserSort="False">
+            <DataGridTemplateColumn.HeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </Style>
+            </DataGridTemplateColumn.HeaderStyle>
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Viewbox>
+                            <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}"/>
+                        </Viewbox>
+                        <Grid Width="1" Height="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                              Background="{Binding Source={x:Static controls:CustomDataGrid.GroupBorderBrush}}"/>
+                        <Grid Background="White" Opacity="0.01"/>
+                    </Grid>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+
+        <DataGridTextColumn x:Key="GroupItemCountColumn"
+                            Header="{Binding Source={StaticResource GroupItemCountColumnHeaderProxy}, Path=Value}"
+                            HeaderStringFormat="{x:Static common1:Constants.GroupItemCountColumnName}"
+                            CanUserReorder="False" CanUserSort="False" CanUserResize="True">
+            <DataGridTextColumn.HeaderStyle>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MonochromeDGColumnHeaderStyle}">
+                    <Setter Property="Border.BorderThickness" Value="1 0 1 1" />
+                </Style>
+            </DataGridTextColumn.HeaderStyle>
+            <DataGridTextColumn.ElementStyle>
+                <Style>
+                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                </Style>
+            </DataGridTextColumn.ElementStyle>
+        </DataGridTextColumn>
+    </DataGrid.Resources>
+
+    <DataGrid.CellStyle>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="BorderThickness" Value="0 0 1 1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <EventSetter Event="MouseEnter" Handler="OnDataGridCellMouseEnter"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnDataGridCellPreviewMouseLeftButtonDown"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding Source={StaticResource IsGridLinesVisibleProxy}, Path=Value}" Value="False">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Converter={x:Static helpers:IsGroupItemConverter.Instance}}" Value="True">
+                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </DataGrid.CellStyle>
+</DataGrid>

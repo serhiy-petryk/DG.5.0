@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="DGView.Views.DBFilterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:DGView.Views"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             x:Name="Root"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Height="28" Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+5%}">
+            <Button x:Name="LoadButton" Content="Завантажити дані" BorderThickness="0" Padding="2 2 4 2"
+                    Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                    effects:IconEffect.Geometry="{StaticResource LightningGeometry}"
+                    effects:IconEffect.Margin="6 6 4 4"
+                    Command="{Binding CmdLoadData}"/>
+
+            <Separator Style="{DynamicResource BarSeparatorStyle}"/>
+
+            <Viewbox Margin="0 5 2 3" VerticalAlignment="Stretch" Height="28">
+                <Path Data="{StaticResource FilterGeometry}"
+                      Fill="{Binding RelativeSource={RelativeSource AncestorType=WrapPanel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"/>
+            </Viewbox>
+            <TextBlock Text="Filter :" VerticalAlignment="Center" Padding="0" Margin="-8 0 8 0"
+                       Foreground="{Binding RelativeSource={RelativeSource AncestorType=WrapPanel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"/>
+
+            <ToggleButton Focusable="False" Padding="0" BorderThickness="0" ToolTip="Select filter"
+                          IsEnabled="{Binding IsOpenSettingsButtonEnabled}"
+                          Style="{StaticResource MonochromeDropDownButtonStyle}" 
+                          effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                          effects:IconEffect.Geometry="{StaticResource SelectGeometry}"
+                          effects:IconEffect.Margin="4"
+                          Checked="OpenSettingButton_OnChecked">
+                <ToggleButton.Resources>
+                    <ContextMenu x:Key="Items" StaysOpen="False" Placement="Bottom"/>
+                </ToggleButton.Resources>
+            </ToggleButton>
+
+            <Button BorderThickness="0" Padding="2" ToolTip="Save filter"
+                    Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                    effects:IconEffect.Geometry="{StaticResource SaveGeometry}"
+                    effects:IconEffect.Margin="4"
+                    Command="{Binding CmdSaveFilter}"/>
+
+            <Button BorderThickness="0" Padding="2" ToolTip="Clear filter"
+                    Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                    effects:IconEffect.Geometry="{StaticResource CloseGeometry}"
+                    effects:IconEffect.Margin="5"
+                    Command="{Binding CmdClearFilter}"/>
+
+            <Separator Style="{DynamicResource BarSeparatorStyle}"/>
+        </WrapPanel>
+
+        <views:FilterGrid Grid.Row="1" x:Name="FilterGrid"/>
+    </Grid>
+</UserControl>

@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="DGView.Views.DGFindTextView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             mc:Ignorable="d"
+             x:Name="Root"
+             Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"
+             BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
+             BorderThickness="0"
+             KeyboardNavigation.TabNavigation="Cycle"
+             effects:CornerRadiusEffect.CornerRadius="8 8 0 0">
+
+    <Border CornerRadius="5 5 0 0" BorderThickness="2" BorderBrush="{Binding ElementName=Root, Path=BorderBrush}">
+        <DockPanel>
+            <!-- Header -->
+            <TabControl DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding ElementName=Root, Path=Background}"
+                        Foreground="{Binding ElementName=Root, Path=Foreground}">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border Name="Border" BorderThickness="0" CornerRadius="4 4 0 0" Margin="2 0" Background="{TemplateBinding Background}">
+                                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter Property="Background" Value="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15%}"></Setter>
+                                            <Setter Property="Foreground" Value="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15%/+80%}"></Setter>
+                                        </Trigger>
+                                        <DataTrigger Binding="{Binding ElementName=ContentSite, Path=IsMouseOver}" Value="True">
+                                            <Setter TargetName="Border" Property="Opacity" Value="0.85" />
+                                        </DataTrigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"></Setter>
+                                            <Setter Property="Foreground" Value="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%/+80%}"></Setter>
+                                            <Setter TargetName="Border" Property="Opacity" Value="1" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+
+                <TabItem Header="Пошук" IsTabStop="False">
+                    <TabItem.Content>
+                        <Grid x:Name="SearchTabContent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Що шукати:" Target="{Binding ElementName=FindWhat}"
+                                       Foreground="{Binding ElementName=Root, Path=Foreground}"/>
+                                <TextBox x:Name="FindWhat" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                         effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                                         Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=-90%}"
+                                         Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=-90%/+80%}"
+                                         TextChanged="FindWhat_OnTextChanged"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <GroupBox Grid.Column="0" Margin="0 0 10 0" Header="Де шукати?"
+                                          Foreground="{Binding ElementName=Root, Path=Foreground}"
+                                          BorderBrush="{Binding ElementName=Root, Path=BorderBrush}">
+                                    <StackPanel Margin="10" Orientation="Vertical">
+                                        <RadioButton x:Name="FindInAllTable" Margin="0 0 0 2" Content="Уся таблиця" IsChecked="True"
+                                                     Style="{StaticResource MonochromeRadioButtonStyle}"/>
+                                        <RadioButton x:Name="FindInSelection" Margin="0 0 0 2" Content="Виділений регіон"
+                                                     Style="{StaticResource MonochromeRadioButtonStyle}"/>
+                                        <RadioButton x:Name="FindInColumn" Content="Активна колонка"
+                                                     Style="{StaticResource MonochromeRadioButtonStyle}"/>
+                                    </StackPanel>
+                                </GroupBox>
+
+                                <GroupBox Grid.Column="1" Header="Параметри пошуку"
+                                          Foreground="{Binding ElementName=Root, Path=Foreground}"
+                                          BorderBrush="{Binding ElementName=Root, Path=BorderBrush}">
+                                    <StackPanel Margin="5" Orientation="Vertical">
+                                        <CheckBox x:Name="MatchCase" Margin="0 0 0 2" IsThreeState="False" Content="З урахуванням регістру букв"
+                                                  Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                                        <CheckBox x:Name="MatchCell" Margin="0 0 0 2" IsThreeState="False" Content="Співпадання тексту всієї клітини"
+                                                  Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                                        <CheckBox x:Name="FindUp" Margin="0 0 0 2" IsThreeState="False" Content="Пошук вгору"
+                                                  Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                                        <CheckBox x:Name="Use" Margin="0 0 0 2" IsThreeState="False" Content="Використовувати:"
+                                                  Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                                        <ComboBox x:Name="cbUse" Margin="18 0 0 0" IsEnabled="{Binding ElementName=Use, Path=IsChecked}"
+                                                  Style="{StaticResource MonochromeComboBoxStyle}"
+                                                  HorizontalAlignment="Stretch"
+                                                  effects:ChromeEffect.Monochrome="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
+                                            <ComboBoxItem Content="Регулярні вирази"/>
+                                            <ComboBoxItem Content="Шаблони"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </GroupBox>
+                            </Grid>
+
+                            <Grid Grid.Row="2" Margin="0 10 2 2">
+                                    <Button Style="{StaticResource MonochromeButtonBaseStyle}" Content="Шукати далі" HorizontalAlignment="Right"
+                                            IsEnabled="{Binding IsFindTextButtonEnabled}"
+                                            effects:ChromeEffect.Monochrome="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15%}"
+                                            effects:CornerRadiusEffect.CornerRadius="3"
+                                            Click="OnFindButtonClick"/>
+                            </Grid>
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
+
+                <TabItem Header="Заміна" IsTabStop="False">
+                    <TabItem.Content>
+                        <ContentControl IsTabStop="False" Width="{Binding ElementName=SearchTabContent, Path=ActualWidth}"
+                                        Height="{Binding ElementName=SearchTabContent, Path=ActualHeight}"
+                                        Background="{Binding ElementName=Root, Path=Background}" Foreground="{Binding ElementName=Root, Path=Foreground}">
+                            <TextBlock Text="Not ready!"/>
+                        </ContentControl>
+                    </TabItem.Content>
+                </TabItem>
+            </TabControl>
+
+            <!-- Header tab -->
+            <Grid DockPanel.Dock="Top" Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Left icon -->
+                <Viewbox Grid.Column="0" Width="16" Margin="6 0 6 0" UseLayoutRounding="False">
+                    <Path Stretch="Uniform"
+                          Data="M0 0 Z M16 16Z M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z"
+                          Fill="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"/>
+                </Viewbox>
+
+                <!-- Header text -->
+                <TextBlock Grid.Column="1" Padding="0 5" VerticalAlignment="Top" FontWeight="Normal"
+                           FontSize="{Binding ElementName=Root, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.1*}"
+                           Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+20%/+70%}"
+                           Text="Find Text" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+
+                <!-- Close button -->
+                <Button Grid.Column="2" Margin="0 0 4 0" Width="20" Padding="2"
+                        Style="{StaticResource ClearMonochromeButtonStyle}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Command="ApplicationCommands.Close" CommandParameter="{Binding ElementName=Root}"/>
+
+                <Thumb Grid.Column="0" Grid.ColumnSpan="2" x:Name="MovingThumb" Opacity="0" Cursor="SizeAll"/>
+            </Grid>
+
+        </DockPanel>
+    </Border>
+</UserControl>

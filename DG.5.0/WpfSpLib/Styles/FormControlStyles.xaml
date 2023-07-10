@@ -1,0 +1,372 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:common="clr-namespace:WpfSpLib.Common"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:helpers="clr-namespace:WpfSpLib.Helpers"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Common.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ==================================================== -->
+    <!-- ==== Style list is taken from SimpleStyles.xaml ==== -->
+    <!-- https://github.com/pragmatrix/CrossUI/blob/master/CrossUI.Runner.WPF/Simple%20Styles%20Default.xaml -->
+    <!-- ==================================================== -->
+
+    <!-- <Style x:Key="SimpleButtonFocusVisual"> -->
+    <!-- <Style x:Key="SimpleButton" TargetType="{x:Type Button}" BasedOn="{x:Null}"> -->
+    <!-- <Style x:Key="RadioButtonFocusVisual"> -->
+    <!-- <Style x:Key="CheckBoxFocusVisual"> -->
+    <!-- <Style x:Key="SimpleCheckBox" TargetType="{x:Type CheckBox}"> -->
+
+    <Style x:Key="MonochromeCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <!--        <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}"/>-->
+        <Setter Property="Padding" Value="4 0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+<!--        <Setter Property="effects:ChromeEffect.Monochrome" Value="#FFF5FAFF" />-->
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+67%,+67%,67, +0%,+67%,+67%,100, +10%,+10%/+85%,+10%/+85%,100" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent"
+                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <BulletDecorator.Resources>
+                            <Duration x:Key="Animation">0:0:0.12</Duration>
+                            <system:TimeSpan x:Key="AnimationTS">0:0:0.12</system:TimeSpan>
+                        </BulletDecorator.Resources>
+
+                        <BulletDecorator.Bullet>
+                            <Grid Width="13" Height="13">
+                                <Border x:Name="Border" Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}" />
+                                <Viewbox Width="9" Height="9">
+                                    <Path x:Name="CheckMark" Width="16" Height="16" Margin="1.5" Opacity="0"
+                                          Fill="{TemplateBinding Foreground}" Stretch="Fill" SnapsToDevicePixels="False" 
+                                          Data="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                                </Viewbox>
+                                <Border x:Name="IndeterminateMark" Background="{TemplateBinding Foreground}" Margin="3" Opacity="0" CornerRadius="1" />
+                            </Grid>
+                        </BulletDecorator.Bullet>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" BeginTime="{StaticResource AnimationTS}" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckMark"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="IndeterminateMark"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckMark"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="IndeterminateMark"/>
+                                    </Storyboard>
+                                 </VisualState>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="CheckMark"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" BeginTime="{StaticResource AnimationTS}" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="IndeterminateMark"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Simple Radio Button -->
+    <Style x:Key="MonochromeRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Padding" Value="4 0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+<!--        <Setter Property="effects:ChromeEffect.Monochrome" Value="#FFF5FAFF" />-->
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+67%,+67%,50, +0%,+67%,+67%,100, +10%,+85%,+85%,100, +20%,+85%,+85%,100" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+
+                    <!-- BulletDecorator is used to provide baseline alignment between the checkmark and the Content -->
+                    <BulletDecorator Background="Transparent"
+                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <BulletDecorator.Bullet>
+                            <Grid Width="13" Height="13">
+                                <Ellipse x:Name="Ellipse_Border" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="1" />
+                                <Ellipse Margin="4" x:Name="CheckMark" Fill="{TemplateBinding Foreground}" />
+                            </Grid>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </BulletDecorator>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="CheckMark" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- <Style x:Key="SimpleRepeatButton" TargetType="{x:Type RepeatButton}" BasedOn="{x:Null}"> -->
+    <!-- <Style x:Key="SimpleThumbStyle" TargetType="{x:Type Thumb}" BasedOn="{x:Null}"> -->
+    <!-- <Style x:Key="SimpleScrollRepeatButtonStyle" TargetType="{x:Type RepeatButton}"> -->
+    <!-- <Style x:Key="SimpleScrollBar" TargetType="{x:Type ScrollBar}"> -->
+    <!-- <Style x:Key="SimpleScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{x:Null}"> -->
+    <!-- <Style x:Key="SimpleListBox" TargetType="{x:Type ListBox}"> -->
+    <!-- <Style x:Key="SimpleListBoxItem" TargetType="{x:Type ListBoxItem}"> -->
+    <!-- <Style x:Key="SimpleExpander" TargetType="{x:Type Expander}"> -->
+
+    <Style x:Key="MonochromeComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="6 2" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=(effects:ChromeEffect.Monochrome), Converter={x:Static common:ColorHslBrush.Instance}}" />
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
+<!--        <Setter Property="TextBlock.Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}" />-->
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        <ContentPresenter x:Name="Presenter" Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=(effects:ChromeEffect.Monochrome), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+40%}" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=(effects:ChromeEffect.Monochrome), Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.67"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MonochromeComboBoxItemStyle}"/>-->
+
+    <Style x:Key="MonochromeComboBoxClearButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButtonBaseStyle}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="3 0"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=ComboBox}, Path=(effects:ChromeEffect.Monochrome)}"/>
+        <Setter Property="effects:IconEffect.Geometry" Value="{StaticResource CloseGeometry}"/>
+        <Setter Property="effects:IconEffect.Margin" Value="0"/>
+    </Style>
+
+    <Style x:Key="MonochromeComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="4 2"/>
+        <!--        <Setter Property="effects:ChromeEffect.Monochrome" Value="#FFF5FAFF"/>-->
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+70%,+70%,50, +0%,+70%,+70%,100, +25%,+25%/+75%,+25%/+75%,100"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MonochromeComboBoxItemStyle}"/>
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <!--<Setter Property="effects:FocusVisualEffect.AlwaysShowFocus" Value="True"/>
+        <Setter Property="effects:FocusVisualEffect.FocusControlStyle" Value="{StaticResource OuterFocusVisualStyle}"/>-->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="15"/>
+                                <!--<ColumnDefinition Width="Auto"/>-->
+                            </Grid.ColumnDefinitions>
+
+                            <!-- The ToggleButton is databound to the ComboBox itself to toggle IsDropDownOpen -->
+                            <ToggleButton x:Name="ToggleButton" Grid.Column="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Right"
+                                          Style="{StaticResource DropDownButtonStyle}"
+                                          Focusable="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                          BorderThickness="0"
+                                          effects:ChromeEffect.Monochrome="{TemplateBinding effects:ChromeEffect.Monochrome}"
+                                          effects:ChromeEffect.ChromeMatrix="{TemplateBinding effects:ChromeEffect.ChromeMatrix}"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press"/>
+
+                            <ContentControl x:Name="ContentSite" Grid.Column="0"
+                                              Margin="{TemplateBinding Padding}"
+                                              Background="{Binding ElementName=ToggleButton, Path=Background}"
+                                              Foreground="{Binding ElementName=ToggleButton, Path=Foreground}"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              IsHitTestVisible="False"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                            <!-- The TextBox must be named PART_EditableTextBox or ComboBox will not recognize it -->
+                            <!-- <TextBox x:Name="PART_EditableTextBox" Margin="3,3,23,3" Visibility="Hidden" HorizontalAlignment="Left"
+                                 Template="{DynamicResource ComboBoxTextBox}"
+                                 Style="{x:Null}" VerticalAlignment="Center" Focusable="True" Background="Transparent"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}" />-->
+
+                            <!-- The Popup shows the list of items in the ComboBox. IsOpen is databound to IsDropDownOpen which is toggled via the ComboBoxToggleButton -->
+                            <Popup x:Name="Popup" IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   PlacementTarget="{Binding ElementName=Border}" Placement="Bottom"
+                                   Focusable="False" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="0">
+                                <Grid x:Name="DropDown" MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                      MinWidth="{TemplateBinding ActualWidth}" SnapsToDevicePixels="True">
+                                    <Border x:Name="DropDownBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(effects:ChromeEffect.Monochrome), Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                                    <ScrollViewer Margin="2" Style="{DynamicResource SimpleScrollViewer}"
+                                                  SnapsToDevicePixels="True" HorizontalScrollBarVisibility="Auto"
+                                                  VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+
+                                        <ItemsPresenter Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ItemsControl.HasItems" Value="False">
+                            <Setter TargetName="DropDownBorder" Property="FrameworkElement.Height" Value="50"/>
+                        </Trigger>
+                        <!-- Not ready! <Trigger Property="IsEditable" Value="true">
+                            <Setter Property="IsTabStop" Value="false" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="PART_EditableTextBox" />
+                            <Setter Property="Visibility" Value="Hidden" TargetName="ContentSite" />
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- <Style x:Key="SimpleProgressBar" TargetType="{x:Type ProgressBar}"> -->
+    <!-- <Style x:Key="SimpleTextBox" TargetType="{x:Type TextBox}"> -->
+    <Style x:Key="MonochromeTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="-90%,-90%/+80%,-90%/+50%,50, -90%,-90%/+80%,-90%/+50%,100" />
+    </Style>
+
+<!-- <Style x:Key="SimpleLabel" TargetType="{x:Type Label}"> -->
+    <!-- <Style x:Key="SimpleMenu" TargetType="{x:Type Menu}"> -->
+    <!-- <Style x:Key="SimpleMenuItem" TargetType="{x:Type MenuItem}"> -->
+    <!-- <Style x:Key="SimpleSeparator" TargetType="{x:Type Separator}"> -->
+    <!-- <Style x:Key="SimpleTabControl" TargetType="{x:Type TabControl}"> -->
+    <!-- <Style x:Key="SimpleTabItem" TargetType="{x:Type TabItem}"> -->
+    <!-- <Style x:Key="SimpleSliderThumb" TargetType="{x:Type Thumb}"> -->
+    <!-- <Style x:Key="SimpleSlider" TargetType="{x:Type Slider}"> -->
+    <!-- <Style x:Key="SimpleTreeView" TargetType="{x:Type TreeView}"> -->
+    <!-- <Style x:Key="SimpleTreeViewItemToggleButton" TargetType="{x:Type ToggleButton}"> -->
+    <!-- <Style x:Key="SimpleTreeViewItem" TargetType="{x:Type TreeViewItem}"> -->
+
+    <Style x:Key="SortingCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <!--        <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}"/>-->
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="Width" Value="24" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="#FFF5FAFF" />
+        <!--<Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />-->
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+67%,+67%,67, +0%,+67%,+67%,100, +10%,+10%/+85%,+10%/+85%,100" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Grid.Resources>
+                            <Duration x:Key="Animation">0:0:0.12</Duration>
+                            <system:TimeSpan x:Key="AnimationTS">0:0:0.12</system:TimeSpan>
+                        </Grid.Resources>
+
+                        <Border x:Name="Border" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                        <Viewbox Margin="{TemplateBinding Padding}">
+                            <Grid>
+                                <Path RenderTransformOrigin="0.5 0.5"
+                                      Fill="{TemplateBinding Foreground}" Stretch="Fill" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      Data="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351zM12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z">
+                                    <Path.RenderTransform>
+                                        <ScaleTransform x:Name="Asc" ScaleX="0" ScaleY="1"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Path RenderTransformOrigin="0.5 0.5"
+                                      Fill="{TemplateBinding Foreground}" Stretch="Fill" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                      Data="M12.96 7H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V7zM10.082 12.629 9.664 14H8.598l1.789-5.332h1.234L13.402 14h-1.12l-.419-1.371h-1.781zm1.57-.785L11 9.688h-.047l-.652 2.156h1.351zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z">
+                                    <Path.RenderTransform>
+                                        <ScaleTransform x:Name="Desc" ScaleX="0" ScaleY="1"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                        </Viewbox>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" BeginTime="{StaticResource AnimationTS}" To="1" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Desc"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Asc"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" BeginTime="{StaticResource AnimationTS}" To="1" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Asc"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Desc"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Desc"/>
+                                        <DoubleAnimation Duration="{StaticResource Animation}" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Asc"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

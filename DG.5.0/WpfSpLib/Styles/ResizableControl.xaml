@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WpfSpLib.Controls"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Common.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="controls:ResizableControl">
+        <Style.Resources>
+            <Style x:Key="ResizeThumb" TargetType="Thumb">
+                <Setter Property="Opacity" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:ResizableControl}, Path=Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="MinHeight" Value="50"/>
+        <Setter Property="MaxWidth" Value="3000"/>
+        <Setter Property="MaxHeight" Value="2000"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="UseLayoutRounding" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ResizableControl">
+                    <Grid>
+                        <Border Effect="{StaticResource ShadowEffect}" Background="#FFFFFFFF" Visibility="{TemplateBinding ShadowVisibility}"/>
+                        <Border BorderThickness="0" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                              UseLayoutRounding="{TemplateBinding UseLayoutRounding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+
+                        <Thumb x:Name="ResizeLeft" Width="7" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTop" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeRight" Width="7" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottom" Height="7" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTopLeft" Height="7" Width="16" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTopRight" Height="7" Width="16" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Height="7" Width="16" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomRight" Height="7" Width="16" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

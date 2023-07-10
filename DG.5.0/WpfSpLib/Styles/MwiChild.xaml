@@ -1,0 +1,259 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:controls="clr-namespace:WpfSpLib.Controls"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ResizableControl.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Default application icon based on https://fontawesome.com/ fa-fighter-jet (size 1920x1920) -->
+    <Geometry x:Key="DefaultIconGeometry">M1920 960q-1 32-288 96l-352 32-224 64h-64l-293 352h69q26 0 45 4.5t19 11.5-19 11.5-45 4.5h-320v-32h64v-416h-160l-192 224h-96l-32-32v-192h32v-32h128v-8l-192-24v-128l192-24v-8h-128v-32h-32v-192l32-32h96l192 224h160v-416h-64v-32h320q26 0 45 4.5t19 11.5-19 11.5-45 4.5h-69l293 352h64l224 64 352 32q261 58 287 93z</Geometry>
+
+    <Style TargetType="controls:MwiChild" BasedOn="{StaticResource {x:Type controls:ResizableControl}}" x:Shared="False">
+        <Style.Resources>
+            <Style x:Key="Mwi.Startup.WindowHeaderSeparator" TargetType="Separator" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Opacity" Value="0.5" />
+                <Setter Property="Background" Value="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}" />
+            </Style>
+
+            <Style x:Key="ResizeThumb" TargetType="Thumb" BasedOn="{StaticResource {x:Type Thumb}}">
+                <Setter Property="Opacity" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Visibility" Value="{Binding Resizable, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+            </Style>
+
+            <!-- System menu (icons are taken from Mahapps) -->
+            <system:String x:Key="SysMenuRestoreGeometry">F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z</system:String>
+            <system:String x:Key="SysMenuMinimizeGeometry">F1M0,7L0,10 10,10 10,7 0,7z</system:String>
+            <system:String x:Key="SysMenuMaximizeGeometry">F1M0,0L0,10 10,10 10,0 0,0 0,3 9,3 9,9 1,9 1,3z</system:String>
+            <system:String x:Key="SysMenuCloseGeometry">M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005</system:String>
+            <ControlTemplate TargetType="MenuItem" x:Key="SysMenuItem">
+                <MenuItem Header="{TemplateBinding Header}" Height="22" Padding="5 2 -5 2" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}"
+                          FontWeight="{TemplateBinding FontWeight}" Command="{TemplateBinding Command}" InputGestureText="{TemplateBinding InputGestureText}">
+                    <MenuItem.Icon>
+                        <Viewbox Width="8" Height="8">
+                            <Path Width="10" Height="10" Fill="Black" Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                        </Viewbox>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ControlTemplate>
+        </Style.Resources>
+
+        <Setter Property="MinWidth" Value="210"/>
+        <Setter Property="MinHeight" Value="50"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="Language" Value="{DynamicResource CurrentLanguage}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:MwiChild">
+                    <Grid x:Name="Root">
+                        <Grid.Resources>
+                            <DropShadowEffect x:Key="Mwi.ShadowEffect" BlurRadius="8" Direction="330" Opacity="0.8" ShadowDepth="4" Color="Black" />
+                            <common:LocalizationProxy x:Key="ChangeThemeToolTipProxy" InputValue="{DynamicResource $MwiChild.ToolTip.ChangeThemeButton}"
+                                                      Argument0="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualTheme.Name}"/>
+                        
+                            <DrawingImage x:Key="DefaultIcon">
+                                <DrawingImage.Drawing>
+                                    <GeometryDrawing Brush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
+                                                     Geometry="{StaticResource DefaultIconGeometry}"/>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Grid.Resources>
+
+                        <!-- Shadow -->
+                        <Border x:Name="ShadowBorder" Background="White" Effect="{StaticResource Mwi.ShadowEffect}"
+                                Margin="{DynamicResource Mwi.Child.Border.Margin}"
+                                CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                Visibility="{DynamicResource Mwi.Child.ShadowBorder.Visibility}"/>
+
+                        <!-- Main border -->
+                        <Border x:Name="BaseBorder" BorderThickness="1" CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}" 
+                                Margin="{DynamicResource Mwi.Child.Border.Margin}"
+                                Background="{DynamicResource Mwi.Child.BaseBackgroundBrush}" BorderBrush="{DynamicResource Mwi.Child.BaseBorderBrush}">
+                            <Grid>
+                                <!-- Window 7 thick border -->
+                                <Border x:Name="DarkenBackground" Height="29" VerticalAlignment="Top"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        Background="{DynamicResource Mwi.Child.DarkenBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+                                <Border x:Name="HighlightBackground" Height="120" VerticalAlignment="Top"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        Background="{DynamicResource Mwi.Child.HighlightBackgroundBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+
+                                <!-- Second line of window border -->
+                                <Border x:Name="SecondLeftTopBorder" BorderThickness="1 1 0 0" Background="Transparent" Margin="0"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        BorderBrush="{DynamicResource Mwi.Child.NearBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+                                <Border x:Name="SecondRightBottomBorder" BorderThickness="0 0 1 1" Background="Transparent" Margin="0"
+                                        CornerRadius="{DynamicResource Mwi.Child.Border.CornerRadius}"
+                                        BorderBrush="{DynamicResource Mwi.Child.FarBorderBrush}" Visibility="{DynamicResource Mwi.Child.SecondBorders.Visibility}"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Content & Command/Status bars -->
+                        <Border x:Name="ContentBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                Margin="{DynamicResource Mwi.Child.Content.Margin}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <!-- Command bar -->
+                                <ContentControl Grid.Row="0" Focusable="False" Content="{TemplateBinding CommandBar}"/>
+                                <!-- Window content -->
+                                <ContentControl Grid.Row="1" x:Name="Content" Content="{TemplateBinding Content}" Focusable="False" />
+                                <!-- Status bar -->
+                                <ContentPresenter Grid.Row="2" Content="{TemplateBinding StatusBar}"/>
+                            </Grid>
+                        </Border>
+
+                        <Thumb x:Name="ResizeLeft" Width="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTop" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeRight" Width="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Right" VerticalAlignment="Stretch" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottom" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+
+                        <Thumb x:Name="ResizeTopLeft" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeTopRight" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomRight" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="ResizeBottomLeft" Width="{DynamicResource Mwi.Child.CornerEdgeWidth}" Height="{DynamicResource Mwi.Child.Edge}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource ResizeThumb}"/>
+
+                        <Grid x:Name="HeaderGrid" VerticalAlignment="Top" Height="{DynamicResource Mwi.Child.Header.Height}" Margin="{DynamicResource Mwi.Child.Header.Margin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Window icon & System menu -->
+                            <ToggleButton Grid.Column="0" x:Name="SystemMenuButton" Width="{DynamicResource Mwi.Child.Header.Height}" Height="{DynamicResource Mwi.Child.Header.Height}"
+                                          Margin="0" Focusable="False" IsThreeState="False" IsChecked="False" BorderThickness="0" Background="Transparent" Padding="0"
+                                          Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+                                <ToggleButton.Resources>
+                                    <ContextMenu x:Key="cm" StaysOpen="False" Padding="0 4">
+                                        <MenuItem Header="{DynamicResource $MwiChild.SystemMenu.Restore}" Command="{Binding SysCmdRestore}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuRestoreGeometry}" />
+                                        <MenuItem Header="{DynamicResource $MwiChild.SystemMenu.Minimize}" Command="{Binding CmdMinimize}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuMinimizeGeometry}" />
+                                        <MenuItem Header="{DynamicResource $MwiChild.SystemMenu.Maximize}" Command="{Binding SysCmdMaximize}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuMaximizeGeometry}"/>
+                                        <Separator Height="12" Margin="0 -2"/>
+                                        <MenuItem Header="{DynamicResource $MwiChild.SystemMenu.Close}" Command="{Binding CmdClose}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuCloseGeometry}" FontWeight="Bold"
+                                                  Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.InverseInstance}}" InputGestureText="Ctrl+F4"/>
+                                        <MenuItem Header="{DynamicResource $MwiChild.SystemMenu.Close}" Command="{Binding CmdClose}" Template="{StaticResource SysMenuItem}" Tag="{StaticResource SysMenuCloseGeometry}" FontWeight="Bold"
+                                                  Visibility="{Binding IsWindowed, Converter={x:Static common:VisibilityConverter.Instance}}" InputGestureText="Alt+F4"/>
+                                    </ContextMenu>
+                                </ToggleButton.Resources>
+                                <Image x:Name="IconImage" Width="16" Height="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{TemplateBinding Icon}"/>
+                            </ToggleButton>
+
+                            <!-- Left header panel -->
+                            <ContentPresenter Grid.Column="1" Content="{TemplateBinding LeftHeaderBar}"/>
+
+                            <!-- Header label -->
+                            <TextBlock Grid.Column="2" x:Name="Header" Margin="3 0 0 0" VerticalAlignment="Center" IsHitTestVisible="False"
+                                       Foreground="{DynamicResource Mwi.Child.Header.ForegroundBrush}"
+                                       TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" Text="{TemplateBinding Title}"/>
+                            <!-- Moving thumb -->
+                            <Thumb Grid.Column="2" x:Name="MovingThumb" Focusable="False" Opacity="0" Cursor="SizeAll" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="{DynamicResource Mwi.Child.MovingThumb.Margin}" effects:TextBlockEffects.AutoTooltipTarget="{Binding ElementName=Header}"/>
+
+                            <!-- Right header panel -->
+                            <ContentPresenter Grid.Column="3" Content="{TemplateBinding RightHeaderBar}"/>
+
+                            <!-- Window buttons -->
+                            <Button Grid.Column="4" Focusable="False" x:Name="DetachedButton" ToolTip="{DynamicResource $MwiChild.Tooltip.DetachWindowButton}" Command="{Binding CmdDetach}"
+                                    Style="{DynamicResource Mwi.DetachedButtonStyle}"
+                                    Visibility="{Binding IsDetachButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                            <Button Grid.Column="5" Focusable="False" x:Name="SelectThemeButton" Command="{Binding CmdSelectTheme}" Style="{DynamicResource Mwi.SelectThemeButtonStyle}"
+                                    ToolTip="{Binding Source={StaticResource ChangeThemeToolTipProxy}, Path=Value}"
+                                    Visibility="{Binding IsSelectThemeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}">
+                            </Button>
+                            <Button Grid.Column="6" Focusable="False" x:Name="MinimizeButton" Command="{Binding CmdMinimize}" Style="{DynamicResource Mwi.MinimizeButtonStyle}"
+                                    Visibility="{Binding IsMinimizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                            <Button Grid.Column="7" Focusable="False" x:Name="MaximizeButton" Command="{Binding CmdMaximize}" Style="{DynamicResource Mwi.MaximizeButtonStyle}"
+                                    Visibility="{Binding IsMaximizeButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                            <Button Grid.Column="8" Focusable="False" x:Name="CloseButton" Command="{Binding CmdClose}" Style="{DynamicResource Mwi.CloseButtonStyle}"
+                                    Visibility="{Binding IsCloseButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                        </Grid>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Colors of Wnd10 theme, active -->
+                        <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="True">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}"/>
+                        </DataTrigger>-->
+
+                        <!-- Colors of Wnd10 theme, inactive -->
+                        <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="False">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10}"/>
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualBaseColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"/>
+                        </DataTrigger>-->
+
+                        <!-- Colors of Wnd7 theme, active -->
+                        <!--<MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=DarkenBackground, Path=Visibility}" Value="Visible"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.BaseBackgroundBrush}"/>
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.BaseBorderBrush}"/>
+                        </MultiDataTrigger>-->
+
+                        <!-- Colors of Wnd7 theme, inactive -->
+                        <!--<MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=DarkenBackground, Path=Visibility}" Value="Visible"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsActive}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}"/>
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.Unfocused.BaseBorderBrush}"/>
+                        </MultiDataTrigger>-->
+
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="{DynamicResource Mwi.Child.Unfocused.BaseBackgroundBrush}" />
+                            <Setter TargetName="BaseBorder" Property="BorderBrush" Value="{DynamicResource Mwi.Child.Unfocused.BaseBorderBrush}" />
+                            <Setter TargetName="HighlightBackground" Property="Opacity" Value="0" />
+                            <Setter TargetName="DarkenBackground" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="SecondLeftTopBorder" Property="Opacity" Value="0.75" />
+                            <Setter TargetName="SecondRightBottomBorder" Property="Opacity" Value="0" />
+                            <Setter TargetName="Header" Property="Foreground" Value="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}" />
+                        </Trigger>
+                        <Trigger SourceName="IconImage" Property="Source" Value="{x:Null}">
+                            <Setter TargetName="IconImage" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="BaseBorder" Property="Margin" Value="0" />
+                            <Setter TargetName="ShadowBorder" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="HeaderGrid" Property="Margin" Value="0" />
+                            <Setter TargetName="ContentBorder" Property="Margin" Value="{DynamicResource Mwi.Child.Content.Maximized.Margin}" />
+                            <Setter TargetName="MovingThumb" Property="Margin" Value="0" />
+                            <Setter TargetName="ResizeLeft" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="ResizeLeft" Property="IsHitTestVisible" Value="False"/>
+                            <Setter TargetName="ResizeTop" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottom" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeTopLeft" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeTopRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottomRight" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="ResizeBottomLeft" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="SecondLeftTopBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="SecondRightBottomBorder" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="BaseBorder" Property="BorderThickness" Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

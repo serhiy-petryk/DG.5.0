@@ -1,0 +1,541 @@
+﻿/*
+Дублікати для опцій меню:
+  по замовчуванню для декількох property з одинаковими іменами створюється тільки одне property
+  тобто якщо в settings файлі вказано декілька опцій меню з однаковим текстом, то буде створена тільки одна опція меню.
+  Щоб зробити підтримку декількох опцій меню з однаковим текстом, потрібно використовувати JsonTextReader на більш низькому рівні, ніж JsonConvert.DeserializeObject,
+  або ускладнити формат config.json файла.
+  */
+/*
+; Для работы программы необходима таблица в базе данных.
+; Строка подключения к базе данных этой таблицы - это первая строка подключения из раздела Connection String (параметр CS: - см. ниже)
+; Запрос для создания этой таблицы приведен ниже
+  CREATE TABLE [dbo].[_UserSettings](
+	[Kind] [nvarchar](50) NOT NULL,
+	[Key] [nvarchar](50) NOT NULL,
+	[ID] [nvarchar](100) NOT NULL,
+	[data] [nvarchar](max) NULL,
+	[AllowViewOthers] [bit] NULL,
+	[AllowEditOthers] [bit] NULL,
+	[created] [nvarchar](50) NOT NULL,
+	[dcreated] [datetime] NOT NULL,
+	[updated] [nvarchar](50) NULL,
+	[dupdated] [datetime] NULL,
+ CONSTRAINT [PK__UserSettings] PRIMARY KEY CLUSTERED 
+(
+	[Kind] ASC,
+	[Key] ASC,
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+; Для начала работы таблица не имеет записей. Они создаются автоматически при эксплуатации программы.
+;
+;=====================================================
+1. Title of application. Format: Title: "string of title"
+2. "DbConnections" (dictionary of connection string objects): {id1: {}, id2: {}}
+  Connection string object: connID: {"provider": "id of data provider", "cs": "text of connection string"}
+  id of data provider - как правило, это последний элемент из namespace of data provider. Для System.Data.SqlClient - это SqlClient
+3. "Lookups" (dictionary of lookup objects): {id1: {}, id2: {}}
+
+*/
+{
+  "Title": "DG.4.0",
+  "DbConnections": {
+    "dbUserSettings": {"provider": "SqlClient", "cs": "initial catalog=dbUserSettings;Pooling=false;Data Source=localhost;Integrated Security=SSPI;Connection Timeout=30;Encrypt=false"},
+    "oneSAPConn": {"provider": "SqlClient", "cs": "initial catalog=dbOneSAP_DW;Pooling=false;Data Source=localhost;Integrated Security=SSPI;Connection Timeout=300;Encrypt=false"},
+    "dbLernosity": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbAssessment;Integrated Security=True;Encrypt=false"},
+    "dbPS": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbPS;Integrated Security=True;Encrypt=false"},
+    "dbCodeproject": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbCodeproject;Integrated Security=True;Encrypt=false"},
+    "MySqlTest": {"provider": "MySqlClient", "cs": "Port=3360;Server=localhost;Database=assessment_content1;UID=root;Password=pol3tava;Persist Security Info=true"},
+    "MySqlMyTestDb": {"provider": "MySqlClient", "cs": "Port=3360;Server=localhost;Database=test_standards_save;UID=root;Password=pol3tava;Persist Security Info=true"},
+    "MdbTestBadPicture":  {"provider": "Oledb", "cs": "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=E:\\Apps\\archive\\Northwind\\Northwind_bad_picture.mdb"},
+    "MdbTest": {"provider": "Oledb", "cs": "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=E:\\Apps\\archive\\Northwind\\nwind.mdb"},
+    "ChalkableDistrict": {"provider": "SqlClient", "cs": "Data Source=qap56j04br.database.windows.net;Initial Catalog=558AEB8A-128F-43F8-9B37-A52F3936CE72;UID=chalkableadmin;Pwd=Hellowebapps1!;Encrypt=false"},
+    "ChalkableMaster": {"provider": "SqlClient", "cs": "Data Source=yqdubo97gg.database.windows.net;Initial Catalog=ChalkableMaster;UID=chalkableadmin;Pwd=Hellowebapps1!;Encrypt=false"},
+    "Assessment": {"provider": "SqlClient", "cs": "Data Source=yqdubo97gg.database.windows.net;Initial Catalog=assessment-production;UID=chalkableadmin;Pwd=Hellowebapps1!;Encrypt=false"},
+    "CheckChalkableAcademicBenchmark": {"provider": "SqlClient", "cs": "Data Source=v8xjnk8au1.database.windows.net;Initial Catalog=ChalkableAcademicBenchmark;UID=chalkableadmin;Pwd=Hellowebapps1!;Encrypt=false"},
+    "CheckChalkableAssessment": {"provider": "SqlClient", "cs": "Data Source=v8xjnk8au1.database.windows.net;Initial Catalog=assessment-qa;UID=chalkableadmin;Pwd=Hellowebapps1!;Encrypt=false"},
+    "TestCsvDataSource": {"provider": "File", "cs": "E:\\Temp\\LargeDB\\offshore_leaks_csvs-20160510\\Entities.csv"},
+    "MdbFileTest": {"provider": "File", "cs": "E:\\Apps\\archive\\Northwind\\nwind.mdb"},
+    "PSAcademicBenchmark": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=TempSoft;Integrated Security=True;Encrypt=false"},
+    "PS_Standard3306": {"provider": "MySqlClient", "cs": "Port=3306;Server=localhost;Database=test2;UID=root;Password=root;Persist Security Info=true"},
+    "PS_LS2140": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=LS2140;Integrated Security=True;Encrypt=false"},
+    "UOD": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=UOD;Integrated Security=True;Encrypt=false"},
+    "UOD-Patrick": {"provider": "SqlClient", "cs": "Data Source=PATRICK-PC;Initial Catalog=UOD;Integrated Security=True;Encrypt=false"},
+    "UOD_ALL_UA": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=UOD_ALL_UA;Integrated Security=True;Encrypt=false"},
+    "dbLvivFlat2021": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbLvivFlat2021;Integrated Security=True;Encrypt=false"},
+    "dbQuote2022": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQuote2022;Integrated Security=True;Connection Timeout=300;Encrypt=false"},
+    "dbQ2023": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQ2023;Integrated Security=True;Connection Timeout=300;Encrypt=false"}
+    /*"TestCsvDataSource": {"provider": "DGVCube.Test.TestCsvDataSource", "cs": "Data Source=D:\\UserData\\SP\\Downloads\\offshore_leaks_csvs-20160510\\Entities.csv"}*/
+  },
+
+  "Lookups": {
+    "quoteSymbols": {"cs": "dbQuote2022", "sql": "select * from vSymbolsLive", "isExclusive": true},
+    "period": {"cs": "oneSAPConn", "sql": "select distinct period from gldoclist order by 1 desc", "isExclusive": true},
+    "plant": {"cs": "oneSAPConn", "sql": "select 'UA' as plant UNION ALL select distinct plant from mat_ledger order by 1", "isExclusive": true},
+    "materialClass": {"cs": "oneSAPConn", "sql": "select * from v_rpt_mat_class_list order by 1", "isExclusive": true},
+    "baseCreditorAccount": {"cs": "oneSAPConn", "sql": "select account from gldocline where partner like 'C%' and pk<40 group by account order by 1", "isExclusive": false},
+    "vsys_table_description": {"cs": "oneSAPConn", "sql": "select * from vsys_table_description", "isExclusive": true}, 
+    "vcube_mastaccount": {"cs": "oneSAPConn", "sql": "select * from vcube_mastaccount", "isExclusive": true},
+    "vcube_mastcc": {"cs": "oneSAPConn", "sql": "select * from vcube_mastcc", "isExclusive": true},
+    "vcube_mastgrants": {"cs": "oneSAPConn", "sql": "select * from vcube_mastgrants", "isExclusive": true},
+    "vcube_mastvat": {"cs": "oneSAPConn", "sql": "select * from vcube_mastvat", "isExclusive": true},
+    "vcube_mastpartner": {"cs": "oneSAPConn", "sql": "select * from vcube_mastpartner", "isExclusive": true},
+    "districts": {"cs": "ChalkableMaster", "sql": "select * from district order by convert(varchar(50), id)", "isExclusive": false},
+    "Assessment-Users": {"cs": "Assessment", "sql": "select * from userinfocache where districtid='558AEB8A-128F-43F8-9B37-A52F3936CE72'", "isExclusive": true, "KeyColumnName": "UserId"},
+    "Assessment-AAs-temp": {
+      "cs": "Assessment","isExclusive": true,"KeyColumnName": "AnnouncementApplicationId", 
+      "sql": "SELECT a.*, b.Title FROM AnnouncementAssessment a inner join Assessment b on a.districtId=b.districtid and a.AssessmentRef=b.LearnosityActivityRef where b.districtid='558AEB8A-128F-43F8-9B37-A52F3936CE72'"
+    },
+    "Assessment-AAs": {
+      "cs": "Assessment", "isExclusive": true, "KeyColumnName": "AnnouncementApplicationId", "sql": "select * from AnnouncementAssessment where districtid='558AEB8A-128F-43F8-9B37-A52F3936CE72'",
+      "columns": {
+        "AssessmentRef": {"label": "AssessmentRef", "lookup": "Assessment-Assessments"}
+      }
+    },
+    "Assessment-Assessments": {
+      "cs": "Assessment","isExclusive": true, "KeyColumnName": "LearnosityActivityRef", "sql": "select * from Assessment where districtid='558AEB8A-128F-43F8-9B37-A52F3936CE72'"
+    },
+    "AssessmentStandardListForCheck": {"cs": "CheckChalkableAssessment","isExclusive": false, "sql": "select distinct StandardRef from QuestionStandard"},
+    "AcademicBenchmarkStandardListForCheck": {"cs": "CheckChalkableAcademicBenchmark","isExclusive": false, "sql": "select * from Standard"},
+    "glLedgerId": {"valueList": ["0L","N1","N2","0L-N1","0L-N2","N1-N2"], "isExclusive": true},
+    "PS_Authority": { "cs": "PS_Standard3306", "sql": "SELECT * from authority", "isExclusive": true, "KeyColumnName": "id"},
+    "SqlSets": { "cs": "PS_LS2140", "sql": "SELECT * from SqlSet", "isExclusive": true}
+  },
+   
+  "Menu": {
+    "Системні дані": {
+      "Опис таблиць": {"cs": "oneSAPConn", "sql": "select * from vsys_column_description", "columns": {"TABLE_ID": {"lookup": "vsys_table_description"}}},
+      "Список SAP транзакцій, які використовує програма SAP Finance AddOn": {"cs": "oneSAPConn", "sql": "select * from tblUsedTransactions"},
+      "User Settings": {"cs": "dbUserSettings", "sql": "select * from _UserSettings"}
+    },
+    "SAP": {
+      "Довідники": {
+        "План рахунків": {"layoutId": "vcube_mastaccount", "cs": "oneSAPConn", "sql": "select * from vcube_mastaccount"},
+        "План рахунків - property test": {
+          "cs": "oneSAPConn", "sql": "select * from vcube_mastaccount", "itemType": "Models.VCubeMastAccount"
+          /*"columns": {
+            "ALTACC": {
+              "label":  "AAA",
+              "lookup": "vcube_mastaltacc"
+            }
+          }*/
+        },
+        "План рахунків (без layout)": {"cs": "oneSAPConn", "sql": "select * from vcube_mastaccount"},
+        "Альтернативний План рахунків": {"layoutId": "vcube_mastaltacc", "cs": "oneSAPConn", "sql": "select * from vcube_mastaltacc"},
+        "Центри витрат": {"layoutId": "mast_cc", "cs": "oneSAPConn", "sql": "select * from vcube_mastcc"},
+        "WBS": {"layoutId": "mast_wbs", "cs": "oneSAPConn", "sql": "select * from mast_WBS"},
+        "Партнери": {"layoutId": "mast_partner", "cs": "oneSAPConn", "sql": "select * from vcube_mastpartner"},
+        "Типи партнерів": {"layoutId": "MASTPARTNERKIND", "cs": "oneSAPConn", "sql": "select * from mmast_partner_kind"},
+        "Матеріали": {"layoutId": "mast_material", "cs": "oneSAPConn", "sql": "select * from mast_material"},
+        "Українські назви матеріалів": {"layoutId": "v_mast_material_ukrname", "cs": "oneSAPConn", "sql": "select * from mast_material_ukrname"},
+        "Класи матеріалів": {"layoutId": "MASTMATCLASS", "cs": "oneSAPConn", "sql": "select * from mmast_material_class"},
+        "Типи матеріалів": {"layoutId": "MASTMATTYPE", "cs": "oneSAPConn", "sql": "select * from mmast_material_type"},
+        "Групи матеріалів": {"layoutId": "MASTMATGROUP", "cs": "oneSAPConn", "sql": "select * from mmast_material_group"},
+        "Типи руху Книги Матеріалів": {"layoutId": "mat_ledger_mov_type", "cs": "oneSAPConn", "sql": "select * from mat_ledger_mov_type"},
+        "Виробничі завдання": {"layoutId": "MAST_PMO", "cs": "oneSAPConn", "sql": "select * from mast_pmo"},
+        "Коди ПДВ": {"layoutId": "MAST_VAT", "cs": "oneSAPConn", "sql": "select * from mast_tax"},
+        "Курси валют": {"layoutId": "sap_nbu_rates", "cs": "oneSAPConn", "sql": "select * from curr_nbu_rates"},
+        "Курси валют для одного кода": {
+          "layoutId": "sap_nbu_rates1", "cs": "oneSAPConn",
+          "sql": "select * from curr_nbu_rates where curr=@curr and date between @start_date and @end_date",
+          "parameters": {
+            "@curr":  {"label": "Код валюти", "type": "System.String", "defValue": "USD"}, // currency code
+            "@start_date": {"label": "Дата з", "type": "System.DateTime", "defValue": "FirstDayOfPreviousMonth"},
+            "@end_date":  {"label": "Дата по", "type": "System.DateTime", "defValue": "LastDayOfPreviousMonth"}
+          }
+        },
+        "Коди валют НБУ": {"layoutId": "sap_nbu_codes", "cs": "oneSAPConn", "sql": "select * from [curr_nbu_codes]"},
+        "OneviewID користувачів": {"cs": "oneSAPConn", "sql": "select * from mmast_users"}
+      },
+      "Операції": {
+        "GLDOCLINE 1'000'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 1000000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, ~storno as storno2, * from gldocline" },
+        "GLDOCLINE 300'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 300000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 100'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 100000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 30'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 30000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 10'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 10000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 3'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 1'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 1000 1E-1+1E-1+1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline",
+          "columns": { "DOCAMT": { "format": "N1", "comment":  "XXX" , "label":  "Label"  } }
+        },
+        "GLDOCLINE 100": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 100 1E-1 doubled, CONVERT (time, CURRENT_TIMESTAMP) timed, dockey, [lineno] from gldocline" },
+        "Операції Головної Книги": {
+          "layoutId": "sap_v_gldocline",
+          "cs": "oneSAPConn",
+          "sql": "select * from vcube_gldocline",
+          "columns": {
+            "0L": { "comment": "1 - для коду обліку 0L" },
+            "N1": { "comment": "1 - для коду обліку N1" },
+            "N2": { "comment": "1 - для коду обліку N2" },
+            "AMT_0L": {
+              "label": "Сума 0L",
+              "comment": "Сума для обліку 0L"
+            },
+            "AMT_N1": {
+              "label": "Сума N1",
+              "comment": "Сума для обліку N1"
+            },
+            "AMT_N2": {
+              "label": "Сума N2",
+              "comment": "Сума для обліку N2"
+            },
+            "AMT_0L_N1": {
+              "label": "Сума різниці 0L-N1",
+              "comment": "Сума для обліку 0L - сума для обліку N1"
+            },
+            "AMT_0L_N2": {
+              "label": "Сума різниці 0L-N2",
+              "comment": "Сума для обліку 0L - сума для обліку N2"
+            },
+            "AMT_N1_N2": {
+              "label": "Сума різниці N1-N2",
+              "comment": "Сума для обліку N1 - сума для обліку N2"
+            }
+          }
+        },
+        "Операції Книги матеріалів": {
+          "layoutId": "mat_ledger",
+          "cs": "oneSAPConn",
+          "sql": "select * from mat_ledger"
+        },
+        "Операції реалізації": {
+          "layoutId": "data_ke24",
+          "cs": "oneSAPConn",
+          "sql": "select * from data_ke24"
+        },
+        "Замовлення на закупівлю": {
+          "layoutId": "data_po",
+          "cs": "oneSAPConn",
+          "sql": "select * from data_po"
+        },
+        "Заголовки операцій Головної Книги": {
+          "layoutId": "sap_gldoclist",
+          "cs": "oneSAPConn",
+          "sql": "select * from vcube_gldoclist",
+          "columns": {
+            "0L": { "comment": "1 - для коду обліку 0L" },
+            "N1": { "comment": "1 - для коду обліку N1" },
+            "N2": { "comment": "1 - для коду обліку N2" }
+          }
+        },
+        "Собівартість матеріалів (IFRS)": {
+          "layoutId": "sap_PROD_COST_IFRS",
+          "cs": "oneSAPConn",
+          "sql": "select * from PROD_COST_IFRS"
+        },
+        "Собівартість матеріалів (Україна)": {
+          "layoutId": "sap_PROD_COST_UKR",
+          "cs": "oneSAPConn",
+          "sql": "select * from PROD_COST_UKR"
+        },
+        "KOB1": {
+          "layoutId": "sap_data_kob1",
+          "cs": "oneSAPConn",
+          "sql": "select * from data_KOB1_pmo"
+        },
+        "Кореспонденція операцій модуля Головна Книга": {
+          "layoutId": "sap_glcorrline",
+          "cs": "oneSAPConn",
+          "sql": "select * from vcube_glcorrline",
+          "columns": {
+            "AMT": { "label": "Сума(грн)" },
+            "DB_AMT": { "label": "Сума(грн) дебет" },
+            "CR_AMT": { "label": "Сума(грн) кредіт" },
+            "CORRACC": {
+              "label": "Кор. рахунок",
+              "comment": "Кореспонд. рахунок IFRS",
+              "lookup": "vcube_mastaccount"
+            },
+            "CORRALTACC": {
+              "label": "Кор.укр. рахунок",
+              "comment": "Кореспонд. український рахунок"
+            },
+            "MAINSHORTALTACC": {
+              "label": "Укр.короткий  рахунок",
+              "comment": "Перші 3 символи українського рахунку"
+            },
+            "CORRSHORTALTACC": {
+              "label": "Кор.укр.короткий  рахунок",
+              "comment": "Перші 3 символи кореспонд. українського рахунку"
+            },
+            "CORRCC": {
+              "label": "Кор. центр витрат",
+              "comment": "Кореспонд. код центра витрат",
+              "lookup": "vcube_mastcc"
+            },
+            "CORRGRANT": {
+              "label": "Кор. грант",
+              "comment": "Кореспонд. код гранта",
+              "lookup": "vcube_mastgrants"
+            },
+            "CORRTAX": {
+              "label": "Кор. код ПДВ",
+              "comment": "Кореспонд. код ПДВ",
+              "lookup": "vcube_mastvat"
+            },
+            "CORRPO": {
+              "label": "Кор. № PO замовлення",
+              "comment": "Кореспонд. номер замовлення на закупівлю"
+            },
+            "CORRPK": {
+              "label": "Кор. код проводки",
+              "comment": "Кореспонд. код проводки"
+            },
+            "CORRTEXT": {
+              "label": "Кор. текст рядка",
+              "comment": "Текст кореспонд. рядка операції"
+            },
+            "CORRPARTNER": {
+              "label": "Кор. партнер",
+              "comment": "Кореспонд. код партнера",
+              "lookup": "vcube_mastpartner"
+            }
+          }
+        }
+      },
+      "Звіти з залишками": {
+        "Оборотка по рахункам Головної Книги": {
+          "layoutId": "sap_gldocline_with_balance", "cs": "oneSAPConn",
+          "sql": "dbo.CUBE_GLDOCLINE_WITH_BALANCE",
+          "parameters": {
+            "@p_ledger": {"label": "Код обліку", "comment": "Можливі значення: 0L, N1, N2, 0L-N1, 0L-N2, N1-N2", "type": "System.String", "defValue": "0L", "lookup": "glLedgerId"}, // p_gl_ledger
+            "@p_start_period": {"label": "Період з ", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_end_period": {"label": "Період по", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"}
+          },
+          "columns": {
+            "OB":  {"label": "Початковий залишок"},
+            "CB": {"label": "Кінцевий залишок"}
+          },
+          "sqlForColumnAttributes": "select * from v_gldocline"
+        },
+        "Оборотка для Книги Матеріалів": {
+          "layoutId": "sap_mat_ledger_with_balance", "cs": "oneSAPConn",
+          "sql": "dbo.CUBE_MAT_LEDGER_WITH_BALANCE",
+          "parameters": {
+            "@p_plant": {"label": "Склад (UA - вся компанія)", "type": "System.String", "defValue": "UA", "lookup": "plant"},
+            "@p_start_period": {"label": "Період з ", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_end_period": {"label": "Період по", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_start_class": {"label": "Клас матеріалів з", "type": "System.Int16", "defValue": 1001, "lookup": "materialClass"},
+            "@p_end_class": {"label": "Клас матеріалів по", "type": "System.Int16", "defValue": "8000", "lookup": "materialClass"}
+          },
+          "columns": {
+            "OB":  {"label": "Поч. залишок кількість", "comment": "Початковий залишок (кількість)"},
+            "CB":  {"label": "Кінц. залишок кількість", "comment": "Кінцевий залишок (кількість)"},
+            "OB_AMT_ST":  {"label": "Поч. залишок станд.сума", "comment": "Початковий залишок для стандартної суми (грн)"},
+            "CB_AMT_ST":  {"label": "Кінц. залишок станд.сума", "comment": "Кінцевий залишок для стандартної суми (грн)"},
+            "OB_AMT_IFRS":  {"label": "Поч. залишок IFRS сума", "comment": "Початковий залишок для суми IFRS (грн)"},
+            "CB_AMT_IFRS":  {"label": "Кінц. залишок IFRS сума", "comment": "Кінцевий залишок для суми IFRS (грн)"},
+            "OB_AMT_UKR":  {"label": "Поч. залишок укр.сума", "comment": "Початковий залишок для української суми (грн)"},
+            "CB_AMT_UKR":  {"label": "Кінц. залишок укр.сума", "comment": "Кінцевий залишок для української суми (грн)"}
+          },
+          "sqlForColumnAttributes": "select * from mat_ledger"
+        },
+        "Оборотка для Дебіторів/Кредиторів": {
+          "layoutId": "sap_partners_with_balance", "cs": "oneSAPConn",
+          "sql": "dbo.CUBE_PARTNERS_WITH_BALANCE",
+          "parameters": {
+            "@p_start_period": {"label": "Період з ", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_end_period": {"label": "Період по", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"}
+          },
+          "sqlForColumnAttributes": "select * from v_gldocline"
+        },
+        "Оборотка для Дебіторів/Кредиторів з кореспонденцією рахунків": {
+          "layoutId": "sap_partners_with_balance_and_corresponding", "cs": "oneSAPConn",
+          "sql": "dbo.CUBE_PARTNERS_CORRESPONDING_WITH_BALANCE",
+          "parameters": {
+            "@p_start_period": {"label": "Період з ", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_end_period": {"label": "Період по", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"}
+          },
+          "columns": {
+            "AMT": {"label": "Сума(грн)"},
+            "CORRACC": {"label": "Кор. рахунок", "comment": "Кореспонд. рахунок IFRS","lookup": "vcube_mastaccount"},
+            "CORRALTACC": {"label": "Кор.укр. рахунок", "comment": "Кореспонд. український рахунок"},
+            "MAINSHORTALTACC": {"label": "Укр.короткий  рахунок", "comment": "Перші 3 символи українського рахунку"},
+            "CORRSHORTALTACC": {"label": "Кор.укр.короткий  рахунок", "comment": "Перші 3 символи кореспонд. українського рахунку"},
+            "CORRCC": {"label": "Кор. центр витрат", "comment": "Кореспонд. код центра витрат", "lookup": "vcube_mastcc"},
+            "CORRGRANT": {"label": "Кор. грант", "comment": "Кореспонд. код гранта", "lookup": "vcube_mastgrants"},
+            "CORRTAX": {"label": "Кор. код ПДВ", "comment": "Кореспонд. код ПДВ", "lookup": "vcube_mastvat"},
+            "CORRPO": {"label": "Кор. № PO замовлення", "comment": "Кореспонд. номер замовлення на закупівлю"},
+            "CORRPK": {"label": "Кор. код проводки", "comment": "Кореспонд. код проводки"},
+            "CORRTEXT": {"label": "Кор. текст рядка", "comment": "Текст кореспонд. рядка операції"},
+            "CORRPARTNER": {"label": "Кор. партнер", "comment": "Кореспонд. код партнера", "lookup": "vcube_mastpartner"}
+          },
+          "sqlForColumnAttributes": "select * from v_gldocline"
+        }
+      },
+      "Книга Кредиторів": {
+        "Залишки кредиторів": {
+          "layoutId": "CUBE_CREDITORS_BALANCE", "cs": "oneSAPConn",
+          "sql":
+            "select a.period, b.* from gldoclist a inner join gldocline b on a.dockey=b.dockey where a.period<=@p_period and b.PARTNER like 'C%' and b.ACCOUNT like @p_base_account+'%'and b.pk<40",
+          "parameters": {
+            "@p_period": {"label": "Період", "type": "System.String", "defValue": "PreviousPeriod", "lookup": "period"},
+            "@p_base_account": {"label": "Шаблон Базового рахунку кредитора", "type": "System.String", "defValue": "2251132000", "lookup": "baseCreditorAccount"}
+          }
+        }
+      },
+      "SAP Тести": {
+        "prod_cost_ifrs_summary": {"layoutId": "prod_cost_ifrs_summary", "cs": "oneSAPConn", "sql": "select * from prod_cost_ifrs_summary"},
+        "mat_ledger_ifrs": {"layoutId": "mat_ledger_ifrs", "cs": "oneSAPConn", "sql": "select * from mat_ledger_ifrs"},
+        "prod_cost_ukr_summary": {"layoutId": "prod_cost_ukr_summary", "cs": "oneSAPConn", "sql": "select * from prod_cost_ukr_summary"},
+        "mat_ledger_ukr": {"layoutId": "mat_ledger_ukr", "cs": "oneSAPConn", "sql": "select * from mat_ledger_ukr"},
+        "Material Ledger (new)": {"layoutId": "ml", "cs": "oneSAPConn", "sql": "select * from ml"}
+      }
+    },
+    "Quote 2022": {
+      "Gap Up (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from vDayYahooGaps WHERE prevClose<Low"},
+      "Gap Down (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from vDayYahooGaps WHERE prevClose>High"},
+      "Gap Up 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013Gaps] WHERE [prevClose]<[Low];"},
+      "Gap Down 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013Gaps] WHERE [prevClose]>[Low];"},
+      "Big Volume 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013BigVolume];"},
+      "Symbols Eoddata": {"cs": "dbQuote2022","sql": "select * from SymbolsEoddata"},
+      "Live Symbols": {"cs": "dbQuote2022","sql": "select * from vSymbolsLive"},
+      "Symbols Nasdaq": {"cs": "dbQuote2022","sql": "select * from SymbolsNasdaq;"},
+      "Symbols Nasdaq (all)": {"cs": "dbQuote2022","sql": "select * from SymbolsNasdaqAll;"},
+      "Screener Nasdaq (from 2021)": {"cs": "dbQuote2022","sql": "select len(Name) NameLen, * from dbQuote2023..HScreenerNasdaqStockDetails"},
+      "Profiles Yahoo": {"cs": "dbQuote2022","sql": "select * from vProfilesYahoo"},
+      "StatQuote (buffer)": {"cs": "dbQuote2022","sql": "select * from Bfr_StatQuote", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "StatQuote (15 min)": {"cs": "dbQuote2022","sql": "select * from StatQuote_15", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "StatQuote (30 min)": {"cs": "dbQuote2022","sql": "select * from StatQuote_30", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "StatQuote (45 min)": {"cs": "dbQuote2022","sql": "select * from StatQuote_45", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "Intraday Yahoo Quote": {"cs": "dbQuote2022","sql": "select * from vIntradayYahooQuotes", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "Intraday Quote Snapshots": {"cs": "dbQuote2022","sql": "select * from dbQ2023.dbo.IntradaySnapshots", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } },
+      "Test_DiffHighLow View": {"cs": "dbQ2023","sql": "select * from dbQ2023.dbo.vTest_DiffHighLow", "columns": { "SYMBOL": { "lookup": "quoteSymbols" } } }
+    }, 
+    "Chalkable": {
+      "District DB": {
+        "Students": {"layoutId":"chalkable-district-student", "cs": "ChalkableDistrict", "sql": "select * from student"}
+      },
+      "Chalkable Master": {
+        "Districts": {"layoutId":"chalkable-master-districts", "cs": "ChalkableMaster", "sql": "select * from [district]"},
+        "Users": {"layoutId":"chalkable-master-users", "cs": "ChalkableMaster", "sql": "select * from [user] where districtref=@district",
+            "parameters": {
+              "@district":  {"label": "District", "type": "System.String", "lookup": "districts"}
+          }
+        }
+      }, 
+      "Assessment": {
+        /*"DistrictId":  {"value": "558AEB8A-128F-43F8-9B37-A52F3936CE72"}, */
+        "Sessions": {
+          "layoutId":"assessment-sessions", "cs": "Assessment", "sql": "select * from AnnouncementAssessmentSession where districtId=@district",
+          "parameters": {
+            "@district":  {"label": "District", "type": "System.String", "defValue": "558AEB8A-128F-43F8-9B37-A52F3936CE72", "lookup": "districts"}
+          },
+          "columns": {
+            "StudentId": {"label": "Student", "lookup": "Assessment-Users"},
+            "AnnouncementApplicationId": {"label": "AA", "lookup": "Assessment-AAs"}
+          }
+        }
+      },
+      "Check ChalkableAcademicBenchmark": {
+        "Check based on missing authorities/documents": {
+          "layoutId": "CheckChalkableAcademicBenchmarkBasedOnMissingAuthoritiesAndDocuments", "cs": "CheckChalkableAcademicBenchmark",
+          "sql": "SELECT a.* FROM Standard a left join Authority b on a.AuthorityRef=b.Id left join Document c on a.DocumentRef=c.Id where b.Id is null or c.id is null",
+          "columns": {
+            "Id": {"lookup": "AssessmentStandardListForCheck"}
+          }
+        },
+        "Get QuestionStandards with missing master data": {
+          "layoutId": "CheckChalkableAcademicBenchmarkGetQuestionStandardWithMissingMasterData", "cs": "CheckChalkableAssessment",
+          "sql": "SELECT distinct StandardRef FROM QuestionStandard_2017_12_11_adjusted",
+          "columns": {
+            "StandardRef": {"lookup": "AcademicBenchmarkStandardListForCheck"}
+          }
+        }
+      }  
+    },
+    "Assessment 2016": {
+      "Chalkable Items": {"layoutId":"chalkableQuestions", "cs": "dbLernosity", "sql": "select * from chalkableItems"},
+      "Resources of chalkable items": {"layoutId":"chalkableItemResources", "cs": "dbLernosity", "sql": "select * from chalkableItemResources"},
+      "Chalkable Images": {"layoutId":"chalkableImages", "cs": "dbLernosity", "sql": "select * from chalkableImages"},
+      "TEMP_Chalkable Items": {"layoutId":"tmp_chalkableQuestions", "cs": "dbLernosity", "sql": "select * from tmp_chalkableItems"},
+      "TEMP_Resources of chalkable items": {"layoutId":"tmp_chalkableItemResources", "cs": "dbLernosity", "sql": "select * from tmp_chalkableItemResources"}
+    },
+    "Lviv Flat": {
+      "Lviv Flats": {"layoutId":"RealEstate", "cs": "dbLernosity", "sql": "select * from RealEstate"},
+      "Contacts": {"layoutId":"RealEstateContacts", "cs": "dbLernosity", "sql": "select contact, count(*) recs from RealEstate group by contact"}
+    },
+    "Mdb Tests": {
+      "MdbCategories": {"cs": "MdbTest", "sql": "select * from Categories"},
+      "Test bad pictures": {"cs": "MdbTestBadPicture", "sql": "select * from Categories"}
+    },
+    "MySql Tests": {
+      "MySql Test (full select)": {"cs": "MySqlTest", "sql": "select * from exam"},
+      "MySql Test1 (short select)": {"cs": "MySqlTest", "sql": "SELECT id, contentBankId from exam"},
+      "MySql MyTestDb, test_table table": {"cs": "MySqlMyTestDb", "sql": "select * from test_my.test_table"},
+      "Academic Benchmark": {"cs": "MySqlMyTestDb", "sql": "select HEX(a.id) as id1, a.* from test_standards_save.standard a"}
+    },
+    "Other Tests": {
+      "9,000,000 records": { "cs": "oneSAPConn", "sql": "SELECT * from gldocline union all SELECT * from gldocline union all SELECT * from gldocline"},
+      "3,000,000 records": { "cs": "oneSAPConn", "sql": "SELECT top 3000000 * from gldocline"},
+      "1,000,000 records": { "cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline"},
+      "200,000 records": { "cs": "oneSAPConn", "sql": "SELECT top 200000 * from gldocline"},
+      "1,000,000 records (ModelExists)": {"cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline", "itemType": "Models.GlDocline"},
+      "1,000,000 records (DictionaryStore)": {"cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline", "itemType": "Models.GlDoclineDictionaryStore"},
+      "1,000,000 records (DictionaryStore2)": {"cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline", "itemType": "Models.GlDoclineDictionaryStore2"},
+      "1,000,000 records (ConcurrentDictionaryStore2)": {"cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline", "itemType": "Models.GlDoclineConcurrentDictionaryStore2"},
+      "1,000,000 records (Hashtable)": {"cs": "oneSAPConn", "sql": "SELECT top 1000000 * from gldocline", "itemType": "Models.GlDoclineHashTableStore2"},
+      "3,000,000 records (DictionaryStore)": {"cs": "oneSAPConn", "sql": "SELECT top 3000000 * from gldocline", "itemType": "Models.GlDoclineDictionaryStore"},
+      "9,000,000 records (DictionaryStore)": {"cs": "oneSAPConn", "sql": "SELECT * from gldocline union all SELECT * from gldocline union all SELECT * from gldocline", "itemType": "Models.GlDoclineDictionaryStore"},
+      "dbPS: assignmentSectionActivity": {"cs": "dbPS", "sql": "SELECT * from x1"},
+      "dbCodeproject": {"cs": "dbCodeproject", "sql": "SELECT a.*, b.image from Entries a left join images b on a.imageUrl=b.Url"}
+    },
+    "Test empty submenu": {},
+    "Test options: План рахунків": {"layoutId": "test_options", "cs": "oneSAPConn", "sql": "select * from vcube_mastaccount"},
+    "Test CSV": {
+      "Test csv": { "cs": "TestCsvDataSource", "sql": "E:\\Temp\\LargeDB\\offshore_leaks_csvs-20160510\\Entities.csv"},
+      "Test file mdb": { "cs": "MdbFileTest", "sql": "select * from Categories"}
+    },
+    "PS_AcademicBenchmark": {
+      "SyncTemp": { "cs": "PSAcademicBenchmark", "sql": "SELECT * from AllId"},
+      "SyncTemp2": { "cs": "PSAcademicBenchmark", "sql": "select a.XX, a.Y2017, a.y2018, a.added, a.updated, a.deleted del, a.NewSubDoc, a.status, b.*, c.SubjectDocumentId SubDoc2017, d.Id as Id20180131, e.Id as Id20180125 from AllId a left join AcademicBenchmarkStandard b on a.XX=b.Id left join AcademicBenchmarkStandard2017 c on a.XX=c.Id left join AcademicBenchmarkStandard20180131 d on a.XX=d.Id left join AcademicBenchmarkStandard20180125 e on a.XX=e.Id"},
+      "Standards 2017/2018": { "cs": "PSAcademicBenchmark", "sql": "SELECT 2017 DataSet, * FROM AcademicBenchmarkStandard2017 union all SELECT 2018 DataSet, * FROM AcademicBenchmarkStandard"},
+      "Standards 2018": { "cs": "PSAcademicBenchmark", "sql": "SELECT * from AcademicBenchmarkStandard"},
+      "SyncItems": { "cs": "PSAcademicBenchmark", "sql": "SELECT * from AcademicBenchmarkSyncItems"}
+    },
+    "PS_Standard3306": {
+      "Authority": { "cs": "PS_Standard3306", "sql": "SELECT * from authority"},
+      "Standard": {
+        "cs": "PS_Standard3306", "sql": "SELECT * from standard",
+        "columns": {
+          "authorityId": {"label": "Authority", "lookup": "PS_Authority"}
+        }
+      }
+    },
+    "PS_LS2140": {
+      "Sqls": {"cs": "PS_LS2140", "sql": "SELECT * from SqlResult",
+        "columns": {
+          "SETID": {"label": "SetID", "lookup": "SqlSets"}
+        }
+      },
+      "SqlSets": { "cs": "PS_LS2140", "sql": "SELECT * from SqlSet"},
+      "SqlResults": {"cs": "PS_LS2140", "sql": "SELECT * from SqlResult"}
+    },
+    "UOD": {
+      "Live UOD_ALL_UA (1'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 1000000 * from all_ua"},
+      "Live UOD_ALL_UA (10'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 10000000 * from all_ua"},
+      "Live UOD_ALL_UA (1'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 1000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
+      "Live UOD_ALL_UA (10'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 10000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
+      "Live UOD_ALL_UA (15'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 15000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
+      "Live UOD_ALL_UA (53'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT * from all_ua"},
+      "temp_founder": {"cs": "UOD", "sql": "SELECT * from uod_b..temp_founder"},
+      "Datasets": {"cs": "UOD", "sql": "SELECT * from datasets"},
+      "Dataset Owners": {"cs": "UOD", "sql": "SELECT * from dataset_owners"},
+      "UA dictionary": {"cs": "UOD", "sql": "SELECT * from dbUserSettings..d_ua"},
+      "FOP": {"cs": "UOD", "sql": "SELECT * from uod_b..b_fop"},
+      "UO": {"cs": "UOD", "sql": "SELECT * from uod_b..b_uo"},
+      "DPI": {"cs": "UOD", "sql": "SELECT * from uod_b..bm_dpi"},
+      "Адміністративно-територіальний устрій": {"cs": "UOD", "sql": "SELECT * from uod_b..bm_atu"},
+      "post index": {"cs": "UOD", "sql": "SELECT * from uod_b..bm_post_index"},
+      "AllUkraine Log": {"cs": "UOD", "sql": "SELECT * from UOD_AllUkraine..v_loader_log"},
+      "AllUkraine Activity": {"cs": "UOD", "sql": "SELECT datediff(MINUTE, last_updated, getdate()) last_minutes, * FROM UOD_AllUkraine..active_proxy"},
+      "AllUA Activity Details": {"cs": "UOD", "sql": "SELECT datediff(MINUTE, last_updated, getdate()) last_minutes, * FROM UOD_AllUkraine..active_proxy_detail"}
+    },
+    "Lviv Flat 2021": {
+      "DomRia": {"cs": "dbLvivFlat2021", "sql": "SELECT * from vDomRia"},
+      "Olx": {"cs": "dbLvivFlat2021", "sql": "SELECT * from vOlx"},
+      "RealEstate": {"layoutId":"RealEstate2021", "cs": "dbLvivFlat2021", "sql": "SELECT * from vRealEstate"},
+      "VN Houses": {"cs": "dbLvivFlat2021", "sql": "SELECT * from VN_Houses"},
+      "VN Developers": {"cs": "dbLvivFlat2021", "sql": "SELECT * from VN_Developers"}
+    }
+  }
+}

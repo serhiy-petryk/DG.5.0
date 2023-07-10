@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="DGView.Views.FilterLineView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             xmlns:helpers="clr-namespace:DGView.Helpers"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <common:BindingProxy x:Key="FilterLineData" Value="{Binding}"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="27" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
+                      CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
+                <DataGrid.Resources>
+                    <Style x:Key="EditingElementStyle" TargetType="{x:Type TextBox}">
+                        <Setter Property="Padding" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Padding" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Foreground" Value="DarkRed"/>
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.RowValidationErrorTemplate>
+                    <ControlTemplate/>
+                </DataGrid.RowValidationErrorTemplate>
+
+                <DataGrid.RowHeaderTemplate>
+                    <DataTemplate>
+                        <Grid Width="32"
+                              ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
+                              Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
+                              Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
+                            <Ellipse StrokeThickness="0" Fill="Red"
+                                     Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
+                                     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
+                            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowHeaderTemplate>
+
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn Header="Операнд" Width="Auto" MinWidth="100"
+                                            SelectedValueBinding="{Binding FilterOperand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                            ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}" />
+                    <DataGridTextColumn Header="Вираз 1" Width="1*" MinWidth="100"
+                                        Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"
+                                        ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
+                    <DataGridTextColumn Header="Вираз 2" Width="1*" MinWidth="100"
+                                        Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"
+                                        ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" x:Name="cbNot" VerticalAlignment="Center" IsChecked="{Binding Clone_Not}"
+                      Style="{StaticResource MonochromeCheckBoxStyle}"/>
+            <TextBlock Grid.Column="1" Margin="4 0 0 0" FontWeight="Bold" Text="Окрім (будуть попадати всі дані, окрім вказаних у виразі)"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0 5 0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" HorizontalAlignment="Center" Padding="4" BorderThickness="2" FontWeight="SemiBold"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:CornerRadiusEffect.CornerRadius="3"
+                    effects:ChromeEffect.Monochrome="{StaticResource SuccessColor}"
+                    effects:ClickEffect.RippleColor="White" 
+                    UseLayoutRounding="False" Content="Підтвердити" Click="SaveButton_OnClick"/>
+            <Button Grid.Column="1" HorizontalAlignment="Center" Padding="4" BorderThickness="2" FontWeight="Bold"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:CornerRadiusEffect.CornerRadius="3"
+                    effects:ChromeEffect.Monochrome="{StaticResource DangerColor}"
+                    effects:ClickEffect.RippleColor="White"
+                    Content="Відмінити" Click="CloseButton_OnClick"/>
+            <Button Grid.Column="2" HorizontalAlignment="Center" Padding="4" BorderThickness="2"
+                    Style="{StaticResource MonochromeButtonBaseStyle}"
+                    effects:CornerRadiusEffect.CornerRadius="3"
+                    effects:ChromeEffect.Monochrome="{StaticResource InfoColor}"
+                    effects:ClickEffect.RippleColor="White"
+                    UseLayoutRounding="False" Content="Очистити фільтр" Click="ClearButton_OnClick"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

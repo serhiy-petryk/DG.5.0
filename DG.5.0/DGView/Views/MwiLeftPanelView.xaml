@@ -1,0 +1,175 @@
+﻿<UserControl x:Class="DGView.Views.MwiLeftPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:menu="clr-namespace:DGCore.Menu;assembly=DGCore"
+             xmlns:views="clr-namespace:DGView.Views"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             x:Name="Root"
+             Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="LeftPanelView_OnLoaded">
+
+    <UserControl.Resources>
+        <!-- Task list Tree view (from https://materialdesignicons.com/) -->
+        <Geometry x:Key="OpenFolderGeometry">M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z</Geometry>
+        <Geometry x:Key="FolderGeometry">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
+        <Geometry x:Key="TableGeometry">M0 0 Z M24 24Z M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z</Geometry>
+
+        <Style TargetType="Path">
+            <Setter Property="Fill" Value="{DynamicResource Mwi.WindowBar.ForegroundBrush}"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0 0 3 0"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <Path x:Key="DownArrowPath" x:Shared="False" Width="8.5" Height="3" Data="M2.5,0L8.5,0 5.5,3z" VerticalAlignment="Center"/>
+        <StackPanel x:Key="OpenIcon" x:Shared="False">
+            <Path Data="M12,10L8,14H11V20H13V14H16M19,4H5C3.89,4 3,4.9 3,6V18A2,2 0 0,0 5,20H9V18H5V8H19V18H15V20H19A2,2 0 0,0 21,18V6A2,2 0 0,0 19,4Z"/>
+            <StaticResource ResourceKey="DownArrowPath"/>
+        </StackPanel>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition MinWidth="430" Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" SizeChanged="OnTreeViewSizeChanged">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button HorizontalAlignment="Center" Margin="2 0" Content="Memory Used" Click="OnMemoryUsedClick"/>
+                <Button HorizontalAlignment="Center" Margin="2 0" Content="Dependencies" Click="OnDependentObjectClick"/>
+                <Button HorizontalAlignment="Center" Margin="2 0" Content="Print" Click="OnPrintClick"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="1" x:Name="Test0" HorizontalAlignment="Center" Margin="2" FontWeight="SemiBold" Text="Список задач"/>
+            <TreeView Grid.Row="2" x:Name="MenuTreeView" ScrollViewer.HorizontalScrollBarVisibility="Auto" TreeViewItem.Selected="TreeViewItem_OnItemSelected">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type menu:SubMenu}" ItemsSource="{Binding Items}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Grid.Column="0" Width="16" Height="16">
+                                <Path Width="24" Height="24" Fill="#FFDDB77d">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Data" Value="{DynamicResource FolderGeometry}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=(TreeViewItem.IsExpanded)}" Value="True">
+                                                    <Setter Property="Data" Value="{DynamicResource OpenFolderGeometry}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="1"/>
+                        </Grid>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type menu:MenuOption}">
+                        <Grid x:Name="Panel" PreviewMouseLeftButtonDown="MenuOption_OnPreviewMouseLeftButtonDown">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox x:Name="Icon" Grid.Column="0" Width="16" Height="16" Opacity="0.7">
+                                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
+                                      Data="{StaticResource TableGeometry}"/>
+                            </Viewbox>
+                            <ContentControl x:Name="WaitSpinnerIcon" Grid.Column="0" Width="16" Height="16" Opacity="0.7" Foreground="Black" Style="{StaticResource WaitSpinnerStyle}" Visibility="Collapsed"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Label}" Margin="1"/>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=IsSelected}" Value="True">
+                                <Setter TargetName="Panel" Property="Background" Value="#FF3399FF"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="Focusable" Value="True"/>
+                        <EventSetter Event="MouseLeftButtonUp" Handler="TreeViewItem_OnMouseLeftButtonUp" />
+                        <EventSetter Event="Expanded" Handler="TreeViewItem_OnExpanded"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+            </TreeView>
+        </Grid>
+
+        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="6" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                      BorderThickness="0"
+                      Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+5%}"/>
+
+        <Grid Grid.Column="2" Visibility="{Binding FilterPanelVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Row="0" Margin="0 4 0 0" IsEnabled="{Binding IsCbDataSettingEnabled}" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <TextBlock Grid.Column="0" Text="Налаштування даних:" Margin="0 0 8 0" FontWeight="SemiBold" VerticalAlignment="Center"/>
+<!--                <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300" Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"/>-->
+                <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300"
+                          Style="{StaticResource MonochromeComboBoxStyle}"
+                          effects:ComboBoxEffects.ClearButtonStyle="{StaticResource MonochromeComboBoxClearButtonStyle}"
+                          effects:ChromeEffect.ChromeMatrix="-70%,-70%/+70%,-70%/+70%,50, -80%,-80%/+70%,-80%/+70%,100, -50%,-50%/+75%,-50%/+75%,100"/>
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="FilterArea" Margin="0 8 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Фільтр даних" HorizontalAlignment="Center" Margin="0 0 0 4" FontWeight="SemiBold"/>
+                <views:DBFilterView Grid.Row="1" x:Name="DbFilterView" HorizontalAlignment="Stretch" Background="{Binding ElementName=Root, Path=Background}"/>
+            </Grid>
+
+            <TextBlock Grid.Row="2" x:Name="ErrorLabel" Text="lblError" Margin="0 10 0 4" FontWeight="SemiBold"
+                       Visibility="{Binding ErrorText, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+
+            <Grid Grid.Row="3" x:Name="DbProcedureParameterArea" Margin="0 8 0 0" Background="Yellow">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Параметри запиту" HorizontalAlignment="Center" Margin="0 0 0 4" FontWeight="SemiBold"/>
+                <WrapPanel Grid.Row="1">
+                    <Button Content="Завантажити дані" Click="LoadDataFromProcedure_OnClick"/>
+                </WrapPanel>
+                <TextBlock Grid.Row="2" Text="ParameterGrid" HorizontalAlignment="Center" Margin="0 10 0 4" FontWeight="SemiBold"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="$ThemeInfo.Name.Windows7">Windows 7</v:String>
+    <v:String x:Key="$ThemeInfo.Name.Windows10">Windows 10</v:String>
+    <v:String x:Key="$ThemeInfo.Name.Windows10-2">Windows 10 with borders</v:String>
+
+    <v:String x:Key="$ThemeSelector">Theme selector</v:String>
+    <v:String x:Key="$ThemeSelector.Theme">Theme</v:String>
+    <v:String x:Key="$ThemeSelector.Color">Color</v:String>
+    <v:String x:Key="$ThemeSelector.UseDefaultTheme">Use default theme?</v:String>
+    <v:String x:Key="$ThemeSelector.UseDefaultColor">Use default color?</v:String>
+    <v:String x:Key="$ThemeSelector.Apply">Apply</v:String>
+    <v:String x:Key="$ThemeSelector.Restore">Restore</v:String>
+    <v:String x:Key="$ThemeSelector.ApplyAndClose">Apply and Close</v:String>
+
+    <v:String x:Key="$ColorControl.GrayLevel">Gray level: {0:F1}%</v:String>
+    <v:String x:Key="$ColorControl.Shades">Shades</v:String>
+    <v:String x:Key="$ColorControl.Tints">Tints</v:String>
+    <v:String x:Key="$ColorControl.Tones">Tones</v:String>
+    <v:String x:Key="$ColorControl.Sliders">Sliders</v:String>
+    <v:String x:Key="$ColorControl.BootstrapColors">Bootstrap colors</v:String>
+    <v:String x:Key="$ColorControl.KnownColors">Known colors</v:String>
+    <v:String x:Key="$ColorControl.KnownColorsByName">Known colors by name</v:String>
+    <v:String x:Key="$ColorControl.RGB">RGB (Red[0-255], Green[0-255], Blue[0-255])</v:String>
+    <v:String x:Key="$ColorControl.HSL">HSL (Hue[0-360], Saturation[0-100], Lightness[0-100])</v:String>
+    <v:String x:Key="$ColorControl.HSV">HSV/HSB (Hue[0-360], Saturation[0-100], Value/Brightness[0-100])</v:String>
+    <v:String x:Key="$ColorControl.CIELAB">CIELAB (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])</v:String>
+    <v:String x:Key="$ColorControl.YCbCr">YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])</v:String>
+    <v:String x:Key="$ColorControl.ColorInformation">Color information</v:String>
+    <v:String x:Key="$ColorControl.Name">Name:</v:String>
+    <v:String x:Key="$ColorControl.Names">Names:</v:String>
+    <v:String x:Key="$ColorControl.SetColor">Click here to set the current color to this color</v:String>
+
+    <v:String x:Key="$MwiContainer.ToolTip.LeftPanelButton">Open/Close Task panel</v:String>
+    <v:String x:Key="$MwiContainer.ToolTip.WindowsMenuButton">Open/Close Arrange Windows Menu</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.ArrangeWindows">Arrange Windows</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.TilesHorizontally">Tiles Horizontally</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.TilesVertically">Tiles Vertically</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Horizontal">Horizontal</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Vertical">Vertical</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Cascade">Cascade</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.CollapseAll">Collapse all</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.CloseAll">Close all</v:String>
+
+    <v:String x:Key="$MwiChild.Tooltip.DetachWindowButton">Detach/attach the window</v:String>
+    <v:String x:Key="$MwiChild.ToolTip.ChangeThemeButton">Change the theme of windows. The current theme is {0}</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Restore">Restore</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Minimize">Minimize</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Maximize">Maximize</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Close">Close</v:String>
+
+    <v:String x:Key="$MwiBar.ToolTip.ScrollLeftButton">Scroll windows bar to left</v:String>
+    <v:String x:Key="$MwiBar.ToolTip.ScrollRightButton">Scroll windows bar to right</v:String>
+
+    <v:String x:Key="$Calculator.ToolTip.RoundingButton">Rounding decimal places of calculator result</v:String>
+</ResourceDictionary>

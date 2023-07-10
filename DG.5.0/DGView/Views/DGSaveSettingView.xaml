@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="DGView.Views.DGSaveSettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+             xmlns:helpers="clr-namespace:WpfSpLib.Helpers;assembly=WpfSpLib"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Color x:Key="DataGridBaseColor">#FFF5FAFF</Color>
+        <SolidColorBrush x:Key="DataGridBaseBrush" Color="{StaticResource DataGridBaseColor}"/>
+        <Geometry x:Key="TrashGeometry">M0 0Z M16 16Z M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z</Geometry>
+        <Geometry x:Key="ExitGeometry">M0 0Z M16 16Z M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z</Geometry>
+
+        <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="effects:ChromeEffect.Monochrome" Value="{StaticResource DataGridBaseColor}" />
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Margin="-5 0 5 0" Content="Нове налаштування:" Target="{Binding ElementName=NewSettingName}"
+                       Foreground="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
+                <TextBox Name="NewSettingName" Grid.Column="1" MaxLength="100"
+                         HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                         effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"
+                         Style="{StaticResource MonochromeTextBoxStyle}"/>
+                <Button Grid.Column="2" Margin="5 0 0 0" Height="26" Focusable="False" Content="Записати нове налаштування і вийти"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        Command="{Binding CmdSaveNewSetting}"
+                        effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
+                        effects:IconEffect.Geometry="{StaticResource SaveGeometry}"
+                        effects:IconEffect.Margin="4 4 -4 4"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="0 0 0 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="cbAllowViewToOthers" Grid.Column="0" IsChecked="True" IsThreeState="False" Content="Показувати іншим користувачам?" Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                <Button Grid.Column="1" Margin="5 0 0 0" Height="26" Focusable="False" Content="Встановити вибране налаштування і вийти"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        Command="{Binding CmdSetSetting}"
+                        effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
+                        effects:IconEffect.Geometry="{StaticResource SelectGeometry}"
+                        effects:IconEffect.Margin="4 4 -4 4"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox x:Name="cbAllowEditToOthers" Grid.Column="0" IsChecked="True" IsThreeState="False" Content="Інші користувачі можуть коригувати це налаштування?" Style="{StaticResource MonochromeCheckBoxStyle}"/>
+                <Button Grid.Column="1" Height="26" MinWidth="100" Focusable="False" Content="Вийти"
+                        Command="ApplicationCommands.Close"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
+                        effects:IconEffect.Geometry="{StaticResource ExitGeometry}"
+                        effects:IconEffect.Margin="4 4 -4 4"/>
+            </Grid>
+        </Grid>
+
+        <!-- ===========-->
+        <!--  DataGrid  -->
+        <!-- ===========-->
+        <Grid x:Name="DataArea" Background="{StaticResource DataGridBaseBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ScrollViewer_OnPreviewMouseWheel">
+                <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" IsReadOnly="True" MinWidth="400"
+                          HorizontalAlignment="Stretch"
+                          CanUserResizeRows="False" SelectionMode="Single"
+                          SelectionUnit="FullRow" HeadersVisibility="Column"
+                          Background="{StaticResource DataGridBaseBrush}"
+                          Foreground="{Binding Source={StaticResource DataGridBaseBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"
+                          ColumnHeaderStyle="{StaticResource MonochromeDGColumnHeaderStyle}"
+                          Sorting="DataGrid_OnSorting"
+                          ClipboardCopyMode="ExcludeHeader"
+                          CopyingRowClipboardContent="DataGrid_OnCopyingRowClipboardContent">
+                    
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                                        <Grid>
+                                            <DataGridCellsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" SnapsToDevicePixels="True"/>
+                                            <Rectangle x:Name="ErrorMark" Fill="Red" Height="1" Margin="5 0 5 0" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsDeleted}" Value="False">
+                                                <Setter TargetName="ErrorMark" Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="1 2"/>
+                            <Setter Property="Focusable" Value="True"/>
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="UseLayoutRounding" Value="False"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{Binding Source={StaticResource DataGridBaseBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}" />
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource DataGridBaseBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%/+75%}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Налаштування" Binding="{Binding SettingId}" Width="1*" MinWidth="100"/>
+                        <DataGridCheckBoxColumn Header="Показувати&#x0a;іншим&#x0a;користувачам?" Binding="{Binding AllowViewOthers}"
+                                                ElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
+                        <DataGridCheckBoxColumn Header="Редагування&#x0a;іншими&#x0a;користувачами?" Binding="{Binding AllowEditOthers}"
+                                                ElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
+                        <DataGridTextColumn Header="Автор" Binding="{Binding Created}"/>
+                        <DataGridTextColumn Header="Створено" Binding="{Binding DCreated, StringFormat=g}"/>
+                        <DataGridTextColumn Header="Оновлено" Binding="{Binding Updated}"/>
+                        <DataGridTextColumn Header="Оновлено" Binding="{Binding DUpdated, StringFormat=g}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+
+            <Border Grid.Row="0" Padding="0 5" BorderThickness="0 0 0 2" BorderBrush="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Фільтр по назві:" Target="{Binding ElementName=QuickFilter}"
+                           Foreground="{Binding ElementName=DataArea, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
+                    <TextBox Grid.Column="1" x:Name="QuickFilter" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                             Text="{Binding QuickFilterText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             Style="{StaticResource MonochromeTextBoxStyle}"
+                             effects:ChromeEffect.Monochrome="{Binding ElementName=DataArea, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
+                             effects:TextBoxEffects.VisibleButtons="Keyboard,Clear,Separator1px"/>
+                    <Button Grid.Column="2" Height="26" Focusable="False" Margin="5 0 20 0" Content="Вилучити запис налаштування" Style="{StaticResource MonochromeButtonBaseStyle}"
+                            Command="{Binding CmdDeleteRow}"
+                            effects:IconEffect.Geometry="{StaticResource TrashGeometry}"
+                            effects:IconEffect.Margin="4 4 -4 4"
+                            effects:ChromeEffect.Monochrome="{Binding ElementName=DataArea, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+5%}"/>
+                    <Button Grid.Column="3" Height="26" Focusable="False" Content="Записати змінені налаштування"  Style="{StaticResource MonochromeButtonBaseStyle}"
+                            Command="{Binding CmdSaveChanges}"
+                            effects:IconEffect.Geometry="{StaticResource SaveGeometry}"
+                            effects:IconEffect.Margin="4 4 -4 4"
+                            effects:ChromeEffect.Monochrome="{Binding ElementName=DataArea, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+5%}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
+</UserControl>

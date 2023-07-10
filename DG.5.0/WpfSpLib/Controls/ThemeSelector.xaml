@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="WpfSpLib.Controls.ThemeSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfSpLib.Controls"
+             xmlns:effects="clr-namespace:WpfSpLib.Effects"
+             xmlns:common="clr-namespace:WpfSpLib.Common"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Root"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Background="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+             Foreground="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+100%}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/FormControlStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Left" MaxWidth="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" BorderThickness="1" Background="Transparent" Margin="4 10 0 4" Padding="4"
+                      Header="{DynamicResource $ThemeSelector.Theme}"
+                      BorderBrush="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
+                <StackPanel Orientation="Vertical">
+                    <CheckBox x:Name="cbUseDefaultTheme" Margin="4 0 0 8" IsThreeState="False" VerticalAlignment="Center" VerticalContentAlignment="Top"
+                              Style="{StaticResource MonochromeCheckBoxStyle}"
+                              Checked="OnUseDefaultThemeChanged" Unchecked="OnUseDefaultThemeChanged"
+                              Content="{DynamicResource $ThemeSelector.UseDefaultTheme}">
+                    </CheckBox>
+
+                    <StackPanel x:Name="ThemeList" Orientation="Vertical" Margin="2 0" IsEnabled="{Binding IsThemeSelectorEnabled}">
+                        <StackPanel.Resources>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="GroupName" Value="Theme"/>
+                                <Setter Property="Margin" Value="2 1"/>
+                                <Setter Property="IsThreeState" Value="False"/>
+                                <Setter Property="Foreground" Value="{Binding ElementName=Root, Path=Foreground}"/>
+                                <Setter Property="Opacity" Value="1.0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+                <Button Content="{DynamicResource $ThemeSelector.Apply}" Height="30" Margin="2 2 8 2" Click="OnApplyButtonClick"
+                        HorizontalAlignment="Center" MinWidth="100"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        IsEnabled="{Binding IsApplyButtonEnabled}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+                <Button Content="{DynamicResource $ThemeSelector.Restore}" Height="30" Margin="2 2 8 8" Click="OnRestoreButtonClick"
+                        HorizontalAlignment="Center" MinWidth="100"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        IsEnabled="{Binding IsRestoreButtonEnabled}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+                <Button Content="{DynamicResource $ThemeSelector.ApplyAndClose}" Height="30" Margin="2 2 8 2" Click="OnApplyAndCloseButtonClick"
+                        HorizontalAlignment="Center" MinWidth="100"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Style="{StaticResource MonochromeButtonBaseStyle}"
+                        effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
+                        effects:CornerRadiusEffect.CornerRadius="3"/>
+            </StackPanel>
+        </Grid>
+
+        <Border BorderThickness="1" Background="Transparent" CornerRadius="4" Margin="4 10 4 4" Padding="4 0 4 4"
+                BorderBrush="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"
+                IsEnabled="{Binding IsColorSelectorEnabled}">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top" Margin="2 -10 2 2" Background="{Binding ElementName=Root, Path=Background}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <local:LabelBox DockPanel.Dock="Top" Text="{DynamicResource $ThemeSelector.Color}" FontWeight="SemiBold" HorizontalAlignment="Left"
+                                    Background="Transparent" Foreground="{Binding ElementName=Root, Path=Foreground}"/>
+                </Grid>
+                <CheckBox x:Name="cbUseDefaultColor" DockPanel.Dock="Top" Margin="2 0 0 2" Content="{DynamicResource $ThemeSelector.UseDefaultColor}" IsThreeState="False"
+                          Style="{StaticResource MonochromeCheckBoxStyle}"
+                          Checked="OnUseDefaultColorChanged" Unchecked="OnUseDefaultColorChanged" />
+                <Border IsEnabled="{Binding ElementName=Root, Path=DataContext.IsColorControlEnabled}">
+                    <local:ColorControl x:Name="ColorControl" x:FieldModifier="public" Margin="1" effects:CornerRadiusEffect.CornerRadius="6 6 0 0"/>
+                </Border>
+            </DockPanel>
+        </Border>
+    </DockPanel>
+</UserControl>

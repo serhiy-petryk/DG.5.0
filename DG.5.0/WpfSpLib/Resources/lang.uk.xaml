@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="$ThemeInfo.Name.Windows7">Windows 7</v:String>
+    <v:String x:Key="$ThemeInfo.Name.Windows10">Windows 10</v:String>
+    <v:String x:Key="$ThemeInfo.Name.Windows10-2">Windows 10 з каймою</v:String>
+
+    <v:String x:Key="$ThemeSelector">Вибір теми</v:String>
+    <v:String x:Key="$ThemeSelector.Theme">Тема</v:String>
+    <v:String x:Key="$ThemeSelector.Color">Колір</v:String>
+    <v:String x:Key="$ThemeSelector.UseDefaultTheme">Використовувати тему за замовчуванням?</v:String>
+    <v:String x:Key="$ThemeSelector.UseDefaultColor">Використовувати колір за замовчуванням?</v:String>
+    <v:String x:Key="$ThemeSelector.Apply">Застосувати</v:String>
+    <v:String x:Key="$ThemeSelector.Restore">Відновити</v:String>
+    <v:String x:Key="$ThemeSelector.ApplyAndClose">Застосувати і закрити</v:String>
+
+    <v:String x:Key="$ColorControl.GrayLevel">Рівень сірого: {0:F1}%</v:String>
+    <v:String x:Key="$ColorControl.Shades">Відтінки</v:String>
+    <v:String x:Key="$ColorControl.Tints">Відтінки</v:String>
+    <v:String x:Key="$ColorControl.Tones">Тони</v:String>
+    <v:String x:Key="$ColorControl.Sliders">Повзунки</v:String>
+    <v:String x:Key="$ColorControl.BootstrapColors">Bootstrap кольори</v:String>
+    <v:String x:Key="$ColorControl.KnownColors">Відомі кольори</v:String>
+    <v:String x:Key="$ColorControl.KnownColorsByName">Відомі кольори по назві</v:String>
+    <v:String x:Key="$ColorControl.RGB">RGB (Червоний[0-255], Зелений[0-255], Синій[0-255])</v:String>
+    <v:String x:Key="$ColorControl.HSL">HSL (Колір[0-360], Насиченість[0-100], Легкість[0-100])</v:String>
+    <v:String x:Key="$ColorControl.HSV">HSV/HSB (Колір[0-360], Насиченість[0-100], Співвідношення/Яскравість[0-100])</v:String>
+    <v:String x:Key="$ColorControl.CIELAB">CIELAB (Lightness[0-100], A(Green↔Red)[-127.5, 127.5], B(Blue↔Yellow)[-127.5, 127.5])</v:String>
+    <v:String x:Key="$ColorControl.YCbCr">YCbCr (Y[0-255], Cb[-127.5, 127.5], Cr[-127.5, 127.5])</v:String>
+    <v:String x:Key="$ColorControl.ColorInformation">Інформація про колір</v:String>
+    <v:String x:Key="$ColorControl.Name">Назва:</v:String>
+    <v:String x:Key="$ColorControl.Names">Назви:</v:String>
+    <v:String x:Key="$ColorControl.SetColor">Натисніть тут, щоб встановити для поточного кольору цей колір</v:String>
+
+    <v:String x:Key="$MwiContainer.ToolTip.LeftPanelButton">Відкрити/закрити панель завдань</v:String>
+    <v:String x:Key="$MwiContainer.ToolTip.WindowsMenuButton">Відкрити/закрити меню організації вікон</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.ArrangeWindows">Організація вікон</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.TilesHorizontally">Плитка по горизонталі</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.TilesVertically">Плитка по вертикалі</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Horizontal">Горизонтально</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Vertical">Вертикально</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.Cascade">Каскадом</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.CollapseAll">Всі вікна згорнути</v:String>
+    <v:String x:Key="$MwiContainer.WindowsMenu.CloseAll">Всі вікна закрити</v:String>
+
+    <v:String x:Key="$MwiChild.Tooltip.DetachWindowButton">Від'єднати/прикріпити вікно</v:String>
+    <v:String x:Key="$MwiChild.ToolTip.ChangeThemeButton">Змінити тему для вікон. Зараз активна '{0}' тема</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Restore">Відновити розмір вікна</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Minimize">Мінімізувати розмір вікна</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Maximize">Максимально збільшити розмір вікна</v:String>
+    <v:String x:Key="$MwiChild.SystemMenu.Close">Закрити вікно</v:String>
+
+    <v:String x:Key="$MwiBar.ToolTip.ScrollLeftButton">Прокрутка панелі вікон вліво</v:String>
+    <v:String x:Key="$MwiBar.ToolTip.ScrollRightButton">Прокрутка панелі вікон вправо</v:String>
+
+    <v:String x:Key="$Calculator.ToolTip.RoundingButton">Округлення десяткових знаків результату калькулятора</v:String>
+</ResourceDictionary>

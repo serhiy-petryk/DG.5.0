@@ -1,0 +1,197 @@
+﻿<Window x:Class="DGView.Controls.Printing.PageSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:helpers="clr-namespace:DGView.Helpers"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        xmlns:printing="clr-namespace:System.Printing;assembly=ReachFramework"
+        xmlns:temp1="clr-namespace:DGView.Controls.Printing"
+        mc:Ignorable="d"
+        Title="Page Setup" Height="450" Width="800"
+        Topmost="False" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="ButtonBase">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="6 0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ButtonBase">
+                        <Border Margin="0" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="3"
+                                SnapsToDevicePixels="True" UseLayoutRounding="True">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Content="{TemplateBinding Content}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#EEEEEE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <Style TargetType="Path">
+                    <Setter Property="Stretch" Value="Fill"/>
+                    <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Control}}, Path=Foreground}"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="PageSizeSelectorStyle" TargetType="ToggleButton" BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="IsThreeState" Value="False"/>
+            <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOff" Value="{StaticResource DownArrowGeometry}"/>
+            <Setter Property="effects:DoubleIconToggleButtonEffect.GeometryOn" Value="{StaticResource CloseGeometry}"/>
+            <Setter Property="effects:DoubleIconToggleButtonEffect.Width" Value="9"/>
+            <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOff" Value="3 0"/>
+            <Setter Property="effects:DoubleIconToggleButtonEffect.MarginOn" Value="3 0"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Measurement System" Margin="5">
+            <StackPanel Orientation="Vertical">
+                <RadioButton Content="Metric" Margin="5 1" IsChecked="{Binding Path=(temp1:PageViewModel.CurrentMeasurementSystem), Converter={x:Static helpers:ComparisonConverter.Instance}, ConverterParameter={x:Static temp1:PageViewModel+MeasurementSystem.Metric}}"/>
+                <RadioButton Content="U.S." Margin="5 1" IsChecked="{Binding Path=(temp1:PageViewModel.CurrentMeasurementSystem), Converter={x:Static helpers:ComparisonConverter.Instance}, ConverterParameter={x:Static temp1:PageViewModel+MeasurementSystem.US}}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Paper Size" Margin="5 0 5 5" Width="{Binding ElementName=MarginsBox, Path=ActualWidth}">
+            <ToggleButton Padding="4 0" BorderThickness="0" Style="{StaticResource PageSizeSelectorStyle}" MouseEnter="OnPageSizeSelectorMouseEnter">
+                <ToggleButton.Content>
+                    <TextBlock Text="{Binding Size}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                </ToggleButton.Content>
+                <ToggleButton.Resources>
+                    <ContextMenu x:Key="cm" StaysOpen="False" Focusable="False" ItemsSource="{Binding AvailableSizes}">
+                        <ContextMenu.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Background="GhostWhite"/>
+                            </ItemsPanelTemplate>
+                        </ContextMenu.ItemsPanel>
+                        <ContextMenu.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{x:Static helpers:BackgroundOfSelectedMenuItemConverter.Instance}">
+                                            <Binding Path="DataContext.Size" RelativeSource="{RelativeSource AncestorType={x:Type temp1:PageSetupWindow}}"/>
+                                            <Binding/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="InputGestureText" Value="{Binding SizeLabel}"/>
+                                <Setter Property="Command" Value="{Binding Path=DataContext.PageSizeSelectCommand, RelativeSource={RelativeSource AncestorType={x:Type temp1:PageSetupWindow}}}"/>
+                                <Setter Property="CommandParameter" Value="{Binding}"/>
+                            </Style>
+                        </ContextMenu.ItemContainerStyle>
+                        <ContextMenu.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-25 -1 -32 -1" Text="{Binding Name}" Padding="0 1"/>
+                            </DataTemplate>
+                        </ContextMenu.ItemTemplate>
+                    </ContextMenu>
+                </ToggleButton.Resources>
+            </ToggleButton>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Grid.Column="0" Header="Orientation" Margin="5 2">
+            <StackPanel Orientation="Vertical">
+                <RadioButton Content="Portrait" Margin="5 1" IsChecked="{Binding Path=Orientation, Converter={x:Static helpers:ComparisonConverter.Instance}, ConverterParameter={x:Static printing:PageOrientation.Portrait}}"/>
+                <RadioButton Content="Landscape" Margin="5 1" IsChecked="{Binding Path=Orientation, Converter={x:Static helpers:ComparisonConverter.Instance}, ConverterParameter={x:Static printing:PageOrientation.Landscape}}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="3" Grid.Column="0" x:Name="MarginsBox" Margin="5 2 5 5" MinWidth="120"
+                  Header="{Binding Path=(temp1:PageViewModel+PageSize.DimensionSuffixName)}"
+                  HeaderStringFormat="Margins ({0})">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="Left:" VerticalAlignment="Center" Margin="5 0"/>
+                <controls:NumericBox Grid.Column="1" Grid.Row="0" VisibleButtons="RightDown,Up,Calculator,Clear" DecimalPlaces="2" MinValue="0" Margin="2"
+                                     Width="110" Value="{Binding MarginLeft, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxValue="{Binding MaxLeftMargin}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Right:" VerticalAlignment="Center" Margin="5 0"/>
+                <controls:NumericBox Grid.Column="1" Grid.Row="1" VisibleButtons="RightDown,Up,Calculator,Clear" DecimalPlaces="2" MinValue="0" Margin="2"
+                                     Width="110" Value="{Binding MarginRight, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxValue="{Binding MaxRightMargin}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Top:" VerticalAlignment="Center" Margin="5 0"/>
+                <controls:NumericBox Grid.Column="1" Grid.Row="2" VisibleButtons="RightDown,Up,Calculator,Clear" DecimalPlaces="2" MinValue="0" Margin="2"
+                                     Width="110" Value="{Binding MarginTop, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxValue="{Binding MaxTopMargin}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="3" Text="Bottom:" VerticalAlignment="Center" Margin="5 0"/>
+                <controls:NumericBox Grid.Column="1" Grid.Row="3" VisibleButtons="RightDown, Up,Calculator,Clear" DecimalPlaces="2" MinValue="0" Margin="2"
+                                     Width="110" Value="{Binding MarginBottom, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxValue="{Binding MaxBottomMargin}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.RowSpan="4" Grid.Column="1" x:Name="MarginsEditor" Margin="0 5 5 5" Padding="2" Header="Margins editor">
+            <Grid Background="Transparent" ToolTip="Для редагування полів Ви можете використовувати повзунки всередині образу сторінки">
+                <Grid x:Name="MarginContainer" VerticalAlignment="Stretch" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gainsboro"
+                          Width="{Binding PageAreaWidth}" Height="{Binding PageAreaHeight}">
+                        <controls:ResizableControl x:Name="PrintingArea"
+                                                   ShadowVisibility="Collapsed"
+                                                   LimitPositionToPanelBounds="True"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                   Width="{Binding PrintingAreaWidth}"
+                                                   Height="{Binding PrintingAreaHeight}"
+                                                   MinWidth="75" MinHeight="75"
+                                                   Position="{Binding PrintingAreaPosition}"
+                                                   SizeChanged="OnPrintingAreaSizeChanged">
+                            <Grid Background="White"/>
+                        </controls:ResizableControl>
+                    </Grid>
+                    <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent"
+                            BorderThickness="1" BorderBrush="Gray" IsHitTestVisible="False"
+                            Width="{Binding PageAreaWidth}" Height="{Binding PageAreaHeight}"/>
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 5 5 10" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="5 0" Style="{StaticResource ButtonStyle}" Content="OK" Height="24" MinWidth="50" HorizontalContentAlignment="Center"
+                        Command="{Binding OkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+                <Button Margin="5 0" Style="{StaticResource ButtonStyle}" Content="Cancel" Height="24" MinWidth="50" HorizontalContentAlignment="Center"
+                        Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

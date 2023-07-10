@@ -1,0 +1,119 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <Style x:Key="MonochromeDGTopLeftButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%/+30%,+10%/+50%,40, +10%,+10%/+30%,+10%/+50%,100, +20%,+10%/+30%,+20%/+50%,100, +30%,+10%/+30%,+30%/+50%,100"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border BorderThickness="0 0 1 1" BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}">
+                        <Grid>
+                            <Rectangle Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
+                            <Polygon Margin="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Points="0,10 10,10 10,0" Stretch="Uniform"
+                                     Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MonochromeDGColumnHeaderStyle" TargetType="DataGridColumnHeader" x:Shared="False">
+        <Style.Resources>
+            <Style TargetType="{x:Type Thumb}">
+                <Setter Property="Width" Value="8"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Cursor" Value="SizeWE"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Border Padding="{TemplateBinding Control.Padding}" Background="{TemplateBinding Control.Background}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"/>
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
+        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
+        <Setter Property="BorderThickness" Value="0 0 1 1"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Margin="{TemplateBinding Margin}"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{Binding}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <TextBlock Grid.Column="1" x:Name="Arrow" Visibility="Collapsed" FontSize="16" Margin="2 -4 -2 -4" VerticalAlignment="Center"/>
+                            <Thumb Grid.Column="0" Grid.ColumnSpan="2" x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left"/>
+                            <Thumb Grid.Column="0" Grid.ColumnSpan="2" x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Arrow" Property="Text" Value="↑"/>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Arrow" Property="Text" Value="↓"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MonochromeDGRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%/+75%,+10%/+50%,40, +10%,+10%/+75%,+10%/+50%,100"/>
+        <Setter Property="BorderThickness" Value="0 0 1 1"/>
+        <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.8*}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridRowHeader">
+                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <TextBlock Padding="4 0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- To remove BindingError after reorder item (drag&drop action) -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+                <Setter Property="Background" Value="Red"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="FontSize" Value="5"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MonochromeDGStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource MonochromeDGColumnHeaderStyle}"/>
+        <Setter Property="RowHeaderStyle" Value="{StaticResource MonochromeDGRowHeaderStyle}"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
+                   BasedOn="{StaticResource MonochromeDGTopLeftButtonStyle}"/>
+        </Style.Resources>
+    </Style>
+</ResourceDictionary>

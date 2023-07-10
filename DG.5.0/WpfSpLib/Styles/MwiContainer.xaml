@@ -1,0 +1,168 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WpfSpLib.Controls"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="controls:MwiContainer" x:Shared="False">
+        <Style.Resources>
+            <!-- 'Mwi.Bar.BackgroundBrush': To suppress output window errors (System.Windows.Data Error: 40) in output window of Visual Studio  -->
+            <SolidColorBrush x:Key="Mwi.Bar.BackgroundBrush" Color="Transparent"/>
+            <Geometry x:Key="Mwi.Container.MenuGeometry">M0 0 Z M24 24Z M4,6H20V8H4V6M4,11H20V13H4V11M4,16H20V18H4V16Z</Geometry>
+            <Geometry x:Key="Mwi.Container.LeftArrowGeometry">M0 0 Z M24 24Z M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z</Geometry>
+
+            <Style TargetType="MenuItem" x:Key="WindowsMenuItemStyle">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="MenuItem">
+                            <MenuItem Header="{TemplateBinding Header}" Command="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiContainer}, Path=CmdSetLayout}"
+                                      CommandParameter="{TemplateBinding CommandParameter}">
+                                <MenuItem.Icon>
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Width="24" Height="24"
+                                              Fill="{Binding RelativeSource={RelativeSource AncestorType=Control}, Path=Foreground}"
+                                              Data="{TemplateBinding Tag, Converter={x:Static common:StringToGeometryConverter.Instance}}"/>
+                                    </Viewbox>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+
+        <!--<Setter Property="MinWidth" Value="50"/>
+        <Setter Property="MinHeight" Value="50"/>
+        <Setter Property="MaxWidth" Value="3000"/>
+        <Setter Property="MaxHeight" Value="2000"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="effects:CornerRadiusEffect.CornerRadius" Value="4"/>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:MwiContainer">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Windows bar -->
+                            <Border Margin="0" Padding="0" BorderThickness="0 0 0 1" Background="{DynamicResource Mwi.Bar.BackgroundBrush}"
+                                    BorderBrush="{DynamicResource Mwi.Bar.BorderBrush}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="26"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- LeftPanel Toggle Button -->
+                                    <ToggleButton Grid.Column="0" x:Name="LeftPanelButton" Margin="0 0 2 0" Padding="0"
+                                                  Style="{StaticResource DefaultButtonBaseStyle}"
+                                                  Focusable="False" IsThreeState="False"
+                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftPanel, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                                  ToolTip="{DynamicResource $MwiContainer.ToolTip.LeftPanelButton}"
+                                                  SnapsToDevicePixels="True"
+                                                  DataContext="{DynamicResource Mwi.Bar.BackgroundBrush}"
+                                                  effects:ChromeEffect.Monochrome="{Binding Color}"
+                                                  effects:ChromeEffect.ChromeMatrix=",+50%,,40, ,+50%,,100, ,+50%,+50%,100"
+                                                  effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource Mwi.Container.MenuGeometry}"
+                                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource Mwi.Container.LeftArrowGeometry}"/>
+
+                                    <!-- Window tab control -->
+                                    <controls:MwiBar Grid.Column="1" x:Name="WindowsBar" ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Children}" SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActiveMwiChild}" Margin="0"/>
+
+                                    <!-- Windows Menu Button -->
+                                    <ToggleButton Grid.Column="2" x:Name="WindowsMenuButton" Margin="0" Focusable="False" IsThreeState="False"
+                                                  Style="{StaticResource DefaultButtonBaseStyle}"
+                                                  ToolTip="{DynamicResource $MwiContainer.ToolTip.WindowsMenuButton}"
+                                                  SnapsToDevicePixels="True"
+                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Children.Count, Converter={x:Static common:VisibilityConverter.Instance}, ConverterParameter=Hide}"
+                                                  DataContext="{DynamicResource Mwi.Bar.BackgroundBrush}"
+                                                  effects:ChromeEffect.Monochrome="{Binding Color}"
+                                                  effects:ChromeEffect.ChromeMatrix=",+50%,,40, ,+50%,,100, ,+50%,+50%,100"
+                                                  effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                                                  effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                                                  effects:DoubleIconToggleButtonEffect.Width="10">
+                                        <ToggleButton.Resources>
+                                            <!-- Windows Menu -->
+                                            <ContextMenu x:Key="cm" StaysOpen="False">
+                                                <ContextMenu.Resources>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Width" Value="16" />
+                                                        <Setter Property="Height" Value="16" />
+                                                        <Setter Property="Stretch" Value="Fill" />
+                                                    </Style>
+                                                </ContextMenu.Resources>
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.ArrangeWindows}" IsEnabled="False" Foreground="{DynamicResource Mwi.Container.WindowsMenu.ForegroundBrush}" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.TilesHorizontally}" CommandParameter="TilesHorizontally" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.TilesVertically}" CommandParameter="TilesVertically" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M15,2v6H9  V2H15z M15,9v6H9V9H15z M2,2h6v6H2V2z M2,9h6v6H2V9z M2,22v-6h6v6H2z M9,22v-6h6v6H9z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8  h-6V2h6V8z" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.Horizontal}" CommandParameter="Horizontal" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M24,22.9V1.1C24,0.5,23.5,0,22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8C23.5,24,24,23.5,24,22.9z M2,2h20  v6H2V2z M2,9h20v6H2V9z M2,22v-6h20v6H2z" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.Vertical}" CommandParameter="Vertical" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M22.9,0H1.1C0.5,0,0,0.5,0,1.1v21.8C0,23.5,0.5,24,1.1,24h21.8c0.6,0,1.1-0.5,1.1-1.1V1.1C24,0.5,23.5,0,22.9,0z M2,22V2h6  v20H2z M9,22V2h6v20H9z M22,22h-6V2h6V22z" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.Cascade}" CommandParameter="Cascade" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M23,8h-3V5c0-0.6-0.4-1-1-1h-3V1c0-0.6-0.4-1-1-1H1C0.4,0,0,0.4,0,1v14c0,0.6,0.4,1,1,1h3v3c0,0.6,0.4,1,1,1h3v3  c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V9C24,8.4,23.6,8,23,8z M4,5v9H2V2h12v2H5C4.4,4,4,4.4,4,5z M8,9v9H6V6h12v2H9C8.4,8,8,8.4,8,9z   M22,22H10V10h12V22z" />
+                                                <Separator x:Name="StartWindowList"/>
+                                                <Separator />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.CollapseAll}" CommandParameter="CollapseAllWindows" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M18 11H10V9H18M20 4V16H8V4H20M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M4 6H2V20C2 21.11 2.9 22 4 22H18V20H4V6Z" />
+                                                <MenuItem Header="{DynamicResource $MwiContainer.WindowsMenu.CloseAll}" CommandParameter="CloseAllWindows" Style="{StaticResource WindowsMenuItemStyle}"
+                                                          Tag="M20 2H8C6.9 2 6 2.9 6 4V16C6 17.11 6.9 18 8 18H20C21.11 18 22 17.11 22 16V4C22 2.9 21.11 2 20 2M20 16H8V4H20V16M4 6V20H18V22H4C2.9 22 2 21.11 2 20V6H4M9.77 12.84L12.6 10L9.77 7.15L11.17 5.75L14 8.6L16.84 5.77L18.24 7.17L15.4 10L18.23 12.84L16.83 14.24L14 11.4L11.17 14.24L9.77 12.84Z" />
+                                            </ContextMenu>
+                                        </ToggleButton.Resources>
+                                    </ToggleButton>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Desktop -->
+                            <ScrollViewer x:Name="ScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Focusable="False">
+                                <Grid x:Name="MwiPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
+                                      KeyboardNavigation.IsTabStop="True"
+                                      Background="{DynamicResource Mwi.Container.BackgroundBrush}"/>
+                            </ScrollViewer>
+
+                            <!-- Left Panel -->
+                            <Grid x:Name="LeftPanelContainer" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="{Binding ElementName=ScrollViewer, Path=ActualHeight}" Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}" Visibility="Hidden" Margin="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentControl Grid.Column="0" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftPanel}" />
+                                <Border Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0 0 1 0"
+                                        Background="{DynamicResource Mwi.Container.LeftPanel.BackgroundBrush}"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
+                                <Thumb Grid.Column="1" x:Name="LeftPanelDragThumb" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="6" BorderThickness="0" Cursor="SizeWE" Opacity="0">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                            <Rectangle Fill="{TemplateBinding Background}"/>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Grid>
+                        </Grid>
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

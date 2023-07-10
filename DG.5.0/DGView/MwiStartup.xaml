@@ -1,0 +1,138 @@
+﻿<Window x:Class="DGView.MwiStartup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
+        xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+        xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+        xmlns:themes="clr-namespace:WpfSpLib.Themes;assembly=WpfSpLib"
+        xmlns:dgView="clr-namespace:DGView"
+        xmlns:helpers="clr-namespace:DGView.Helpers"
+        xmlns:views="clr-namespace:DGView.Views"
+        mc:Ignorable="d"
+        Title="DGView 2.0"
+        Style="{StaticResource HeadlessWindow}"
+        KeyDown="MwiStartup_OnKeyDown">
+
+    <controls:MwiChild x:Name="TopControl" AllowDetach="False" Height="700" Width="1050" VisibleButtons="Minimize,Maximize,Close,SelectTheme"
+                       Theme="{Binding Source={x:Static themes:MwiThemeInfo.Themes}, Path=[Windows10-2]}"
+                       ThemeColor="LightSteelBlue">
+        <controls:MwiChild.Resources>
+            <common:BindingProxy x:Key="IsWindows7Proxy" Value="{DynamicResource Mwi.IsWindows7}"/>
+            <common:LocalizationProxy x:Key="ScaleValueProxy" InputValue="{DynamicResource Loc:MwiStartup.Label.ScaleSlider}"
+                                      Argument0="{Binding ElementName=ScaleSlider, Path=Value}"/>
+
+            <Image x:Key="LanguageMenuIcon" Stretch="Fill" Source="{Binding Icon}" Width="24" Height="18" x:Shared="False"/>
+
+            <ResourceDictionary x:Key="LanguageMenu" x:Shared="False">
+                <ContextMenu x:Key="cm" StaysOpen="False" ItemsSource="{Binding Source={x:Static helpers:LanguageMenuItem.LanguageMenuItems}, Path=Values}">
+                    <ContextMenu.Resources>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Header" Value="{Binding Label}"/>
+                            <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=OneWay}"/>
+                            <Setter Property="Command" Value="{Binding CmdSetLanguage}"/>
+                            <Setter Property="Icon" Value="{StaticResource LanguageMenuIcon}"/>
+                        </Style>
+                    </ContextMenu.Resources>
+                </ContextMenu>
+            </ResourceDictionary>
+        </controls:MwiChild.Resources>
+
+        <!--<controls:MwiChild.CommandBar>
+            <samples:MwiCommandBarSample/>
+        </controls:MwiChild.CommandBar>
+
+        <controls:MwiChild.StatusBar>
+            <samples:MwiStatusBarSample/>
+        </controls:MwiChild.StatusBar>-->
+
+        <controls:MwiChild.RightHeaderBar>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Scale Slider label -->
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Source={StaticResource ScaleValueProxy}, Path=Value}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.Unfocused.ForegroundBrush}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ScaleSlider, Path=IsMouseOver}" Value="True">
+                                    <!-- or <DataTrigger Binding="{Binding Path=Children[1].IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel}}" Value="True">-->
+                                    <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <!-- Scale Slider -->
+                <Slider Grid.Column="1" x:Name="ScaleSlider" ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.ScaleSlider}"
+                        Height="22" Width="100" Margin="2 0 0 0" VerticalAlignment="Bottom" Orientation="Horizontal"
+                        Value="1.0" TickFrequency="0.5" Minimum="0.5" Maximum="4" LargeChange="0.5"
+                        IsSnapToTickEnabled="False" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2"/>
+
+                <Button Grid.Column="2" Width="18" Height="18" BorderThickness="0" Focusable="False" ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.ScaleSlider.ResetButton}"
+                        Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dgView:MwiStartup}, Path=CmdScaleSliderReset}"
+                        effects:CornerRadiusEffect.CornerRadius="3">
+                    <Viewbox Width="10" Height="10">
+                        <Path Width="13" Height="13" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="F1 M0 0 H1 L13 12 V13 H12 L0 1Z M13 0 V1 L1 13 H0 V12 L12 0Z"/>
+                    </Viewbox>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonBaseStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource Mwi.Child.Header.ForegroundBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>
+                                    <!--<Setter Property="Background" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15}"/>
+                                    <Setter Property="Foreground" Value="{Binding Source={StaticResource MwiBaseColorProxy}, Path=Value.Value, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15/+75%}"/>-->
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
+
+                <ToggleButton Grid.Column="4" Padding="3 0 0 0" Style="{DynamicResource Mwi.WindowCommonButtonStyle}"
+                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectLanguageButton}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              effects:DoubleIconToggleButtonEffect.Width="9"
+                              effects:DoubleIconToggleButtonEffect.MarginOff="3 0"
+                              effects:DoubleIconToggleButtonEffect.MarginOn="3 0"
+                              effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,60, ,+70%,+0%,100, +15,+15/+75%,+0%,100"
+                              Visibility="{Binding Source={StaticResource IsWindows7Proxy}, Path=Value, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
+                              Resources="{StaticResource LanguageMenu}">
+                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentLanguageIcon}"/>
+                </ToggleButton>
+
+                <ToggleButton Grid.Column="4" Style="{DynamicResource Mwi.WindowCommonButtonStyle}"
+                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectLanguageButton}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
+                              effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
+                              effects:DoubleIconToggleButtonEffect.Width="7"
+                              Visibility="{Binding Source={StaticResource IsWindows7Proxy}, Path=Value, Converter={x:Static common:VisibilityConverter.Instance}}"
+                              Resources="{StaticResource LanguageMenu}">
+                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentLanguageIcon}"/>
+                </ToggleButton>
+            </Grid>
+        </controls:MwiChild.RightHeaderBar>
+
+        <controls:MwiContainer x:Name="MwiContainer">
+            <controls:MwiContainer.LeftPanel>
+                <views:MwiLeftPanelView Background="{Binding ElementName=TopControl, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+            </controls:MwiContainer.LeftPanel>
+        </controls:MwiContainer>
+    </controls:MwiChild>
+</Window>

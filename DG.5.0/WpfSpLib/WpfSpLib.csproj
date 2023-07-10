@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Mwi.Wnd7\Close.Disabled.png" />
+    <None Remove="Resources\Mwi.Wnd7\Close.png" />
+    <None Remove="Resources\Mwi.Wnd7\Maximize.Disabled.png" />
+    <None Remove="Resources\Mwi.Wnd7\Maximize.png" />
+    <None Remove="Resources\Mwi.Wnd7\Minimize.Disabled.png" />
+    <None Remove="Resources\Mwi.Wnd7\Minimize.png" />
+    <None Remove="Resources\Mwi.Wnd7\Restore.Disabled.png" />
+    <None Remove="Resources\Mwi.Wnd7\Restore.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Resources\lang.uk.xaml" />
+    <Page Remove="Resources\lang.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\lang.uk.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\lang.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Close.Disabled.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Maximize.Disabled.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Maximize.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Minimize.Disabled.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Minimize.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Restore.Disabled.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Mwi.Wnd7\Restore.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\FormControlStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\GroupBoxStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\WaitSpinner.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Styles\ExpanderStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
+</Project>

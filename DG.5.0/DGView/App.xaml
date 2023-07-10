@@ -1,0 +1,16 @@
+﻿<Application x:Class="DGView.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MwiStartup.xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Generic.xaml" />
+                <!--<ResourceDictionary Source="pack://application:,,,/DGView;component/Resources/lang.xaml" />-->
+                <ResourceDictionary Source="/Resources/lang.xaml" />
+                <ResourceDictionary Source="/Themes/Common.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

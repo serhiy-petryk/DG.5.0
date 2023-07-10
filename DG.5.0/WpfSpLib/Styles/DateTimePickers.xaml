@@ -1,0 +1,350 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:controls="clr-namespace:WpfSpLib.Controls"
+                    xmlns:common="clr-namespace:WpfSpLib.Common"
+                    xmlns:timePickerHelper="clr-namespace:WpfSpLib.Controls.TimePickerHelper">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Common.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="TimePartPickerBase" TargetType="{x:Type controls:TimePickerBase}">
+        <Style.Resources>
+            <Geometry x:Key="ClockGeometry">M0 0Z M24 24Z M12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22C6.47,22 2,17.5 2,12A10,10 0 0,1 12,2M12.5,7V12.25L17,14.92L16.25,16.15L11,13V7H12.5Z</Geometry>
+            <Geometry x:Key="CalendarClockGeometry">M0 0Z M24 24Z M15,13H16.5V15.82L18.94,17.23L18.19,18.53L15,16.69V13M19,8H5V19H9.67C9.24,18.09 9,17.07 9,16A7,7 0 0,1 16,9C17.07,9 18.09,9.24 19,9.67V8M5,21C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H6V1H8V3H16V1H18V3H19A2,2 0 0,1 21,5V11.1C22.24,12.36 23,14.09 23,16A7,7 0 0,1 16,23C14.09,23 12.36,22.24 11.1,21H5M16,11.15A4.85,4.85 0 0,0 11.15,16C11.15,18.68 13.32,20.85 16,20.85A4.85,4.85 0 0,0 20.85,16C20.85,13.32 18.68,11.15 16,11.15Z</Geometry>
+            <Geometry x:Key="CalendarGeometry">M0 0Z M24 24Z M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1</Geometry>
+
+            <SolidColorBrush x:Key="CalendarForegroundBrush" Color="#FF333333"/>
+            <SolidColorBrush x:Key="CalendarBackgroundBrush" Color="#FFA8DAF2"/>
+            <SolidColorBrush x:Key="CalendarBorderBrush" Color="#FF3399FF"/>
+
+            <Style TargetType="{x:Type DataGridCell}">
+                <Setter Property="TextBlock.FontSize" Value="10" />
+                <Setter Property="TextBlock.Foreground" Value="{StaticResource CalendarForegroundBrush}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.1" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="HighlightBackground"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="SelectionStates">
+                                        <VisualState x:Name="Unselected"/>
+                                        <VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To=".75" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SelectedBackground"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <Rectangle x:Name="TodayBackground" Fill="#FFAAAAAA" Opacity="0" RadiusY="1" RadiusX="1"/>
+                                <Rectangle x:Name="SelectedBackground" Fill="{StaticResource CalendarBackgroundBrush}" Opacity="0" RadiusY="1" RadiusX="1"/>
+                                <Border x:Name="HighlightBackground"  Opacity="0" BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1" Background="{StaticResource CalendarBackgroundBrush}" CornerRadius="1"/>
+                                <ContentPresenter x:Name="NormalText" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CalendarDayButtonStyle" TargetType="{x:Type CalendarDayButton}">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type CalendarDayButton}">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.1" To="0.5" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="HighlightBackground"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="SelectionStates">
+                                        <VisualState x:Name="Unselected"/>
+                                        <VisualState x:Name="Selected">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To=".75" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SelectedBackground"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="ActiveStates">
+                                        <VisualState x:Name="Active"/>
+                                        <VisualState x:Name="Inactive">
+                                            <Storyboard>
+                                                <ColorAnimation Duration="0" To="#FF777777" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="NormalText"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="DayStates">
+                                        <VisualState x:Name="RegularDay"/>
+                                        <VisualState x:Name="Today">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="TodayBackground"/>
+                                                <ColorAnimation Duration="0" To="#FFFFFFFF" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="NormalText"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Rectangle x:Name="TodayBackground" Fill="#FFAAAAAA" Opacity="0" RadiusY="1" RadiusX="1"/>
+                                <Rectangle x:Name="SelectedBackground" Fill="{StaticResource CalendarBackgroundBrush}" Opacity="0" RadiusY="1" RadiusX="1"/>
+                                <Border x:Name="HighlightBackground"  Opacity="0" BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1" Background="{StaticResource CalendarBackgroundBrush}" CornerRadius="1"/>
+                                <ContentPresenter x:Name="NormalText" TextElement.Foreground="{StaticResource CalendarForegroundBrush}" Margin="5,1,5,1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ================================= -->
+            <Style TargetType="DataGridRow">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static timePickerHelper:DataGridRowBackgroundConverter.Instance}}"/>
+            </Style>
+
+            <Style x:Key="TimeSelectorStyle" TargetType="DataGrid">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="AutoGenerateColumns" Value="True"/>
+                <Setter Property="HeadersVisibility" Value="None"/>
+                <Setter Property="ColumnWidth" Value="*"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="SelectionUnit" Value="Cell"/>
+                <Setter Property="GridLinesVisibility" Value="None"/>
+                <Setter Property="CanUserReorderColumns" Value="False"/>
+                <Setter Property="CanUserResizeColumns" Value="False"/>
+                <!-- not working <Setter Property="CellStyle" Value="{StaticResource TimeSelectorCellStyle}"/>-->
+            </Style>
+
+            <!-- ============= -->
+            <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+            <Color x:Key="BlackColor">#FF000000</Color>
+            <Color x:Key="Gray6">#FFCCCCCC</Color>
+            <Color x:Key="HighlightColor">#FF086F9E</Color>
+
+            <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource WhiteColor}" po:Freeze="True" />
+            <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Gray6}" po:Freeze="True" />
+            <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource Gray6}" po:Freeze="True" />
+            <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" po:Freeze="True" />
+            <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" po:Freeze="True" />
+            <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" po:Freeze="True" />
+        </Style.Resources>
+
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Padding" Value="2" />
+        <Setter Property="VisibleButtons" Value="Popup,Clear,Separator1px" />
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="{StaticResource UserInputControlChromeMatrix}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
+                    <Grid>
+                        <Label Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LanguageChangeHook}"/>
+                        <Border x:Name="Base" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition x:Name="Separator" Width="Auto" />
+                                    <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                                    <ColumnDefinition x:Name="ClearButtonColumn" Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!-- If you have an error: Cannot set unknown member 'System.Windows.Controls.TextBox.IsReadOnly'
+                                in DateTimePicker/TimePicker, please, change BuildAction in property page of this file to 'Resource',
+                                try to run application, then restore BuildAction to 'Page'.
+                                See Mike Rod comment in https://stackoverflow.com/questions/6850713/weird-xaml-parsing-error-when-trying-to-set-textbox-isreadonly -->
+                                <TextBox x:Name="PART_TextBox" Grid.Column="0"
+                                         BorderThickness="0" Background="Transparent" Foreground="{TemplateBinding Foreground}"
+                                         Margin="0" Padding="{TemplateBinding Padding}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         CaretBrush="{DynamicResource BlackBrush}"
+                                         Focusable="{TemplateBinding Focusable}"
+                                         FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                         SelectionBrush="{DynamicResource HighlightBrush}">
+                                </TextBox>
+
+                                <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorWidth}"
+                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+
+                                <ToggleButton x:Name="PART_ToggleButton" Grid.Column="2" Focusable="False" Width="18" Padding="1"
+                                              IsThreeState="False" VerticalContentAlignment="Center" BorderThickness="0"
+                                              effects:ChromeEffect.BichromeBackground="{Binding Background, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              effects:ChromeEffect.BichromeForeground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static common:ColorHslBrush.Instance}}"
+                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                              IsHitTestVisible="{Binding ElementName=PART_Popup, Path=IsOpen, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=!}"
+                                              effects:IconEffect.Geometry="{StaticResource CalendarClockGeometry}" />
+
+                                <Button x:Name="PART_ClearButton" Grid.Column="3" Focusable="False" Width="14" Padding="2" BorderThickness="0"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsClearButtonVisible, Converter={x:Static common:VisibilityConverter.Instance}}"
+                                        Style="{StaticResource ClearBichromeButtonStyle}" VerticalAlignment="Stretch"/>
+
+                                <Popup x:Name="PART_Popup" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Focusable="False" SnapsToDevicePixels="True"
+                                       UseLayoutRounding="True"
+                                       AllowsTransparency="True"
+                                       Placement="Bottom" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                       PopupAnimation="Fade"
+                                       IsOpen="{Binding ElementName=PART_ToggleButton, Path=IsChecked}"
+                                       StaysOpen="False">
+                                    <Border BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="2">
+                                        <StackPanel Orientation="Vertical" Background="{DynamicResource ControlBackgroundBrush}">
+                                            <StackPanel x:Name="StackPanel" Orientation="Horizontal"
+                                                        Background="{DynamicResource ControlBackgroundBrush}"
+                                                        HorizontalAlignment="Center">
+                                                <Calendar x:Name="PART_Calendar" Margin="2 0 -5 -14" BorderBrush="Transparent"
+                                                          FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}"
+                                                          SelectionMode="SingleDate"
+                                                          CalendarDayButtonStyle="{StaticResource CalendarDayButtonStyle}"
+                                                          Visibility="Collapsed" />
+
+                                                <!-- ============= -->
+                                                <!--     Clock     -->
+                                                <!-- ============= -->
+                                                <Viewbox x:Name="PART_Clock" Width="90" Height="90" VerticalAlignment="Center" Margin="4">
+                                                    <Viewbox.Resources>
+                                                        <SolidColorBrush x:Key="RedBrush" Color="#FFE10000" />
+                                                    </Viewbox.Resources>
+                                                    <Canvas Width="120" Height="120" Margin="0">
+                                                        <Ellipse Width="120" Height="120" Margin="0" Stroke="{DynamicResource BlackBrush}" Opacity="0.7" StrokeThickness="4" Effect="{StaticResource ShadowEffect}"/>
+                                                        <Polygon x:Name="PART_HourHand" Canvas.Left="60" Canvas.Top="60" Points="-2.5,0,-0.5,-36,0.5,-36,2.5,0" Fill="{DynamicResource BlackBrush}" />
+                                                        <Polygon x:Name="PART_MinuteHand" Canvas.Top="60" Canvas.Left="60" Points="-2,0,-0.5,-46,0.5,-46,2,0" Fill="{DynamicResource BlackBrush}" />
+                                                        <Ellipse Canvas.Left="57" Canvas.Top="57" Width="6" Height="6" Fill="{DynamicResource BlackBrush}" />
+                                                        <Canvas x:Name="PART_SecondArea" Visibility="{Binding ElementName=PART_SecondSelector, Path=Visibility}">
+                                                            <Ellipse Canvas.Left="56" Canvas.Top="56" Width="8" Height="8" Fill="{StaticResource RedBrush}" />
+                                                            <Polygon x:Name="PART_SecondHand" Canvas.Top="60" Canvas.Left="60" Points="-1,0,-1,-50,0,-54,1,-50,1,0,3,20,-3,20" Fill="{StaticResource RedBrush}"/>
+                                                        </Canvas>
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </StackPanel>
+
+                                            <!-- ============= -->
+                                            <!-- Time selector -->
+                                            <!-- ============= -->
+                                            <Border x:Name="PART_Selectors" Margin="4 0 4 4"
+                                                    BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="0 0 1 0"
+                                                    HorizontalAlignment="Left" Visibility="{Binding ElementName=PART_Clock, Path=Visibility}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid Grid.Column="0">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Border Grid.Row="0" BorderThickness="1 1 0 0"
+                                                                BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
+                                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=AMText}"
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
+                                                                       Foreground="{StaticResource CalendarForegroundBrush}"/>
+                                                        </Border>
+                                                        <Border Grid.Row="2" BorderThickness="1 0 0 1"
+                                                                BorderBrush="{StaticResource CalendarBorderBrush}" Background="#FFECF0F4"
+                                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}">
+                                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=PMText}"
+                                                                       HorizontalAlignment="Stretch" TextAlignment="Center" FontSize="10" FontWeight="SemiBold"
+                                                                       Foreground="{StaticResource CalendarForegroundBrush}"/>
+                                                        </Border>
+
+                                                        <DataGrid x:Name="PART_NightHourSelector" Grid.Row="1"
+                                                                  BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.NightHourRows}}"
+                                                                  FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
+
+                                                        <DataGrid x:Name="PART_DayHourSelector" Grid.Row="3"
+                                                                  BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 0 0 1"
+                                                                  ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.DayHourRows}}"
+                                                                  FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}"
+                                                                  Visibility="{Binding RelativeSource={RelativeSource AncestorType=controls:TimePickerBase}, Path=IsAmPmMode, Converter={x:Static common:VisibilityConverter.Instance}}" />
+                                                    </Grid>
+
+                                                    <DataGrid x:Name="PART_MinuteSelector" Grid.Column="1"
+                                                              BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                              ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
+                                                              FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
+
+                                                    <DataGrid x:Name="PART_SecondSelector" Grid.Column="2"
+                                                              BorderBrush="{StaticResource CalendarBorderBrush}" BorderThickness="1 1 0 1"
+                                                              ItemsSource="{Binding Source={x:Static timePickerHelper:SelectorRow.MinuteRows}}"
+                                                              FontFamily="{TemplateBinding FontFamily}" Style="{StaticResource TimeSelectorStyle}" />
+                                                </Grid>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="effects:ChromeEffect.Monochrome" Value="{x:Null}"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </MultiTrigger>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter TargetName="PART_Calendar" Property="IsHitTestVisible" Value="False" />
+                            <Setter TargetName="PART_Selectors" Property="IsHitTestVisible" Value="False" />
+                        </Trigger>
+                        <Trigger Property="IsDatePickerVisible" Value="True">
+                            <Setter TargetName="PART_Calendar" Property="Visibility" Value="Visible" />
+                            <!--<Setter TargetName="PART_TextBox" Property="Text" Value="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />-->
+                        </Trigger>
+                        <Trigger Property="IsDatePickerVisible" Value="False">
+                            <Setter TargetName="PART_ToggleButton" Property="effects:IconEffect.Geometry" Value="{StaticResource ClockGeometry}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding ElementName=PART_Clock, Path=Visibility}" Value="Collapsed">
+                            <Setter TargetName="PART_Calendar" Property="Margin" Value="0 0 0 -4" />
+                            <Setter TargetName="PART_ToggleButton" Property="effects:IconEffect.Geometry" Value="{StaticResource CalendarGeometry}" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:DateTimePicker}" BasedOn="{StaticResource TimePartPickerBase}">
+        <Setter Property="IsTodayHighlighted" Value="True" />
+        <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date and time" />
+        <Style.Triggers>
+            <Trigger Property="IsDateOnlyMode" Value="True">
+                <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a date" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type controls:TimePicker}" BasedOn="{StaticResource TimePartPickerBase}">
+        <Setter Property="effects:WatermarkEffect.Watermark" Value="Select a time" />
+    </Style>
+
+</ResourceDictionary>

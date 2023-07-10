@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:v="clr-namespace:System;assembly=mscorlib">
+
+    <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Визначає коефіцієнт масштабування інтерфейсу користувача</v:String>
+    <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider.ResetButton">Скинути масштабування</v:String>
+    <v:String x:Key="Loc:MwiStartup.Label.ScaleSlider">Масштабування {0:P0}</v:String>
+    <v:String x:Key="Loc:MwiStartup.ToolTip.SelectLanguageButton">Select language / Вибрати мову</v:String>
+
+    <!-- DatagridView -->
+    <v:String x:Key="Loc:DGV.Status.StopLoading">Зупинити завантаження?</v:String>
+    <v:String x:Key="Loc:DGV.Status.LoadingRows">Завантажено {0:N0} елементів.</v:String>
+    <v:String x:Key="Loc:DGV.Status.LoadedTime">Дані завантажені за {0:N0} мілісекунд.</v:String>
+    <v:String x:Key="Loc:DGV.Status.PreparingData">Підготовка даних...</v:String>
+    <v:String x:Key="Loc:DGV.Status.DataProcessing">Обробка даних...</v:String>
+    <v:String x:Key="Loc:DGV.Status.DataProcessed">Дані оброблені. Час обробки: {0:N0} мілісекунд</v:String>
+    <v:String x:Key="Loc:DGV.Status.PartiallyLoaded">Дані завантажені частково!</v:String>
+    <v:String x:Key="Loc:DGV.Status.Rows">Елементів: {0}</v:String>
+
+    <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader">К-сть елементів</v:String>
+
+    <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
+</ResourceDictionary>

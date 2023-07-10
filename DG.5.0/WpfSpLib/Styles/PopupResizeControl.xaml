@@ -1,0 +1,85 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:WpfSpLib.Controls"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Common.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type controls:PopupResizeControl}">
+        <Style.Resources>
+            <Style x:Key="ResizeThumb" TargetType="Thumb">
+                <Setter Property="Opacity" Value="0"/>
+                <Setter Property="Focusable" Value="False"/>
+            </Style>
+        </Style.Resources>
+
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource RedBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:PopupResizeControl}">
+                    <Grid x:Name="PART_Root" Background="Transparent">
+
+                        <Border Margin="0 0 6 6" Effect="{StaticResource ShadowEffect}" BorderThickness="1" BorderBrush="Transparent"
+                                Background="{TemplateBinding Background}" Opacity="{TemplateBinding Opacity}"/>
+
+                        <Border BorderThickness="0" Background="Transparent" Margin="0 0 6 6">
+                            <Grid Background="Transparent" ClipToBounds="True">
+
+                                <ContentPresenter Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.Instance}}"/>
+                                <Viewbox Stretch="Fill" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DoesContentSupportElasticLayout, Converter={x:Static common:VisibilityConverter.InverseInstance}}">
+                                    <ContentPresenter/>
+                                </Viewbox>
+
+                                <Thumb x:Name="PART_ResizeGrip" Cursor="SizeNWSE" Opacity="0.5"
+                                       VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                                       Background="{TemplateBinding Background}" Foreground="{TemplateBinding Foreground}">
+                                    <Thumb.Width>
+                                        <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/8%4+">
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualWidth" />
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ActualHeight" />
+                                        </MultiBinding>
+                                    </Thumb.Width>
+
+                                    <Thumb.Style>
+                                        <Style TargetType="Thumb">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Grid>
+                                                            <Viewbox>
+                                                                <Canvas Width="20" Height="20">
+                                                                    <Polygon Points="0,20,20,20,20,0" Fill="{TemplateBinding Background}"/>
+                                                                    <Path Stretch="Uniform" Fill="{TemplateBinding Foreground}" Margin="3 3 0 0"
+                                                                          Data="M8 8 M22,22H20V20H22V22M22,18H20V16H22V18M18,22H16V20H18V22M18,18H16V16H18V18M14,22H12V20H14V22M22,14H20V12H22V14Z" />
+                                                                </Canvas>
+                                                            </Viewbox>
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                            </Grid>
+                        </Border>
+
+                        <Thumb x:Name="PART_ResizeRight" Width="6" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="PART_ResizeBottom" Height="6" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource ResizeThumb}"/>
+                        <Thumb x:Name="PART_ResizeCornerBottom" Height="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Width="{Binding ElementName=PART_ResizeGrip, Path=ActualWidth}">
+                        </Thumb>
+                        <Thumb x:Name="PART_ResizeCornerRight" Width="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource ResizeThumb}"
+                               Height="{Binding ElementName=PART_ResizeGrip, Path=ActualHeight}">
+                        </Thumb>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

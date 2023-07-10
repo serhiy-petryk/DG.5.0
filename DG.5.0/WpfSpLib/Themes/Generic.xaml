@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Themes/Common.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ButtonStyles.xaml" />
+<!--        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ComboBoxStyles.xaml" />-->
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ExpanderStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DataGridStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DragDropStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DropDownButtons.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/FormControlStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/GroupBoxStyles.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/NumericBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/FormatBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DateTimePickers.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DialogBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ColorControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/Calculator.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/VirtualKeyboard.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ObjectEditor.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/PopupResizeControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ResizableControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/WaitSpinner.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/MwiContainer.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/MwiChild.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/MwiBar.xaml" />
+
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Resources/lang.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
