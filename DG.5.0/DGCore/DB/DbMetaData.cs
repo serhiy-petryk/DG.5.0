@@ -17,191 +17,87 @@ namespace DGCore.DB
         // - AddNewData procedure must be call for each type of provider types in static DbMetaData() init procedure of this class
 
         // _cache data by long and short namespace, for keys example : "System.Data.OracleClient", "OracleClient" ...
-        static Dictionary<string, DbMetaDataBase> _cacheMetaData = new Dictionary<string, DbMetaDataBase>();
 
-        public static void AddNewData(DbMetaDataBase data)
-        {
-            string key = data.Namespace.ToUpper();
-            if (!_cacheMetaData.ContainsKey(key))
-            {
-                _cacheMetaData.Add(data.Namespace.ToUpper(), data);
-                string[] ss = key.Split('.');
-                if (ss[ss.Length - 1] != key)
-                {
-                    _cacheMetaData.Add(ss[ss.Length - 1], data);
-                }
-            }
-        }
+        #region ==========  Init section  ============
+        private static readonly DbMetaDataBase[] MetaDataList = {new DbMetaData_SqlClient(), new DbMetaData_OleDb(), new DbMetaData_MySqlClient()};
+        private static readonly Dictionary<string, DbMetaDataBase> CacheMetaData = new Dictionary<string, DbMetaDataBase>();
+
         static DbMetaData()
-        {// Init == fill _cache by subclasses of DbMetaDataBase
-            Type t = typeof(DbMetaData);
-            Type[] tt = t.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public);
-            Type baseType = typeof(DbMetaDataBase);
-            foreach (Type t1 in tt)
-            {
-                if (t1.IsSubclassOf(baseType) && !t1.IsAbstract)
+        {
+            foreach (var m in MetaDataList)
+                using (var conn = m.GetConnection(null))
                 {
-                    ConstructorInfo ci = t1.GetConstructor(new Type[0]);
-                    if (ci != null)
+                    var key = conn.GetType().Namespace.ToUpper();
+                    if (!CacheMetaData.ContainsKey(key))
                     {
-                        DbMetaDataBase x = (DbMetaDataBase)ci.Invoke(null);
-                        AddNewData(x);
+                        CacheMetaData.Add(key, m);
+                        var ss = key.Split('.');
+                        if (ss[ss.Length - 1] != key)
+                            CacheMetaData.Add(ss[ss.Length - 1], m);
                     }
                 }
-            }
         }
+        #endregion
 
+        #region =============  Static section  =============
+        public static DbConnection GetConnection(string shortOrLongNamespace, string connectionString) => GetMetaDataObject(shortOrLongNamespace).GetConnection(connectionString);
+        public static string QuotedColumnName(string dbProviderNamespace, string unquotedColumnName) => GetMetaDataObject(dbProviderNamespace).QuotedColumnName(unquotedColumnName);
+        public static string QuotedTableName(string dbProviderNamespace, string unquotedTableName) => GetMetaDataObject(dbProviderNamespace).QuotedTableName(unquotedTableName);
+        public static string QuotedParameterName(string dbProviderNamespace, string unquotedParameterName) => GetMetaDataObject(dbProviderNamespace).QuotedParameterName(unquotedParameterName);
+        public static string ParameterNamePattern(string dbProviderNamespace) => GetMetaDataObject(dbProviderNamespace).ParameterNamePattern();
+        public static Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName) => GetMetaDataObject(conn.GetType().Namespace).GetColumnDescriptions(conn, tableName);
 
-        public static DbConnection GetConnection(string shortOrLongNamespace, string connectionString)
-        {
-            return GetMetaDataObject(shortOrLongNamespace).GetConnection(connectionString);
-        }
-        public static string QuotedColumnName(string dbProviderNamespace, string unquotedColumnName)
-        {
-            return GetMetaDataObject(dbProviderNamespace).QuotedColumnName(unquotedColumnName);
-        }
-        public static string QuotedTableName(string dbProviderNamespace, string unquotedTableName)
-        {
-            return GetMetaDataObject(dbProviderNamespace).QuotedTableName(unquotedTableName);
-        }
-        public static string QuotedParameterName(string dbProviderNamespace, string unquotedParameterName)
-        {
-            return GetMetaDataObject(dbProviderNamespace).QuotedParameterName(unquotedParameterName);
-        }
-        public static string ParameterNamePattern(string dbProviderNamespace)
-        {
-            return GetMetaDataObject(dbProviderNamespace).ParameterNamePattern();
-        }
-        public static Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName)
-        {
-            return GetMetaDataObject(conn.GetType().Namespace).GetColumnDescriptions(conn, tableName);
-        }
+        private static DbMetaDataBase GetMetaDataObject(string key) => CacheMetaData[key.ToUpper()];
+        #endregion
 
-        // ================   Private section  =====================
-        //    static DbMetaDataBase GetMetaDataObject(DbConnection conn) {
-        //    return _cacheMetaData[conn.GetType().Namespace.ToUpper()];
-        //}
-        static DbMetaDataBase GetMetaDataObject(string key)
+        #region ===========  DbMetaDataBase class  ============
+        private abstract class DbMetaDataBase
         {
-            return _cacheMetaData[key.ToUpper()];
-        }
-
-        //=========================================
-        public abstract class DbMetaDataBase
-        {
-
-            public abstract Type ConnectionType { get; }
-            public abstract string Namespace { get; }
             public abstract DbConnection GetConnection(string connectionString); //to get connection by short or long namespace (commonly you need use the DataFactory)
-                                                                                 //Quoted(Column/Table)Name/ParameterNamePattern may depend on Provider/version which can obtain fron Connection object (for Odbc/OleDb)
+            // Quoted(Column/Table)Name/ParameterNamePattern may depend on Provider/version which can obtain from Connection object (for Odbc/OleDb)
             public abstract string QuotedColumnName(string unquotedColumnName);//DbCommandBuilder.QuoteIdentifier//Suffix/Prefix does not work correctly for OleDb
             public abstract string QuotedTableName(string unquotedTableName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
             public abstract string QuotedParameterName(string unquotedParameterName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
             public abstract string ParameterNamePattern();// look at conn.GetSchema(DbMetaDataCollectionNames.DataSourceInformation), column "ParameterNamePattern"
             public abstract Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableBName);
         }
+        #endregion
 
-        //===================  OleDb  ===============================
+        #region ===========  OleDb DbMetaData class  ============
         sealed class DbMetaData_OleDb : DbMetaDataBase
         {
-            public override Type ConnectionType => typeof(System.Data.OleDb.OleDbConnection);
-            public override string Namespace
-            {
-                get { return "System.Data.OleDb"; }
-            }
-            public override DbConnection GetConnection(string connectionString)
-            {
-                return new System.Data.OleDb.OleDbConnection(connectionString);
-            }
-            public override string QuotedColumnName(string unquotedColumnName)
-            {
-                return "[" + unquotedColumnName + "]";
-            }
-            public override string QuotedTableName(string unquotedTableName)
-            {
-                return "[" + unquotedTableName + "]";
-            }
-            public override string QuotedParameterName(string unquotedParameterName)
-            {
-                return "@" + unquotedParameterName;
-            }
-            public override string ParameterNamePattern()
-            {
-                return @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
-            }
-            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableBName)
-            {
-                return null;
-            }
+            public override DbConnection GetConnection(string connectionString) => new System.Data.OleDb.OleDbConnection(connectionString);
+            public override string QuotedColumnName(string unquotedColumnName) => "[" + unquotedColumnName + "]";
+            public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName + "]";
+            public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
+            public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
+            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableBName) => null;
         }
+        #endregion
 
-        //==================  SqlClient  ===================================
+        #region ===========  SqlClient DbMetaData class  ============
         sealed class DbMetaData_SqlClient : DbMetaDataBase
         {
-            public override Type ConnectionType => typeof(Microsoft.Data.SqlClient.SqlConnection);
-            public override string Namespace
-            {
-                get { return "Microsoft.Data.SqlClient"; }
-            }
-            public override DbConnection GetConnection(string connectionString)
-            {
-                return new Microsoft.Data.SqlClient.SqlConnection(connectionString);
-            }
-            public override string QuotedColumnName(string unquotedColumnName)
-            {
-                return "[" + unquotedColumnName + "]";
-            }
-            public override string QuotedTableName(string unquotedTableName)
-            {
-                return "[" + unquotedTableName.Replace("..", ".DBO.").Replace(".", "].[") + "]";
-            }
-            public override string QuotedParameterName(string unquotedParameterName)
-            {
-                return "@" + unquotedParameterName;
-            }
-            public override string ParameterNamePattern()
-            {
-                return @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
-            }
-            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName)
-            {
-                return SqlClient_GetColumnDescription(conn, tableName);
-            }
+            public override DbConnection GetConnection(string connectionString) => new Microsoft.Data.SqlClient.SqlConnection(connectionString);
+            public override string QuotedColumnName(string unquotedColumnName) => "[" + unquotedColumnName + "]";
+            public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName.Replace("..", ".DBO.").Replace(".", "].[") + "]";
+            public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
+            public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
+            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName) => SqlClient_GetColumnDescription(conn, tableName);
         }
+        #endregion
 
-        //==================  MySqlClient  ===================================
+        #region ===========  MySqlClient DbMetaData class  ============
         sealed class DbMetaData_MySqlClient : DbMetaDataBase
         {
-            public override Type ConnectionType => typeof(MySql.Data.MySqlClient.MySqlConnection);
-            public override string Namespace
-            {
-                get { return "MySql.Data.MySqlClient"; }
-            }
-            public override DbConnection GetConnection(string connectionString)
-            {
-                return new MySql.Data.MySqlClient.MySqlConnection(connectionString);
-            }
-            public override string QuotedColumnName(string unquotedColumnName)
-            {
-                return "`" + unquotedColumnName + "`";
-            }
-            public override string QuotedTableName(string unquotedTableName)
-            {
-                return "`" + unquotedTableName.Replace(".", "`.`") + "`";
-            }
-            public override string QuotedParameterName(string unquotedParameterName)
-            {
-                return "@" + unquotedParameterName;
-            }
-            public override string ParameterNamePattern()
-            {
-                return @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
-            }
-            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName)
-            {
-                return MySqlClient_GetColumnDescription(conn, tableName);
-            }
+            public override DbConnection GetConnection(string connectionString) => new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+            public override string QuotedColumnName(string unquotedColumnName) => "`" + unquotedColumnName + "`";
+            public override string QuotedTableName(string unquotedTableName) => "`" + unquotedTableName.Replace(".", "`.`") + "`";
+            public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
+            public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
+            public override Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName) => MySqlClient_GetColumnDescription(conn, tableName);
         }
+        #endregion
 
         //==================  OracleClient  ===================================
         /*      sealed class DbMetaData_OracleClient : DbMetaDataBase {
