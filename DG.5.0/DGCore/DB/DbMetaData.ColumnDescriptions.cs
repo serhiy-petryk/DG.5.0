@@ -110,8 +110,11 @@ namespace DGCore.DB
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
+                cmd.Parameters.Add(new SqlParameter("@table_name", tableName));
+                DbUtils.AdjustParameters(cmd);
                 using (var reader = cmd.ExecuteReader())
-                    dict.Add(((string)reader["Column_Name"]).ToUpper(), (string)reader["Value"]);
+                    while (reader.Read())
+                        dict.Add(((string)reader["Column_Name"]).ToUpper(), reader["Value"].ToString());
             }
             return dict;
         }
@@ -126,8 +129,11 @@ namespace DGCore.DB
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
+                cmd.Parameters.Add(new SqlParameter("@table_name", tableName));
+                DbUtils.AdjustParameters(cmd);
                 using (var reader = cmd.ExecuteReader())
-                    dict.Add(((string)reader["Column_Name"]).ToUpper(), (string)reader["Value"]);
+                    while (reader.Read())
+                        dict.Add(((string)reader["column_Name"]).ToUpper(), reader["Value"].ToString());
             }
             return dict;
             /*using (DataTable dt = new DataTable())
