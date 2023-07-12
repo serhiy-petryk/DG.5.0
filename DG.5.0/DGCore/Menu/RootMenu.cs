@@ -44,7 +44,6 @@ namespace DGCore.Menu
             foreach (var kvp in _mainObject.DbConnections)
             {
                 var cs = kvp.Value.Provider + ";" + kvp.Value.CS.Trim();
-                DB.DbCmd._standardConnections.Add(kvp.Key, cs);
                 if (isFirstConnectionString)
                 {
                     Misc.AppSettings.settingsStorage = cs;

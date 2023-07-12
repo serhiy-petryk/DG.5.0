@@ -13,8 +13,7 @@ namespace DGCore.DB
   {
     public enum DbCmdKind { Query, Procedure, File }
 
-    public static Dictionary<string, string> _standardConnections = new Dictionary<string, string>();
-    static int idCnt = 0;
+    private static int idCnt = 0;
 
     public int ID = idCnt++;
     public readonly string _connectionString;
@@ -46,15 +45,7 @@ namespace DGCore.DB
       this.Parameters_Add(paramValues, paramNames);
     }
 
-    public string Connection_Key
-    {
-      get
-      {
-        if (_standardConnections.ContainsKey(this._connectionString)) return this._connectionString;
-        return this._dbConn.GetType().FullName + ";" + this._dbConn.Database + ";" + this._dbConn.DataSource;
-      }
-    }
-
+    public string Connection_Key => this._dbConn.GetType().FullName + ";" + this._dbConn.Database + ";" + this._dbConn.DataSource;
     public string Command_Key => this.Connection_Key + ";" + this._sql;
 
     public void Parameters_Add(IEnumerable paramValues, IEnumerable<string> paramNames)

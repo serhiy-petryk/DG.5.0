@@ -20,13 +20,6 @@ namespace DGCore.DB {
       //         @"system.data.Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
       //         @"T:\Data\DBQ\mdb.day\testDB.mdb"
 
-      // Try to get connectionString from standard connection repository (_standardConnections)
-
-      string sTmp;
-      DbCmd._standardConnections.TryGetValue(myConnectionString, out sTmp);
-      if (!String.IsNullOrEmpty(sTmp)) {
-        myConnectionString = sTmp;
-      }
       if (File.Exists(myConnectionString))
       {// file name
         string extension = Path.GetExtension(myConnectionString).ToLower();
