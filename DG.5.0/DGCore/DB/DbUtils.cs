@@ -70,12 +70,18 @@ namespace DGCore.DB {
       if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
     }
 
-        //  =======  Command
+        #region ==========  Command  =============
+        public static DbCommand Command_Get(DbConnection conn, string sql) => Command_Get(conn, sql, null);
         public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
         {
             var cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.CommandType = sql.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text;
+            Command_SetParameters(cmd, parameters);
+            return cmd;
+        }
+        public static void Command_SetParameters(DbCommand cmd, Dictionary<string, object> parameters)
+        {
             cmd.Parameters.Clear();
             if (parameters != null)
             {
@@ -88,100 +94,63 @@ namespace DGCore.DB {
                 }
                 AdjustParameters(cmd);
             }
-            return cmd;
         }
+        #endregion
 
-        public static CommandType Command_GetType(string commandText) {
-      //CommandType.TableDirect does not supported by SqlServer
-      return (commandText.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text);
-    }
-    public static DbCommand Command_Get(DbConnection conn, string sql) {
-      return Command_Get(conn, sql, null, null);
-    }
-    public static DbCommand Command_Get(string connectionString, string sql) {
-      return Command_Get(Connection_Get(connectionString), sql, null, null);
-    }
-    public static DbCommand Command_Get(DbConnection conn, string sql, IEnumerable paramValues, IEnumerable<string> paramNames) {
-      DbCommand cmd = conn.CreateCommand();
-      cmd.CommandText = sql;
-      cmd.CommandType = DbUtils.Command_GetType(sql);
-      if (paramValues != null) Command_SetParameters(cmd, paramValues, paramNames);
-      return cmd;
-    }
-    public static void Command_SetParameters(DbCommand cmd, IEnumerable paramValues, IEnumerable<string> paramNames) {
-      cmd.Parameters.Clear();
-      Command_AddParameters(cmd, paramValues, paramNames);
-    }
-    public static void Command_AddParameters(DbCommand cmd, IEnumerable paramValues, IEnumerable<string> paramNames) {
-      if (paramNames == null) {
-        foreach (object parValue in paramValues) {
-          DbParameter par = cmd.CreateParameter();
-//          AdjustParameter(par, parValue);
-          cmd.Parameters.Add(par);
-        }
-      }
-      else {
-        IEnumerator<string> enames= paramNames.GetEnumerator();
-        enames.MoveNext();
-        foreach(object paramValue in paramValues) {
-          DbParameter par = cmd.CreateParameter();
-          string s = enames.Current;
-          par.ParameterName = enames.Current;
-          par.Value = paramValue;
-  //        AdjustParameter(par, paramValue);
-          cmd.Parameters.Add(par);
-          enames.MoveNext();
-        }
-      }
-      AdjustParameters(cmd);
-    }
+        //===================== Private section (GetDataAdapter/Schema/DbProviderFactory) ==============
+        internal static DataTable GetSchemaTable(DbCommand cmd)
+        {
+            // SqlClient needs to fill cmd with parameters; OracleClient&OleDb - does not need  
+            Connection_Open(cmd.Connection);
+            var flagParameterInfo = 0;
+            var error = false;
+            while (flagParameterInfo < 2)
+            {
+                try
+                {
+                    if (flagParameterInfo == 1)
+                    {
+                        var parameters = new Dictionary<string, object>();
+                        if (!(cmd.Connection is CSV.TestCsvConnection))
+                        {
+                            foreach (var p in GetParameterNamesFromSqlText(cmd.GetType().Namespace, cmd.CommandText))
+                                parameters.Add(p, DBNull.Value);
+                            Command_SetParameters(cmd, parameters);
 
-    //===================== Private section (GetDataAdapter/Schema/DbProviderFactory) ==============
-    internal static DataTable GetSchemaTable(DbCommand cmd) {
-      // SqlClient needs to fill cmd with parameters; OracleClient&OleDb - does not need  
-      Connection_Open(cmd.Connection);
-      List<string> parameterNames = cmd.Connection is CSV.TestCsvConnection
-        ? new List<string>()
-        : GetParameterNamesFromSqlText(cmd.GetType().Namespace, cmd.CommandText);
-      int flagParameterInfo = 0;
-      bool error = false;
-      while (flagParameterInfo < 2) {
-        try {
-          if (flagParameterInfo == 1) {
-            DBNull[] paramValues = new DBNull[parameterNames.Count];
-            for (int i = 0; i < paramValues.Length; i++) paramValues[i] = DBNull.Value;
-            Command_SetParameters(cmd, paramValues, parameterNames);
-          }
-          AdjustParameters(cmd);
-          using (DbDataReader reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly)) {
-            DataTable dt = reader.GetSchemaTable();
-            reader.Close();
-            if (dt == null) {
-              try {
-                using (DbDataReader reader1 = cmd.ExecuteReader()) {
-                  reader1.Read();
-                  reader1.Close();
+                        }
+                    }
+                    using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
+                    {
+                        var dt = reader.GetSchemaTable();
+                        reader.Close();
+                        if (dt == null)
+                        {
+                            try
+                            {
+                                using (var reader1 = cmd.ExecuteReader())
+                                    reader1.Read();
+                            }
+                            catch (Exception ex)
+                            {
+                                error = true;
+                                throw new Exception("Invalid SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
+                            }
+                            error = true;
+                            throw new Exception("Invalid SQL statement: " + cmd.CommandText);
+                        }
+                        // dt.ExtendedProperties.Add("ParameterNames", parameterNames);
+                        return dt;
+                    }
                 }
-              }
-              catch (Exception ex) {
-                error = true;
-                throw new Exception("Invalid SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
-              }
-              error = true;
-              throw new Exception("Invalid SQL statement: " + cmd.CommandText);
+                catch (Exception ex)
+                {
+                    if (error) throw; // return earlier error
+                    if (flagParameterInfo > 0) throw new Exception("Can not get Schema for SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
+                    flagParameterInfo++;
+                }
             }
-            dt.ExtendedProperties.Add("ParameterNames", parameterNames);
-            return dt;
-          }
+            return null;
         }
-        catch (Exception ex) {
-          if (error) throw; // return earlier error
-          if (flagParameterInfo > 0) throw new Exception("Can not get Schema for SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
-          flagParameterInfo++;
-        }
-      }
-      return null;
-    }
 
     private static List<string> GetParameterNamesFromSqlText(string dbProviderNamespace, string sql)
     {
