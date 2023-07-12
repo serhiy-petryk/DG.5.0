@@ -152,54 +152,62 @@ namespace DGCore.DB {
             return null;
         }
 
-    private static List<string> GetParameterNamesFromSqlText(string dbProviderNamespace, string sql)
-    {
-      List<string> parameterNames = new List<string>();
-      List<string> parameterNamesInUpper = new List<string>();
-      Regex r = new Regex(DbMetaData.ParameterNamePattern(dbProviderNamespace), RegexOptions.Singleline | RegexOptions.IgnoreCase);
-      MatchCollection matches = r.Matches(sql);
-      foreach (Match match in matches)
-      {
-        if (!parameterNamesInUpper.Contains(match.Value.ToUpper()))
+        private static List<string> GetParameterNamesFromSqlText(string dbProviderNamespace, string sql)
         {
-          parameterNamesInUpper.Add(match.Value.ToUpper());
-          parameterNames.Add(match.Value);
+            var parameterNames = new List<string>();
+            var parameterNamesInUpper = new List<string>();
+            Regex r = new Regex(DbMetaData.ParameterNamePattern(dbProviderNamespace), RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            MatchCollection matches = r.Matches(sql);
+            foreach (Match match in matches)
+            {
+                if (!parameterNamesInUpper.Contains(match.Value.ToUpper()))
+                {
+                    parameterNamesInUpper.Add(match.Value.ToUpper());
+                    parameterNames.Add(match.Value);
+                }
+            }
+            return parameterNames;
         }
-      }
-      return parameterNames;
-    }
-    
-    public static void AdjustParameters(DbCommand cmd) {
-      foreach (DbParameter par in cmd.Parameters) {
-        if (par.Value == null || par.Value == DBNull.Value) {
-          par.Value = DBNull.Value;
-//          par.DbType = DbType.String;
-//          par.DbType = DbType.DateTime;
-          if (par.DbType == DbType.String) par.Size = 1;
-          return;
+
+        public static void AdjustParameters(DbCommand cmd)
+        {
+            foreach (DbParameter par in cmd.Parameters)
+            {
+                if (par.Value == null || par.Value == DBNull.Value)
+                {
+                    par.Value = DBNull.Value;
+                    //          par.DbType = DbType.String;
+                    //          par.DbType = DbType.DateTime;
+                    if (par.DbType == DbType.String) par.Size = 1;
+                    return;
+                }
+                if (par.Value is DateTime && ((DateTime)par.Value) == new DateTime(0))
+                {
+                    par.Value = DBNull.Value;
+                    return;
+                }
+                if ((par.Value is double) && (double.IsNaN((double)par.Value)))
+                {
+                    par.Value = DBNull.Value;
+                    par.DbType = DbType.Double;
+                    return;
+                }
+                if ((par.Value is float) && (float.IsNaN((float)par.Value)))
+                {
+                    par.Value = DBNull.Value;
+                    par.DbType = DbType.Single;
+                    return;
+                }
+                //        par.Value = value;
+                par.DbType = par.DbType;//нужно явно указать тип параметра
+                if (par.DbType == DbType.String)
+                {
+                    if (par.Value is string)
+                    {
+                        par.Size = Math.Max(1, ((string)par.Value).Length);
+                    }
+                }
+            }
         }
-        if (par.Value is DateTime && ((DateTime)par.Value) == new DateTime(0)) {
-          par.Value = DBNull.Value;
-          return;
-        }
-        if ((par.Value is double) && (double.IsNaN((double)par.Value))) {
-          par.Value = DBNull.Value;
-          par.DbType = DbType.Double;
-          return;
-        }
-        if ((par.Value is float) && (float.IsNaN((float)par.Value))) {
-          par.Value = DBNull.Value;
-          par.DbType = DbType.Single;
-          return;
-        }
-//        par.Value = value;
-        par.DbType = par.DbType;//нужно явно указать тип параметра
-        if (par.DbType == DbType.String) {
-          if (par.Value is string) {
-            par.Size = Math.Max(1, ((string)par.Value).Length);
-          }
-        }
-      }
-    }
   }
 }
