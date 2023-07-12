@@ -70,8 +70,28 @@ namespace DGCore.DB {
       if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
     }
 
-    //  =======  Command
-    public static CommandType Command_GetType(string commandText) {
+        //  =======  Command
+        public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
+        {
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = sql.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text;
+            cmd.Parameters.Clear();
+            if (parameters != null)
+            {
+                foreach (var kvp in parameters)
+                {
+                    var par = cmd.CreateParameter();
+                    par.ParameterName = kvp.Key;
+                    par.Value = kvp.Value;
+                    cmd.Parameters.Add(par);
+                }
+                AdjustParameters(cmd);
+            }
+            return cmd;
+        }
+
+        public static CommandType Command_GetType(string commandText) {
       //CommandType.TableDirect does not supported by SqlServer
       return (commandText.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text);
     }
