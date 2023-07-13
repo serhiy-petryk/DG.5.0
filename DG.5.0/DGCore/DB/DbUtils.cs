@@ -109,7 +109,6 @@ namespace DGCore.DB {
                             foreach (var p in GetParameterNamesFromSqlText(cmd.GetType().Namespace, cmd.CommandText))
                                 parameters.Add(p, DBNull.Value);
                             Command_SetParameters(cmd, parameters);
-
                         }
                     }
                     using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
