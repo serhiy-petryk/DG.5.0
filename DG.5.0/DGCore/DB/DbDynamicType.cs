@@ -7,40 +7,6 @@ namespace DGCore.DB
 {
   public static class DbDynamicType
   {
-    public static void Test()
-    {
-      string connectionString = @"SqlClient;Connect Timeout=1800;initial catalog=dbSAP_DW;Pooling=false;Data Source=z2t3uaprvla14;Integrated Security=SSPI;Encrypt=false";
-      string sql = "select * from gldocline";
-      using (DbCommand cmd = DbUtils.Command_Get(DbUtils.Connection_Get(connectionString), sql, null))
-      {
-        string[] pk = { "DOCKEY", "LINENO" };
-        //        List<string> pk = new List<string>(new string[] {  "LINENO" });
-        Type t = null;
-        //        Type t = xxGetDynamicType(cmd, pk, null);
-        object o = Activator.CreateInstance(t);
-        object o1 = Activator.CreateInstance(t);
-        PropertyDescriptorCollection pdc = PD.MemberDescriptorUtils.GetTypeMembers(t);
-        PropertyDescriptor pd1 = pdc["DOCKEY"];
-        PropertyDescriptor pd2 = pdc["LINENO"];
-        pd1.SetValue(o, (long)1);
-        pd2.SetValue(o, (Int16)(-1123));
-        int i1 = o.GetHashCode();
-        int i2 = ((long)1).GetHashCode();
-        int i3 = ((Int16)(-1123)).GetHashCode();
-        int i4 = i2 ^ i3;
-        string s1 = o.ToString();
-        bool b1 = o.Equals(o1);
-        int k1 = ((IComparable)o).CompareTo(o1);
-        pd1.SetValue(o1, (long)1);
-        bool b2 = o.Equals(o1);
-        int k2 = ((IComparable)o).CompareTo(o1);
-        pd2.SetValue(o1, (Int16)(-1123));
-        bool b3 = o.Equals(o1);
-        int k3 = ((IComparable)o).CompareTo(o1);
-      }
-    }
-
-    //=======================
     private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
 
     public static Type GetDynamicType(DbCmd cmd, string[] primaryKey,
