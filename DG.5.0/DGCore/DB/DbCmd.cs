@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Threading;
 
 namespace DGCore.DB
@@ -34,12 +35,13 @@ namespace DGCore.DB
 
     public DbCmd(string connectionString, string sql, IEnumerable paramValues, IEnumerable<string> paramNames)
     {
+      if (File.Exists(connectionString)) connectionString = "File;" + connectionString;
       this._connectionString = connectionString;
       this._sql = sql.Trim();
       this._dbConn = DbUtils.Connection_Get(connectionString);
       this._dbCmd = this._dbConn.CreateCommand();
       this._dbCmd.CommandText = this._sql;
-      this._dbCmd.CommandType = (this._sql.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text);
+      this._dbCmd.CommandType = _cmdKind == DbCmdKind.Procedure ? CommandType.StoredProcedure : CommandType.Text;
       if (_dbConn.ConnectionTimeout == 0 || (_dbCmd.CommandTimeout != 0 && _dbCmd.CommandTimeout < _dbConn.ConnectionTimeout))
         _dbCmd.CommandTimeout = _dbConn.ConnectionTimeout;
       this.Parameters_Add(paramValues, paramNames);
