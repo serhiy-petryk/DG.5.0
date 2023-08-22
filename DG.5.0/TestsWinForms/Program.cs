@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Forms;
-using TestsWinForms.Tests.Data;
+using TestsWinForms.TestsData;
 
 namespace TestsWinForms
 {
@@ -16,7 +16,7 @@ namespace TestsWinForms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            UnnamedParameters.Mdb();
+            UnnamedParameters.RunAllTests();
 
             Application.Run(new Form1());
         }
