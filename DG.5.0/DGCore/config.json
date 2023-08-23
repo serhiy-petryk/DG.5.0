@@ -38,7 +38,7 @@
 
 */
 {
-  "Title": "DG.4.0",
+  "Title": "DG.5.0",
   "DbConnections": {
     "dbUserSettings": {"provider": "SqlClient", "cs": "initial catalog=dbUserSettings;Pooling=false;Data Source=localhost;Integrated Security=SSPI;Connection Timeout=30;Encrypt=false"},
     "oneSAPConn": {"provider": "SqlClient", "cs": "initial catalog=dbOneSAP_DW;Pooling=false;Data Source=localhost;Integrated Security=SSPI;Connection Timeout=300;Encrypt=false"},
