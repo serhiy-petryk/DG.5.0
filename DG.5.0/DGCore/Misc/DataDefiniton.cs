@@ -30,7 +30,7 @@ namespace DGCore.Misc {
         _dbCmd = new DB.DbCmd(connectionString, sql);
       }
       else {
-        _dbCmd = new DB.DbCmd(connectionString, sql, dbParameters.GetParameterValues(), dbParameters.GetParameterNames());
+        _dbCmd = new DB.DbCmd(connectionString, sql, dbParameters.GetParameters());
       }
       AttributeCollection ac = new AttributeCollection();
       this._description = description;
@@ -81,7 +81,7 @@ namespace DGCore.Misc {
       }*/
 
       if (_dbParameters != null)
-        _dbCmd.Parameters_UpdateByNewValues(_dbParameters.GetParameterValues(), _dbParameters.GetParameterNames());
+        _dbCmd.Parameters_Add(_dbParameters.GetParameters(), true);
       Filters.DbWhereFilter whereFilter = WhereFilter == null ? null : new Filters.DbWhereFilter(WhereFilter);
       Sql.DbDataSource ds = Sql.DbDataSource.GetDataSource(_dbCmd, whereFilter, ItemType, null, consumer);
       return ds;

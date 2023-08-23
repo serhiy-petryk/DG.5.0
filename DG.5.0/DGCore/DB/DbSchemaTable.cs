@@ -40,7 +40,6 @@ namespace DGCore.DB
 
     //=======================================================
     public readonly string _baseTableName = null;
-    // public List<string> _parameterNames = new List<string>();
     public Dictionary<string, DbSchemaColumn> _columns = new Dictionary<string, DbSchemaColumn>();
     public Dictionary<string, DbSchemaTable> _updatableTables = new Dictionary<string, DbSchemaTable>();
 
@@ -61,7 +60,6 @@ namespace DGCore.DB
       List<string> tableNames = new List<string>();
       using (DataTable dt = DbUtils.GetSchemaTable(cmd))
       {
-        // this._parameterNames = (List<string>)dt.ExtendedProperties["ParameterNames"];
         var colCnt = 0;
         var isColumnHiddenExist = dt.Columns.Contains("IsHidden");// SqlServer supported or Jet.TableDirect; Jet.Sql and Oracle do not support
         var isColumnReadOnlyExist = dt.Columns.Contains("IsReadOnly");// Oracle does not support

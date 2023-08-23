@@ -21,19 +21,17 @@ namespace DGCore.DB
     public readonly string _sql;
     readonly DbConnection _dbConn;
     public readonly DbCommand _dbCmd;
-    public readonly List<object> _paramValues = new List<object>();
-    public readonly List<string> _paramNames = new List<string>();
+    public readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
 
     public DbCmdKind _cmdKind => _connectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase)
       ? DbCmdKind.File
       : (_sql.IndexOf(' ') == -1 ? DbCmdKind.Procedure : DbCmdKind.Query);
 
-    public DbCmd(string connectionString, string sql)
-      : this(connectionString, sql, null, null)
+    public DbCmd(string connectionString, string sql) : this(connectionString, sql, null)
     {
     }
 
-    public DbCmd(string connectionString, string sql, IEnumerable paramValues, IEnumerable<string> paramNames)
+    public DbCmd(string connectionString, string sql, IDictionary<string, object> parameters)
     {
       if (File.Exists(connectionString)) connectionString = "File;" + connectionString;
       this._connectionString = connectionString;
@@ -44,37 +42,30 @@ namespace DGCore.DB
       this._dbCmd.CommandType = _cmdKind == DbCmdKind.Procedure ? CommandType.StoredProcedure : CommandType.Text;
       if (_dbConn.ConnectionTimeout == 0 || (_dbCmd.CommandTimeout != 0 && _dbCmd.CommandTimeout < _dbConn.ConnectionTimeout))
         _dbCmd.CommandTimeout = _dbConn.ConnectionTimeout;
-      this.Parameters_Add(paramValues, paramNames);
+      this.Parameters_Add(parameters, false);
     }
 
     public string Connection_Key => this._dbConn.GetType().FullName + ";" + this._dbConn.Database + ";" + this._dbConn.DataSource;
     public string Command_Key => this.Connection_Key + ";" + this._sql;
 
-    public void Parameters_Add(IEnumerable paramValues, IEnumerable<string> paramNames)
+    public void Parameters_Add(IDictionary<string, object> parameters, bool clear)
     {
-      if (paramValues != null) _paramValues.AddRange(System.Linq.Enumerable.Cast<object>(paramValues));
-      if (paramNames != null) _paramNames.AddRange(paramNames);
-      Parameters_Update();
-    }
+      if (clear) _parameters.Clear();
+      
+      if (parameters != null)
+        foreach (var kvp in parameters) _parameters.Add(kvp.Key, kvp.Value);
 
-    public void Parameters_UpdateByNewValues(IEnumerable paramValues, IEnumerable<string> paramNames)
-    {
-      this._paramNames.Clear();
-      this._paramValues.Clear();
-      this.Parameters_Add(paramValues, paramNames);
+      Parameters_Update();
     }
 
     void Parameters_Update()
     {
-      if (this._paramNames.Count != 0 && this._paramNames.Count != this._paramValues.Count)
-        throw new Exception("Numbers of parameter names and values are not equal. Connection: " + this._dbConn + ". Command: " + this._sql);
-
       this._dbCmd.Parameters.Clear();
-      for (int i = 0; i < this._paramValues.Count; i++)
+      foreach (var kvp in _parameters)
       {
-        DbParameter par = _dbCmd.CreateParameter();
-        if (this._paramNames.Count > 0) par.ParameterName = this._paramNames[i];
-        par.Value = this._paramValues[i];
+        var par = _dbCmd.CreateParameter();
+        par.ParameterName = kvp.Key;
+        par.Value = kvp.Value;
         _dbCmd.Parameters.Add(par);
       }
       DbUtils.AdjustParameters(this._dbCmd);
@@ -148,10 +139,7 @@ namespace DGCore.DB
       _dbCmd?.Dispose();
     }
 
-    public object Clone()
-    {
-      return new DbCmd(this._connectionString, this._sql, this._paramValues, this._paramNames);
-    }
+    public object Clone() => new DbCmd(this._connectionString, this._sql, this._parameters);
 
     public event EventHandler Disposed;
 

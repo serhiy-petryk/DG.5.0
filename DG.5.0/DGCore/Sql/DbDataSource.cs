@@ -46,9 +46,10 @@ namespace DGCore.Sql {
         this._cmdData = this._cmd;
       }
       else {// Sql with parameters
-        this._cmdData = new DB.DbCmd(this._cmd._connectionString, "SELECT * from (" + this._cmd._sql + ") x WHERE " + whereFilter._whereExpression, 
-          this._cmd._paramValues, this._cmd._paramNames);
-        this._cmdData.Parameters_Add(whereFilter._parameterValues, whereFilter._parameterNames);
+        this._cmdData = new DB.DbCmd(this._cmd._connectionString,
+          "SELECT * from (" + this._cmd._sql + ") x WHERE " + whereFilter._whereExpression, this._cmd._parameters);
+
+        this._cmdData.Parameters_Add(whereFilter._parameters, false);
       }
 
       base._itemType = itemType;

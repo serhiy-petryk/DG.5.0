@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace DGCore.Sql {
@@ -42,16 +43,8 @@ namespace DGCore.Sql {
         return null; 
       }
     }
-    public string[] GetParameterNames() {
-      List<string> oo = new List<string>();
-      foreach (Parameter p in this._parameters) oo.Add(p._sqlName);
-      return oo.ToArray();
-    }
-    public object[] GetParameterValues() {
-      List<object> oo = new List<object>();
-      foreach (Parameter p in this._parameters) oo.Add(p._value);
-      return oo.ToArray();
-    }
+    public Dictionary<string, object> GetParameters() => _parameters.ToDictionary(a => a._sqlName, a => a._value);
+
     public string GetStringPresentation() {
       List<string> ss = new List<string>();
       foreach (Parameter p in this._parameters) ss.Add(p.GetStringPresentation());

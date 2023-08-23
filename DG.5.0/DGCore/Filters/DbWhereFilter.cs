@@ -8,8 +8,7 @@ namespace DGCore.Filters
   {
 
     public readonly string _whereExpression;
-    public readonly List<string> _parameterNames = new List<string>();
-    public readonly List<object> _parameterValues = new List<object>();
+    public readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
     string _dbProviderNamespace;
 
     internal DbWhereFilter(FilterList filterList)
@@ -112,17 +111,19 @@ namespace DGCore.Filters
 
     string GetNextParameterName(object parameterValue)
     {
-      string parameterName = DB.DbMetaData.QuotedParameterName(this._dbProviderNamespace, "w__" + _parameterValues.Count.ToString());
-      _parameterValues.Add(parameterValue);
-      _parameterNames.Add(parameterName);
+      string parameterName = DB.DbMetaData.QuotedParameterName(this._dbProviderNamespace, "w__" + _parameters.Count.ToString());
+      _parameters.Add(parameterName, parameterValue);
       return parameterName;
     }
 
     public string GetKey()
     {
-      if (this._parameterValues == null) return this._whereExpression;
-      List<string> ss = new List<string>();
-      foreach (object o in this._parameterValues) ss.Add(o == null ? "" : o.ToString());
+      if (this._parameters.Count == 0) return this._whereExpression;
+
+      var ss = new List<string>();
+      foreach (var kvp in this._parameters)
+        ss.Add(kvp.Value == null ? "" : kvp.Value.ToString());
+
       return this._whereExpression + "^" + String.Join("#", ss.ToArray());
 
     }

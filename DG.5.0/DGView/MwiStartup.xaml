@@ -11,7 +11,7 @@
         xmlns:helpers="clr-namespace:DGView.Helpers"
         xmlns:views="clr-namespace:DGView.Views"
         mc:Ignorable="d"
-        Title="DGView 2.0"
+        Title="DGView 5.0"
         Style="{StaticResource HeadlessWindow}"
         KeyDown="MwiStartup_OnKeyDown">
 
