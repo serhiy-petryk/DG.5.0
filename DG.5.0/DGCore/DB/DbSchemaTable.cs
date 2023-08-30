@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 
 namespace DGCore.DB
 {
@@ -146,28 +147,10 @@ namespace DGCore.DB
           {
             DbSchemaTable x = GetSchemaTableForDataTable(DbUtils.Command_Get(cmd.Connection, s), connectionKey);
             // Updatable table has to have all primary key columns in column list of sql statement
-            if (x.IsUpdatable)
-            {
-              bool updatable = true;
-              foreach (DbSchemaColumn col in x._primaryKey)
-              {
-                bool flag = false;
-                foreach (DbSchemaColumn thisCol in this._columns.Values)
-                {
-                  if (thisCol.BaseTableName == col.BaseTableName && thisCol.BaseColumnName == col.BaseColumnName)
-                  {
-                    flag = true;
-                    break;
-                  }
-                }
-                if (!flag)
-                {
-                  updatable = false;
-                  break;
-                }
-              }
-              if (updatable) this._updatableTables.Add(s, x);
-            }
+            var updatable = x.IsUpdatable && x._primaryKey.All(x1 => _columns.Values.Any(a =>
+                              string.Equals(a.BaseTableName, x1.BaseTableName) &&
+                              string.Equals(a.BaseColumnName, x1.BaseColumnName)));
+            if (updatable) this._updatableTables.Add(s, x);
 
             foreach (DbSchemaColumn col in this._columns.Values)
             {
