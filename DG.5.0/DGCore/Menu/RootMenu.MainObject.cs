@@ -18,6 +18,9 @@ namespace DGCore.Menu
                 SetFlatMenu();
                 Title = Title?.Trim();
 
+                foreach (var mo in Lookups.Values)
+                  mo.SetConnectionObject(DbConnections);
+
                 foreach (var o in Lookups.Values)
                     o.Normalize(this);
 
@@ -40,8 +43,10 @@ namespace DGCore.Menu
                 Utils.Json.ConvertJsonElements(mo);
                 mo.Label = kvp.Key;
                 mo.ParentId = parent?.Id;
+                mo.SetConnectionObject(DbConnections);
                 FlatMenu.Add(mo);
                 if (!mo.IsSubmenu) return;
+
                 // Submenu
                 // var o2 = ((Newtonsoft.Json.Linq.JObject) kvp.Value).ToObject<Dictionary<string, object>>();
                 var o2 = JsonSerializer.Deserialize<Dictionary<string, object>>(((JsonElement)kvp.Value).GetRawText(), Utils.Json.DefaultJsonOptions);

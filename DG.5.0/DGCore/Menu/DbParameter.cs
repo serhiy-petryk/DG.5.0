@@ -50,7 +50,8 @@ namespace DGCore.Menu
       else if (lookup.ValueList != null && lookup.ValueList.Length > 0 && string.IsNullOrEmpty(lookup.Sql))
         Parameter = new Sql.Parameter(parameterName, Label, Comment, TType, defValue, lookup.ValueList, lookup.IsExclusive);
       else if (!string.IsNullOrEmpty(lookup.Sql))
-        Parameter = new Sql.Parameter(parameterName, Label, Comment, TType, defValue, lookup.CS, lookup.Sql, lookup.IsExclusive);
+        Parameter = new Sql.Parameter(parameterName, Label, Comment, TType, defValue, lookup.oCS.GetConnectionString(),
+          lookup.Sql, lookup.IsExclusive);
       else
         throw new Exception($"Помилка файла конфігурації. Не можливо створити обєкт parameter із-за помилки в lookup.\nParameter name: {parameterName}");
     }

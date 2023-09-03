@@ -24,7 +24,7 @@ namespace DGCore.Menu
             if (IsSubmenu || _dataDefinition != null)
                 return _dataDefinition;
 
-            var attributes = GetAttributesFromDbMetaData(CS, SqlForColumnAttributes);
+            var attributes = GetAttributesFromDbMetaData(oCS.GetConnectionString(), SqlForColumnAttributes);
             var objectAttrs =
               (Columns?.ToDictionary(kvp1 => kvp1.Key, kvp2 => kvp2.Value.Attributes ?? new List<Attribute>(),
                 StringComparer.OrdinalIgnoreCase)) ??

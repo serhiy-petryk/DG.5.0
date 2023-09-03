@@ -34,11 +34,14 @@ namespace DGCore.Menu
     public string ItemType { get; set; }
     public Type oItemType { get; set; }
 
+    public void SetConnectionObject(Dictionary<string, RootMenu.DbConnection> dbConnections)
+    {
+      if (oCS == null && !string.IsNullOrEmpty(CS))
+        oCS = dbConnections[CS.Trim()];
+    }
+
     public void Normalize(RootMenu.MainObject mo)
     {
-      if (!string.IsNullOrEmpty(CS))
-        oCS = mo.DbConnections[CS.Trim()];
-
       if (!string.IsNullOrEmpty(ItemType))
       {
         oItemType = Utils.Types.TryGetType(ItemType);
