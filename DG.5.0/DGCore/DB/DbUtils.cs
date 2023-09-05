@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -64,7 +63,6 @@ namespace DGCore.DB {
     }
 
         #region ==========  Command  =============
-        public static DbCommand Command_Get(DbConnection conn, string sql) => Command_Get(conn, sql, null);
         public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
         {
             var cmd = conn.CreateCommand();

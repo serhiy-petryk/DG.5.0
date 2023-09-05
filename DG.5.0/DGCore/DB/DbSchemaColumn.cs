@@ -13,10 +13,7 @@ namespace DGCore.DB {
     readonly int _size;
     readonly byte _dp = 0;
     readonly Type _type;
-    readonly bool _isReadOnly;
     public readonly bool _isNullable;
-    readonly bool _isAutoIncrement;
-    readonly bool _isPrimaryKey;
     string _baseTableName;
     string _baseColumnName;
     public DbSchemaColumn _baseColumn = null;
@@ -28,23 +25,16 @@ namespace DGCore.DB {
     public Int16 Position { get { return this._position; } }
     public byte DecimalPlaces { get { return this._dp; } }
     public Type DataType { get { return this._type; } }
-    public bool IsReadOnly { get { return this._isReadOnly; } }
     public bool IsNullable { get { return this._isNullable; } }
-    public bool IsAutoIncrement { get { return this._isAutoIncrement; } }
-    public bool IsPrimaryKey { get { return this._isPrimaryKey; } }
     public string BaseTableName { get { return this._baseTableName; } }
     public string BaseColumnName { get { return this._baseColumnName; } }
 
     //===============
-    public DbSchemaColumn(string name, Int16 position, int size, byte dp, Type type, bool isReadOnly, bool isNullable, bool isAutoIncrement,
-      bool isPrimaryKey, string baseTableName, string baseColumnName) {
+    public DbSchemaColumn(string name, Int16 position, int size, byte dp, Type type, bool isNullable, string baseTableName, string baseColumnName) {
 
       this._sqlName = name; this._position = position; this._size = size; this._dp = dp;
-      this._type = type; this._isReadOnly = isReadOnly; this._isNullable = isNullable;
-      this._isAutoIncrement = isAutoIncrement; this._isPrimaryKey = isPrimaryKey;
+      this._type = type; this._isNullable = isNullable;
       this._baseTableName = baseTableName; this._baseColumnName = baseColumnName;
-      if (this.SqlName == "QTY") {
-      }
     }
 
     //===============
