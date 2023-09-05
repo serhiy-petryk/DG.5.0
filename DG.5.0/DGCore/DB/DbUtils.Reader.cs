@@ -18,13 +18,12 @@ namespace DGCore.DB {
         return (TypeObject)_typeConvertersCache[converterNumber].ConvertFrom(null, null, value);
       }
 
-//      internal static Func<DbDataReader, T> GetDelegate_FromDataReaderToObject<T>(DbCommand cmd, IEnumerable<DbColumnMapElement> columnMap) {
-      public static Func<DbDataReader, T> GetDelegate_FromDataReaderToObject<T>(DB.DbCmd cmd, IEnumerable<DbColumnMapElement> columnMap) {
+      public static Func<DbDataReader, T> GetDelegate_FromDataReaderToObject<T>(DB.DbCmd cmd, DbColumnMapElement[] columnMap) {
         if (columnMap == null) columnMap = DbColumnMapElement.GetDefaultColumnMap(cmd, typeof(T));
         return GetDelegate_ObjectFromDataReader<T>(columnMap);
       }
 
-      static string GetColumnMapKey(IEnumerable<DbColumnMapElement> columnMap, Type itemType) {
+      static string GetColumnMapKey(DbColumnMapElement[] columnMap, Type itemType) {
         string char1 = ((char)1).ToString();
         string char2 = ((char)2).ToString();
         StringBuilder sb = new StringBuilder(itemType.FullName + char1);
@@ -38,7 +37,7 @@ namespace DGCore.DB {
         return sb.ToString();
       }
 
-      static Func<DbDataReader, T> GetDelegate_ObjectFromDataReader<T>(IEnumerable<DbColumnMapElement> columnMap) {
+      static Func<DbDataReader, T> GetDelegate_ObjectFromDataReader<T>(DbColumnMapElement[] columnMap) {
         string key = GetColumnMapKey(columnMap, typeof(T));
         lock (_delegates) {
           if (_delegates.ContainsKey(key)) {

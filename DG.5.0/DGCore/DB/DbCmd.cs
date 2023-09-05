@@ -104,7 +104,7 @@ namespace DGCore.DB
     }
 
     // fill dictionary - is simplest; user must create more complex fill separate
-    public void Fill<KeyType, ItemType>(IDictionary data, Delegate keyFunction, IEnumerable<DbColumnMapElement> columnMap)
+    public void Fill<KeyType, ItemType>(IDictionary data, Delegate keyFunction, DbColumnMapElement[] columnMap)
     {
       Func<ItemType, KeyType> keyFunc = (Func<ItemType, KeyType>)keyFunction;
       Func<DbDataReader, ItemType> func = DbUtils.Reader.GetDelegate_FromDataReaderToObject<ItemType>(this, columnMap);
