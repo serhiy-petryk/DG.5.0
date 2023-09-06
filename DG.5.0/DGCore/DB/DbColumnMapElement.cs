@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace DGCore.DB {
@@ -28,6 +29,7 @@ namespace DGCore.DB {
     private static DbColumnMapElement[] GetColumnMapWithoutItemType(DbCmd cmd) {
       List<DbColumnMapElement> map = new List<DbColumnMapElement>();
       DbSchemaTable tbl = cmd.GetSchemaTable();
+      var aa1 = tbl._columns.Values.Select(a => new DbColumnMapElement(a, null)).ToArray();
       foreach (DbSchemaColumn col in tbl._columns.Values) {
         map.Add(new DbColumnMapElement(col, null));
       }
