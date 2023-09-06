@@ -12,7 +12,6 @@ namespace DGCore.DB {
     private static readonly Dictionary<string, DbColumnMapElement[]> _defaultMaps = new Dictionary<string, DbColumnMapElement[]>();
 
     public static DbColumnMapElement[] GetDefaultColumnMap(DbCmd cmd, Type itemType) {
-      if (itemType == null) return GetColumnMapWithoutItemType(cmd);// need for Database filter
       string key = itemType.FullName + ";" + cmd.Command_Key;
       lock (_defaultMaps) {
         if (_defaultMaps.ContainsKey(key)) return _defaultMaps[key];
@@ -24,16 +23,6 @@ namespace DGCore.DB {
         _defaultMaps.Add(key, map);
         return map;
       }
-    }
-
-    private static DbColumnMapElement[] GetColumnMapWithoutItemType(DbCmd cmd) {
-      List<DbColumnMapElement> map = new List<DbColumnMapElement>();
-      DbSchemaTable tbl = cmd.GetSchemaTable();
-      var aa1 = tbl._columns.Values.Select(a => new DbColumnMapElement(a, null)).ToArray();
-      foreach (DbSchemaColumn col in tbl._columns.Values) {
-        map.Add(new DbColumnMapElement(col, null));
-      }
-      return map.ToArray();
     }
 
     private static DbColumnMapElement[] PrepareDefaultColumnMap<T>(IEnumerable<DbSchemaColumn> dbColumns) {
