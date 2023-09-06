@@ -1,0 +1,4 @@
+2023-09-06:
+1. Upper/lower case for database table/column name.
+2. Database adpter -> fetch only column description from database
+3. Table definitions -> cache
