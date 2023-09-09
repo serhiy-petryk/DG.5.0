@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace DGCore.Menu
 {
@@ -45,7 +44,7 @@ namespace DGCore.Menu
         }
 
         if (!string.IsNullOrEmpty(Format))
-          Attributes.Add(new DisplayFormatAttribute(){DataFormatString = Format});
+            Attributes.Add(new DGCore.Common.DisplayFormatAttribute(Format));
       }
     }
 

@@ -93,4 +93,10 @@ namespace DGCore.Common {
     }*/
   }
 
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
+  public class DisplayFormatAttribute : Attribute
+  {
+      public readonly string Format;
+      public DisplayFormatAttribute(string format) => Format = format;
+  }
 }
