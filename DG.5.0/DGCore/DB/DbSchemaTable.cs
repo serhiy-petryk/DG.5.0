@@ -73,9 +73,13 @@ namespace DGCore.DB
           {
             string columnName = dr["ColumnName"].ToString().ToUpper();
             // Get the basetable name
-            string baseTableName = String.Join(".", new string[] {(isColumnBaseCatalogNameExist? dr["BaseCatalogName"].ToString().ToUpper(): ""),
-            (isColumnBaseSchemaNameExist? dr["BaseSchemaName"].ToString().ToUpper(): ""),
-            dr["BaseTableName"].ToString().ToUpper()});
+            string baseTableName = String.Join(".",
+              new string[]
+              {
+                (isColumnBaseCatalogNameExist ? dr["BaseCatalogName"].ToString().ToUpper() : ""),
+                (isColumnBaseSchemaNameExist ? dr["BaseSchemaName"].ToString().ToUpper() : ""),
+                dr["BaseTableName"].ToString().ToUpper()
+              });
             if (baseTableName.StartsWith(".")) baseTableName = baseTableName.Remove(0, 1);
             if (baseTableName.StartsWith(".")) baseTableName = baseTableName.Remove(0, 1);
             //            StringBuilder sbTableName = new StringBuilder(baseCatalogName);
