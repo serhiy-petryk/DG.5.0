@@ -40,7 +40,7 @@ namespace DGCore.DB
         #region =============  Static section  =============
         public static DbConnection GetConnection(string shortOrLongNamespace, string connectionString) => GetMetaDataObject(shortOrLongNamespace).GetConnection(connectionString);
         public static string QuotedColumnName(string dbProviderNamespace, string unquotedColumnName) => GetMetaDataObject(dbProviderNamespace).QuotedColumnName(unquotedColumnName);
-        public static string QuotedTableName(string dbProviderNamespace, string unquotedTableName) => GetMetaDataObject(dbProviderNamespace).QuotedTableName(unquotedTableName);
+        // public static string QuotedTableName(string dbProviderNamespace, string unquotedTableName) => GetMetaDataObject(dbProviderNamespace).QuotedTableName(unquotedTableName);
         public static string QuotedParameterName(string dbProviderNamespace, string unquotedParameterName) => GetMetaDataObject(dbProviderNamespace).QuotedParameterName(unquotedParameterName);
         public static string ParameterNamePattern(string dbProviderNamespace) => GetMetaDataObject(dbProviderNamespace).ParameterNamePattern();
         public static Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName) => GetMetaDataObject(conn.GetType().Namespace).ColumnDescriptions(conn, tableName);
@@ -54,7 +54,7 @@ namespace DGCore.DB
             public abstract DbConnection GetConnection(string connectionString); //to get connection by short or long namespace (commonly you need use the DataFactory)
             // Quoted(Column/Table)Name/ParameterNamePattern may depend on Provider/version which can obtain from Connection object (for Odbc/OleDb)
             public abstract string QuotedColumnName(string unquotedColumnName);//DbCommandBuilder.QuoteIdentifier//Suffix/Prefix does not work correctly for OleDb
-            public abstract string QuotedTableName(string unquotedTableName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
+            // public abstract string QuotedTableName(string unquotedTableName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
             public abstract string QuotedParameterName(string unquotedParameterName);//DbCommandBuilder.QuoteIdentifier/Suffix/Prefix does not work correctly for OleDb/Oracle
             public abstract string ParameterNamePattern();// look at conn.GetSchema(DbMetaDataCollectionNames.DataSourceInformation), column "ParameterNamePattern"
             public abstract Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableBName);
@@ -66,7 +66,7 @@ namespace DGCore.DB
         {
             public override DbConnection GetConnection(string connectionString) => new System.Data.OleDb.OleDbConnection(connectionString);
             public override string QuotedColumnName(string unquotedColumnName) => "[" + unquotedColumnName + "]";
-            public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName + "]";
+            // public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName + "]";
             public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableBName) => null;
@@ -78,7 +78,7 @@ namespace DGCore.DB
         {
             public override DbConnection GetConnection(string connectionString) => new Microsoft.Data.SqlClient.SqlConnection(connectionString);
             public override string QuotedColumnName(string unquotedColumnName) => "[" + unquotedColumnName + "]";
-            public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName.Replace("..", ".DBO.").Replace(".", "].[") + "]";
+            // public override string QuotedTableName(string unquotedTableName) => "[" + unquotedTableName.Replace("..", ".DBO.").Replace(".", "].[") + "]";
             public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)
@@ -124,7 +124,7 @@ namespace DGCore.DB
         {
             public override DbConnection GetConnection(string connectionString) => new MySql.Data.MySqlClient.MySqlConnection(connectionString);
             public override string QuotedColumnName(string unquotedColumnName) => "`" + unquotedColumnName + "`";
-            public override string QuotedTableName(string unquotedTableName) => "`" + unquotedTableName.Replace(".", "`.`") + "`";
+            // public override string QuotedTableName(string unquotedTableName) => "`" + unquotedTableName.Replace(".", "`.`") + "`";
             public override string QuotedParameterName(string unquotedParameterName) => "@" + unquotedParameterName;
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)

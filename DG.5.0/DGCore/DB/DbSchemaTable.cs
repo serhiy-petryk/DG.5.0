@@ -18,20 +18,10 @@ namespace DGCore.DB
       lock (_schemaTables)
       {
           if (!_schemaTables.ContainsKey(key))
-              return new DbSchemaTable(cmd, connectionKey, false);
+              return new DbSchemaTable(cmd, connectionKey);
           return _schemaTables[key];
       }
     }
-    static DbSchemaTable GetSchemaTableForDataTable(DbCommand cmd, string connectionKey)
-    {
-      // do not need to lock _schemaTable == call inside existing lock
-      var tableCmd = DbUtils.Command_Get(cmd.Connection, "SELECT * from " + DbMetaData.QuotedTableName(cmd.GetType().Namespace, cmd.CommandText.ToUpper()), null);
-      string key = GetDictionaryKey(tableCmd, connectionKey);
-      if (!_schemaTables.ContainsKey(key))
-        return new DbSchemaTable(cmd, connectionKey, true);
-      return _schemaTables[key];
-    }
-
     static string GetDictionaryKey(DbCommand cmd, string connectionKey)
     {
       if (string.IsNullOrEmpty(connectionKey))
@@ -46,17 +36,9 @@ namespace DGCore.DB
     private List<DbSchemaColumn> _primaryKey = new List<DbSchemaColumn>();// technical field
     //    string _columnsKey = null;
 
-    private DbSchemaTable(DbCommand cmd, string connectionKey, bool isTable)
+    private DbSchemaTable(DbCommand cmd, string connectionKey)
     {// must be command with parameters (for SqlClient)
       Dictionary<string, DbSchemaColumnProperty> customColumnProperties = DbSchemaColumnProperty.GetProperties(GetDictionaryKey(cmd, connectionKey));
-      Dictionary<string, string> columnDescriptions = null;
-      if (isTable)
-      {
-        this._baseTableName = cmd.CommandText.ToUpper();
-        cmd = DbUtils.Command_Get(cmd.Connection, "SELECT * from " + DbMetaData.QuotedTableName(cmd.GetType().Namespace, this._baseTableName), null);
-        columnDescriptions = DbMetaData.GetColumnDescriptions(cmd.Connection, this._baseTableName);
-      }
-
       List<string> tableNames = new List<string>();
       using (DataTable dt = DbUtils.GetSchemaTable(cmd))
       {
@@ -110,20 +92,6 @@ namespace DGCore.DB
               customColumnProperties.TryGetValue(columnName, out customProperty);
               column._customProperty = customProperty;
             }
-            if (columnDescriptions != null && columnDescriptions.ContainsKey(column.SqlName))
-            {
-              //              string s = columnDescriptions[column.SqlName];
-              string[] ss = columnDescriptions[column.SqlName].Split('^');
-              column._dbDisplayName = ss[0].Trim();
-              column._dbDescription = (ss.Length < 2 ? null : ss[1].Trim());
-              if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
-              /*              int k1 = s.IndexOf(";");
-                            if (k1 < 0) column._dbDisplayName = s;
-                            else {
-                              column._dbDisplayName = s.Substring(0, k1).Trim();
-                              column._dbDescription = s.Substring(k1 + 1).Trim();
-                            }*/
-            }
             this._columns.Add(column.SqlName, column);
           }
           colCnt++;
@@ -132,42 +100,17 @@ namespace DGCore.DB
 
       _schemaTables.Add(GetDictionaryKey(cmd, connectionKey), this);
 
-      if (isTable || cmd.CommandType == CommandType.TableDirect)
+      for (int i = 0; i < tableNames.Count; i++)
       {
-        //        DbSchemaColumn.OleDb_AdjustColumns(conn, this._baseTableName, this._columns.Values);
-      }
-      else
-      {
-
-        for (int i = 0; i < tableNames.Count; i++)
+        var tableName = tableNames[i];
+        var columnDescriptions2 = DbMetaData.GetColumnDescriptions(cmd.Connection, tableName);
+        foreach (var cd in columnDescriptions2)
+        foreach (var column in _columns.Values.Where(c => string.Equals(c.BaseTableName, tableName) && string.Equals(c.SqlName, cd.Key)))
         {
-          string tableName = tableNames[i];
-          var columnDescriptions2 = DbMetaData.GetColumnDescriptions(cmd.Connection, tableName);
-          foreach (var cd in columnDescriptions2)
-          foreach (var column in _columns.Values.Where(c => string.Equals(c.BaseTableName, tableName) && string.Equals(c.SqlName, cd.Key)))
-          {
-            string[] ss = cd.Value.Split('^');
-            column._dbDisplayName = ss[0].Trim();
-            if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
-            if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
-          }
-
-          continue;
-
-          // Old code -> not need ?
-          try
-          {
-            DbSchemaTable x = GetSchemaTableForDataTable(DbUtils.Command_Get(cmd.Connection, tableName, null), connectionKey);
-            foreach (var col in this._columns.Values.Where(c => string.Equals(c.BaseTableName, tableName)))
-              col._baseColumn = x._columns[col.BaseColumnName];
-          }
-          catch (Exception ex)
-          {
-            foreach (var col in this._columns.Values.Where(c => string.Equals(c.BaseTableName, tableName)))
-              col.ClearBaseTable();
-            tableNames.Remove(tableName);
-            i--;
-          }
+          string[] ss = cd.Value.Split('^');
+          column._dbDisplayName = ss[0].Trim();
+          if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
+          if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
         }
       }
     }
