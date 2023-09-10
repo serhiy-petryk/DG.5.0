@@ -45,8 +45,7 @@ namespace DGCore.DB
       this.Parameters_Add(parameters, false);
     }
 
-    public string Connection_Key => this._dbConn.GetType().FullName + ";" + this._dbConn.Database + ";" + this._dbConn.DataSource;
-    public string Command_Key => this.Connection_Key + ";" + this._sql;
+    public string Command_Key => DbUtils.Command_GetKey(_dbCmd);
 
     public void Parameters_Add(IDictionary<string, object> parameters, bool clear)
     {
@@ -71,7 +70,7 @@ namespace DGCore.DB
       DbUtils.AdjustParameters(this._dbCmd);
     }
 
-    public DbSchemaTable GetSchemaTable() => DbSchemaTable.GetSchemaTable(_dbCmd, Connection_Key);
+    public DbSchemaTable GetSchemaTable() => DbSchemaTable.GetSchemaTable(_dbCmd);
 
     public void Connection_Open()
     {

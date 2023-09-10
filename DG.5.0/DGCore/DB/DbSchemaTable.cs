@@ -12,14 +12,14 @@ namespace DGCore.DB
         private static readonly Dictionary<string, DbSchemaTable> _schemaTables =
             new Dictionary<string, DbSchemaTable>(); // key=connString+sql; value=dbTable
 
-        public static DbSchemaTable GetSchemaTable(DbCommand cmd, string connectionKey)
+        public static DbSchemaTable GetSchemaTable(DbCommand cmd)
         {
-            string key = GetDictionaryKey(cmd, connectionKey);
-
+            var key = DbUtils.Command_GetKey(cmd);
             lock (_schemaTables)
             {
                 if (!_schemaTables.ContainsKey(key))
-                    return new DbSchemaTable(cmd, connectionKey);
+                    _schemaTables.Add(key, new DbSchemaTable(cmd));
+
                 return _schemaTables[key];
             }
         }
@@ -34,12 +34,9 @@ namespace DGCore.DB
         public readonly string _baseTableName = null;
         public Dictionary<string, DbSchemaColumn> _columns = new Dictionary<string, DbSchemaColumn>();
 
-        private List<DbSchemaColumn> _primaryKey = new List<DbSchemaColumn>();// technical field
-                                                                              //    string _columnsKey = null;
-
-        private DbSchemaTable(DbCommand cmd, string connectionKey)
+        private DbSchemaTable(DbCommand cmd)
         {// must be command with parameters (for SqlClient)
-            Dictionary<string, DbSchemaColumnProperty> customColumnProperties = DbSchemaColumnProperty.GetProperties(GetDictionaryKey(cmd, connectionKey));
+            Dictionary<string, DbSchemaColumnProperty> customColumnProperties = DbSchemaColumnProperty.GetProperties(DbUtils.Command_GetKey(cmd));
             List<string> tableNames = new List<string>();
             using (DataTable dt = DbUtils.GetSchemaTable(cmd))
             {
@@ -98,8 +95,6 @@ namespace DGCore.DB
                     colCnt++;
                 }
             }
-
-            _schemaTables.Add(GetDictionaryKey(cmd, connectionKey), this);
 
             foreach (var tableName in tableNames)
             {

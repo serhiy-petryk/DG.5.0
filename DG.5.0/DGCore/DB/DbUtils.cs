@@ -6,63 +6,73 @@ using System.Data.OleDb;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace DGCore.DB {
-  public static partial class DbUtils {
+namespace DGCore.DB
+{
+    public static partial class DbUtils
+    {
 
-    // format: key: connID; value: (DataAdapterKey; connectionString) or (filename from MDB, ..)
-    const string _defaultParameterPattern = @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
+        // format: key: connID; value: (DataAdapterKey; connectionString) or (filename from MDB, ..)
+        const string _defaultParameterPattern = @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
 
-    //  =======  Connection 
-    public static DbConnection Connection_Get(string myConnectionString) {
-      // myConnectionString format: filename or "short/long provider namespace;connection string"
-      // Example: @"Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
-      //         @"system.data.Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
-      //         @"T:\Data\DBQ\mdb.day\testDB.mdb"
+        #region =========  Connection  ==========
+        public static string Connection_GetKey(DbConnection conn) =>
+            conn.GetType().FullName + ";" + conn.Database + ";" + conn.DataSource;
 
-      if (File.Exists(myConnectionString))
-      {// file name
-        string extension = Path.GetExtension(myConnectionString).ToLower();
-        switch (extension)
+        public static DbConnection Connection_Get(string myConnectionString)
         {
-            case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={myConnectionString}");
-            case ".csv": return new CSV.TestCsvConnection(myConnectionString);
-        }
-        throw new Exception("Connection does not define for file type " + extension);
-      }
+            // myConnectionString format: filename or "short/long provider namespace;connection string"
+            // Example: @"Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
+            //         @"system.data.Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
+            //         @"T:\Data\DBQ\mdb.day\testDB.mdb"
 
-      if (myConnectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase) && File.Exists(myConnectionString.Substring(5)))
-      {// file (csv, json, ...)
-        string fn = myConnectionString.Substring(5);
-        string extension = Path.GetExtension(fn).ToLower();
-        switch (extension)
+            if (File.Exists(myConnectionString))
+            {// file name
+                string extension = Path.GetExtension(myConnectionString).ToLower();
+                switch (extension)
+                {
+                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={myConnectionString}");
+                    case ".csv": return new CSV.TestCsvConnection(myConnectionString);
+                }
+                throw new Exception("Connection does not define for file type " + extension);
+            }
+
+            if (myConnectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase) && File.Exists(myConnectionString.Substring(5)))
+            {// file (csv, json, ...)
+                string fn = myConnectionString.Substring(5);
+                string extension = Path.GetExtension(fn).ToLower();
+                switch (extension)
+                {
+                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fn}");
+                    case ".csv": return new CSV.TestCsvConnection(fn);
+                }
+                throw new Exception("Connection does not define for file type " + extension);
+            }
+
+            int k = myConnectionString.IndexOf(';');
+            if (k < 1) throw new Exception("Invalid connection string. ConnectionString must be exist in StandardConnectionDictionary or to be in format  \"<short/long provider namespace>;<connection string>\"");
+            string provider = myConnectionString.Substring(0, k).Trim();// Provider name
+            if (provider != "SqlClient")
+            {
+            }
+            string connString = myConnectionString.Substring(k + 1).Trim();
+            try
+            {
+                return DbMetaData.GetConnection(provider, connString);
+            }
+            catch
+            {
+                throw new Exception("Error while creating of connection string. Provider: " + provider + "; connectionString: " + connString);
+            }
+        }
+
+        public static void Connection_Open(DbConnection connection)
         {
-          case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fn}");
-          case ".csv": return new CSV.TestCsvConnection(fn);
+            if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
         }
-        throw new Exception("Connection does not define for file type " + extension);
-      }
-
-      int k = myConnectionString.IndexOf(';');
-      if (k <1) throw new Exception("Invalid connection string. ConnectionString must be exist in StandardConnectionDictionary or to be in format  \"<short/long provider namespace>;<connection string>\"");
-      string provider = myConnectionString.Substring(0, k).Trim();// Provider name
-      if (provider != "SqlClient") {
-      }
-      string connString = myConnectionString.Substring(k + 1).Trim();
-      try {
-        return DbMetaData.GetConnection(provider, connString);
-      }
-      catch {
-        throw new Exception("Error while creating of connection string. Provider: " + provider+"; connectionString: " + connString);
-      }
-    }
-    public static string Connection_GetKey(DbConnection conn) {
-      return conn.GetType().FullName + ";" + conn.Database + ";" + conn.DataSource;
-    }
-    public static void Connection_Open(DbConnection connection) {
-      if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
-    }
+        #endregion
 
         #region ==========  Command  =============
+        public static string Command_GetKey(DbCommand cmd) => Connection_GetKey(cmd.Connection) + ";" + cmd.CommandText;
         public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
         {
             var cmd = conn.CreateCommand();
@@ -199,5 +209,5 @@ namespace DGCore.DB {
                 }
             }
         }
-  }
+    }
 }
