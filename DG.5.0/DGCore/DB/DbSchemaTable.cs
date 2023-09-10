@@ -36,7 +36,6 @@ namespace DGCore.DB
 
         private DbSchemaTable(DbCommand cmd)
         {// must be command with parameters (for SqlClient)
-            Dictionary<string, DbSchemaColumnProperty> customColumnProperties = DbSchemaColumnProperty.GetProperties(DbUtils.Command_GetKey(cmd));
             List<string> tableNames = new List<string>();
             using (DataTable dt = DbUtils.GetSchemaTable(cmd))
             {
@@ -84,12 +83,6 @@ namespace DGCore.DB
                         bool isNullable = (bool)dr["AllowDBNull"];
                         bool isPrimaryKey = (bool)dr["IsKey"];
                         DbSchemaColumn column = new DbSchemaColumn(columnName, position, size, dp, type, isNullable, baseTableName, baseColumnName);
-                        if (customColumnProperties != null)
-                        {
-                            DbSchemaColumnProperty customProperty;
-                            customColumnProperties.TryGetValue(columnName, out customProperty);
-                            column._customProperty = customProperty;
-                        }
                         this._columns.Add(column.SqlName, column);
                     }
                     colCnt++;
