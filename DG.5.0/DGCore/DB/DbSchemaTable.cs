@@ -26,7 +26,6 @@ namespace DGCore.DB
         #endregion
 
         #region ================   Instance section  =====================
-        public readonly string _baseTableName = null;
         public Dictionary<string, DbSchemaColumn> _columns = new Dictionary<string, DbSchemaColumn>();
 
         private DbSchemaTable(DbCommand cmd)
@@ -42,7 +41,7 @@ namespace DGCore.DB
                 foreach (DataRow dr in dt.Rows)
                 {
                     position++;
-                    bool isHidden = isColumnHiddenExist && (dr["IsHidden"] == DBNull.Value ? false : (bool)dr["IsHidden"]);
+                    var isHidden = isColumnHiddenExist && (dr["IsHidden"] != DBNull.Value && (bool)dr["IsHidden"]);
                     if (!isHidden)
                     {
                         string columnName = dr["ColumnName"].ToString().ToUpper();
