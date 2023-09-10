@@ -100,17 +100,24 @@ namespace DGCore.DB
 
       _schemaTables.Add(GetDictionaryKey(cmd, connectionKey), this);
 
-      for (int i = 0; i < tableNames.Count; i++)
+      foreach (var tableName in tableNames)
       {
-        var tableName = tableNames[i];
-        var columnDescriptions2 = DbMetaData.GetColumnDescriptions(cmd.Connection, tableName);
-        foreach (var cd in columnDescriptions2)
-        foreach (var column in _columns.Values.Where(c => string.Equals(c.BaseTableName, tableName) && string.Equals(c.SqlName, cd.Key)))
+        var columnDescriptions = DbMetaData.GetColumnDescriptions(cmd.Connection, tableName);
+        if (columnDescriptions != null)
         {
-          string[] ss = cd.Value.Split('^');
-          column._dbDisplayName = ss[0].Trim();
-          if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
-          if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
+          foreach (var cd in columnDescriptions)
+          {
+            var name = tableName;
+            foreach (var column in _columns.Values.Where(c =>
+              string.Equals(c.BaseTableName, name, StringComparison.OrdinalIgnoreCase) &&
+              string.Equals(c.SqlName, cd.Key, StringComparison.OrdinalIgnoreCase)))
+            {
+              var ss = cd.Value.Split('^');
+              column._dbDisplayName = ss[0].Trim();
+              if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
+              if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
+            }
+          }
         }
       }
     }
