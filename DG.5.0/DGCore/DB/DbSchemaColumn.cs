@@ -17,7 +17,6 @@ namespace DGCore.DB {
     string _baseTableName;
     string _baseColumnName;
     public DbSchemaColumn _baseColumn = null;
-    public DbSchemaColumnProperty _customProperty;
 
     public string SqlName { get { return this._sqlName; } }
 //    public string SqlNativeName { get { return this._sqlName; } }
@@ -44,7 +43,6 @@ namespace DGCore.DB {
 
     public string DisplayName {
       get {
-        if (_customProperty != null && !String.IsNullOrEmpty(_customProperty.DisplayName)) return this._customProperty.DisplayName;
         if (!String.IsNullOrEmpty(this._dbDisplayName)) return this._dbDisplayName;
         if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbDisplayName)) return this._baseColumn._dbDisplayName;
         return null;
@@ -54,7 +52,6 @@ namespace DGCore.DB {
 
     public string Description {
       get {
-        if (_customProperty != null && !String.IsNullOrEmpty(_customProperty.Desription)) return this._customProperty.Desription;
         if (!String.IsNullOrEmpty(this._dbDescription)) return this._dbDescription;
         if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbDescription)) return this._baseColumn._dbDescription;
         return null;
@@ -63,7 +60,6 @@ namespace DGCore.DB {
 
     public string DisplayFormat {
       get {
-        if (_customProperty != null && !String.IsNullOrEmpty(_customProperty.DisplayFormat)) return this._customProperty.DisplayFormat;
         if (this.DataType==typeof(Decimal) && this.DecimalPlaces > 0) return "N"+ this.DecimalPlaces.ToString();
         return null;
       }
@@ -71,7 +67,6 @@ namespace DGCore.DB {
 
     public string DbMasterSql {
       get {
-        if (_customProperty != null && !String.IsNullOrEmpty(_customProperty.MasterSql)) return this._customProperty.MasterSql;
         if (!String.IsNullOrEmpty(this._dbMasterSql)) return this._dbMasterSql;
         if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbMasterSql)) return this._baseColumn._dbMasterSql;
         return null;
@@ -83,7 +78,5 @@ namespace DGCore.DB {
       this._baseTableName = null;
       this._baseColumn = null;
     }
-
   }
-
 }
