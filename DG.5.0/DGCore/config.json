@@ -104,6 +104,7 @@
    
   "Menu": {
     "C# app tests": {
+      "SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon"},
       "dbQ2023 -> SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from dbQ2023..SymbolsPolygon"},
       "dbQ2023 -> SymbolsEoddata": {"cs": "dbQ2023", "sql": "select * from dbQ2023Others..SymbolsEoddata"},
       "План рахунків (other db)": {"layoutId": "vcube_mastaccount", "cs": "dbQ2023", "sql": "select * from dbOneSAP_DW..vcube_mastaccount"}
