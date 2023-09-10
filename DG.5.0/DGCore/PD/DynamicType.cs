@@ -35,7 +35,7 @@ namespace DGCore.PD
 
             // Add new type to module
             TypeBuilder tb = _moduleBuilder.DefineType("DynamicType_" + Utils.Tips.GetUniqueNumber().ToString(), TypeAttributes.Public);
-            Dictionary<string, FieldBuilder> fields = new Dictionary<string, FieldBuilder>();
+            Dictionary<string, FieldBuilder> fields = new Dictionary<string, FieldBuilder>(StringComparer.OrdinalIgnoreCase);
             // Add fields
             for (int i = 0; i < propertyNames.Count; i++)
             {
@@ -96,8 +96,8 @@ namespace DGCore.PD
 
             // Add new type to module
             var tb = _moduleBuilder.DefineType("DynamicType_" + Utils.Tips.GetUniqueNumber(), TypeAttributes.Public);
-            Dictionary<string, FieldBuilder> fields = new Dictionary<string, FieldBuilder>();
-            Dictionary<string, PropertyBuilder> properties = new Dictionary<string, PropertyBuilder>();
+            Dictionary<string, FieldBuilder> fields = new Dictionary<string, FieldBuilder>(StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, PropertyBuilder> properties = new Dictionary<string, PropertyBuilder>(StringComparer.OrdinalIgnoreCase);
             // Add fields
             for (int i = 0; i < propertyNames.Count; i++)
             {
@@ -348,11 +348,11 @@ namespace DGCore.PD
                     // Check by name contains
                     for (int i = 0; i < _params.Count; i++)
                     {
-                        string s1 = _params[i].Name.ToUpper();
+                        string s1 = _params[i].Name;
                         int typeCnt = 0;
                         for (int i1 = 0; i1 < _params.Count; i1++)
                         {
-                            if (_params[i1].Name.ToUpper().Contains(s1)) typeCnt++;
+                            if (_params[i1].Name.Contains(s1, StringComparison.OrdinalIgnoreCase)) typeCnt++;
                         }
                         if (typeCnt == 1)
                         {// There is only one parameter with name s1
@@ -360,7 +360,7 @@ namespace DGCore.PD
                             int typeNo = -1;
                             for (int i1 = 0; i1 < _propNames.Count; i1++)
                             {
-                                if (_propNames[i1].ToUpper().Contains(s1))
+                                if (_propNames[i1].Contains(s1, StringComparison.OrdinalIgnoreCase))
                                 {
                                     typeCnt++;
                                     typeNo = i1;

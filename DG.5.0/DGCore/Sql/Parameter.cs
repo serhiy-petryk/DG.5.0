@@ -122,7 +122,7 @@ namespace DGCore.Sql {
   //=========================================================
   public class ParameterStandardValuesConverter : TypeConverter {
 
-    static Dictionary<string, StandardValuesCollection> _cache = new Dictionary<string, StandardValuesCollection>();
+    static Dictionary<string, StandardValuesCollection> _cache = new Dictionary<string, StandardValuesCollection>(StringComparer.OrdinalIgnoreCase);
 
     bool _activated = false;
     StandardValuesCollection _list;
@@ -170,7 +170,7 @@ namespace DGCore.Sql {
     }
     public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context) {
       if (!_activated) {
-        string key = _connectionString.ToUpper() + ";" + _sql.ToUpper().Replace(" ", "");
+        string key = _connectionString + ";" + _sql.Replace(" ", "");
         if (!_cache.ContainsKey(key)) {
           using (DB.DbCmd x = new DB.DbCmd(this._connectionString, this._sql))
           {

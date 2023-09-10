@@ -8,7 +8,8 @@ namespace DGCore.DB {
   public class DbColumnMapElement {
 
     //=============  Static section  ==================
-    private static readonly Dictionary<string, DbColumnMapElement[]> _defaultMaps = new Dictionary<string, DbColumnMapElement[]>();
+    private static readonly Dictionary<string, DbColumnMapElement[]> _defaultMaps =
+        new Dictionary<string, DbColumnMapElement[]>(StringComparer.OrdinalIgnoreCase);
 
     public static DbColumnMapElement[] GetDefaultColumnMap(DbCmd cmd, Type itemType) {
       string key = itemType.FullName + ";" + cmd.Command_Key;

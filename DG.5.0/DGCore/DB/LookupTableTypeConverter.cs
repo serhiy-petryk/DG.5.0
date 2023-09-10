@@ -7,7 +7,7 @@ namespace DGCore.DB
 {
   public static class LookupTableHelper
   {
-    static Dictionary<string, TypeConverter> _cached = new Dictionary<string, TypeConverter>();
+    static Dictionary<string, TypeConverter> _cached = new Dictionary<string, TypeConverter>(StringComparer.OrdinalIgnoreCase);
 
     //    static object dummy = PD.DynTypeSerializator.dummy;
     /*public static TypeConverter GetTypeConverter(Type componentType, BO_LookupTableAttribute attr) {

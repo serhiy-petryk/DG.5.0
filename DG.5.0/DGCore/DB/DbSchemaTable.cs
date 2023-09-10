@@ -43,13 +43,13 @@ namespace DGCore.DB
                     var isHidden = isColumnHiddenExist && (dr["IsHidden"] != DBNull.Value && (bool)dr["IsHidden"]);
                     if (isHidden) continue;
 
-                    var columnName = dr["ColumnName"].ToString().ToUpper();
+                    var columnName = dr["ColumnName"].ToString();
 
                     // Get the basetable name
                     var baseTableName = String.Join(".",
-                        (isColumnBaseCatalogNameExist ? dr["BaseCatalogName"].ToString().ToUpper() : ""),
-                        (isColumnBaseSchemaNameExist ? dr["BaseSchemaName"].ToString().ToUpper() : ""),
-                        dr["BaseTableName"].ToString().ToUpper());
+                        (isColumnBaseCatalogNameExist ? dr["BaseCatalogName"].ToString() : ""),
+                        (isColumnBaseSchemaNameExist ? dr["BaseSchemaName"].ToString() : ""),
+                        dr["BaseTableName"].ToString());
                     if (baseTableName.StartsWith(".")) baseTableName = baseTableName.Remove(0, 1);
                     if (baseTableName.StartsWith(".")) baseTableName = baseTableName.Remove(0, 1);
 
@@ -57,7 +57,7 @@ namespace DGCore.DB
                         !(isColumnBaseSchemaNameExist && dr["BaseSchemaName"].ToString().ToUpper() == "SYS"))
                         tableNames.Add(baseTableName);
 
-                    var baseColumnName = dr["BaseColumnName"].ToString().ToUpper();
+                    var baseColumnName = dr["BaseColumnName"].ToString();
                     // Int16 position = Convert.ToInt16(dr["ColumnOrdinal"]); // "ColumnOrdinal" starts with 0 for SqlServer, or 1 for MySql
                     var type = (Type)dr["DataType"];
                     int size;

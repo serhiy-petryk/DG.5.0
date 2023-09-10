@@ -29,7 +29,7 @@ namespace DGCore.DB
             foreach (var m in MetaDataList)
                 using (var conn = m.GetConnection(null))
                 {
-                    var key = conn.GetType().Namespace.ToUpper();
+                    var key = conn.GetType().Namespace;
                     if (!CacheMetaData.ContainsKey(key))
                     {
                         CacheMetaData.Add(key, m);
@@ -49,7 +49,7 @@ namespace DGCore.DB
         public static string ParameterNamePattern(string dbProviderNamespace) => GetMetaDataObject(dbProviderNamespace).ParameterNamePattern();
         public static Dictionary<string, string> GetColumnDescriptions(DbConnection conn, string tableName) => GetMetaDataObject(conn.GetType().Namespace).ColumnDescriptions(conn, tableName);
 
-        private static DbMetaDataBase GetMetaDataObject(string key) => CacheMetaData[key.ToUpper()];
+        private static DbMetaDataBase GetMetaDataObject(string key) => CacheMetaData[key];
         #endregion
 
         #region ===========  DbMetaDataBase class  ============
@@ -240,7 +240,7 @@ namespace DGCore.DB
                 {
                     var value = reader["Value"].ToString();
                     if (!string.IsNullOrEmpty(value))
-                        dict.Add(((string) reader["Column_Name"]).ToUpper(), value);
+                        dict.Add(((string) reader["Column_Name"]), value);
                 }
 
             return dict;

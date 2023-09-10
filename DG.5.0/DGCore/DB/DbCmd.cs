@@ -21,9 +21,9 @@ namespace DGCore.DB
     public readonly string _sql;
     readonly DbConnection _dbConn;
     public readonly DbCommand _dbCmd;
-    public readonly Dictionary<string, object> _parameters = new Dictionary<string, object>();
+    public readonly Dictionary<string, object> _parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-    public DbCmdKind _cmdKind => _connectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase)
+    public DbCmdKind _cmdKind => _connectionString.StartsWith("File;", StringComparison.OrdinalIgnoreCase)
       ? DbCmdKind.File
       : (_sql.IndexOf(' ') == -1 ? DbCmdKind.Procedure : DbCmdKind.Query);
 

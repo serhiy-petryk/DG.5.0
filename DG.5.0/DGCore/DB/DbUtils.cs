@@ -111,7 +111,7 @@ namespace DGCore.DB
                 {
                     if (flagParameterInfo == 1)
                     {
-                        var parameters = new Dictionary<string, object>();
+                        var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
                         if (!(cmd.Connection is CSV.TestCsvConnection))
                         {
                             foreach (var p in GetParameterNamesFromSqlText(cmd.GetType().Namespace, cmd.CommandText))

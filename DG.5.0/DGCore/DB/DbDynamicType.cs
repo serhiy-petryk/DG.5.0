@@ -6,10 +6,9 @@ namespace DGCore.DB
 {
   public static class DbDynamicType
   {
-    private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
+    private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
 
-    public static Type GetDynamicType(DbCmd cmd, string[] primaryKey,
-      Dictionary<string, AttributeCollection> columnAttributes) =>
+    public static Type GetDynamicType(DbCmd cmd, string[] primaryKey, Dictionary<string, AttributeCollection> columnAttributes) =>
       GetDynamicType(cmd, primaryKey, columnAttributes, false, out var dummy);
 
     public static Type GetDynamicType(DbCmd cmd, string[] primaryKey, Dictionary<string, AttributeCollection> columnAttributes, bool isMasterSql, out string masterPrimaryKeyName)
@@ -38,7 +37,7 @@ namespace DGCore.DB
         List<Type> propertyTypes = new List<Type>();
 
         // Create field definition list
-        Dictionary<string, Attribute[]> customAttributes = new Dictionary<string, Attribute[]>();
+        Dictionary<string, Attribute[]> customAttributes = new Dictionary<string, Attribute[]>(StringComparer.OrdinalIgnoreCase);
         foreach (DbSchemaColumn c in schemaTable.Columns.Values)
         {
           if (c.DisplayName != null && c.DisplayName.StartsWith("--")) continue;
@@ -60,7 +59,7 @@ namespace DGCore.DB
             var lookupConnectionString = attrLookup._connection ?? cmd._connectionString;
             using (DbCmd masterCmd = new DbCmd(lookupConnectionString , attrLookup._sql))
             {
-              var masterSqlPrimaryKeyName = attrLookup._keyMember?.ToUpper();
+              var masterSqlPrimaryKeyName = attrLookup._keyMember;
               Type masterType = null;
               masterType = string.IsNullOrEmpty(masterSqlPrimaryKeyName)
                 ? GetDynamicType(masterCmd, null, null, true, out masterSqlPrimaryKeyName)

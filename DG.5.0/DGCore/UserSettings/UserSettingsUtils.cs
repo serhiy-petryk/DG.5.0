@@ -107,8 +107,8 @@ namespace DGCore.UserSettings
                 return false;
 
             var keys = GetKeysFromDb(o);
-            var s = settingId.ToUpper();
-            var flagExist = keys.Any(s1 => s1.ToUpper() == s);
+            var s = settingId;
+            var flagExist = keys.Any(s1 => string.Equals(s1, s, StringComparison.OrdinalIgnoreCase));
             if (flagExist)
             {
                 if (Shared.ShowMessage($@"Налаштування з кодом '{settingId}' уже існує. Перезаписати його?", "", Enums.MessageBoxButtons.YesNo, Enums.MessageBoxIcon.Warning) != Enums.MessageBoxResult.Yes)
@@ -227,7 +227,7 @@ namespace DGCore.UserSettings
         private enum StorageKind { File, SqlClient };
         private static readonly string PathOrConnection; // In DesignMode equals to null
         private static readonly StorageKind _storageKind =
-        (Misc.AppSettings.settingsStorage.Trim().ToUpper().StartsWith("SQLCLIENT")
+        (Misc.AppSettings.settingsStorage.Trim().StartsWith("SQLCLIENT", StringComparison.OrdinalIgnoreCase)
           ? StorageKind.SqlClient
           : StorageKind.File);
 
