@@ -8,29 +8,24 @@ namespace DGCore.DB
 {
     public class DbSchemaTable
     {
-        // ================   Static section  =====================
-        private static readonly Dictionary<string, DbSchemaTable> _schemaTables =
+        #region ================   Static section  =====================
+        private static readonly Dictionary<string, DbSchemaTable> SchemaTables =
             new Dictionary<string, DbSchemaTable>(); // key=connString+sql; value=dbTable
 
         public static DbSchemaTable GetSchemaTable(DbCommand cmd)
         {
             var key = DbUtils.Command_GetKey(cmd);
-            lock (_schemaTables)
+            lock (SchemaTables)
             {
-                if (!_schemaTables.ContainsKey(key))
-                    _schemaTables.Add(key, new DbSchemaTable(cmd));
+                if (!SchemaTables.ContainsKey(key))
+                    SchemaTables.Add(key, new DbSchemaTable(cmd));
 
-                return _schemaTables[key];
+                return SchemaTables[key];
             }
         }
-        static string GetDictionaryKey(DbCommand cmd, string connectionKey)
-        {
-            if (string.IsNullOrEmpty(connectionKey))
-                return (DbUtils.Connection_GetKey(cmd.Connection) + "#" + cmd.CommandText).ToUpper();
-            return (connectionKey + "#" + cmd.CommandText).ToUpper();
-        }
+        #endregion
 
-        //=======================================================
+        #region ================   Instance section  =====================
         public readonly string _baseTableName = null;
         public Dictionary<string, DbSchemaColumn> _columns = new Dictionary<string, DbSchemaColumn>();
 
@@ -110,5 +105,6 @@ namespace DGCore.DB
                 }
             }
         }
+        #endregion
     }
 }
