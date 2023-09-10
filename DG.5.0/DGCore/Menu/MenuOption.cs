@@ -25,10 +25,8 @@ namespace DGCore.Menu
                 return _dataDefinition;
 
             var attributes = GetAttributesFromDbMetaData(oCS.GetConnectionString(), SqlForColumnAttributes);
-            var objectAttrs =
-              (Columns?.ToDictionary(kvp1 => kvp1.Key, kvp2 => kvp2.Value.Attributes ?? new List<Attribute>(),
-                StringComparer.OrdinalIgnoreCase)) ??
-              new Dictionary<string, List<Attribute>>(StringComparer.OrdinalIgnoreCase);
+            var objectAttrs = (Columns?.ToDictionary(kvp1 => kvp1.Key, kvp2 => kvp2.Value.Attributes ?? new List<Attribute>(),
+                    StringComparer.OrdinalIgnoreCase)) ?? new Dictionary<string, List<Attribute>>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var kvp in attributes)
             {
@@ -65,7 +63,7 @@ namespace DGCore.Menu
             using (var cmd = new DB.DbCmd(connectionString, sql))
             {
                 var tbl = cmd.GetSchemaTable();
-                foreach (var kvp in tbl._columns)
+                foreach (var kvp in tbl.Columns)
                 {
                     var attrs = new List<Attribute>();
                     if (!string.IsNullOrEmpty(kvp.Value.DisplayName))

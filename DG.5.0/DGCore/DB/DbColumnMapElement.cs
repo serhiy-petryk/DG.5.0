@@ -18,7 +18,7 @@ namespace DGCore.DB {
         DbSchemaTable tbl = cmd.GetSchemaTable();
         MethodInfo mi = typeof(DbColumnMapElement).GetMethod("PrepareDefaultColumnMap", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         MethodInfo mi1 = mi.MakeGenericMethod(itemType);
-        DbColumnMapElement[] map = (DbColumnMapElement[])mi1.Invoke(null, new object[] { tbl._columns.Values });
+        DbColumnMapElement[] map = (DbColumnMapElement[])mi1.Invoke(null, new object[] { tbl.Columns.Values });
         _defaultMaps.Add(key, map);
         return map;
       }

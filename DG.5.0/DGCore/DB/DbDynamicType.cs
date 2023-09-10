@@ -19,7 +19,7 @@ namespace DGCore.DB
       if (isMasterSql)
       {
         // Primary key is the first column of MasterSql
-        foreach (DbSchemaColumn column in schemaTable._columns.Values)
+        foreach (DbSchemaColumn column in schemaTable.Columns.Values)
         {
           masterPrimaryKeyName = column.SqlName;
           primaryKey = new string[] { masterPrimaryKeyName };
@@ -39,7 +39,7 @@ namespace DGCore.DB
 
         // Create field definition list
         Dictionary<string, Attribute[]> customAttributes = new Dictionary<string, Attribute[]>();
-        foreach (DbSchemaColumn c in schemaTable._columns.Values)
+        foreach (DbSchemaColumn c in schemaTable.Columns.Values)
         {
           if (c.DisplayName != null && c.DisplayName.StartsWith("--")) continue;
 

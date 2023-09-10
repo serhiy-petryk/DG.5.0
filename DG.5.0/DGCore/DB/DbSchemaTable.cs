@@ -10,7 +10,7 @@ namespace DGCore.DB
     {
         #region ================   Static section  =====================
         private static readonly Dictionary<string, DbSchemaTable> SchemaTables =
-            new Dictionary<string, DbSchemaTable>(); // key=connString+sql; value=dbTable
+            new Dictionary<string, DbSchemaTable>(StringComparer.OrdinalIgnoreCase); // key=connString+sql; value=dbTable
 
         public static DbSchemaTable GetSchemaTable(DbCommand cmd)
         {
@@ -26,7 +26,7 @@ namespace DGCore.DB
         #endregion
 
         #region ================   Instance section  =====================
-        public Dictionary<string, DbSchemaColumn> _columns = new Dictionary<string, DbSchemaColumn>();
+        public Dictionary<string, DbSchemaColumn> Columns = new Dictionary<string, DbSchemaColumn>(StringComparer.OrdinalIgnoreCase);
 
         private DbSchemaTable(DbCommand cmd)
         {// must be command with parameters (for SqlClient)
@@ -74,7 +74,7 @@ namespace DGCore.DB
                     var isNullable = (bool)dr["AllowDBNull"];
                     var isPrimaryKey = (bool)dr["IsKey"];
                     var column = new DbSchemaColumn(columnName, position, size, dp, type, isNullable, baseTableName, baseColumnName);
-                    _columns.Add(column.SqlName, column);
+                    Columns.Add(column.SqlName, column);
                 }
             }
 
@@ -85,7 +85,7 @@ namespace DGCore.DB
                 {
                     foreach (var cd in columnDescriptions)
                     {
-                        foreach (var column in _columns.Values.Where(c =>
+                        foreach (var column in Columns.Values.Where(c =>
                           string.Equals(c.BaseTableName, tableName, StringComparison.OrdinalIgnoreCase) &&
                           string.Equals(c.SqlName, cd.Key, StringComparison.OrdinalIgnoreCase)))
                         {

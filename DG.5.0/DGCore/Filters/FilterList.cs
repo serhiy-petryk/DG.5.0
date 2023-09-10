@@ -20,7 +20,7 @@ namespace DGCore.Filters {
       this._dbProviderNamespace = cmd._dbCmd.GetType().Namespace;
       if (itemType == null) {// do not init new dynamic type while user do not open DGV
         DB.DbSchemaTable tbl = cmd.GetSchemaTable();
-        foreach (DB.DbSchemaColumn col in tbl._columns.Values) {
+        foreach (DB.DbSchemaColumn col in tbl.Columns.Values) {
           if (col.DisplayName != null && col.DisplayName.StartsWith("--")) continue;
           AttributeCollection attrs = null;
           string displayName = null;
