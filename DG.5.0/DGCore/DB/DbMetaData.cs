@@ -143,9 +143,15 @@ namespace DGCore.DB
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)
             {
-                var sql = "SELECT table_name, column_name, column_comment as value FROM INFORMATION_SCHEMA.COLUMNS a " +
-                    "WHERE (TABLE_NAME = @table_name or concat_ws('.', a.TABLE_SCHEMA, a.TABLE_NAME) = @table_name) and ifnull(column_comment, '') <> ''";
-                return GetColumnDescriptionsBySql(conn, sql, tableName);
+                var key = DbUtils.Connection_GetKey(conn) + "#" + tableName;
+                if (!CacheColumnDescriptions.ContainsKey(key))
+                {
+                    var sql =
+                        "SELECT table_name, column_name, column_comment as value FROM INFORMATION_SCHEMA.COLUMNS a " +
+                        "WHERE (TABLE_NAME = @table_name or concat_ws('.', a.TABLE_SCHEMA, a.TABLE_NAME) = @table_name) and ifnull(column_comment, '') <> ''";
+                    CacheColumnDescriptions.Add(key, GetColumnDescriptionsBySql(conn, sql, tableName));
+                }
+                return CacheColumnDescriptions[key];
             }
         }
         #endregion
