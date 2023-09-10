@@ -1,0 +1,27 @@
+According to DB-Engines, in January 2023 the most popular systems on the db-engines.com web site were (https://en.wikipedia.org/wiki/Relational_database):
+==========================================================================================================================================================
+Oracle Database
+MySQL
+Microsoft SQL Server
+PostgreSQL (free software)
+IBM Db2
+Microsoft Access
+SQLite (free software)
+MariaDB (free software)
+Snowflake
+Microsoft Azure SQL Database
+Apache Hive (free software)
+Teradata Vantage
+
+DB-Engines Ranking (https://db-engines.com/en/ranking):
+======================================================
+1.	Oracle detailed information	Relational, Multi-model info	1240.88	-1.22	+2.62
+2.	MySQL detailed information	Relational, Multi-model info	1111.49	-18.97	-100.98
+3.	Microsoft SQL Server detailed information	Relational, Multi-model info	902.22	-18.60	-24.08
+4.	PostgreSQL detailed information	Relational, Multi-model info	620.75	+0.37	+0.29
+5.	MongoDB detailed information	Document, Multi-model info	439.42	+4.93	-50.21
+6.	Redis detailed information	Key-value, Multi-model info	163.68	+0.72	-17.79
+7.	Elasticsearch	Search engine, Multi-model info	138.98	-0.94	-12.46
+8.	IBM Db2	Relational, Multi-model info	136.72	-2.52	-14.67
+9.	SQLite detailed information	Relational	129.20	-0.72	-9.62
+10.	Microsoft Access	Relational	128.56	-1.78	-11.47
