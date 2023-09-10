@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 
@@ -19,6 +20,9 @@ namespace DGCore.DB
         #region ==========  Init section  ============
         private static readonly DbMetaDataBase[] MetaDataList = {new DbMetaData_SqlClient(), new DbMetaData_OleDb(), new DbMetaData_MySqlClient()};
         private static readonly Dictionary<string, DbMetaDataBase> CacheMetaData = new Dictionary<string, DbMetaDataBase>();
+
+        private static readonly Dictionary<string, Dictionary<string, string>> CacheColumnDescriptions =
+            new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
 
         static DbMetaData()
         {
@@ -83,38 +87,48 @@ namespace DGCore.DB
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)
             {
-                // SQL SERVER INFORMATION_SCHEMA list: http://technet.microsoft.com/en-us/library/ms186778(v=sql.90).aspx
-                string sql;
-                if (conn.ServerVersion.StartsWith("08."))
-                {// Sql server 2000
-                    sql = "SELECT i_s.TABLE_NAME, i_s.COLUMN_NAME, s.value FROM INFORMATION_SCHEMA.COLUMNS i_s " +
-                          "INNER JOIN sysproperties s ON s.id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) AND s.smallid = i_s.ORDINAL_POSITION AND s.name = 'MS_Description' " +
-                          "WHERE (i_s.TABLE_NAME=@table_name or (i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME)=@table_name) and OBJECTPROPERTY(OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME), 'IsMsShipped')=0";
-                }
-                else
-                {// Sql server2005(version='09'), sql server 2014 (version='12')
-                 //sql = "SELECT i_s.TABLE_NAME, i_s.COLUMN_NAME, s.value FROM INFORMATION_SCHEMA.COLUMNS i_s " +
-                 //  "INNER JOIN sys.extended_properties s ON s.major_id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) AND s.minor_id = i_s.ORDINAL_POSITION AND s.name = 'MS_Description' " +
-                 //  "WHERE (i_s.TABLE_NAME=@table_name or (i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME)=@table_name) and OBJECTPROPERTY(OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME), 'IsMsShipped')=0";
-                    /*sql = "select st.name [Table_name], sc.name [Column_name], sep.value [Value] from sys.tables st " +
-                          "inner join sys.columns sc on st.object_id = sc.object_id " +
-                          "inner join sys.schemas ss on st.schema_id=ss.schema_id " +
-                          "left join sys.extended_properties sep on st.object_id = sep.major_id " +
-                          "and sc.column_id = sep.minor_id and sep.name = 'MS_Description' " +
-                          "where st.name = @table_name or ss.name+'.'+st.name = @table_name";*/
-                    var names = tableName.Split('.');
-                    var dbName = names.Length == 3 ? names[0] + "." : null;
-                    var ownerName = names.Length > 1 && !string.IsNullOrEmpty(names[names.Length - 2]) ? names[names.Length - 2] : "dbo";
-                    tableName = names[names.Length - 1];
-                    sql = $"select st.name [Table_name], sc.name [Column_name], sep.value [Value] from {dbName}sys.tables st " +
-                          $"inner join {dbName}sys.columns sc on st.object_id = sc.object_id " +
-                          $"inner join {dbName}sys.schemas ss on st.schema_id=ss.schema_id " +
-                          $"left join {dbName}sys.extended_properties sep on st.object_id = sep.major_id " +
-                          $"and sc.column_id = sep.minor_id and sep.name = 'MS_Description' " +
-                          $"where st.name = @table_name and ss.name = '{ownerName}'";
+                var key = DbUtils.Connection_GetKey(conn) + "#" + tableName;
+                if (!CacheColumnDescriptions.ContainsKey(key))
+                {
+                    // SQL SERVER INFORMATION_SCHEMA list: http://technet.microsoft.com/en-us/library/ms186778(v=sql.90).aspx
+                    string sql;
+                    if (conn.ServerVersion.StartsWith("08."))
+                    {
+                        // Sql server 2000
+                        sql = "SELECT i_s.TABLE_NAME, i_s.COLUMN_NAME, s.value FROM INFORMATION_SCHEMA.COLUMNS i_s " +
+                              "INNER JOIN sysproperties s ON s.id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) AND s.smallid = i_s.ORDINAL_POSITION AND s.name = 'MS_Description' " +
+                              "WHERE (i_s.TABLE_NAME=@table_name or (i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME)=@table_name) and OBJECTPROPERTY(OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME), 'IsMsShipped')=0";
+                    }
+                    else
+                    {
+                        // Sql server2005(version='09'), sql server 2014 (version='12')
+                        //sql = "SELECT i_s.TABLE_NAME, i_s.COLUMN_NAME, s.value FROM INFORMATION_SCHEMA.COLUMNS i_s " +
+                        //  "INNER JOIN sys.extended_properties s ON s.major_id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) AND s.minor_id = i_s.ORDINAL_POSITION AND s.name = 'MS_Description' " +
+                        //  "WHERE (i_s.TABLE_NAME=@table_name or (i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME)=@table_name) and OBJECTPROPERTY(OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME), 'IsMsShipped')=0";
+                        /*sql = "select st.name [Table_name], sc.name [Column_name], sep.value [Value] from sys.tables st " +
+                              "inner join sys.columns sc on st.object_id = sc.object_id " +
+                              "inner join sys.schemas ss on st.schema_id=ss.schema_id " +
+                              "left join sys.extended_properties sep on st.object_id = sep.major_id " +
+                              "and sc.column_id = sep.minor_id and sep.name = 'MS_Description' " +
+                              "where st.name = @table_name or ss.name+'.'+st.name = @table_name";*/
+                        var names = tableName.Split('.');
+                        var dbName = names.Length == 3 ? names[0] + "." : null;
+                        var ownerName = names.Length > 1 && !string.IsNullOrEmpty(names[names.Length - 2])
+                            ? names[names.Length - 2]
+                            : "dbo";
+                        tableName = names[names.Length - 1];
+                        sql =
+                            $"select st.name [Table_name], sc.name [Column_name], sep.value [Value] from {dbName}sys.tables st " +
+                            $"inner join {dbName}sys.columns sc on st.object_id = sc.object_id " +
+                            $"inner join {dbName}sys.schemas ss on st.schema_id=ss.schema_id " +
+                            $"left join {dbName}sys.extended_properties sep on st.object_id = sep.major_id " +
+                            $"and sc.column_id = sep.minor_id and sep.name = 'MS_Description' " +
+                            $"where st.name = @table_name and ss.name = '{ownerName}'";
+                    }
+                    CacheColumnDescriptions.Add(key, GetColumnDescriptionsBySql(conn, sql, tableName));
                 }
 
-                return GetColumnDescriptionsBySql(conn, sql, tableName);
+                return CacheColumnDescriptions[key];
             }
         }
         #endregion
@@ -214,7 +228,7 @@ namespace DGCore.DB
 
         private static Dictionary<string, string> GetColumnDescriptionsBySql(DbConnection conn, string sql, string tableName)
         {
-            var dict = new Dictionary<string, string>();
+            var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             using (var cmd = DbUtils.Command_Get(conn, sql, new Dictionary<string, object>{{"@table_name", tableName}}))
             using (var reader = cmd.ExecuteReader())
                 while (reader.Read())

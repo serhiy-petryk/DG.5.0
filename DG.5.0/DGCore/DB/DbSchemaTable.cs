@@ -9,7 +9,8 @@ namespace DGCore.DB
     public class DbSchemaTable
     {
         // ================   Static section  =====================
-        static Dictionary<string, DbSchemaTable> _schemaTables = new Dictionary<string, DbSchemaTable>();// key=connString+tblName; value=dbTable
+        private static readonly Dictionary<string, DbSchemaTable> _schemaTables =
+            new Dictionary<string, DbSchemaTable>(); // key=connString+sql; value=dbTable
 
         public static DbSchemaTable GetSchemaTable(DbCommand cmd, string connectionKey)
         {
