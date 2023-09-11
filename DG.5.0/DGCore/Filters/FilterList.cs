@@ -185,7 +185,7 @@ namespace DGCore.Filters {
         var name = o.Name;// Get saved property name
         foreach (var line in this)
         {
-          if (line.UniqueID == name)
+          if (string.Equals(line.UniqueID, name, StringComparison.InvariantCultureIgnoreCase))
           {// Saved property name exists in current FilterObject == ApplyInfo
             line.Not = o.Not;
             line.IgnoreCase = o.IgnoreCase;
