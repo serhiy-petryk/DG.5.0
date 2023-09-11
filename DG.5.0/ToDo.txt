@@ -1,7 +1,7 @@
-2023-09-06:
+п»ї2023-09-06:
 done: 1. Database adapter -> fetch only column description from database (+ parameter name, column name)
 done: 2. Table definitions -> cache
 done: 3. Upper/lower case for database table/column name.
 4. Refactore DynamicType.Attributes
 5. Bug: Remove value filter in group mode with detail lines -> data reseted to group mode with list of all columns
-6. Bug: Системні дані -> User Settings -> не відображаються усі поля
+6. Bug: РЎРёСЃС‚РµРјРЅС– РґР°РЅС– -> User Settings -> РЅРµ РІС–РґРѕР±СЂР°Р¶Р°СЋС‚СЊСЃСЏ СѓСЃС– РїРѕР»СЏ
