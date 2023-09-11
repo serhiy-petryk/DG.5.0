@@ -303,7 +303,7 @@ namespace DGCore.DGVList
       try
       {
         RefreshDataCore(mode, parameters);
-        ResetBindings(); // Need for sorting visualiztion
+        ResetBindings(); // Need for sorting visualization
       }
       catch (Exception ex)
       {

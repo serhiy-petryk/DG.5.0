@@ -129,6 +129,7 @@ namespace DGView.ViewModels
             if (DGControl.SelectedCells.Count == 1)
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
             Data.A_ClearByValueFilter();
+            SetColumnVisibility();
             OnPropertiesChanged(nameof(IsClearFilterOnValueEnable));
         }
 
