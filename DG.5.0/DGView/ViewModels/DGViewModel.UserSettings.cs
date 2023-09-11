@@ -85,7 +85,7 @@ namespace DGView.ViewModels
             _columns.AddRange(settings.AllColumns);
             for (var k = 0; k < _columns.Count; k++)
             {
-                var dgCol = DGControl.Columns.FirstOrDefault(c => c.SortMemberPath == _columns[k].Id);
+                var dgCol = DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, _columns[k].Id, StringComparison.OrdinalIgnoreCase));
                 if (dgCol == null)
                     _columns.RemoveAt(k--);
                 else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format))
@@ -97,11 +97,11 @@ namespace DGView.ViewModels
             }
             foreach (var col in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
             {
-                var c1 = _columns.FirstOrDefault(c => c.Id == col.SortMemberPath);
+                var c1 = _columns.FirstOrDefault(c => string.Equals(c.Id, col.SortMemberPath, StringComparison.OrdinalIgnoreCase));
                 if (c1 == null)
                     _columns.Add(new Column() { Id = col.SortMemberPath, IsHidden = true });
                 // _columns.Add(new Column() { Id = col.SortMemberPath, DisplayName = col.SortMemberPath.Replace(".", "^"), IsHidden = true });
-                col.CanUserReorder = !_frozenColumns.Contains(col.SortMemberPath);
+                col.CanUserReorder = !_frozenColumns.Contains(col.SortMemberPath, StringComparer.OrdinalIgnoreCase);
             }
 
             // ToDo: reorder columns according frozen columns
@@ -124,7 +124,7 @@ namespace DGView.ViewModels
                 for (var k = 0; k < _columns.Count; k++)
                 {
                     var col = _columns[k];
-                    var dgCol = DGControl.Columns.First(c => c.SortMemberPath == col.Id);
+                    var dgCol = DGControl.Columns.First(c => string.Equals(c.SortMemberPath, col.Id, StringComparison.OrdinalIgnoreCase));
                     if (dgCol.DisplayIndex != colCnt++)
                         dgCol.DisplayIndex = colCnt - 1;
                 }
@@ -178,7 +178,7 @@ namespace DGView.ViewModels
 
                 foreach (var dgCol in DGControl.Columns.OfType<DataGridBoundColumn>().Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
                 {
-                    var col = _columns.FirstOrDefault(c => c.Id == dgCol.SortMemberPath);
+                    var col = _columns.FirstOrDefault(c => string.Equals(c.Id, dgCol.SortMemberPath, StringComparison.OrdinalIgnoreCase));
                     if (col == null)
                         Helpers.DGHelper.SetColumnVisibility(dgCol, false);
                     else
@@ -236,7 +236,7 @@ namespace DGView.ViewModels
             {
                 if (!string.IsNullOrEmpty(c.SortMemberPath))
                 {
-                    var col = _columns.FirstOrDefault(c1 => c1.Id == c.SortMemberPath);
+                    var col = _columns.FirstOrDefault(c1 => string.Equals(c1.Id, c.SortMemberPath, StringComparison.OrdinalIgnoreCase));
                     settings.AllColumns.Add(new Column
                     {
                         Id = c.SortMemberPath,
