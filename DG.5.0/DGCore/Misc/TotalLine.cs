@@ -15,7 +15,7 @@ namespace DGCore.Misc
         {
             foreach (TotalLine tl1 in target)
             {
-                if (source.FirstOrDefault(o => o.Id == tl1.Id) is Common.ITotalLine tl2)
+                if (source.FirstOrDefault(o => string.Equals(o.Id, tl1.Id, StringComparison.OrdinalIgnoreCase)) is Common.ITotalLine tl2)
                     tl1.TotalFunction = tl2.TotalFunction;
                 else
                     tl1.TotalFunction = Common.Enums.TotalFunction.None;
