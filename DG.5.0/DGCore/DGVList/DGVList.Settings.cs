@@ -45,7 +45,7 @@ namespace DGCore.DGVList
       for (var i = 0; i < settingInfo.Groups.Count; i++)
       {
         var item = settingInfo.Groups[i];
-        var pd = Properties[item.Id];
+        var pd = Properties.Find(item.Id, true);
         if (pd != null)
         {
           Groups.Add(new ListSortDescription(pd, item.SortDirection));
@@ -56,7 +56,7 @@ namespace DGCore.DGVList
             var savedSortOfGroup = settingInfo.SortsOfGroup[i];
             foreach (var x in savedSortOfGroup)
             {
-              var pd1 = Properties[x.Id];
+              var pd1 = Properties.Find(x.Id, true);
               if (pd1 != null)
                 sortOfGroup.Add(new ListSortDescription(pd1, x.SortDirection));
             }
@@ -71,8 +71,8 @@ namespace DGCore.DGVList
 
       // Restore sorts columns
       Sorts.Clear();
-      Sorts.AddRange(settingInfo.Sorts.Where(item => Properties[item.Id] != null)
-        .Select(item => new ListSortDescription(Properties[item.Id], item.SortDirection)));
+      Sorts.AddRange(settingInfo.Sorts.Where(item => Properties.Find(item.Id, true) != null)
+        .Select(item => new ListSortDescription(Properties.Find(item.Id, true), item.SortDirection)));
 
       // Restore totals
       Misc.TotalLine.ApplySettings(TotalLines, settingInfo.TotalLines);
