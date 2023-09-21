@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -43,6 +44,14 @@ namespace DGView.Controls
             DataContext = ViewModel;
             VirtualizingPanel.SetVirtualizationMode(this, VirtualizationMode.Recycling);
         }
+
+        #region =======  Public methods  ============
+        public void RepaintRows()
+        {
+            foreach (var row in this.GetVisualChildren().OfType<DataGridRow>())
+                OnRowIsReady(row);
+        }
+        #endregion
 
         #region =======  Override methods  ============
         protected override void OnLoadingRow(DataGridRowEventArgs e)
