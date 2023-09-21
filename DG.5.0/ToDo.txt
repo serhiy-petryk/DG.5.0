@@ -10,4 +10,7 @@ done: 6. Bug: Системні дані -> User Settings -> не відобра�
 done: 7. Bug: compare План рахунків -> Check upper/lower case for group/properties in DGVList
 8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 not possible (see fast filter): 9. Clear filter by value in group mode: don't collapse rows
-10. Global: FastFilter/ClearFilterByValue in group mode -> don't collapse grid rows 
+10. Global: FastFilter/ClearFilterByValue/Show-hide grid in group mode -> don't collapse grid rows 
+
+2023-09-21
+11. Show/hide grid action -> remove refresh data grid & collapsing of detail lines in group mode
