@@ -25,36 +25,25 @@ namespace DGCore.DB
             //         @"system.data.Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
             //         @"T:\Data\DBQ\mdb.day\testDB.mdb"
 
-            if (File.Exists(myConnectionString))
-            {// file name
-                string extension = Path.GetExtension(myConnectionString).ToLower();
-                switch (extension)
-                {
-                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={myConnectionString}");
-                    case ".csv": return new CSV.TestCsvConnection(myConnectionString);
-                }
-                throw new Exception("Connection does not define for file type " + extension);
-            }
-
-            if (myConnectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase) && File.Exists(myConnectionString.Substring(5)))
-            {// file (csv, json, ...)
-                string fn = myConnectionString.Substring(5);
-                string extension = Path.GetExtension(fn).ToLower();
-                switch (extension)
-                {
-                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fn}");
-                    case ".csv": return new CSV.TestCsvConnection(fn);
-                }
-                throw new Exception("Connection does not define for file type " + extension);
-            }
-
-            int k = myConnectionString.IndexOf(';');
-            if (k < 1) throw new Exception("Invalid connection string. ConnectionString must be exist in StandardConnectionDictionary or to be in format  \"<short/long provider namespace>;<connection string>\"");
-            string provider = myConnectionString.Substring(0, k).Trim();// Provider name
-            if (provider != "SqlClient")
+            var filename = File.Exists(myConnectionString) ? myConnectionString : null;
+            if (filename == null && myConnectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase) && File.Exists(myConnectionString.Substring(5)))
+                filename = myConnectionString.Substring(5);
+            if (filename != null)
             {
+                var extension = Path.GetExtension(filename).ToLower();
+                switch (extension)
+                {
+                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={filename}");
+                    case ".csv": return new CSV.TestCsvConnection(filename);
+                }
+                throw new Exception("Can't define data connection for file type " + extension);
             }
-            string connString = myConnectionString.Substring(k + 1).Trim();
+
+            var k = myConnectionString.IndexOf(';');
+            if (k < 1) throw new Exception("Invalid connection string. ConnectionString must be exist in StandardConnectionDictionary or to be in format  \"<short/long provider namespace>;<connection string>\"");
+
+            var provider = myConnectionString.Substring(0, k).Trim();
+            var connString = myConnectionString.Substring(k + 1).Trim();
             try
             {
                 return DbMetaData.GetConnection(provider, connString);
