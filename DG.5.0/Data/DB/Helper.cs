@@ -4,10 +4,11 @@ using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.IO;
+using System.Text.RegularExpressions;
 
-namespace Data.Helpers
+namespace Data.DB
 {
-    public static class Db
+    public static class Helper
     {
         #region =========  Connection  ==========
 
@@ -42,7 +43,7 @@ namespace Data.Helpers
             var connString = myConnectionString.Substring(k + 1).Trim();
             try
             {
-                return DbMetaData.GetConnection(provider, connString);
+                return Helpers.DbMetaData.GetConnection(provider, connString);
             }
             catch
             {
@@ -82,7 +83,10 @@ namespace Data.Helpers
             }
         }
 
-        public static void AdjustParameters(DbCommand cmd)
+        #endregion
+
+        #region ==========  Schema Table  ============
+        private static void AdjustParameters(DbCommand cmd)
         {
             foreach (DbParameter par in cmd.Parameters)
             {
@@ -122,7 +126,78 @@ namespace Data.Helpers
                 }
             }
         }
+        private static string[] GetParameterNamesFromSqlText(string dbProviderNamespace, string sql)
+        {
+            var parameterNames = new List<string>();
+            var parameterNamesInUpper = new List<string>();
+            Regex r = new Regex(Helpers.DbMetaData.ParameterNamePattern(dbProviderNamespace), RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            MatchCollection matches = r.Matches(sql);
+            foreach (Match match in matches)
+            {
+                if (!parameterNamesInUpper.Contains(match.Value.ToUpper()))
+                {
+                    parameterNamesInUpper.Add(match.Value.ToUpper());
+                    parameterNames.Add(match.Value);
+                }
+            }
+            return parameterNames.ToArray();
+        }
         #endregion
 
+        #region ==========  Schema Table  ============
+        public static DataTable GetSchemaTable(DbCommand cmd)
+        {
+            // SqlClient needs to fill cmd with parameters; OracleClient&OleDb - does not need  
+            Connection_Open(cmd.Connection);
+            var flagParameterInfo = 0;
+            var error = false;
+            while (flagParameterInfo < 2)
+            {
+                try
+                {
+                    if (flagParameterInfo == 1)
+                    {
+                        var parameters = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+                        if (!(cmd.Connection is CSV.TestCsvConnection))
+                        {
+                            foreach (var p in GetParameterNamesFromSqlText(cmd.GetType().Namespace, cmd.CommandText))
+                                parameters.Add(p, DBNull.Value);
+                            Command_SetParameters(cmd, parameters);
+                        }
+                    }
+                    using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
+                    {
+                        var dt = reader.GetSchemaTable();
+                        reader.Close();
+                        if (dt == null)
+                        {
+                            try
+                            {
+                                using (var reader1 = cmd.ExecuteReader())
+                                    reader1.Read();
+                            }
+                            catch (Exception ex)
+                            {
+                                error = true;
+                                throw new Exception("Invalid SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
+                            }
+                            error = true;
+                            throw new Exception("Invalid SQL statement: " + cmd.CommandText);
+                        }
+                        // dt.ExtendedProperties.Add("ParameterNames", parameterNames);
+                        return dt;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (error) throw; // return earlier error
+                    if (flagParameterInfo > 0) throw new Exception("Can not get Schema for SQL statement: " + cmd.CommandText + Environment.NewLine + ex.Message);
+                    flagParameterInfo++;
+                }
+            }
+            return null;
+        }
+
+        #endregion
     }
 }
