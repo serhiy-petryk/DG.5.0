@@ -4,7 +4,6 @@ using System.Data.Common;
 
 namespace DGCore.DB
 {
-
     public static partial class DbMetaData
     {
         //To Do: 

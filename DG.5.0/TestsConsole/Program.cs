@@ -1,4 +1,5 @@
 ﻿using System;
+using TestsConsole.DataTests;
 
 namespace TestsConsole
 {
@@ -6,8 +7,9 @@ namespace TestsConsole
     {
         static void Main(string[] args)
         {
-            TestsConsole.Data.MdbMetaData.Run();
-            // Console.WriteLine("Hello World!");
+            // MdbMetaData.Run();
+
+            DataProjectTests.SchemaTableTest();
         }
     }
 }
