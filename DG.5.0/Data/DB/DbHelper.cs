@@ -85,7 +85,7 @@ namespace Data.DB
 
         #endregion
 
-        #region ==========  Schema Table  ============
+        #region ==========  Parameters  ============
         private static void AdjustParameters(DbCommand cmd)
         {
             foreach (DbParameter par in cmd.Parameters)
