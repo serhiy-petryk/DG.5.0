@@ -16,7 +16,6 @@ namespace Data.DB
         public readonly bool _isNullable;
         string _baseTableName;
         string _baseColumnName;
-        public DbSchemaColumn _baseColumn = null;
 
         public string SqlName { get { return this._sqlName; } }
         //    public string SqlNativeName { get { return this._sqlName; } }
@@ -48,7 +47,6 @@ namespace Data.DB
             get
             {
                 if (!String.IsNullOrEmpty(this._dbDisplayName)) return this._dbDisplayName;
-                if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbDisplayName)) return this._baseColumn._dbDisplayName;
                 return null;
                 //        return this._sqlName;
             }
@@ -59,7 +57,6 @@ namespace Data.DB
             get
             {
                 if (!String.IsNullOrEmpty(this._dbDescription)) return this._dbDescription;
-                if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbDescription)) return this._baseColumn._dbDescription;
                 return null;
             }
         }
@@ -78,7 +75,6 @@ namespace Data.DB
             get
             {
                 if (!String.IsNullOrEmpty(this._dbMasterSql)) return this._dbMasterSql;
-                if (this._baseColumn != null && !String.IsNullOrEmpty(this._baseColumn._dbMasterSql)) return this._baseColumn._dbMasterSql;
                 return null;
             }
         }
@@ -87,7 +83,6 @@ namespace Data.DB
         {
             this._baseColumnName = null;
             this._baseTableName = null;
-            this._baseColumn = null;
         }
     }
 }
