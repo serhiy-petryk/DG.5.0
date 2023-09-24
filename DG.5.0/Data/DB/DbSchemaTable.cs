@@ -26,7 +26,7 @@ namespace Data.DB
         #endregion
 
         #region ================   Instance section  =====================
-        public Dictionary<string, DbSchemaColumn> Columns = new Dictionary<string, DbSchemaColumn>(StringComparer.OrdinalIgnoreCase);
+        public Dictionary<int, DbSchemaColumn> Columns = new Dictionary<int, DbSchemaColumn>();
 
         private DbSchemaTable(DbCommand cmd)
         {// must be command with parameters (for SqlClient)
@@ -74,7 +74,7 @@ namespace Data.DB
                     var isNullable = (bool)dr["AllowDBNull"];
                     var isPrimaryKey = (bool)dr["IsKey"];
                     var column = new DbSchemaColumn(columnName, position, size, dp, type, isNullable, baseTableName, baseColumnName);
-                    Columns.Add(column.SqlName, column);
+                    Columns.Add(column.Id, column);
                 }
             }
 
@@ -87,12 +87,12 @@ namespace Data.DB
                     {
                         foreach (var column in Columns.Values.Where(c =>
                           string.Equals(c.BaseTableName, tableName, StringComparison.OrdinalIgnoreCase) &&
-                          string.Equals(c.SqlName, cd.Key, StringComparison.OrdinalIgnoreCase)))
+                          string.Equals(c.BaseColumnName, cd.Key, StringComparison.OrdinalIgnoreCase)))
                         {
                             var ss = cd.Value.Split('^');
-                            column._dbDisplayName = ss[0].Trim();
-                            if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
-                            if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
+                            column.DisplayName = ss[0].Trim();
+                            if (ss.Length >= 2) column.Description = ss[1].Trim();
+                            if (ss.Length >= 3) column.DbMasterSql = ss[2].Trim();
                         }
                     }
                 }

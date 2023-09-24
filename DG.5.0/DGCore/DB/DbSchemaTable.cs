@@ -87,7 +87,7 @@ namespace DGCore.DB
                     {
                         foreach (var column in Columns.Values.Where(c =>
                           string.Equals(c.BaseTableName, tableName, StringComparison.OrdinalIgnoreCase) &&
-                          string.Equals(c.SqlName, cd.Key, StringComparison.OrdinalIgnoreCase)))
+                          string.Equals(c.BaseColumnName, cd.Key, StringComparison.OrdinalIgnoreCase)))
                         {
                             var ss = cd.Value.Split('^');
                             column._dbDisplayName = ss[0].Trim();

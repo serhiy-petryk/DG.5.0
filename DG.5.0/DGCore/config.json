@@ -104,7 +104,8 @@
    
   "Menu": {
     "C# app tests": {
-      "Test db schema": {"cs": "dbQ2023", "sql": "select b.altacc altacc1, * from dbOneSAP_DW..mast_coa a left join dbOneSAP_DW..mast_coa_alt b on a.altacc = b.altacc"},
+      "Test db schema": {"cs": "dbQ2023", "sql": "select b.altacc altacc1, a.*, b.altacc AltAcc2 from [dbOneSAP_DW].[dbo].mast_coa a left join dbOneSAP_DW..[mast_coa_alt] b on a.altacc = b.altacc"},
+      "Test db schema (columns with the same name)": {"cs": "dbQ2023", "sql": "select b.altacc altacc1, * from dbOneSAP_DW..mast_coa a left join dbOneSAP_DW..mast_coa_alt b on a.altacc = b.altacc"},
       "SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon"},
       "dbQ2023 -> SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from dbQ2023..SymbolsPolygon"},
       "dbQ2023 -> SymbolsEoddata": {"cs": "dbQ2023", "sql": "select * from dbQ2023Others..SymbolsEoddata"},
