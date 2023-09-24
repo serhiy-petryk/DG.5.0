@@ -82,7 +82,7 @@ namespace Data.Helpers
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)
             {
-                var key = Data.DB.Helper.Connection_GetKey(conn) + "#" + tableName;
+                var key = DB.DbHelper.Connection_GetKey(conn) + "#" + tableName;
                 if (!CacheColumnDescriptions.ContainsKey(key))
                 {
                     // SQL SERVER INFORMATION_SCHEMA list: http://technet.microsoft.com/en-us/library/ms186778(v=sql.90).aspx
@@ -137,7 +137,7 @@ namespace Data.Helpers
             public override string ParameterNamePattern() => @"@[\p{Lo}\p{Lu}\p{Ll}\p{Lm}_@#][\p{Lo}\p{Lu}\p{Ll}\p{Lm}\p{Nd}\uff3f_@#\$]*(?=\s+|$)";
             public override Dictionary<string, string> ColumnDescriptions(DbConnection conn, string tableName)
             {
-                var key = Data.DB.Helper.Connection_GetKey(conn) + "#" + tableName;
+                var key = DB.DbHelper.Connection_GetKey(conn) + "#" + tableName;
                 if (!CacheColumnDescriptions.ContainsKey(key))
                 {
                     var sql = "SELECT table_name, column_name, column_comment as value FROM INFORMATION_SCHEMA.COLUMNS a " +
@@ -228,7 +228,7 @@ namespace Data.Helpers
         private static Dictionary<string, string> GetColumnDescriptionsBySql(DbConnection conn, string sql, string tableName)
         {
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            using (var cmd = Data.DB.Helper.Command_Get(conn, sql, new Dictionary<string, object>{{"@table_name", tableName}}))
+            using (var cmd = DB.DbHelper.Command_Get(conn, sql, new Dictionary<string, object>{{"@table_name", tableName}}))
             using (var reader = cmd.ExecuteReader())
                 while (reader.Read())
                 {

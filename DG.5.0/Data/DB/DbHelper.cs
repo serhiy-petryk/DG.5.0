@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Data.DB
 {
-    public static class Helper
+    public static class DbHelper
     {
         #region =========  Connection  ==========
 

@@ -30,7 +30,6 @@ namespace Data.DB
         //===============
         public DbSchemaColumn(string name, Int16 position, int size, byte dp, Type type, bool isNullable, string baseTableName, string baseColumnName)
         {
-
             this._sqlName = name; this._position = position; this._size = size; this._dp = dp;
             this._type = type; this._isNullable = isNullable;
             this._baseTableName = baseTableName; this._baseColumnName = baseColumnName;
