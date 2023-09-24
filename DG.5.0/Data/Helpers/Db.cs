@@ -1,0 +1,128 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.OleDb;
+using System.IO;
+
+namespace Data.Helpers
+{
+    public static class Db
+    {
+        #region =========  Connection  ==========
+
+        public static string Connection_GetKey(DbConnection conn) =>
+            conn.GetType().FullName + ";" + conn.Database + ";" + conn.DataSource;
+
+        public static DbConnection Connection_Get(string myConnectionString)
+        {
+            // myConnectionString format: filename or "short/long provider namespace;connection string"
+            // Example: @"Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
+            //         @"system.data.Oledb;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=T:\Data\DBQ\mdb.day\testDB.mdb"
+            //         @"T:\Data\DBQ\mdb.day\testDB.mdb"
+
+            var filename = File.Exists(myConnectionString) ? myConnectionString : null;
+            if (filename == null && myConnectionString.StartsWith("File;", StringComparison.InvariantCultureIgnoreCase) && File.Exists(myConnectionString.Substring(5)))
+                filename = myConnectionString.Substring(5);
+            if (filename != null)
+            {
+                var extension = Path.GetExtension(filename).ToLower();
+                switch (extension)
+                {
+                    case ".mdb": return new OleDbConnection($@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={filename}");
+                    case ".csv": return new CSV.TestCsvConnection(filename);
+                }
+                throw new Exception("Can't define data connection for file type " + extension);
+            }
+
+            var k = myConnectionString.IndexOf(';');
+            if (k < 1) throw new Exception("Invalid connection string. ConnectionString must be exist in StandardConnectionDictionary or to be in format  \"<short/long provider namespace>;<connection string>\"");
+
+            var provider = myConnectionString.Substring(0, k).Trim();
+            var connString = myConnectionString.Substring(k + 1).Trim();
+            try
+            {
+                return DbMetaData.GetConnection(provider, connString);
+            }
+            catch
+            {
+                throw new Exception("Error while creating of connection string. Provider: " + provider + "; connectionString: " + connString);
+            }
+        }
+
+        public static void Connection_Open(DbConnection connection)
+        {
+            if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
+        }
+        #endregion
+
+        #region ==========  Command  =============
+        public static string Command_GetKey(DbCommand cmd) => Connection_GetKey(cmd.Connection) + ";" + cmd.CommandText;
+        public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
+        {
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.CommandType = sql.IndexOf(' ') == -1 ? CommandType.StoredProcedure : CommandType.Text;
+            Command_SetParameters(cmd, parameters);
+            return cmd;
+        }
+        public static void Command_SetParameters(DbCommand cmd, Dictionary<string, object> parameters)
+        {
+            cmd.Parameters.Clear();
+            if (parameters != null)
+            {
+                foreach (var kvp in parameters)
+                {
+                    var par = cmd.CreateParameter();
+                    par.ParameterName = kvp.Key;
+                    par.Value = kvp.Value;
+                    cmd.Parameters.Add(par);
+                }
+                AdjustParameters(cmd);
+            }
+        }
+
+        public static void AdjustParameters(DbCommand cmd)
+        {
+            foreach (DbParameter par in cmd.Parameters)
+            {
+                if (par.Value == null || par.Value == DBNull.Value)
+                {
+                    par.Value = DBNull.Value;
+                    //          par.DbType = DbType.String;
+                    //          par.DbType = DbType.DateTime;
+                    if (par.DbType == DbType.String) par.Size = 1;
+                    return;
+                }
+                if (par.Value is DateTime && ((DateTime)par.Value) == new DateTime(0))
+                {
+                    par.Value = DBNull.Value;
+                    return;
+                }
+                if ((par.Value is double) && (double.IsNaN((double)par.Value)))
+                {
+                    par.Value = DBNull.Value;
+                    par.DbType = DbType.Double;
+                    return;
+                }
+                if ((par.Value is float) && (float.IsNaN((float)par.Value)))
+                {
+                    par.Value = DBNull.Value;
+                    par.DbType = DbType.Single;
+                    return;
+                }
+                //        par.Value = value;
+                par.DbType = par.DbType;//нужно явно указать тип параметра
+                if (par.DbType == DbType.String)
+                {
+                    if (par.Value is string)
+                    {
+                        par.Size = Math.Max(1, ((string)par.Value).Length);
+                    }
+                }
+            }
+        }
+        #endregion
+
+    }
+}
