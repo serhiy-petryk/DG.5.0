@@ -14,3 +14,10 @@ not possible (see fast filter): 9. Clear filter by value in group mode: don't co
 
 2023-09-21
 done: 11. Show/hide grid action -> remove refresh data grid & collapsing of detail lines in group mode
+
+2023-09-22
+12. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
+13. MemberDescriptor: remove DbNullValue property
+14. MemberDescriptor: remove Format property
+14. MemberDescriptor: remove Alignment property
+
