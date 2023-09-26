@@ -53,7 +53,11 @@ namespace Data.DB
 
         public static void Connection_Open(DbConnection connection)
         {
-            if ((ConnectionState.Open & connection.State) == ConnectionState.Closed) connection.Open();
+            while (connection.State.HasFlag(ConnectionState.Connecting))
+                System.Threading.Thread.Sleep(100);
+
+            if (!connection.State.HasFlag(ConnectionState.Open))
+                connection.Open();
         }
         #endregion
 
@@ -86,7 +90,7 @@ namespace Data.DB
         #endregion
 
         #region ==========  Parameters  ============
-        private static void AdjustParameters(DbCommand cmd)
+        internal static void AdjustParameters(DbCommand cmd)
         {
             foreach (DbParameter par in cmd.Parameters)
             {
