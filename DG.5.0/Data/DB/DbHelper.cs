@@ -12,7 +12,7 @@ namespace Data.DB
     {
         #region =========  Connection  ==========
 
-        public static string Connection_GetKey(DbConnection conn) =>
+        public static string Connection_GetKey(this DbConnection conn) =>
             conn.GetType().FullName + ";" + conn.Database + ";" + conn.DataSource;
 
         public static DbConnection Connection_Get(string myConnectionString)
@@ -51,7 +51,7 @@ namespace Data.DB
             }
         }
 
-        public static void Connection_Open(DbConnection connection)
+        public static void Connection_Open(this DbConnection connection)
         {
             while (connection.State.HasFlag(ConnectionState.Connecting))
                 System.Threading.Thread.Sleep(100);
@@ -62,7 +62,7 @@ namespace Data.DB
         #endregion
 
         #region ==========  Command  =============
-        public static string Command_GetKey(DbCommand cmd) => Connection_GetKey(cmd.Connection) + ";" + cmd.CommandText;
+        public static string Command_GetKey(this DbCommand cmd) => Connection_GetKey(cmd.Connection) + ";" + cmd.CommandText;
         public static DbCommand Command_Get(DbConnection conn, string sql, Dictionary<string, object> parameters)
         {
             var cmd = conn.CreateCommand();

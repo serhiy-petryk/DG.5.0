@@ -18,6 +18,7 @@ namespace Data.DB
         public string DisplayName { get; internal set; }
         public string Description { get; internal set; }
         public string DbMasterSql { get; internal set; }
+        public string DisplayFormat { get; internal set; }
         //===============
         public DbSchemaColumn(string name, Int16 position, int size, byte dp, Type type, bool isNullable, string baseTableName, string baseColumnName)
         {

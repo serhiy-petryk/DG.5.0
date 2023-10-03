@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -63,6 +64,34 @@ namespace Data.DB
                 _dbCmd.Parameters.Add(par);
             }
             DbHelper.AdjustParameters(_dbCmd);
+        }
+
+        public DbSchemaTable GetSchemaTable() => DbSchemaTable.GetSchemaTable(_dbCmd);
+
+        // fill dictionary - is simplest; user must create more complex fill separate
+        public void Fill<KeyType, ItemType>(IDictionary data, Delegate keyFunction, DbColumnMapElement[] columnMap)
+        {
+            Func<ItemType, KeyType> keyFunc = (Func<ItemType, KeyType>)keyFunction;
+            Func<DbDataReader, ItemType> func = DbReaderHelper.GetDelegate_FromDataReaderToObject<ItemType>(this, columnMap);
+
+            DbHelper.Connection_Open(_dbConn);
+            using (DbDataReader reader = this._dbCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    try
+                    {
+                        ItemType item = func(reader);
+                        data.Add(keyFunc(item), item);
+                    }
+                    catch (Exception exception)
+                    {
+                        object[] values = new object[reader.FieldCount];
+                        reader.GetValues(values);
+                        throw;
+                    }
+                }
+            }
         }
 
         #region Interface Members
