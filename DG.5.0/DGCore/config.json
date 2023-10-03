@@ -108,6 +108,8 @@
       "Test db schema (column name has space)": {"cs": "oneSAPConn", "sql": "select b.altacc \"123 alt acc 1\", a.*, b.altacc AltAcc2 from [dbOneSAP_DW].[dbo].mast_coa a left join dbOneSAP_DW..[mast_coa_alt] b on a.altacc = b.altacc"},
       "Test db schema (columns with the same name)": {"cs": "oneSAPConn", "sql": "select b.altacc altacc1, * from dbOneSAP_DW..mast_coa a left join dbOneSAP_DW..mast_coa_alt b on a.altacc = b.altacc"},
       "SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon"},
+      "SymbolsPolygon clone": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon",
+        "columns": {"Type": { "label": "CustomLabel" }}},
       "dbQ2023 -> SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from dbQ2023..SymbolsPolygon"},
       "dbQ2023 -> SymbolsEoddata": {"cs": "dbQ2023", "sql": "select * from dbQ2023Others..SymbolsEoddata"},
       "План рахунків (other db)": {"layoutId": "vcube_mastaccount", "cs": "dbQ2023", "sql": "select * from dbOneSAP_DW..vcube_mastaccount"}
