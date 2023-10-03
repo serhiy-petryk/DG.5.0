@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 using DGCore.DGVList;
@@ -26,6 +27,23 @@ namespace DGView.Helpers
             if (Equals(value, true)) return ListSortDirection.Descending;
             throw new NotImplementedException();
         }
+    }
+
+    public class ByteArrayToHexStringConverter : IValueConverter
+    {
+        public static ByteArrayToHexStringConverter Instance = new ByteArrayToHexStringConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (Equals(value, null)) return null;
+
+            var bb = (byte[])value;
+            var hex = new StringBuilder("0x", bb.Length * 2 + 2);
+            foreach (var b in bb)
+                hex.AppendFormat("{0:X2}", b);
+            return hex.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
     public class DGDateTimeConverter : IValueConverter

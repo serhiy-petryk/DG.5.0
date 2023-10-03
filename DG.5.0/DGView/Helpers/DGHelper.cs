@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using DGCore.Common;
 using DGCore.Helpers;
 using DGCore.PD;
@@ -161,7 +162,7 @@ namespace DGView.Helpers
                 {
                     var template = TemplateGenerator.CreateDataTemplate(() =>
                         {
-                            var result = new Image {Margin = new Thickness(1)};
+                            var result = new Image {Margin = new Thickness(1), Stretch = pd.Name == "Picture" ? Stretch.UniformToFill : Stretch.None };
                             result.SetBinding(Image.SourceProperty, pd.Name);
                             return result;
                         }
@@ -177,11 +178,18 @@ namespace DGView.Helpers
                     if (pd.IsReadOnly)
                         binding.Mode = BindingMode.OneWay;
                     var format = ((IMemberDescriptor)pd).Format;
+
+                    var f = viewModel.Formats.Where(kvp => kvp.Key == pd.Name).Select(kvp=>kvp.Value).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(f))
+                        format = f;
+
                     // format = "N1";
                     if (!string.IsNullOrEmpty(format))
                         binding.StringFormat = format;
                     else if (Types.GetNotNullableType(pd.PropertyType) == typeof(DateTime)) // set smart format for DateTime
                         binding.Converter = DGDateTimeConverter.Instance;
+                    //else if (pd.Name == "Picture")
+                      //  binding.Converter = BytesToHexStringConverter.Instance;
                     boundColumn.Binding = binding;
                 }
 

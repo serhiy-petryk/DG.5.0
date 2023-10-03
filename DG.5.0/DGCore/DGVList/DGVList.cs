@@ -9,6 +9,7 @@ namespace DGCore.DGVList
 {
   public partial class DGVList<TItem> : BindingList<object>, IDGVList
   {
+      public Dictionary<string, string> Formats { get; } = new Dictionary<string, string>();
     public PropertyDescriptorCollection Properties => UnderlyingData.Properties;
     public Sql.DataSourceBase UnderlyingData { get; }
     public List<ListSortDescription> Sorts { get; } = new List<ListSortDescription>();
@@ -90,6 +91,12 @@ namespace DGCore.DGVList
         .Select(pd => new Misc.TotalLine(pd)).ToArray();
 
       UnderlyingData.DataStatusChangedEvent += OnUnderlyingData_DataStatusChangedHandler;
+
+      foreach (PropertyDescriptor p in Properties)
+      {
+          if (p.PropertyType == typeof(decimal))
+              Formats.Add(p.Name, "N5");
+      }
     }
 
     private void OnUnderlyingData_DataStatusChangedHandler(object sender, Sql.DataSourceBase.SqlDataEventArgs e) => DataStateChanged?.Invoke(this, e);
