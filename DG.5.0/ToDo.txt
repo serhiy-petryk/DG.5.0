@@ -22,12 +22,12 @@ done: 14. MemberDescriptor: remove Format property
 done: 14. MemberDescriptor: remove Alignment property
 
 2023-10-03
-15. Remove DbColumnMap
+needed for data fetch: 15. Remove DbColumnMap
 not need: 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Convertor/Alignment/..)
 
 2023-10-05
 done: 17. Clear MemberDescriptor.cs
 18. Smart format for byte array: Picture/hex string, ..
 19. Check Helpers.DGCellValueFormatter -> check format/converters -> must be the same as DGHelper.GenerateColumns
-20. DbSchemaColumn -> use uniqueId
-21. UniqueId -> use from Constant.cs
+done: 20. DbSchemaColumn -> use uniqueId
+not need: 21. UniqueId -> use from Constant.cs
