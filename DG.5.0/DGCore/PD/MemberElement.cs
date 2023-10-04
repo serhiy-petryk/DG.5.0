@@ -70,7 +70,6 @@ namespace DGCore.PD
         {
           if (o is BrowsableAttribute) _tokenIsBrowsable = ((BrowsableAttribute)o).Browsable;
           else if (o is DisplayNameAttribute) _tokenDisplayName = ((DisplayNameAttribute)o).DisplayName;
-          else if (o is Common.BO_DisplayNameAttribute) _tokenDisplayName = ((Common.BO_DisplayNameAttribute)o).DisplayName;
           else if (o is Common.BO_LookupTableAttribute)
           {
             //            LookupTableHelper.InitLookupTableTypeConverter( _tokenDisplayName = ((BO_DisplayNameAttribute)o).DisplayName;
