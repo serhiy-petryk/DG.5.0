@@ -2,7 +2,7 @@
 done: 1. Database adapter -> fetch only column description from database (+ parameter name, column name)
 done: 2. Table definitions -> cache
 done: 3. Upper/lower case for database table/column name.
-4. Refactore DynamicType.Attributes
+done: 4. Refactore DynamicType.Attributes
 done: 5. Bug: Remove value filter in group mode with detail lines -> data reseted to group mode with list of all columns
 done: 6. Bug: Системні дані -> User Settings -> не відображаються усі поля
 
@@ -17,13 +17,13 @@ done: 11. Show/hide grid action -> remove refresh data grid & collapsing of deta
 
 2023-09-22
 12. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
-13. MemberDescriptor: remove DbNullValue property
-14. MemberDescriptor: remove Format property
-14. MemberDescriptor: remove Alignment property
+done: 13. MemberDescriptor: remove DbNullValue property
+done: 14. MemberDescriptor: remove Format property
+done: 14. MemberDescriptor: remove Alignment property
 
 2023-10-03
 15. Remove DbColumnMap
-16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Convertor/Alignment/..)
+not need: 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Convertor/Alignment/..)
 
 2023-10-05
 done: 17. Clear MemberDescriptor.cs
