@@ -87,8 +87,7 @@ namespace DGCore.DB {
 
     [Browsable(false)]
     public bool CanBeNull => // for datareader
-      (this.ItemDataType.IsClass || Utils.Types.IsNullableType(this.ItemDataType) || 
-       ((PD.IMemberDescriptor)this.MemberDescriptor).DbNullValue != null) && this.DbColumn.IsNullable;
+      (this.ItemDataType.IsClass || Utils.Types.IsNullableType(this.ItemDataType)) && this.DbColumn.IsNullable;
   }
 
 }

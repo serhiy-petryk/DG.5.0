@@ -95,15 +95,8 @@ namespace DGCore.Filters
       get { return this._pd.Description; }
     }
     [Browsable(false)]
-    public override bool PropertyCanBeNull
-    {
-      get
-      {
-        bool canBeNull = _pd.PropertyType.IsClass || Utils.Types.IsNullableType(_pd.PropertyType);
-        if (!canBeNull && _pd is PD.IMemberDescriptor) canBeNull = ((PD.IMemberDescriptor)_pd).DbNullValue != null;
-        return canBeNull;
-      }
-    }
+    public override bool PropertyCanBeNull => _pd.PropertyType.IsClass || Utils.Types.IsNullableType(_pd.PropertyType);
+
     [Browsable(false)]
     public override bool IgnoreCaseSupport
     {
@@ -159,7 +152,7 @@ namespace DGCore.Filters
       else
       {
         return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items,
-            this.CanBeNull, this.Not, ((PD.IMemberDescriptor)this._pd).DbNullValue });
+            this.CanBeNull, this.Not, null });
       }
 
     }

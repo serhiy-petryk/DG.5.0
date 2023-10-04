@@ -29,8 +29,7 @@ namespace DGCore.DB {
         StringBuilder sb = new StringBuilder(itemType.FullName + char1);
         foreach (DbColumnMapElement e in columnMap) {
           if (e.IsValid) {
-            sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 +
-              (((PD.IMemberDescriptor)e.MemberDescriptor).DbNullValue == null ? "" : ((PD.IMemberDescriptor)e.MemberDescriptor).DbNullValue.ToString()) + char1 +
+            sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 + "" + char1 +
               (e.DbColumn.IsNullable ? "1" : "0") + char1 + e.MemberDescriptor.Name + char1 + e.DbColumn.Position.ToString() + char2);
           }
         }
@@ -63,7 +62,7 @@ namespace DGCore.DB {
             TypeConverter objectTypeConverter;
             if (!DbReader_isColumnValid(dbType, notNullableObjectType, e.MemberDescriptor.Converter, out objectTypeConverter)) continue;
 
-            object dbNullValue = ((PD.IMemberDescriptor)e.MemberDescriptor).DbNullValue;
+            // object dbNullValue = ((PD.IMemberDescriptor)e.MemberDescriptor).DbNullValue;
             string propName = e.MemberDescriptor.Name;
             // Check column
 
@@ -234,47 +233,9 @@ namespace DGCore.DB {
             else if (e.CanBeNull) {
               il.Emit(OpCodes.Br_S, lblSaveProperty);
               il.MarkLabel(lblNull);
-              if (dbNullValue == null) {
-                il.Emit(OpCodes.Ldnull);
-              }
-              else {// dBNullValue is defined
-                switch (dbNullValue.GetType().Name) {
-                  case "Boolean":
-                    if ((bool)dbNullValue == true) il.Emit(OpCodes.Ldc_I4_1);
-                    else il.Emit(OpCodes.Ldc_I4_0);
-                    break;
-                  case "SByte": il.Emit(OpCodes.Ldc_I4_S, (SByte)dbNullValue); break;
-                  case "Char":
-                  case "Byte":
-                  case "Int16":
-                  case "UInt16":
-                  case "Int32": il.Emit(OpCodes.Ldc_I4, Convert.ToInt32(dbNullValue)); break;
-                  case "UInt32": il.Emit(OpCodes.Ldc_I4, unchecked((Int32)(UInt32)dbNullValue)); break;
-                  case "Int64": il.Emit(OpCodes.Ldc_I8, (Int64)dbNullValue); break;
-                  case "UInt64": il.Emit(OpCodes.Ldc_I8, unchecked((Int64)(UInt64)dbNullValue)); break;
-                  case "Double": il.Emit(OpCodes.Ldc_R8, (double)dbNullValue); break;
-                  case "Single": il.Emit(OpCodes.Ldc_R4, (Single)dbNullValue); break;
-                  case "Decimal":
-                    il.Emit(OpCodes.Ldc_R8, Convert.ToDouble(dbNullValue));
-                    ConstructorInfo ci1 = typeof(Decimal).GetConstructor(new Type[] { typeof(double) });
-                    il.Emit(OpCodes.Newobj, ci1);
-                    break;
-                  case "DateTime":
-                    il.Emit(OpCodes.Ldc_I8, ((DateTime)dbNullValue).Ticks);
-                    ConstructorInfo ci2 = typeof(DateTime).GetConstructor(new Type[] { typeof(long) });
-                    il.Emit(OpCodes.Newobj, ci2);
-                    break;
-                  case "TimeSpan":
-                    il.Emit(OpCodes.Ldc_I8, ((TimeSpan)dbNullValue).Ticks);
-                    ConstructorInfo ci3 = typeof(TimeSpan).GetConstructor(new Type[] { typeof(long) });
-                    il.Emit(OpCodes.Newobj, ci3);
-                    break;
-                  default:
-                    throw new Exception("Load constant procedure does not defined for " + dbNullValue.GetType().Name);
-                }
-              }
+              il.Emit(OpCodes.Ldnull);
               // Save result
-              il.MarkLabel(lblSaveProperty);
+                            il.MarkLabel(lblSaveProperty);
             }
             else { } // nothing to do
             // Save result

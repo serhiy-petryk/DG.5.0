@@ -26,4 +26,4 @@ done: 11. Show/hide grid action -> remove refresh data grid & collapsing of deta
 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Convertor/Alignment/..)
 
 2023-10-05
-17. Clear MemberDescriptor.cs
+done: 17. Clear MemberDescriptor.cs
