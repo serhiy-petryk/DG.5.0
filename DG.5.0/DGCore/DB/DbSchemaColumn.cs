@@ -4,7 +4,7 @@ namespace DGCore.DB {
 
     public class DbSchemaColumn
     {
-        public int Id = Common.Constants.UniqueCounter++;
+        public int Id = Utils.Tips.GetUniqueNumber();
 
         public string SqlName { get; }
         public int Size { get; }

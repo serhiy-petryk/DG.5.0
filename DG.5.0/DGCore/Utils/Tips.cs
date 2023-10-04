@@ -18,9 +18,7 @@ namespace DGCore.Utils {
       return Environment.UserDomainName + "\\" + Environment.UserName.ToUpper();
     }
 
-    public static int GetUniqueNumber() {
-      return _uniqueCount++;
-    }
+    public static int GetUniqueNumber() => _uniqueCount++;
 
     public static object GetDefault(Type type) => type.IsValueType ? Activator.CreateInstance(type) : null;
 

@@ -29,3 +29,5 @@ not need: 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Conv
 done: 17. Clear MemberDescriptor.cs
 18. Smart format for byte array: Picture/hex string, ..
 19. Check Helpers.DGCellValueFormatter -> check format/converters -> must be the same as DGHelper.GenerateColumns
+20. DbSchemaColumn -> use uniqueId
+21. UniqueId -> use from Constant.cs
