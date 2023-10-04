@@ -21,10 +21,6 @@ namespace DGCore.Common
         {
             this.Connection = connection; this.Sql = sql; this.KeyMember = keyMember;
         }
-
-        /*public BO_LookupTableAttribute(Type lookupObjectType) {
-          Attribute a = TypeDescriptor.GetAttributes(lookupObjectType)[typeof(BO_LookupTableAttribute)];
-        }*/
     }
     #endregion
 
