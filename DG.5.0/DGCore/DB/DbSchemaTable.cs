@@ -90,9 +90,9 @@ namespace DGCore.DB
                           string.Equals(c.BaseColumnName, cd.Key, StringComparison.OrdinalIgnoreCase)))
                         {
                             var ss = cd.Value.Split('^');
-                            column._dbDisplayName = ss[0].Trim();
-                            if (ss.Length >= 2) column._dbDescription = ss[1].Trim();
-                            if (ss.Length >= 3) column._dbMasterSql = ss[2].Trim();
+                            column.DisplayName = ss[0].Trim();
+                            if (ss.Length >= 2) column.Description = ss[1].Trim();
+                            if (ss.Length >= 3) column.DbMasterSql = ss[2].Trim();
                         }
                     }
                 }

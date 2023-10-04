@@ -24,3 +24,6 @@ done: 11. Show/hide grid action -> remove refresh data grid & collapsing of deta
 2023-10-03
 15. Remove DbColumnMap
 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Convertor/Alignment/..)
+
+2023-10-05
+17. Clear MemberDescriptor.cs

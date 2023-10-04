@@ -23,7 +23,7 @@ namespace DGCore.PD
         public override bool IsReadOnly => true;
         public override Type PropertyType => typeof(int?);
         public object DbNullValue => null;
-        public string Format => "N0";
+        public string DisplayFormat => "N0";
         public Enums.Alignment? Alignment => Enums.Alignment.Center;
 
         //==========  Not implemented  ===========

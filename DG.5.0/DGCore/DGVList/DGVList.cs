@@ -92,11 +92,11 @@ namespace DGCore.DGVList
 
       UnderlyingData.DataStatusChangedEvent += OnUnderlyingData_DataStatusChangedHandler;
 
-      foreach (PropertyDescriptor p in Properties)
+      /*foreach (PropertyDescriptor p in Properties)
       {
           if (p.PropertyType == typeof(decimal))
               Formats.Add(p.Name, "N5");
-      }
+      }*/
     }
 
     private void OnUnderlyingData_DataStatusChangedHandler(object sender, Sql.DataSourceBase.SqlDataEventArgs e) => DataStateChanged?.Invoke(this, e);

@@ -75,7 +75,7 @@ namespace DGView.ViewModels
             _host = host;
             Column = column;
             Name = ((PropertyDescriptor)descriptor).DisplayName;
-            Format = descriptor.Format;
+            Format = descriptor.DisplayFormat;
             
             var item = settings.Groups.FirstOrDefault(o => o.Id == Id);
             if (item != null)

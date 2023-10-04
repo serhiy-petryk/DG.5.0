@@ -162,12 +162,12 @@ namespace DGView.Helpers
                 {
                     var template = TemplateGenerator.CreateDataTemplate(() =>
                         {
-                            var result = new Image {Margin = new Thickness(1), Stretch = pd.Name == "Picture" ? Stretch.UniformToFill : Stretch.None };
+                            var result = new Image { Margin = new Thickness(1), Stretch = pd.Name == "Picture" ? Stretch.UniformToFill : Stretch.None };
                             result.SetBinding(Image.SourceProperty, pd.Name);
                             return result;
                         }
                     );
-                    column = new DataGridTemplateColumn {CellTemplate = template, SortMemberPath = pd.Name};
+                    column = new DataGridTemplateColumn { CellTemplate = template, SortMemberPath = pd.Name };
                 }
                 else column = new DataGridTextColumn();
 
@@ -177,7 +177,7 @@ namespace DGView.Helpers
                     var binding = new Binding(pd.Name);
                     if (pd.IsReadOnly)
                         binding.Mode = BindingMode.OneWay;
-                    var format = ((IMemberDescriptor)pd).Format;
+                    var format = ((IMemberDescriptor)pd).DisplayFormat;
 
                     var f = viewModel.Formats.Where(kvp => kvp.Key == pd.Name).Select(kvp=>kvp.Value).FirstOrDefault();
                     if (!string.IsNullOrEmpty(f))

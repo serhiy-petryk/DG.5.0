@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DGCore.Common;
 
 namespace DGCore.PD
@@ -19,7 +20,7 @@ namespace DGCore.PD
         object DbNullValue { get; }
         MemberInfo ReflectedMemberInfo { get; }
         Delegate NativeGetter { get; }
-        string Format { get; }
+        string DisplayFormat { get; }
         // System.Drawing.ContentAlignment? Alignment { get; }
         Enums.Alignment? Alignment { get; }
     }
@@ -46,7 +47,11 @@ namespace DGCore.PD
             _member = new MemberElement(null, typeof(T), ss);
             base.AttributeArray = _member.Attributes;
 
-            var a = (Common.BO_DbColumnAttribute)Attributes[typeof(Common.BO_DbColumnAttribute)];
+            var displayFormat = ((BO_DisplayFormatAttribute)_member.Attributes.FirstOrDefault(a => a is BO_DisplayFormatAttribute))?.DisplayFormat;
+            if (!string.IsNullOrEmpty(displayFormat))
+                DisplayFormat = displayFormat;
+
+            /*var a = (Common.BO_DbColumnAttribute)Attributes[typeof(Common.BO_DbColumnAttribute)];
             if (a != null)
             {
                 _dbColumnName = a._dbColumnName;
@@ -63,7 +68,7 @@ namespace DGCore.PD
                     _thisConverter = new ByteArrayToHexStringConverter();
                 else if (string.Equals(Format, "bytestoguid", StringComparison.OrdinalIgnoreCase))
                     _thisConverter = new ByteArrayToGuidStringConverter();
-            }
+            }*/
 
             /* not need!!! if (_thisConverter == null && PropertyType == typeof(string) && (path.EndsWith("UID", StringComparison.OrdinalIgnoreCase) || path.StartsWith("ICON", StringComparison.CurrentCultureIgnoreCase)))
               _thisConverter = new ByteArrayToHexStringConverter();*/
@@ -85,7 +90,7 @@ namespace DGCore.PD
         }
 
         public MemberKind MemberKind => _member._memberKind;
-        public string Format { get; } // for DGV
+        public string DisplayFormat { get; } // for DGV
         public Enums.Alignment? Alignment { get; }
         public object DbNullValue => _dbNullValue;
         public MemberInfo ReflectedMemberInfo => _member._memberKind == MemberKind.Property ? _member._memberInfo.ReflectedType.GetProperty(Name) : _member._memberInfo;

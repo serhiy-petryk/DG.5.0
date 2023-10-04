@@ -30,7 +30,7 @@ namespace DGCore.DB
       TypeConverter tc = TypeDescriptor.GetConverter(componentType);
       if (tc.GetType() == typeof(TypeConverter))
       {// No converter
-        PropertyDescriptor x = PD.MemberDescriptorUtils.GetMember(componentType, attr._keyMember, true);
+        PropertyDescriptor x = PD.MemberDescriptorUtils.GetMember(componentType, attr.KeyMember, true);
         Type tcType = typeof(LookupTableTypeConverter<,>).MakeGenericType(x.ComponentType, Utils.Types.GetNotNullableType(x.PropertyType));
         // add converter
         TypeDescriptor.AddAttributes(componentType, new TypeConverterAttribute(tcType));
@@ -71,12 +71,12 @@ namespace DGCore.DB
     }
     public LookupTableTypeConverter(Common.BO_LookupTableAttribute attr)
     {
-      this._dbCmd = new DbCmd(attr._connection, attr._sql);
+      this._dbCmd = new DbCmd(attr.Connection, attr.Sql);
       //      this._conn = attr._connection;
       //    this._sql = attr._sql;
-      this._pdKeyMember = (PD.MemberDescriptor<TType>)PD.MemberDescriptorUtils.GetMember(typeof(TType), attr._keyMember, false);
-      if (_pdKeyMember == null) this._pdKeyMember = (PD.MemberDescriptor<TType>)PD.MemberDescriptorUtils.GetMember(typeof(TType), attr._keyMember, true);
-      if (_pdKeyMember == null) throw new Exception("MasterDataTypeConverter. Can not find '" + attr._keyMember +
+      this._pdKeyMember = (PD.MemberDescriptor<TType>)PD.MemberDescriptorUtils.GetMember(typeof(TType), attr.KeyMember, false);
+      if (_pdKeyMember == null) this._pdKeyMember = (PD.MemberDescriptor<TType>)PD.MemberDescriptorUtils.GetMember(typeof(TType), attr.KeyMember, true);
+      if (_pdKeyMember == null) throw new Exception("MasterDataTypeConverter. Can not find '" + attr.KeyMember +
         "' property for key member of type " + typeof(TType).Name);
 
       publicAttribute = null;

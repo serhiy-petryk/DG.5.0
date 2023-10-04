@@ -44,7 +44,7 @@ namespace DGCore.Menu
         }
 
         if (!string.IsNullOrEmpty(Format))
-            Attributes.Add(new DGCore.Common.DisplayFormatAttribute(Format));
+            Attributes.Add(new DGCore.Common.BO_DisplayFormatAttribute(Format));
       }
     }
 

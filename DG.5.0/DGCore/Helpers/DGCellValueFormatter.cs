@@ -31,7 +31,7 @@ namespace DGCore.Helpers
                 return;
             }
 
-            _format = ((IMemberDescriptor)propertyDescriptor).Format;
+            _format = ((IMemberDescriptor)propertyDescriptor).DisplayFormat;
             _pd = propertyDescriptor;
             PropertyType = Utils.Types.GetNotNullableType(_pd.PropertyType);
             var converter = _pd.Converter;

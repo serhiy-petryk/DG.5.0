@@ -21,7 +21,7 @@ namespace DGCore.Helpers
             DisplayName = pd.DisplayName;
             ColumnDisplayIndex = columnDisplayIndex;
             NotNullableValueType = Utils.Types.GetNotNullableType(pd.PropertyType);
-            Format = ((IMemberDescriptor)pd).Format;
+            Format = ((IMemberDescriptor)pd).DisplayFormat;
             _getter = o => pd.GetValue(o);
         }
     }
