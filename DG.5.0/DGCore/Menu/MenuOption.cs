@@ -51,7 +51,6 @@ namespace DGCore.Menu
 
             _dataDefinition = new Misc.DataDefinition(Label, oCS.GetConnectionString(), Sql, pp, oItemType, GetLayoutId(), columnAttributes);
             return _dataDefinition;
-
         }
 
         private static Dictionary<string, List<Attribute>> GetAttributesFromDbMetaData(string connectionString, string sql)
