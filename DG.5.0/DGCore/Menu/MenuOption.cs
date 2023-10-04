@@ -24,11 +24,11 @@ namespace DGCore.Menu
             if (IsSubmenu || _dataDefinition != null)
                 return _dataDefinition;
 
-            var attributes = GetAttributesFromDbMetaData(oCS.GetConnectionString(), SqlForColumnAttributes);
+            var dbAttributes = GetAttributesFromDbMetaData(oCS.GetConnectionString(), SqlForColumnAttributes);
             var objectAttrs = (Columns?.ToDictionary(kvp1 => kvp1.Key, kvp2 => kvp2.Value.Attributes ?? new List<Attribute>(),
                     StringComparer.OrdinalIgnoreCase)) ?? new Dictionary<string, List<Attribute>>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var kvp in attributes)
+            foreach (var kvp in dbAttributes)
             {
                 if (objectAttrs.ContainsKey(kvp.Key))
                 {
@@ -41,7 +41,7 @@ namespace DGCore.Menu
                 else
                     objectAttrs.Add(kvp.Key, kvp.Value);
             }
-            var aaa = objectAttrs.ToDictionary(kvp => kvp.Key, xx => new AttributeCollection(xx.Value.ToArray()));
+            var columnAttributes = objectAttrs.ToDictionary(kvp => kvp.Key, xx => new AttributeCollection(xx.Value.ToArray()), StringComparer.InvariantCultureIgnoreCase);
 
             // Sql parameters
             var pp = Parameters == null
@@ -49,7 +49,7 @@ namespace DGCore.Menu
               : new Sql.ParameterCollection(Parameters.Where(x => x.Value.Parameter != null)
                 .Select(x => x.Value.Parameter).ToArray());
 
-            _dataDefinition = new Misc.DataDefinition(Label, oCS.GetConnectionString(), Sql, pp, oItemType, GetLayoutId(), aaa);
+            _dataDefinition = new Misc.DataDefinition(Label, oCS.GetConnectionString(), Sql, pp, oItemType, GetLayoutId(), columnAttributes);
             return _dataDefinition;
 
         }
