@@ -162,7 +162,7 @@ namespace DGView.Helpers
                 {
                     var template = TemplateGenerator.CreateDataTemplate(() =>
                         {
-                            var result = new Image { Margin = new Thickness(1), Stretch = pd.Name == "Picture" ? Stretch.UniformToFill : Stretch.None };
+                            var result = new Image { Margin = new Thickness(1) };
                             result.SetBinding(Image.SourceProperty, pd.Name);
                             return result;
                         }
@@ -177,13 +177,12 @@ namespace DGView.Helpers
                     var binding = new Binding(pd.Name);
                     if (pd.IsReadOnly)
                         binding.Mode = BindingMode.OneWay;
-                    var format = ((IMemberDescriptor)pd).DisplayFormat;
 
+                    var format = ((IMemberDescriptor)pd).DisplayFormat;
                     var f = viewModel.Formats.Where(kvp => kvp.Key == pd.Name).Select(kvp=>kvp.Value).FirstOrDefault();
                     if (!string.IsNullOrEmpty(f))
                         format = f;
 
-                    // format = "N1";
                     if (!string.IsNullOrEmpty(format))
                         binding.StringFormat = format;
                     else if (Types.GetNotNullableType(pd.PropertyType) == typeof(DateTime)) // set smart format for DateTime
