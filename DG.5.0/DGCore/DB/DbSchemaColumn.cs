@@ -20,11 +20,14 @@ namespace DGCore.DB {
         public string DbMasterSql { get; internal set; }
         public string DisplayFormat { get; internal set; }
         //===============
-        public DbSchemaColumn(string name, Int16 position, int size, byte dp, Type type, bool isNullable, string baseTableName, string baseColumnName)
+        public DbSchemaColumn(string name, Int16 position, int size, byte decimalPlaces, Type dataType, bool isNullable, string baseTableName, string baseColumnName)
         {
-            this.SqlName = name; this.Position = position; this.Size = size; this.DecimalPlaces = dp;
-            this.DataType = type; this.IsNullable = isNullable;
+            this.SqlName = name; this.Position = position; this.Size = size; this.DecimalPlaces = decimalPlaces;
+            this.DataType = dataType; this.IsNullable = isNullable;
             this.BaseTableName = baseTableName; this.BaseColumnName = baseColumnName;
+
+            if (dataType == typeof(Decimal) && decimalPlaces > 0)
+                DisplayFormat = $"N{decimalPlaces}";
         }
 
         //===============
