@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media;
 using DGCore.Common;
 using DGCore.Helpers;
 using DGCore.PD;
@@ -155,18 +154,20 @@ namespace DGView.Helpers
             foreach (PropertyDescriptor pd in viewModel.Properties)
             {
                 var propertyType = Types.GetNotNullableType(pd.PropertyType);
+                var gridFormat = GetGridFormat((IMemberDescriptor)pd, viewModel.Formats);
+                var oldColumn = viewModel.DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, pd.Name, StringComparison.Ordinal));
+
                 DataGridColumn column;
                 if (propertyType == typeof(bool))
-                    column = new DataGridCheckBoxColumn{ElementStyle = viewModel.DGControl.Resources["DataGridCheckBoxColumnElementStyle"] as Style };
-                else if (propertyType == typeof(byte[]))
+                    column = new DataGridCheckBoxColumn { ElementStyle = viewModel.DGControl.Resources["DataGridCheckBoxColumnElementStyle"] as Style };
+                else if (propertyType == typeof(byte[]) && string.Equals(gridFormat, "image", StringComparison.OrdinalIgnoreCase))
                 {
                     var template = TemplateGenerator.CreateDataTemplate(() =>
-                        {
-                            var result = new Image { Margin = new Thickness(1) };
-                            result.SetBinding(Image.SourceProperty, pd.Name);
-                            return result;
-                        }
-                    );
+                    {
+                        var result = new Image { Margin = new Thickness(1) };
+                        result.SetBinding(Image.SourceProperty, pd.Name);
+                        return result;
+                    });
                     column = new DataGridTemplateColumn { CellTemplate = template, SortMemberPath = pd.Name };
                 }
                 else column = new DataGridTextColumn();
@@ -178,46 +179,55 @@ namespace DGView.Helpers
                     if (pd.IsReadOnly)
                         binding.Mode = BindingMode.OneWay;
 
-                    var format = ((IMemberDescriptor)pd).DisplayFormat;
-                    var f = viewModel.Formats.Where(kvp => kvp.Key == pd.Name).Select(kvp=>kvp.Value).FirstOrDefault();
-                    if (!string.IsNullOrEmpty(f))
-                        format = f;
-
-                    if (!string.IsNullOrEmpty(format))
-                        binding.StringFormat = format;
+                    if (propertyType == typeof(byte[]) && !string.Equals(gridFormat, "image", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (string.Equals(gridFormat, "hex", StringComparison.OrdinalIgnoreCase))
+                            binding.Converter = ByteArrayToHexStringConverter.Instance;
+                        else
+                            binding.Converter = null;
+                    }
+                    else if (!string.IsNullOrEmpty(gridFormat))
+                        binding.StringFormat = gridFormat;
                     else if (Types.GetNotNullableType(pd.PropertyType) == typeof(DateTime)) // set smart format for DateTime
                         binding.Converter = DGDateTimeConverter.Instance;
                     //else if (pd.Name == "Picture")
-                      //  binding.Converter = BytesToHexStringConverter.Instance;
+                    //  binding.Converter = BytesToHexStringConverter.Instance;
                     boundColumn.Binding = binding;
+
+                    if (pd.Name == "ACCOUNT") binding.StringFormat = "Account: {0}";
                 }
 
-                // ??? Sort support for BindingList=> doesn't work column.SortMemberPath = prefixes.Count == 0 ? t.Name : string.Join(".", prefixes) + "." + t.Name;
-                viewModel.DGControl.Columns.Add(column);
-                column.CanUserSort = typeof(IComparable).IsAssignableFrom(propertyType);
-                column.Visibility = pd.Name.Contains(Constants.MDelimiter) ? Visibility.Collapsed : Visibility.Visible;
-                // column.Width = DataGridLength.Auto;
-                // column.MaxWidth = 2000;
-
-                /* Create datagrid header style programmatically
-                // Create data template for column header
-                var dt = new DataTemplate();
-                var rectangleFactory = new FrameworkElementFactory(typeof(TextBlock));
-                rectangleFactory.SetValue(TextBlock.TextWrappingProperty, TextWrapping.Wrap);
-                var b1 = new Binding { Path = new PropertyPath("Header"), Source = column };
-                rectangleFactory.SetBinding(TextBlock.TextProperty, b1);
-                dt.VisualTree = rectangleFactory;
-
-                var style = new Style(typeof(DataGridColumnHeader));
-                style.Setters.Add(new Setter(ContentControl.ContentTemplateProperty, dt));
-                column.HeaderStyle = style;*/
-
-                // Add tooltip to column header
-                if (!string.IsNullOrEmpty(pd.Description))
+                if (oldColumn == null)
                 {
-                    var columnHeaderStyle = Application.Current.Resources["MonochromeDGColumnHeaderStyle"] as Style;
-                    columnHeaderStyle.Setters.Add(new Setter(ToolTipService.ToolTipProperty, pd.Description));
-                    column.HeaderStyle = columnHeaderStyle;
+                    // ??? Sort support for BindingList=> doesn't work column.SortMemberPath = prefixes.Count == 0 ? t.Name : string.Join(".", prefixes) + "." + t.Name;
+                    viewModel.DGControl.Columns.Add(column);
+                    column.CanUserSort = typeof(IComparable).IsAssignableFrom(propertyType);
+                    column.Visibility = pd.Name.Contains(Constants.MDelimiter)
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
+                    AddToolTipToGridColumn(column, pd);
+                }
+                else
+                {
+                    if (oldColumn.GetType() != column.GetType())
+                    {
+                        viewModel.DGControl.Columns.Insert(oldColumn.DisplayIndex, column);
+                        viewModel.DGControl.Columns.Remove(oldColumn);
+                        AddToolTipToGridColumn(column, pd);
+                    }
+                    else if (oldColumn is DataGridBoundColumn bc1 && column is DataGridBoundColumn bc2)
+                    {
+                        var b1 = (Binding)bc1.Binding;
+                        var b2 = (Binding)bc2.Binding;
+                        if (!string.Equals(b1.StringFormat, b2.StringFormat) || !Equals(b1.Converter, b2.Converter))
+                            bc1.Binding = bc2.Binding;
+
+                        if (bc1.Width.IsAuto)
+                        {
+                            bc1.Width = bc1.ActualWidth;
+                            bc1.Width = DataGridLength.Auto;
+                        }
+                    }
                 }
             }
 
@@ -226,6 +236,25 @@ namespace DGView.Helpers
             {
                 viewModel.DGControl.FrozenColumnCount = 1;
                 viewModel.DGControl.FrozenColumnCount = 0;
+            }
+
+            viewModel.SetSetting(viewModel.GetSettings());
+        }
+
+        public static string GetGridFormat(IMemberDescriptor md, Dictionary<string, string> formats)
+        {
+            if (formats.ContainsKey(((PropertyDescriptor)md).Name))
+                return formats[((PropertyDescriptor)md).Name] ?? md.DisplayFormat;
+            return md.DisplayFormat;
+        }
+
+        public static void AddToolTipToGridColumn(DataGridColumn column, PropertyDescriptor pd)
+        {
+            if (!string.IsNullOrEmpty(pd.Description))
+            {
+                var columnHeaderStyle = Application.Current.Resources["MonochromeDGColumnHeaderStyle"] as Style;
+                columnHeaderStyle.Setters.Add(new Setter(ToolTipService.ToolTipProperty, pd.Description));
+                column.HeaderStyle = columnHeaderStyle;
             }
         }
 

@@ -466,7 +466,7 @@
       "Contacts": {"layoutId":"RealEstateContacts", "cs": "dbLernosity", "sql": "select contact, count(*) recs from RealEstate group by contact"}
     },
     "Mdb Tests": {
-      "MdbCategories": {"cs": "MdbTest", "sql": "select * from Categories"},
+      "MdbCategories": {"cs": "MdbTest", "sql": "select * from Categories",  "columns": {"picture": { "comment": "test description" }}},
       "Test bad pictures": {"cs": "MdbTestBadPicture", "sql": "select * from Categories"}
     },
     "MySql Tests": {
