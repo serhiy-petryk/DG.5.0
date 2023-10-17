@@ -96,6 +96,7 @@
                           effects:DoubleIconToggleButtonEffect.GeometryOff="{Binding Source={StaticResource GridOffPath}, Path=Data}"/>
 
             <Button Focusable="False" BorderThickness="0" Padding="7" ToolTip="Select font"
+                    Command="{Binding CmdSetFont}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource FontTGeometry}"/>
 

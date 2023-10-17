@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using DGCore.Helpers;
+using DGCore.PD;
 using DGView.Controls.Printing;
 using DGView.Helpers;
 using DGView.Views;
@@ -18,6 +19,7 @@ namespace DGView.ViewModels
         public RelayCommand CmdEditSetting { get; private set; }
         public RelayCommand CmdSetSetting { get; private set; }
         public RelayCommand CmdSaveSetting { get; private set; }
+        public RelayCommand CmdSetFont { get; private set; }
         public RelayCommand CmdRowDisplayMode { get; private set; }
         public RelayCommand CmdSetGroupLevel { get; private set; }
         public RelayCommand CmdSetSortAsc { get; private set; }
@@ -39,6 +41,7 @@ namespace DGView.ViewModels
             CmdEditSetting = new RelayCommand(cmdEditSetting);
             CmdSetSetting = new RelayCommand(cmdSetSetting);
             CmdSaveSetting = new RelayCommand(cmdSaveSetting);
+            CmdSetFont = new RelayCommand(cmdSetFont);
             CmdRowDisplayMode = new RelayCommand(cmdRowDisplayMode);
             CmdSetGroupLevel = new RelayCommand(cmdSetGroupLevel);
 
@@ -76,6 +79,27 @@ namespace DGView.ViewModels
             var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
             var geometry = (Geometry)dgView.Resources["SaveGeometry"];
             Misc.OpenDGDialog(DGControl, new DGSaveSettingView(this, LastAppliedLayoutName), "Save setting", geometry);
+        }
+        private void cmdSetFont(object o)
+        {
+            foreach (PropertyDescriptor p in Properties)
+            {
+                if (p.PropertyType == typeof(byte[]))
+                {
+                    var c = DGControl.Columns.FirstOrDefault(a => string.Equals(a.SortMemberPath, p.Name, StringComparison.OrdinalIgnoreCase));
+                    if (!Formats.ContainsKey(p.Name))
+                        Formats.Add(p.Name, Helpers.DGHelper.GetGridFormat((IMemberDescriptor)p, Formats));
+
+                    var format = Formats[p.Name];
+                    if (string.Equals(format, "image"))
+                        Formats[p.Name] = "hex";
+                    else if (string.Equals(format, "hex"))
+                        Formats[p.Name] = null;
+                    else
+                        Formats[p.Name] = "image";
+                }
+            }
+            Helpers.DGHelper.GenerateColumns(this);
         }
         private void cmdRowDisplayMode(object p)
         {
