@@ -60,17 +60,17 @@ namespace DGView.ViewModels
             //_allValidColumnNames = DGControl.Columns.Where(col => !string.IsNullOrEmpty(col.SortMemberPath) && !col.SortMemberPath.Contains('.'))
             //  .Select(col => col.SortMemberPath).ToList();
 
-            ResizeColumnWidth(); // !!! Before SaveColumnInfo*/
+            // ResizeColumnWidth(); // !!! Before SaveColumnInfo*/
             return ((IUserSettingSupport<DGV>)this).GetSettings();
         }
 
-        public int _layoutCount = 0;
+        /*public int _layoutCount = 0;
         public void ResizeColumnWidth()
         {
             this._layoutCount++;
             // this.AutoResizeColumns(this._RowViewMode == DGCore.Common.Enums.DGRowViewMode.NotSet ? DataGridViewAutoSizeColumnsMode.DisplayedCells : DataGridViewAutoSizeColumnsMode.ColumnHeader, false);
             // old this.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.ColumnHeader, true);
-        }
+        }*/
 
         public void SetSetting(DGV settings)
         {
@@ -176,7 +176,7 @@ namespace DGView.ViewModels
                 if (GroupItemCountColumn != null)
                     Helpers.DGHelper.SetColumnVisibility(GroupItemCountColumn, Data.Groups.Count > 0);
 
-                foreach (var dgCol in DGControl.Columns.OfType<DataGridBoundColumn>().Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
+                foreach (var dgCol in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
                 {
                     var col = _columns.FirstOrDefault(c => string.Equals(c.Id, dgCol.SortMemberPath, StringComparison.OrdinalIgnoreCase));
                     if (col == null)
