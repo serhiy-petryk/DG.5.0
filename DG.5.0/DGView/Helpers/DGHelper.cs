@@ -217,12 +217,13 @@ namespace DGView.Helpers
                         var b1 = (Binding)bc1.Binding;
                         var b2 = (Binding)bc2.Binding;
                         if (!string.Equals(b1.StringFormat, b2.StringFormat) || !Equals(b1.Converter, b2.Converter))
-                            bc1.Binding = bc2.Binding;
-
-                        if (bc1.Width.IsAuto)
                         {
-                            bc1.Width = bc1.ActualWidth;
-                            bc1.Width = DataGridLength.Auto;
+                            bc1.Binding = bc2.Binding;
+                            if (bc1.Width.IsAuto)
+                            {
+                                bc1.Width = bc1.ActualWidth;
+                                bc1.Width = DataGridLength.Auto;
+                            }
                         }
                     }
                 }
