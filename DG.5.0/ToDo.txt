@@ -35,3 +35,9 @@ not need: 21. UniqueId -> use from Constant.cs
 22. DbSchemaColumn -> Id as key
 23. Add helper class for datagrid column visibility properties (format,converters, ??)
 24. Global bug: зависання при друку великої кількості сторінок (більше 5-10)
+
+2023-10-17
+25. Try to use GridColumnFormat in setting.
+26. Read/Save DGV setting -> support GridFormat
+27. FastFilter, other filters -> support GridFormat
+28. DGV Settings edit -> support GridFormat

@@ -190,11 +190,8 @@ namespace DGView.Helpers
                         binding.StringFormat = gridFormat;
                     else if (Types.GetNotNullableType(pd.PropertyType) == typeof(DateTime)) // set smart format for DateTime
                         binding.Converter = DGDateTimeConverter.Instance;
-                    //else if (pd.Name == "Picture")
-                    //  binding.Converter = BytesToHexStringConverter.Instance;
-                    boundColumn.Binding = binding;
 
-                    if (pd.Name == "ACCOUNT") binding.StringFormat = "Account: {0}";
+                    boundColumn.Binding = binding;
                 }
 
                 if (oldColumn == null)
@@ -239,6 +236,17 @@ namespace DGView.Helpers
             }
 
             viewModel.SetSetting(viewModel.GetSettings());
+
+            //==========================
+            void AddToolTipToGridColumn(DataGridColumn column, PropertyDescriptor pd)
+            {
+                if (!string.IsNullOrEmpty(pd.Description))
+                {
+                    var columnHeaderStyle = Application.Current.Resources["MonochromeDGColumnHeaderStyle"] as Style;
+                    columnHeaderStyle.Setters.Add(new Setter(ToolTipService.ToolTipProperty, pd.Description));
+                    column.HeaderStyle = columnHeaderStyle;
+                }
+            }
         }
 
         public static string GetGridFormat(IMemberDescriptor md, Dictionary<string, string> formats)
@@ -246,16 +254,6 @@ namespace DGView.Helpers
             if (formats.ContainsKey(((PropertyDescriptor)md).Name))
                 return formats[((PropertyDescriptor)md).Name] ?? md.DisplayFormat;
             return md.DisplayFormat;
-        }
-
-        public static void AddToolTipToGridColumn(DataGridColumn column, PropertyDescriptor pd)
-        {
-            if (!string.IsNullOrEmpty(pd.Description))
-            {
-                var columnHeaderStyle = Application.Current.Resources["MonochromeDGColumnHeaderStyle"] as Style;
-                columnHeaderStyle.Setters.Add(new Setter(ToolTipService.ToolTipProperty, pd.Description));
-                column.HeaderStyle = columnHeaderStyle;
-            }
         }
 
         public static TextAlignment? GetColumnAlignment(DataGridColumn column) =>
