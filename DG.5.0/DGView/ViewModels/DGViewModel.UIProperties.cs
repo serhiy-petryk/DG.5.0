@@ -110,6 +110,7 @@ namespace DGView.ViewModels
                     DGControl.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         Data.A_FastFilterChanged(value);
+                        SetColumnVisibility();
                     }), System.Windows.Threading.DispatcherPriority.Background);
                 }
             }
