@@ -42,3 +42,6 @@ not need: 21. UniqueId -> use from Constant.cs
 27. FastFilter, other filters -> support GridFormat
 28. DGV Settings edit -> support GridFormat
 29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
+
+2023-10-19
+30. Remove converter/dbNullValue/.. in property (MemberDescriptor)
