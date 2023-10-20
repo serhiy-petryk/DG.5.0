@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Threading;
 using DGCore.Common;
+using DGCore.PD;
 using DGCore.UserSettings;
 using DGView.Controls;
 
@@ -74,6 +75,16 @@ namespace DGView.ViewModels
 
         public void SetSetting(DGV settings)
         {
+            // Set formats in AllColumns from Properties
+            foreach (var c in settings.AllColumns)
+            {
+                var property = Properties.OfType<PropertyDescriptor>().FirstOrDefault(p =>
+                    string.Equals(p.Name, c.Id, StringComparison.OrdinalIgnoreCase));
+                var format = ((IMemberDescriptor) property)?.DisplayFormat;
+                if (!string.Equals(format, c.Format_Property))
+                    c.Format_Property = format;
+            }
+
             if (settings.Groups.Count != _groupColumns.Count)
                 ManageGroupColumns(settings.Groups.Count);
 
@@ -88,18 +99,21 @@ namespace DGView.ViewModels
                 var dgCol = DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, _columns[k].Id, StringComparison.OrdinalIgnoreCase));
                 if (dgCol == null)
                     _columns.RemoveAt(k--);
-                else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format))
+                else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format_Actual))
                 {
                     var b = WpfSpLib.Helpers.BindingHelper.CloneBinding((Binding)boundColumn.Binding);
-                    b.StringFormat = _columns[k].Format;
+                    b.StringFormat = _columns[k].Format_Actual;
                     boundColumn.Binding = b;
                 }
             }
+
             foreach (var col in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
             {
                 var c1 = _columns.FirstOrDefault(c => string.Equals(c.Id, col.SortMemberPath, StringComparison.OrdinalIgnoreCase));
+                var property = (IMemberDescriptor) Properties.OfType<PropertyDescriptor>().FirstOrDefault(p =>
+                    string.Equals(col.SortMemberPath, p.Name, StringComparison.OrdinalIgnoreCase));
                 if (c1 == null)
-                    _columns.Add(new Column() { Id = col.SortMemberPath, IsHidden = true });
+                    _columns.Add(new Column(col.SortMemberPath) { IsHidden = true, Format_Property = property?.DisplayFormat});
                 // _columns.Add(new Column() { Id = col.SortMemberPath, DisplayName = col.SortMemberPath.Replace(".", "^"), IsHidden = true });
                 col.CanUserReorder = !_frozenColumns.Contains(col.SortMemberPath, StringComparer.OrdinalIgnoreCase);
             }
@@ -237,10 +251,14 @@ namespace DGView.ViewModels
                 if (!string.IsNullOrEmpty(c.SortMemberPath))
                 {
                     var col = _columns.FirstOrDefault(c1 => string.Equals(c1.Id, c.SortMemberPath, StringComparison.OrdinalIgnoreCase));
-                    settings.AllColumns.Add(new Column
+                    var property = (IMemberDescriptor) Properties.OfType<PropertyDescriptor>().FirstOrDefault(p =>
+                        string.Equals(((PropertyDescriptor) p).Name, c.SortMemberPath,
+                            StringComparison.OrdinalIgnoreCase));
+                    settings.AllColumns.Add(new Column(c.SortMemberPath)
                     {
-                        Id = c.SortMemberPath,
-                        Format = (c as DataGridBoundColumn)?.Binding?.StringFormat,
+                        // Format = (c as DataGridBoundColumn)?.Binding?.StringFormat,
+                        Format_Property = property?.DisplayFormat,
+                        Format_Grid = col?.Format_Grid,
                         // DisplayName = Properties[c.SortMemberPath].DisplayName,
                         // IsHidden = c.Visibility != Visibility.Visible,
                         IsHidden = col?.IsHidden ?? c.Visibility != Visibility.Visible,

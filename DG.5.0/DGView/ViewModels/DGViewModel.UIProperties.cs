@@ -201,7 +201,7 @@ namespace DGView.ViewModels
         internal DataGridColumn GroupItemCountColumn = null;
         internal List<DataGridColumn> _groupColumns = new List<DataGridColumn>();
         internal List<double> _fontFactors = new List<double>();
-        private List<DGCore.UserSettings.Column> _columns = new List<DGCore.UserSettings.Column>();
+        internal List<DGCore.UserSettings.Column> _columns = new List<DGCore.UserSettings.Column>();
         private List<string> _frozenColumns = new List<string>();
 
         //========================

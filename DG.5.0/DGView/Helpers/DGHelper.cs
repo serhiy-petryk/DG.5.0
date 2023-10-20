@@ -154,7 +154,7 @@ namespace DGView.Helpers
             foreach (PropertyDescriptor pd in viewModel.Properties)
             {
                 var propertyType = Types.GetNotNullableType(pd.PropertyType);
-                var gridFormat = GetGridFormat((IMemberDescriptor)pd, viewModel.Formats);
+                var gridFormat = GetGridFormat(pd, viewModel);
                 var oldColumn = viewModel.DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, pd.Name, StringComparison.Ordinal));
 
                 DataGridColumn column;
@@ -236,8 +236,6 @@ namespace DGView.Helpers
                 viewModel.DGControl.FrozenColumnCount = 0;
             }
 
-            viewModel.SetSetting(viewModel.GetSettings());
-
             //==========================
             void AddToolTipToGridColumn(DataGridColumn column, PropertyDescriptor pd)
             {
@@ -250,11 +248,11 @@ namespace DGView.Helpers
             }
         }
 
-        public static string GetGridFormat(IMemberDescriptor md, Dictionary<string, string> formats)
+        internal static string GetGridFormat(PropertyDescriptor md, DGViewModel viewModel)
         {
-            if (formats.ContainsKey(((PropertyDescriptor)md).Name))
-                return formats[((PropertyDescriptor)md).Name] ?? md.DisplayFormat;
-            return md.DisplayFormat;
+            var column = viewModel._columns.FirstOrDefault(c => string.Equals(c.Id, md.Name, StringComparison.OrdinalIgnoreCase));
+            if (column == null) return ((IMemberDescriptor) md).DisplayFormat;
+            return column.Format_Actual;
         }
 
         public static TextAlignment? GetColumnAlignment(DataGridColumn column) =>

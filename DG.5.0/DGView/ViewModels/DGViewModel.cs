@@ -93,6 +93,9 @@ namespace DGView.ViewModels
                         ((IUserSettingSupport<DGV>) this).SetSetting(settings);
                     else
                         UserSettingsUtils.Init(this, startUpLayoutName);
+                
+                    // Apply saved in database column settings for format
+                    Helpers.DGHelper.GenerateColumns(this);
                 }));
             });
         }

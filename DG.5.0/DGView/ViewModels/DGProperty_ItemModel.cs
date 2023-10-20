@@ -18,10 +18,10 @@ namespace DGView.ViewModels
         public string Description { get; }
         public string Format
         {
-            get => Column.Format;
+            get => Column.Format_Actual;
             set
             {
-                Column.Format = value;
+                Column.Format_Grid = value;
                 OnPropertiesChanged(nameof(Format));
             }
         }
@@ -75,7 +75,7 @@ namespace DGView.ViewModels
             _host = host;
             Column = column;
             Name = ((PropertyDescriptor)descriptor).DisplayName;
-            Format = descriptor.DisplayFormat;
+            Format = column.Format_Actual;
             
             var item = settings.Groups.FirstOrDefault(o => o.Id == Id);
             if (item != null)

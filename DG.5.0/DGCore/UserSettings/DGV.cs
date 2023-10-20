@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.Json.Serialization;
 using DGCore.Common;
 using DGCore.Utils;
 
@@ -78,10 +80,26 @@ namespace DGCore.UserSettings
 
     public class Column : ISupportSerializationModifications
     {
-        public string Id { get; set; }
+        public string Id { get; private set; }
         public bool IsHidden { get; set; }
         public int? Width { get; set; }
-        public string Format { get; set; }
+
+        private string format_grid;
+        public string Format_Grid
+        {
+            get => string.Equals(format_grid, Format_Property, StringComparison.Ordinal) ? null : format_grid;
+            set => format_grid = value;
+        }
+
+        public string Format_Property;
+        [JsonIgnore]
+        public string Format_Actual => Format_Grid ?? Format_Property;
+
+        public Column(string id)
+        {
+            Id = id;
+        }
+
         public void ModifyBeforeSerialize()
         {
             if (!string.IsNullOrEmpty(Id))

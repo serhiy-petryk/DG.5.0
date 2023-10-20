@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using DGCore.Common;
 using DGCore.PD;
 using DGCore.UserSettings;
+using DGView.Helpers;
 using DGView.ViewModels;
 using WpfSpLib.Common;
 using WpfSpLib.Helpers;
@@ -259,6 +260,7 @@ namespace DGView.Views
             }
 
             _viewModel.SetSetting(Settings);
+            DGHelper.GenerateColumns(_viewModel);
         }
         private void cmdClearFilter(object p)
         {

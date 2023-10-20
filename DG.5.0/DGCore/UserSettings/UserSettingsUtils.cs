@@ -32,6 +32,7 @@ namespace DGCore.UserSettings
             else
                 SetSetting(o, temp[0]);
         }
+
         public static int SaveChangedSettings(List<UserSettingsDbObject> data, IUserSettingProperties properties)
         {
             var changedItems = new List<UserSettingsDbObject>();
@@ -89,18 +90,6 @@ namespace DGCore.UserSettings
             return deletedItems.Count + changedItems.Count;
         }
 
-        public static bool SaveNewSetting(IUserSettingProperties o, string settingId, bool allowViewOthers, bool allowEditOthers)
-        {
-            if (o == null)
-            {
-                Shared.ShowMessage(@"Обєкт налаштування не може бути пустим", "", Enums.MessageBoxButtons.OK, Enums.MessageBoxIcon.Warning);
-                return false;
-            }
-            var methodType = o.GetType().GetInterface("IUserSettingSupport`1").GetGenericArguments()[0];
-            var saveMethodInfo = typeof(UserSettingsUtils).GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .First(x => x.Name == "SaveNewSetting" && x.IsGenericMethod).MakeGenericMethod(methodType);
-            return (bool)saveMethodInfo.Invoke(null, new object[] { o, settingId, allowViewOthers, allowEditOthers });
-        }
         public static bool SaveNewSetting<T>(IUserSettingSupport<T> o, string settingId, bool allowViewOthers, bool allowEditOthers)
         {
             if (!CheckSettingId(o, settingId))
@@ -188,6 +177,7 @@ namespace DGCore.UserSettings
             }
             return true;
         }
+
         public static void SetSetting<T>(IUserSettingSupport<T> o, string settingId)
         {
             if (!CheckSettingId(o, settingId))

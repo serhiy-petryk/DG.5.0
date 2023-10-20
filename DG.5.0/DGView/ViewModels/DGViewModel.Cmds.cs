@@ -86,17 +86,14 @@ namespace DGView.ViewModels
             {
                 if (p.PropertyType == typeof(byte[]))
                 {
-                    var c = DGControl.Columns.FirstOrDefault(a => string.Equals(a.SortMemberPath, p.Name, StringComparison.OrdinalIgnoreCase));
-                    if (!Formats.ContainsKey(p.Name))
-                        Formats.Add(p.Name, Helpers.DGHelper.GetGridFormat((IMemberDescriptor)p, Formats));
-
-                    var format = Formats[p.Name];
+                    var format = Helpers.DGHelper.GetGridFormat(p, this);
+                    var column = _columns.FirstOrDefault(a => string.Equals(a.Id, p.Name, StringComparison.OrdinalIgnoreCase));
                     if (string.Equals(format, "image"))
-                        Formats[p.Name] = "hex";
+                        column.Format_Grid = "hex";
                     else if (string.Equals(format, "hex"))
-                        Formats[p.Name] = null;
+                        column.Format_Grid = null;
                     else
-                        Formats[p.Name] = "image";
+                        column.Format_Grid = "image";
                 }
             }
             Helpers.DGHelper.GenerateColumns(this);
