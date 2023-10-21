@@ -57,7 +57,6 @@ namespace DGView.ViewModels
         public DataGrid DGControl { get; }
         public IDGVList Data { get; private set; }
         public PropertyDescriptorCollection Properties => Data.Properties;
-        public Dictionary<string, string> Formats => Data.Formats;
 
         public DGViewModel(DataGrid dataGrid)
         {

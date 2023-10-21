@@ -87,8 +87,13 @@ namespace DGCore.UserSettings
         private string format_grid;
         public string Format_Grid
         {
-            get => string.Equals(format_grid, Format_Property, StringComparison.Ordinal) ? null : format_grid;
-            set => format_grid = value;
+            get => format_grid;
+            set
+            {
+                if (string.Equals(value, Format_Property, StringComparison.Ordinal))
+                    value = null;
+                format_grid = value;
+            }
         }
 
         public string Format_Property;
