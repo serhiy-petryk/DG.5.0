@@ -38,8 +38,8 @@ not need: 21. UniqueId -> use from Constant.cs
 
 2023-10-17
 25. Try to use GridColumnFormat in setting.
-26. Read/Save DGV setting -> support GridFormat
-27. FastFilter, other filters -> support GridFormat
+done: 26. Read/Save DGV setting -> support GridFormat
+27. FastFilter/Search, other filters -> support GridFormat
 28. DGV Settings edit -> support GridFormat
 29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
@@ -47,9 +47,9 @@ not need: 21. UniqueId -> use from Constant.cs
 30. Remove converter/dbNullValue/.. in property (MemberDescriptor)
 
 2023-10-21
-31. DGV.Settings.AllColumns <==> DGViewModel._columns
-32. Refactore ViewModel.SaveSettings method (AllColumns/_columns, remove nonexisting columns, add columns from properties)
+node need: 31. DGV.Settings.AllColumns <==> DGViewModel._columns
+nod need: 32. Refactore ViewModel.SaveSettings method (AllColumns/_columns, remove nonexisting columns, add columns from properties)
 done: 33. Fix column Width support in ViewModel
 
 2023-10-22
-34. Move setting of column format from GenerateColumns to ApplySetting method
+impossible: 34. Move setting of column format from GenerateColumns to ApplySetting method
