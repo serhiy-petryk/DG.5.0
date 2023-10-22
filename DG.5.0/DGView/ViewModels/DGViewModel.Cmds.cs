@@ -72,6 +72,7 @@ namespace DGView.ViewModels
             var newSetting = (string)p;
             DGControl.EnableColumnVirtualization = true; // prevent data binding error: BindingExpression:Path=Background; DataItem=null; target element is 'DataGridColumnHeader' (Name=''); target property is 'Background' (type 'Brush')
             DGCore.UserSettings.UserSettingsUtils.Init(this, newSetting);
+            Helpers.DGHelper.GenerateColumns(this);
             LastAppliedLayoutName = newSetting;
         }
         private void cmdSaveSetting(object p)
@@ -89,11 +90,11 @@ namespace DGView.ViewModels
                     var format = Helpers.DGHelper.GetGridFormat(p, this);
                     var column = _columns.FirstOrDefault(a => string.Equals(a.Id, p.Name, StringComparison.OrdinalIgnoreCase));
                     if (string.Equals(format, "image"))
-                        column.Format_Grid = "hex";
+                        column.Format_UserDefined = "hex";
                     else if (string.Equals(format, "hex"))
-                        column.Format_Grid = null;
+                        column.Format_UserDefined = null;
                     else
-                        column.Format_Grid = "image";
+                        column.Format_UserDefined = "image";
                 }
             }
             Helpers.DGHelper.GenerateColumns(this);

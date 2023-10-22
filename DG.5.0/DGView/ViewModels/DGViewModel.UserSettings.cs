@@ -99,12 +99,12 @@ namespace DGView.ViewModels
                 var dgCol = DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, _columns[k].Id, StringComparison.OrdinalIgnoreCase));
                 if (dgCol == null)
                     _columns.RemoveAt(k--);
-                else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format_Actual))
+                /*else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format_Actual))
                 {
                     var b = WpfSpLib.Helpers.BindingHelper.CloneBinding((Binding)boundColumn.Binding);
                     b.StringFormat = _columns[k].Format_Actual;
                     boundColumn.Binding = b;
-                }
+                }*/
             }
 
             foreach (var col in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
@@ -258,7 +258,7 @@ namespace DGView.ViewModels
                     {
                         // Format = (c as DataGridBoundColumn)?.Binding?.StringFormat,
                         Format_Property = property?.DisplayFormat,
-                        Format_Grid = col?.Format_Grid,
+                        Format_UserDefined = col?.Format_UserDefined,
                         // DisplayName = Properties[c.SortMemberPath].DisplayName,
                         // IsHidden = c.Visibility != Visibility.Visible,
                         IsHidden = col?.IsHidden ?? c.Visibility != Visibility.Visible,

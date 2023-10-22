@@ -84,16 +84,18 @@ namespace DGCore.UserSettings
         public bool IsHidden { get; set; }
         public int? Width { get; set; }
 
-        private string format_grid;
-        public string Format_Grid
+        private string format_UserDefined;
+
+        [JsonPropertyName("Format")]
+        public string Format_UserDefined
         {
-            get => format_grid;
-            set => format_grid = string.Equals(value, Format_Property, StringComparison.Ordinal) ? null: value;
+            get => format_UserDefined;
+            set => format_UserDefined = string.Equals(value, Format_Property, StringComparison.Ordinal) ? null: value;
         }
 
         public string Format_Property;
         [JsonIgnore]
-        public string Format_Actual => Format_Grid ?? Format_Property;
+        public string Format_Actual => Format_UserDefined ?? Format_Property;
 
         public Column(string id)
         {

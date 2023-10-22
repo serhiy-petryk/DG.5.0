@@ -21,7 +21,7 @@ namespace DGView.ViewModels
             get => Column.Format_Actual;
             set
             {
-                Column.Format_Grid = value;
+                Column.Format_UserDefined = value;
                 OnPropertiesChanged(nameof(Format));
             }
         }
