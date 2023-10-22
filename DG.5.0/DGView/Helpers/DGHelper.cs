@@ -199,30 +199,29 @@ namespace DGView.Helpers
                     // ??? Sort support for BindingList=> doesn't work column.SortMemberPath = prefixes.Count == 0 ? t.Name : string.Join(".", prefixes) + "." + t.Name;
                     viewModel.DGControl.Columns.Add(column);
                     column.CanUserSort = typeof(IComparable).IsAssignableFrom(propertyType);
-                    column.Visibility = pd.Name.Contains(Constants.MDelimiter)
-                        ? Visibility.Collapsed
-                        : Visibility.Visible;
+                    column.Visibility = pd.Name.Contains(Constants.MDelimiter) ? Visibility.Collapsed : Visibility.Visible;
                     AddToolTipToGridColumn(column, pd);
                 }
                 else
                 {
                     if (oldColumn.GetType() != column.GetType())
                     {
+                        column.Visibility = oldColumn.Visibility;
                         viewModel.DGControl.Columns.Insert(oldColumn.DisplayIndex, column);
                         viewModel.DGControl.Columns.Remove(oldColumn);
                         AddToolTipToGridColumn(column, pd);
                     }
-                    else if (oldColumn is DataGridBoundColumn bc1 && column is DataGridBoundColumn bc2)
+                    else if (oldColumn is DataGridBoundColumn bcOld && column is DataGridBoundColumn bcNew)
                     {
-                        var b1 = (Binding)bc1.Binding;
-                        var b2 = (Binding)bc2.Binding;
-                        if (!string.Equals(b1.StringFormat, b2.StringFormat) || !Equals(b1.Converter, b2.Converter))
+                        var bOld = (Binding)bcOld.Binding;
+                        var bNew = (Binding)bcNew.Binding;
+                        if (!string.Equals(bOld.StringFormat, bNew.StringFormat) || !Equals(bOld.Converter, bNew.Converter))
                         {
-                            bc1.Binding = bc2.Binding;
-                            if (bc1.Width.IsAuto)
+                            bcOld.Binding = bcNew.Binding;
+                            if (bcOld.Width.IsAuto) // Refresh auto width
                             {
-                                bc1.Width = bc1.ActualWidth;
-                                bc1.Width = DataGridLength.Auto;
+                                bcOld.Width = bcOld.ActualWidth;
+                                bcOld.Width = DataGridLength.Auto;
                             }
                         }
                     }
@@ -248,10 +247,10 @@ namespace DGView.Helpers
             }
         }
 
-        internal static string GetGridFormat(PropertyDescriptor md, DGViewModel viewModel)
+        internal static string GetGridFormat(PropertyDescriptor pd, DGViewModel viewModel)
         {
-            var column = viewModel._columns.FirstOrDefault(c => string.Equals(c.Id, md.Name, StringComparison.OrdinalIgnoreCase));
-            if (column == null) return ((IMemberDescriptor) md).DisplayFormat;
+            var column = viewModel._columns.FirstOrDefault(c => string.Equals(c.Id, pd.Name, StringComparison.OrdinalIgnoreCase));
+            if (column == null) return ((IMemberDescriptor)pd).DisplayFormat;
             return column.Format_Actual;
         }
 

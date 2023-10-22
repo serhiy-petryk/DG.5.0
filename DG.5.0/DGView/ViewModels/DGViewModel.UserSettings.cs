@@ -99,23 +99,25 @@ namespace DGView.ViewModels
                 var dgCol = DGControl.Columns.FirstOrDefault(c => string.Equals(c.SortMemberPath, _columns[k].Id, StringComparison.OrdinalIgnoreCase));
                 if (dgCol == null)
                     _columns.RemoveAt(k--);
-                /*else if (dgCol is DataGridBoundColumn boundColumn && !Equals(boundColumn.Binding.StringFormat, _columns[k].Format_Actual))
-                {
-                    var b = WpfSpLib.Helpers.BindingHelper.CloneBinding((Binding)boundColumn.Binding);
-                    b.StringFormat = _columns[k].Format_Actual;
-                    boundColumn.Binding = b;
-                }*/
             }
 
-            foreach (var col in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
+            foreach (var column in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
             {
-                var c1 = _columns.FirstOrDefault(c => string.Equals(c.Id, col.SortMemberPath, StringComparison.OrdinalIgnoreCase));
+                var dgColumn = _columns.FirstOrDefault(c => string.Equals(c.Id, column.SortMemberPath, StringComparison.OrdinalIgnoreCase));
                 var property = (IMemberDescriptor) Properties.OfType<PropertyDescriptor>().FirstOrDefault(p =>
-                    string.Equals(col.SortMemberPath, p.Name, StringComparison.OrdinalIgnoreCase));
-                if (c1 == null)
-                    _columns.Add(new Column(col.SortMemberPath) { IsHidden = true, Format_Property = property?.DisplayFormat});
+                    string.Equals(column.SortMemberPath, p.Name, StringComparison.OrdinalIgnoreCase));
+                if (dgColumn == null)
+                    _columns.Add(new Column(column.SortMemberPath) { IsHidden = true, Format_Property = property?.DisplayFormat});
+                else
+                {
+                    // Set column width
+                    var newWidth = Equals(dgColumn.Width, null) ? DataGridLength.Auto : new DataGridLength(dgColumn.Width.Value);
+                    if (!Equals(column.Width, newWidth))
+                        column.Width = newWidth;
+                }
                 // _columns.Add(new Column() { Id = col.SortMemberPath, DisplayName = col.SortMemberPath.Replace(".", "^"), IsHidden = true });
-                col.CanUserReorder = !_frozenColumns.Contains(col.SortMemberPath, StringComparer.OrdinalIgnoreCase);
+                column.CanUserReorder = !_frozenColumns.Contains(column.SortMemberPath, StringComparer.OrdinalIgnoreCase);
+
             }
 
             // ToDo: reorder columns according frozen columns
