@@ -56,4 +56,4 @@ impossible: 34. Move setting of column format from GenerateColumns to ApplySetti
 35. Actual format (refactoring DGCellValueFormatter)
 	printer
 	search
-	FastFilter(QuickFilter)
+	FastFilter(QuickFilter) DGVListGroup.PrepareFastFilter, DGVListGroup.ApplyFastFilterPredicate
