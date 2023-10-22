@@ -28,7 +28,7 @@ namespace DGCore.UserSettings
             }
 
             if (temp.Length == 0)
-                o.SetSetting(o.GetBlankSetting());
+                o.ApplySetting(o.GetBlankSetting());
             else
                 SetSetting(o, temp[0]);
         }
@@ -204,7 +204,7 @@ namespace DGCore.UserSettings
                                 var o1 = JsonSerializer.Deserialize<T>(dr.GetString(0), Utils.Json.DefaultJsonOptions);
                                 Utils.Json.ConvertJsonElements(o1);
                                 (o1 as ISupportSerializationModifications)?.ModifyAfterDeserialized();
-                                o.SetSetting(o1);
+                                o.ApplySetting(o1);
                                 return;
                             }
                         }

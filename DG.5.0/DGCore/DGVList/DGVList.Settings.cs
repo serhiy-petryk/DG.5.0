@@ -11,9 +11,9 @@ namespace DGCore.DGVList
     public void ResetSettings()
     {
       var whereFilter = (UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)WhereFilter;
-      whereFilter?.SetSetting(whereFilter.GetBlankSetting());
+      whereFilter?.ApplySetting(whereFilter.GetBlankSetting());
       var filterByValue = (UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)FilterByValue;
-      filterByValue?.SetSetting(filterByValue.GetBlankSetting());
+      filterByValue?.ApplySetting(filterByValue.GetBlankSetting());
       ShowTotalRow = false;
       ExpandedGroupLevel = 0;
       ShowGroupsOfUpperLevels = false;
@@ -31,13 +31,13 @@ namespace DGCore.DGVList
 
       WhereFilter.ClearFilter();
       if (settingInfo.WhereFilter != null && settingInfo.WhereFilter.Count > 0)
-        ((UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)WhereFilter).SetSetting(settingInfo.WhereFilter);
+        ((UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)WhereFilter).ApplySetting(settingInfo.WhereFilter);
 
       FilterByValue = null;
       if (settingInfo.FilterByValue != null && settingInfo.FilterByValue.Count > 0)
       {
         FilterByValue = new Filters.FilterList(Properties);
-        ((UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)FilterByValue).SetSetting(settingInfo.FilterByValue);
+        ((UserSettings.IUserSettingSupport<List<UserSettings.Filter>>)FilterByValue).ApplySetting(settingInfo.FilterByValue);
       }
 
       Groups.Clear();

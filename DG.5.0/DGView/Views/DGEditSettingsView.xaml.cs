@@ -259,7 +259,7 @@ namespace DGView.Views
                 Settings.TotalLines.Add(total);
             }
 
-            _viewModel.SetSetting(Settings);
+            _viewModel.ApplySetting(Settings);
             DGHelper.GenerateColumns(_viewModel);
         }
         private void cmdClearFilter(object p)

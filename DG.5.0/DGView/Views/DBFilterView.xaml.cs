@@ -103,8 +103,8 @@ namespace DGView.Views
         List<Filter> IUserSettingSupport<List<Filter>>.GetBlankSetting() =>
             ((IUserSettingSupport<List<Filter>>)FilterGrid.FilterList).GetBlankSetting();
 
-        void IUserSettingSupport<List<Filter>>.SetSetting(List<Filter> settings) =>
-            ((IUserSettingSupport<List<Filter>>)FilterGrid.FilterList).SetSetting(settings);
+        void IUserSettingSupport<List<Filter>>.ApplySetting(List<Filter> settings) =>
+            ((IUserSettingSupport<List<Filter>>)FilterGrid.FilterList).ApplySetting(settings);
         #endregion
     }
 }

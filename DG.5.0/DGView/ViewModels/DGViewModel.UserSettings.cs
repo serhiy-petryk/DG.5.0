@@ -73,7 +73,7 @@ namespace DGView.ViewModels
             // old this.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.ColumnHeader, true);
         }*/
 
-        public void SetSetting(DGV settings)
+        public void ApplySetting(DGV settings)
         {
             // Set formats in AllColumns from Properties
             foreach (var c in settings.AllColumns)

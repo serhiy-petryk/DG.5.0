@@ -14,7 +14,7 @@ namespace DGCore.UserSettings
     {
         T GetSettings();
         T GetBlankSetting();
-        void SetSetting(T settings);
+        void ApplySetting(T settings);
     }
 
     public interface ISupportSerializationModifications

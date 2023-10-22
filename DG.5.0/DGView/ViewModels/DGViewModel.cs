@@ -89,7 +89,7 @@ namespace DGView.ViewModels
                     DGControl.ItemsSource = (IEnumerable)Data;
                     Helpers.DGHelper.GenerateColumns(this);
                     if (settings != null)
-                        ((IUserSettingSupport<DGV>) this).SetSetting(settings);
+                        ((IUserSettingSupport<DGV>) this).ApplySetting(settings);
                     else
                         UserSettingsUtils.Init(this, startUpLayoutName);
                 

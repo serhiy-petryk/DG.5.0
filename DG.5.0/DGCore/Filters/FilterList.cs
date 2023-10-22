@@ -169,7 +169,7 @@ namespace DGCore.Filters {
 
     List<UserSettings.Filter> UserSettings.IUserSettingSupport<List<UserSettings.Filter>>.GetBlankSetting() => new List<UserSettings.Filter>();
 
-    void UserSettings.IUserSettingSupport<List<UserSettings.Filter>>.SetSetting(List<UserSettings.Filter> settings)
+    void UserSettings.IUserSettingSupport<List<UserSettings.Filter>>.ApplySetting(List<UserSettings.Filter> settings)
     {
       //throw new NotImplementedException();
       if (settings == null) return;
