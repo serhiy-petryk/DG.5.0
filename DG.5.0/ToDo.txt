@@ -54,6 +54,6 @@ done: 33. Fix column Width support in ViewModel
 2023-10-22
 impossible: 34. Move setting of column format from GenerateColumns to ApplySetting method
 35. Actual format (refactoring DGCellValueFormatter)
-	printer
+	printer DGDirectRenderingPrintContentGenerator/_columnGetters
 	search
 	FastFilter(QuickFilter) DGVListGroup.PrepareFastFilter, DGVListGroup.ApplyFastFilterPredicate
