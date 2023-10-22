@@ -49,4 +49,7 @@ not need: 21. UniqueId -> use from Constant.cs
 2023-10-21
 31. DGV.Settings.AllColumns <==> DGViewModel._columns
 32. Refactore ViewModel.SaveSettings method (AllColumns/_columns, remove nonexisting columns, add columns from properties)
-33. Fix column Width support in ViewModel
+done: 33. Fix column Width support in ViewModel
+
+2023-10-22
+34. Move setting of column format from GenerateColumns to ApplySetting method
