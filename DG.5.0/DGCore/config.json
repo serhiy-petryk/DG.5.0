@@ -159,16 +159,16 @@
         "OneviewID користувачів": {"cs": "oneSAPConn", "sql": "select * from mmast_users"}
       },
       "Операції": {
-        "GLDOCLINE 1'000'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 1000000 1E-1 doubled, CAST(GETDATE() AS Date) Today, CONVERT (time, CURRENT_TIMESTAMP) timed, ~storno as storno2, * from gldocline" },
-        "GLDOCLINE 300'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
-        "GLDOCLINE 100'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
-        "GLDOCLINE 30'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
-        "GLDOCLINE 10'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
-        "GLDOCLINE 3'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
-        "GLDOCLINE 1'000 (Docamt with format)": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline",
+        "GLDOCLINE 1'000'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 1000000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, CONVERT (time, CURRENT_TIMESTAMP) timed, ~storno as storno2, * from gldocline" },
+        "GLDOCLINE 300'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 100'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 30'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 10'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 3'000": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline" },
+        "GLDOCLINE 1'000 (Docamt with format)": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 3000 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, * from gldocline",
           "columns": { "DOCAMT": { "format": "N1", "comment":  "XXX" , "label":  "Label"  } }
         },
-        "GLDOCLINE 100": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 100 1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, dockey, [lineno] from gldocline" },
+        "GLDOCLINE 100": { "layoutId": "GLDOCLINE", "cs": "oneSAPConn", "sql": "select top 100 1E-1+1E-1+1E-1 doubled, CAST(GETDATE() AS Date) Today, GetDate() Now, CONVERT (time, CURRENT_TIMESTAMP) timed, dockey, [lineno] from gldocline" },
         "Операції Головної Книги": {
           "layoutId": "sap_v_gldocline",
           "cs": "oneSAPConn",
