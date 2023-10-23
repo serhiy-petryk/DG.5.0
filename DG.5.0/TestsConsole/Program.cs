@@ -1,5 +1,4 @@
-﻿using System;
-using TestsConsole.DataTests;
+﻿using TestsConsole.DataTests;
 
 namespace TestsConsole
 {

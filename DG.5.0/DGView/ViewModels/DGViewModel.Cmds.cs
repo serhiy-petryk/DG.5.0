@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using DGCore.Helpers;
-using DGCore.PD;
 using DGView.Controls.Printing;
 using DGView.Helpers;
 using DGView.Views;
