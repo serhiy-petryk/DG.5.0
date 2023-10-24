@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using DGCore.Common;
+using DGCore.Helpers;
 
 namespace DGCore.DGVList
 {
@@ -77,12 +78,12 @@ namespace DGCore.DGVList
 
     public event Sql.DataSourceBase.dlgDataStatusChangedDelegate DataStateChanged;
 
-    private Func<List<Tuple<string, string>>> _getAllValidColumns;
+    private Func<DGColumnHelper[]> _getAllValidColumnHelpers;
 
-    public DGVList(Sql.DataSourceBase dataSource, Func<List<Tuple<string, string>>> getAllValidColumns)
+    public DGVList(Sql.DataSourceBase dataSource, Func<DGColumnHelper[]> getAllValidColumnHelpers)
     {
       UnderlyingData = dataSource;
-      _getAllValidColumns = getAllValidColumns;
+      _getAllValidColumnHelpers = getAllValidColumnHelpers;
       WhereFilter = new Filters.FilterList(Properties);
       // FilterByValue = null;
 
@@ -137,7 +138,7 @@ namespace DGCore.DGVList
         Sorts.Clear();
         SortsOfGroups.Clear();
         TotalLines = null;
-        _getAllValidColumns = null;
+        _getAllValidColumnHelpers = null;
         _getters = null;
         _helpersGroup = null;
         _helpersSort = null;

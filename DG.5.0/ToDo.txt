@@ -60,5 +60,5 @@ done: 35. Actual format (refactoring DGCellValueFormatter)
 36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
 37: To fix: 'Test bad picture' menu option -> Unlnown image type -> see C# converter from byte[] to image (ILSpy: datagridcell)
 38. To fix: 'Number of items' column -> grid data don't refresh after language changed
-39. Replace getAllValidColumns -> getAllValidColumnHelpers
+done: 39. Replace getAllValidColumns -> getAllValidColumnHelpers
 done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)

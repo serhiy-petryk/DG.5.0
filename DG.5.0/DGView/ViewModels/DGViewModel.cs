@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DGCore.DGVList;
+using DGCore.Helpers;
 using DGCore.Sql;
 using DGCore.UserSettings;
 using DGView.Helpers;
@@ -76,7 +77,7 @@ namespace DGView.ViewModels
 
                 // Not need! DGCore.Misc.DependentObjectManager.Bind(ds, this); // Register object    
                 var listType = typeof(DGVList<>).MakeGenericType(ds.ItemType);
-                var dataSource = (IDGVList)Activator.CreateInstance(listType, ds, (Func<List<Tuple<string, string>>>)GetAllValidColumns);
+                var dataSource = (IDGVList)Activator.CreateInstance(listType, ds, (Func<DGColumnHelper[]>)GetAllValidColumnHelpers);
                 Data = dataSource;
 
                 Unwire();
