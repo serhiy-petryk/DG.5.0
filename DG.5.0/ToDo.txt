@@ -53,9 +53,12 @@ done: 33. Fix column Width support in ViewModel
 
 2023-10-22
 impossible: 34. Move setting of column format from GenerateColumns to ApplySetting method
-35. Actual format (refactoring DGCellValueFormatter)
+done: 35. Actual format (refactoring DGCellValueFormatter)
 	printer DGDirectRenderingPrintContentGenerator/_columnGetters
 	search
 	FastFilter(QuickFilter) DGVListGroup.PrepareFastFilter, DGVListGroup.ApplyFastFilterPredicate
 36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
 37: To fix: 'Test bad picture' menu option -> Unlnown image type -> see C# converter from byte[] to image (ILSpy: datagridcell)
+38. To fix: 'Number of items' column -> grid data don't refresh after language changed
+39. Replace getAllValidColumns -> getAllValidColumnHelpers
+done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)

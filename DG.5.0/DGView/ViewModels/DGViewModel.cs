@@ -87,14 +87,14 @@ namespace DGView.ViewModels
                 DGControl.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
                     DGControl.ItemsSource = (IEnumerable)Data;
-                    Helpers.DGHelper.GenerateColumns(this);
+                    GenerateColumns();
                     if (settings != null)
                         ((IUserSettingSupport<DGV>) this).ApplySetting(settings);
                     else
                         UserSettingsUtils.Init(this, startUpLayoutName);
                 
                     // Apply saved in database column settings for format
-                    Helpers.DGHelper.GenerateColumns(this);
+                    GenerateColumns();
                 }));
             });
         }
