@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 using DGCore.DGVList;
@@ -32,25 +31,17 @@ namespace DGView.Helpers
     public class ByteArrayToHexStringConverter : IValueConverter
     {
         public static ByteArrayToHexStringConverter Instance = new ByteArrayToHexStringConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (Equals(value, null)) return null;
-
-            var bb = (byte[])value;
-            var hex = new StringBuilder("0x", bb.Length * 2 + 2);
-            foreach (var b in bb)
-                hex.AppendFormat("{0:X2}", b);
-            return hex.ToString();
-        }
-
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            DGCore.Helpers.DGCellValueFormatter.ByteArrayToHexStringConverter(value, targetType, parameter, culture);
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
     public class DGDateTimeConverter : IValueConverter
     {
         public static DGDateTimeConverter Instance = new DGDateTimeConverter();
-        private static readonly TypeConverter _converter = TypeDescriptor.GetConverter(typeof(DateTime));
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => _converter.ConvertTo(null, culture, value, typeof(string));
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            DGCore.Helpers.DGCellValueFormatter.DateTimeDefaultConverter.ConvertTo(null, culture, value,
+                typeof(string));
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 

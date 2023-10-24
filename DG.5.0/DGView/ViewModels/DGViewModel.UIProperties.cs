@@ -205,6 +205,7 @@ namespace DGView.ViewModels
         private List<string> _frozenColumns = new List<string>();
 
         //========================
-        private List<string> GetAllValidColumns() => _columns.Where(c => !c.IsHidden).Select(c => c.Id).ToList();
+        private List<Tuple<string, string>> GetAllValidColumns() => _columns.Where(c => !c.IsHidden)
+            .Select(c => new Tuple<string, string>(c.Id, c.Format_Actual)).ToList();
     }
 }

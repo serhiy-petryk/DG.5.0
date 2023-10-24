@@ -76,7 +76,7 @@ namespace DGView.ViewModels
 
                 // Not need! DGCore.Misc.DependentObjectManager.Bind(ds, this); // Register object    
                 var listType = typeof(DGVList<>).MakeGenericType(ds.ItemType);
-                var dataSource = (IDGVList)Activator.CreateInstance(listType, ds, (Func<List<string>>)GetAllValidColumns);
+                var dataSource = (IDGVList)Activator.CreateInstance(listType, ds, (Func<List<Tuple<string, string>>>)GetAllValidColumns);
                 Data = dataSource;
 
                 Unwire();

@@ -129,7 +129,7 @@ namespace DGView.Views
                     .ThenBy(c => c.Column.DisplayIndex);
 
             var properties = new List<PropertyDescriptor>();
-            var helpers = DGHelper.GetColumnHelpers(_viewModel.DGControl.Columns.Where(c=> c.Visibility == Visibility.Visible).ToArray(), _viewModel.Properties, properties).ToList();
+            var helpers = _viewModel.GetColumnHelpers(_viewModel.DGControl.Columns.Where(c => c.Visibility == Visibility.Visible).ToArray(), properties).ToList();
             for (var i = 0; i < helpers.Count; i++)
             {
                 if (helpers[i].NotNullableValueType == typeof(byte[]) || helpers[i].NotNullableValueType == typeof(bool))
@@ -140,7 +140,7 @@ namespace DGView.Views
             }
             var getters = new Func<object, string>[_viewModel.DGControl.Columns.Count];
             for (var i = 0; i < helpers.Count; i++)
-                getters[helpers[i].ColumnDisplayIndex] = new DGCellValueFormatter(properties[i]).StringForFindTextGetter;
+                getters[helpers[i].ColumnDisplayIndex] = new DGCellValueFormatter(properties[i], helpers[i].Format).StringForFindTextGetter;
 
             foreach (var cell in selectedCells)
             {
@@ -155,16 +155,8 @@ namespace DGView.Views
         {
             var findUp = FindUp.IsChecked ?? false;
             var properties = new List<PropertyDescriptor>();
-            var helpers = DGHelper.GetColumnHelpers(columns, _viewModel.Properties, properties).ToList();
-            for (var i = 0; i < helpers.Count; i++)
-            {
-                if (helpers[i].NotNullableValueType == typeof(byte[]) || helpers[i].NotNullableValueType == typeof(bool))
-                {
-                    properties.RemoveAt(i);
-                    helpers.RemoveAt(i--);
-                }
-            }
-            var getters = properties.Select(p => new DGCellValueFormatter(p).StringForFindTextGetter).ToArray();
+            var helpers = _viewModel.GetColumnHelpers(columns, properties).Where(h=> !(h.NotNullableValueType == typeof(byte[]) || h.NotNullableValueType == typeof(bool))).ToList();
+            var getters = properties.Select(p => new DGCellValueFormatter(p, helpers.FirstOrDefault(h => string.Equals(h.Name, p.Name, StringComparison.OrdinalIgnoreCase))?.Format).StringForFindTextGetter).ToArray();
             var items = _viewModel.DGControl.Items;
 
             if (findUp)

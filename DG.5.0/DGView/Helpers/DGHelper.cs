@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using DGCore.Common;
-using DGCore.Helpers;
 using DGCore.PD;
 using DGCore.Utils;
 using DGView.ViewModels;
@@ -82,31 +81,6 @@ namespace DGView.Helpers
 
             items = selectedItems.OrderBy(o => o.Value).Select(o => o.Key).ToArray();
             columns = selectedColumns.OrderBy(o => o.Value).Select(o => o.Key).ToArray();
-        }
-
-        public static DGColumnHelper[] GetColumnHelpers(DataGridColumn[] columns, PropertyDescriptorCollection properties, List<PropertyDescriptor> selectedProperties)
-        {
-            var columnHelpers = new List<DGColumnHelper>();
-            selectedProperties?.Clear();
-            foreach (var column in columns.OrderBy(c=>c.DisplayIndex))
-            {
-                if (!string.IsNullOrEmpty(column.SortMemberPath))
-                {
-                    columnHelpers.Add(new DGColumnHelper(properties[column.SortMemberPath], column.DisplayIndex));
-                    selectedProperties?.Add(properties[column.SortMemberPath]);
-                }
-                else if (column.HeaderStringFormat == Constants.GroupItemCountColumnName)
-                {
-                    var p = new PropertyDescriptorForGroupItemCount((string) Application.Current.Resources["Loc:DGV.GroupItemCountColumnHeader"]);
-                    columnHelpers.Add(new DGColumnHelper(p, column.DisplayIndex));
-                    selectedProperties?.Add(p);
-                }
-                else if (column.HeaderStringFormat.StartsWith(Constants.GroupColumnNamePrefix)) { }
-                else
-                    throw new Exception("Trap!!!");
-            }
-
-            return columnHelpers.ToArray();
         }
 
         public static void SetColumnVisibility(DataGridColumn column, bool isVisible)

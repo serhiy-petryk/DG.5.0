@@ -241,9 +241,13 @@ namespace DGView.Controls.Printing
             {
                 var column = _columns[i];
                 if (!string.IsNullOrEmpty(column.SortMemberPath))
-                    getters[i] = (new DGCellValueFormatter(_viewModel.Properties[column.SortMemberPath])).ValueForPrinterGetter;
+                {
+                    var dgColumn = _viewModel._columns.FirstOrDefault(c => string.Equals(c.Id, column.SortMemberPath, StringComparison.OrdinalIgnoreCase));
+                    var format = dgColumn?.Format_Actual;
+                    getters[i] = (new DGCellValueFormatter(_viewModel.Properties[column.SortMemberPath], format)).ValueForPrinterGetter;
+                }
                 else if (Equals(column.HeaderStringFormat, Constants.GroupItemCountColumnName))
-                    getters[i] = (new DGCellValueFormatter(new PropertyDescriptorForGroupItemCount())).ValueForPrinterGetter;
+                    getters[i] = (new DGCellValueFormatter(new PropertyDescriptorForGroupItemCount(), "N0")).ValueForPrinterGetter;
                 else if ((column.HeaderStringFormat ?? "").StartsWith(Constants.GroupColumnNamePrefix))
                     getters[i] = null;
                 else
@@ -686,17 +690,22 @@ namespace DGView.Controls.Printing
                 if (value is byte[] bytes)
                 {
                     var image = new BitmapImage();
-                    using (var stream = new MemoryStream(bytes))
+                    try
                     {
-                        stream.Position = 0;
-                        image.BeginInit();
-                        image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                        image.CacheOption = BitmapCacheOption.OnLoad;
-                        // image.UriSource = null;
-                        image.StreamSource = stream;
-                        image.EndInit();
+                        using (var stream = new MemoryStream(bytes))
+                        {
+                            stream.Position = 0;
+                            image.BeginInit();
+                            image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                            image.CacheOption = BitmapCacheOption.OnLoad;
+                            // image.UriSource = null;
+                            image.StreamSource = stream;
+                            image.EndInit();
+                        }
+
+                        image.Freeze();
                     }
-                    image.Freeze();
+                    catch (Exception ex) { return;}
 
                     var xFactor = (cellWidth - 3 * _gridScale) / image.Width;
                     var yFactor = (cellHeight - 3 * _gridScale) / image.Height;

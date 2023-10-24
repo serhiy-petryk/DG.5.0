@@ -466,7 +466,17 @@ namespace DGCore.DGVList
         return;
 
       var allValidColumns = _getAllValidColumns();
-      _getters = Properties.OfType<PropertyDescriptor>().Where(p=> allValidColumns.Contains(p.Name)).Select(p => new DGCellValueFormatter(p).StringForFindTextGetter).ToArray();
+      var getters = new List<Func<object, string>>();
+      foreach (PropertyDescriptor p in Properties)
+      {
+          var c = allValidColumns.FirstOrDefault(a => string.Equals(p.Name, a.Item1, StringComparison.OrdinalIgnoreCase));
+          if (c != null)
+          {
+              getters.Add(new DGCellValueFormatter(p, c.Item2).StringForFindTextGetter);
+          }
+      }
+            _getters = getters.ToArray();
+      // _getters = Properties.OfType<PropertyDescriptor>().Where(p=> allValidColumns.Select(a=>a.Item1).Contains(p.Name)).Select(p => new DGCellValueFormatter(p).StringForFindTextGetter).ToArray();
       if (_getters.Length == 0)
         return;
 

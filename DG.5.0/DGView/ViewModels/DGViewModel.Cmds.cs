@@ -188,7 +188,7 @@ namespace DGView.ViewModels
         private void cmdSaveAsExcelFile(object p)
         {
             DGHelper.GetSelectedArea(DGControl, out var items, out var columns);
-            var columnHelpers = DGHelper.GetColumnHelpers(columns, Properties, null);
+            var columnHelpers = GetColumnHelpers(columns, null);
             var filename = $"DGV_{LayoutId}.{ExcelApp.GetDefaultExtension()}";
             var groupColumnNames = Data.Groups.Select(g => g.PropertyDescriptor.Name).ToList();
             SaveData.SaveAndOpenDataToXlsFile(filename, Title,
@@ -199,7 +199,7 @@ namespace DGView.ViewModels
         private void cmdSaveAsTextFile(object p)
         {
             DGHelper.GetSelectedArea(DGControl, out var items, out var columns);
-            var columnHelpers = DGHelper.GetColumnHelpers(columns, Properties, null);
+            var columnHelpers = GetColumnHelpers(columns, null);
             var filename = $"DGV_{LayoutId}.txt";
             SaveData.SaveAndOpenDataToTextFile(filename, items, columnHelpers);
         }

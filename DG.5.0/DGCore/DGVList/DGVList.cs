@@ -77,9 +77,9 @@ namespace DGCore.DGVList
 
     public event Sql.DataSourceBase.dlgDataStatusChangedDelegate DataStateChanged;
 
-    private Func<List<string>> _getAllValidColumns;
+    private Func<List<Tuple<string, string>>> _getAllValidColumns;
 
-    public DGVList(Sql.DataSourceBase dataSource, Func<List<string>> getAllValidColumns)
+    public DGVList(Sql.DataSourceBase dataSource, Func<List<Tuple<string, string>>> getAllValidColumns)
     {
       UnderlyingData = dataSource;
       _getAllValidColumns = getAllValidColumns;

@@ -15,13 +15,13 @@ namespace DGCore.Helpers
 
         private Func<object, object> _getter;
         // For common columns
-        public DGColumnHelper(PropertyDescriptor pd, int columnDisplayIndex)
+        public DGColumnHelper(PropertyDescriptor pd, int columnDisplayIndex, string format)
         {
             Name = pd.Name;
             DisplayName = pd.DisplayName;
             ColumnDisplayIndex = columnDisplayIndex;
             NotNullableValueType = Utils.Types.GetNotNullableType(pd.PropertyType);
-            Format = ((IMemberDescriptor)pd).DisplayFormat;
+            Format = format;
             _getter = o => pd.GetValue(o);
         }
     }
