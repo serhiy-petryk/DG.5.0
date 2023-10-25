@@ -22,6 +22,8 @@ namespace DGView.Controls.Printing
 {
     internal class DGDirectRenderingPrintContentGenerator : IPrintContentGenerator, IDisposable
     {
+        private readonly static ImageSourceConverter _imageSourceConverter = new ImageSourceConverter();
+
         public bool StopPrintGeneration { get; set; }
 
         private DGViewModel _viewModel;
@@ -366,24 +368,20 @@ namespace DGView.Controls.Printing
                         var value = _columnGetters[index](item);
                         if (value is byte[] bytes)
                         {
-                            var image = new BitmapImage();
-                            using (var stream = new MemoryStream(bytes))
+                            ImageSource image = null;
+                            try
                             {
-                                stream.Position = 0;
-                                image.BeginInit();
-                                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                                image.CacheOption = BitmapCacheOption.OnLoad;
-                                // image.UriSource = null;
-                                image.StreamSource = stream;
-                                image.EndInit();
+                                image = _imageSourceConverter.ConvertFrom(bytes) as ImageSource;
                             }
-                            image.Freeze();
+                            catch {}
 
-                            var imageActualWidth = _columns[index].ActualWidth - 3.0;
-                            var imageHeight = image.Height * imageActualWidth / image.Width;
-                            if (imageHeight - 2.0 > rowHeight)
-                                rowHeight = imageHeight - 2.0;
-
+                            if (image != null)
+                            {
+                                var imageActualWidth = _columns[index].ActualWidth - 3.0;
+                                var imageHeight = image.Height * imageActualWidth / image.Width;
+                                if (imageHeight - 2.0 > rowHeight)
+                                    rowHeight = imageHeight - 2.0;
+                            }
                         }
                     }
                 }
@@ -689,23 +687,14 @@ namespace DGView.Controls.Printing
             {
                 if (value is byte[] bytes)
                 {
-                    var image = new BitmapImage();
+                    ImageSource image = null;
                     try
                     {
-                        using (var stream = new MemoryStream(bytes))
-                        {
-                            stream.Position = 0;
-                            image.BeginInit();
-                            image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                            image.CacheOption = BitmapCacheOption.OnLoad;
-                            // image.UriSource = null;
-                            image.StreamSource = stream;
-                            image.EndInit();
-                        }
-
-                        image.Freeze();
+                        image = _imageSourceConverter.ConvertFrom(bytes) as ImageSource;
                     }
-                    catch (Exception ex) { return;}
+                    catch {}
+
+                    if (image == null) return;
 
                     var xFactor = (cellWidth - 3 * _gridScale) / image.Width;
                     var yFactor = (cellHeight - 3 * _gridScale) / image.Height;
