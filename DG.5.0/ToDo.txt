@@ -27,19 +27,19 @@ not need: 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Conv
 
 2023-10-05
 done: 17. Clear MemberDescriptor.cs
-18. Smart format for byte array: Picture/hex string, ..
+??? 18. Smart format for byte array: Picture/hex string, ..
 	IsImage(byte[]): https://www.c-sharpcorner.com/blogs/auto-detecting-image-type-and-extension-from-byte-in-c-sharp
-19. Check Helpers.DGCellValueFormatter -> check format/converters -> must be the same as DGHelper.GenerateColumns
+done: 19. Check Helpers.DGCellValueFormatter -> check format/converters -> must be the same as DGHelper.GenerateColumns
 done: 20. DbSchemaColumn -> use uniqueId
 not need: 21. UniqueId -> use from Constant.cs
 22. DbSchemaColumn -> Id as key
-23. Add helper class for datagrid column visibility properties (format,converters, ??)
+done: 23. Add helper class for datagrid column visibility properties (format,converters, ??)
 24. Global bug: зависання при друку великої кількості сторінок (більше 5-10)
 
 2023-10-17
 25. Try to use GridColumnFormat in setting.
 done: 26. Read/Save DGV setting -> support GridFormat
-27. FastFilter/Search, other filters -> support GridFormat
+done: 27. FastFilter/Search, other filters -> support GridFormat
 28. DGV Settings edit -> support GridFormat
 29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
@@ -62,3 +62,8 @@ done: 37: To fix: 'Test bad picture' menu option -> Unknown image type -> see C#
 38. To fix: 'Number of items' column -> grid data don't refresh after language changed
 done: 39. Replace getAllValidColumns -> getAllValidColumnHelpers
 done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
+
+2023-10-25
+41. Check image column performance -> based on quote images
+42. Remove convertor and other properties from MemberDescriptor.
+43. Max column width -> move to Constant.
