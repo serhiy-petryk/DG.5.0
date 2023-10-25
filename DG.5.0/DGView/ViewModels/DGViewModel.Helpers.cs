@@ -30,8 +30,8 @@ namespace DGView.ViewModels
                 }
                 else if (column.HeaderStringFormat == Constants.GroupItemCountColumnName)
                 {
-                    var p = new PropertyDescriptorForGroupItemCount((string)Application.Current.Resources["Loc:DGV.GroupItemCountColumnHeader"]);
-                    columnHelpers.Add(new DGColumnHelper(p, column.DisplayIndex, "N0"));
+                    var p = PropertyDescriptorForGroupItemCount.PD_ForGroupItemCount;
+                    columnHelpers.Add(new DGColumnHelper(p, column.DisplayIndex, ((IMemberDescriptor)p).DisplayFormat));
                     selectedProperties?.Add(p);
                 }
                 else if (column.HeaderStringFormat.StartsWith(Constants.GroupColumnNamePrefix)) { }

@@ -8,9 +8,9 @@ namespace DGCore.PD
 {
     public class PropertyDescriptorForGroupItemCount: PropertyDescriptor, IMemberDescriptor
     {
-        public PropertyDescriptorForGroupItemCount(string header = null) : base(header ?? "К-сть елементів", null)
-        {
-        }
+        public static PropertyDescriptorForGroupItemCount PD_ForGroupItemCount = new PropertyDescriptorForGroupItemCount();
+
+        private PropertyDescriptorForGroupItemCount() : base("Number of items", null) {}
 
         public override object GetValue(object component)
         {
@@ -24,7 +24,6 @@ namespace DGCore.PD
         public override Type PropertyType => typeof(int?);
         public object DbNullValue => null;
         public string DisplayFormat => "N0";
-        public Enums.Alignment? Alignment => Enums.Alignment.Center;
 
         //==========  Not implemented  ===========
         public override bool CanResetValue(object component) => throw new NotImplementedException();

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using DGCore.DGVList;
+using DGCore.PD;
 using DGView.Helpers;
 using DGView.ViewModels;
 using WpfSpLib.Common;
@@ -176,7 +177,9 @@ namespace DGView.Controls
 
             // Set content of group item count column
             if (groupItem != null && ViewModel.GroupItemCountColumn?.GetCellContent(row) is TextBlock txtBlock)
-                txtBlock.SetCurrentValueSmart(TextBlock.TextProperty, groupItem.ItemCount.ToString("N0", LocalizationHelper.CurrentCulture));
+                txtBlock.SetCurrentValueSmart(TextBlock.TextProperty,
+                    groupItem.ItemCount.ToString(PropertyDescriptorForGroupItemCount.PD_ForGroupItemCount.DisplayFormat,
+                        LocalizationHelper.CurrentCulture));
 
             // for (var k = 0; k < Columns.Count; k++)
             var firstVisibleColumn = true;

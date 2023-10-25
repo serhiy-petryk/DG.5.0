@@ -249,7 +249,10 @@ namespace DGView.Controls.Printing
                     getters[i] = (new DGCellValueFormatter(_viewModel.Properties[column.SortMemberPath], format)).ValueForPrinterGetter;
                 }
                 else if (Equals(column.HeaderStringFormat, Constants.GroupItemCountColumnName))
-                    getters[i] = (new DGCellValueFormatter(new PropertyDescriptorForGroupItemCount(), "N0")).ValueForPrinterGetter;
+                {
+                    var p = PropertyDescriptorForGroupItemCount.PD_ForGroupItemCount;
+                    getters[i] = (new DGCellValueFormatter(p,((IMemberDescriptor)p).DisplayFormat)).ValueForPrinterGetter;
+                }
                 else if ((column.HeaderStringFormat ?? "").StartsWith(Constants.GroupColumnNamePrefix))
                     getters[i] = null;
                 else
