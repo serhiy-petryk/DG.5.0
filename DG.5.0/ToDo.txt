@@ -69,3 +69,4 @@ done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
 done: 43. Max column width -> move to Constant.
 44. Highlight the active cell in edit setting form.
 45. Do text search action on Enter key press in 'Find' form.
+46. Autoupdate number formats in datagrid row header and group row count columns while language is changed
