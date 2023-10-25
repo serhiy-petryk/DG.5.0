@@ -6,7 +6,6 @@ using System.Reflection;
 
 namespace Data.PD
 {
-
     public enum MemberKind { Field = 0, Property = 1, Method = 2 };
     public delegate object GetHandler(object source);
     public delegate void SetHandler(object source, object value);
@@ -19,8 +18,6 @@ namespace Data.PD
         MemberInfo ReflectedMemberInfo { get; }
         Delegate NativeGetter { get; }
         string Format { get; }
-        // System.Drawing.ContentAlignment? Alignment { get; }
-        Common.Enums.Alignment? Alignment { get; }
     }
 
     //======================================
@@ -85,7 +82,6 @@ namespace Data.PD
 
         public MemberKind MemberKind => _member._memberKind;
         public string Format { get; } // for DGV
-        public Common.Enums.Alignment? Alignment { get; }
         public object DbNullValue => _dbNullValue;
         public MemberInfo ReflectedMemberInfo => _member._memberKind == MemberKind.Property ? _member._memberInfo.ReflectedType.GetProperty(Name) : _member._memberInfo;
         public Delegate NativeGetter => _member._nativeGetter;
