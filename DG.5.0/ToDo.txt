@@ -66,6 +66,6 @@ done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
 2023-10-25
 41. Check image column performance -> based on quote images
 42. Remove convertor and other properties from MemberDescriptor.
-43. Max column width -> move to Constant.
+done: 43. Max column width -> move to Constant.
 44. Highlight the active cell in edit setting form.
 45. Do text search action on Enter key press in 'Find' form.
