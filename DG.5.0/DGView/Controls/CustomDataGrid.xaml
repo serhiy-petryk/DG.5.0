@@ -20,7 +20,7 @@
              CanUserResizeRows="False"
              GridLinesVisibility="None"
              ColumnWidth="Auto"
-             MaxColumnWidth="2000"
+             MaxColumnWidth="1000"
              Style="{StaticResource MonochromeDGStyle}"
              Background="#FFFFFFFF"
 
