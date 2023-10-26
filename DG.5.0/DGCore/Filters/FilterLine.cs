@@ -141,27 +141,9 @@ namespace DGCore.Filters
           items.Add(Activator.CreateInstance(typePredicateItem, new object[] { item.FilterOperand, this.IgnoreCase, item.Value1, item.Value2 }));
         }
       }
-      if (propertyType.IsClass)
-      {
-        return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items, this.CanBeNull, this.Not });
-      }
-      else if (Utils.Types.IsNullableType(propertyType))
-      {
-        return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items, this.CanBeNull, this.Not });
-      }
-      else
-      {
-        return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items,
-            this.CanBeNull, this.Not, null });
-      }
 
+      return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items, this.CanBeNull, this.Not });
     }
-    /*[Browsable(false)]
-    public override object GetNullValue() {
-      if (this._pd is PD.IMemberDescriptor) return ((PD.IMemberDescriptor)_pd).DbNullValue;
-      else return null;
-    }*/
-
   }
 
   //===============================

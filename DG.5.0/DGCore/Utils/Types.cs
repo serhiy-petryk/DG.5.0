@@ -135,30 +135,6 @@ namespace DGCore.Utils
       }
     }
     //=====================
-    public static object CastDbNullValue(object dbNullValue, Type valueType, string memberName)
-    {
-      if (dbNullValue == null) return null; // dbNullValue not defined == return null
-      if (IsNullableType(valueType))
-      {
-        throw new Exception("BO_DbColumnAttribute attribute  error for member " + memberName + "." + Environment.NewLine +
-          "dbNullValue parameter of BO_DbColumnAttribute attribute can be not null only for non nullable types");
-      }
-      if (dbNullValue.GetType() != valueType)
-      {
-        try
-        {
-          return Convert.ChangeType(dbNullValue, valueType);
-        }
-        catch (Exception ex)
-        {
-          throw new Exception("BO_DbColumnAttribute attribute error for member " + memberName + "." + Environment.NewLine +
-            "dbNullValue parameter can not be converted to " + valueType.Name + " data type." + Environment.NewLine +
-            "Error message: " + ex.Message);
-        }
-      }
-      else return dbNullValue;
-    }
-
     public static string GetTypeCSString(Type type)
     {
       string specString1 = ((char)1).ToString();

@@ -25,11 +25,10 @@ namespace DGCore.Filters {
 
       //GetWhereDelegate_ValueType
       private static Func<TItem, bool> GetWhereDelegate_ValueType<TItem, TValue>
-        (Func<TItem, TValue> getter, List<PredicateItem<TValue>> predicateItems, bool canBeNull, bool notFlag, object dbNullValue)
+        (Func<TItem, TValue> getter, List<PredicateItem<TValue>> predicateItems, bool canBeNull, bool notFlag)
     where TValue : struct {
 
         PredicateItem<TValue>[] pItems = predicateItems.ToArray();// faster on 50% than List<T>
-        if (dbNullValue == null) {
           return delegate(TItem item) {
             TValue x = getter(item);
             foreach (PredicateItem<TValue> pitem in pItems) {
@@ -38,19 +37,6 @@ namespace DGCore.Filters {
             }
             return notFlag;
           };
-        }
-        else {
-          TValue dbNullValue2 = (TValue)dbNullValue;
-          return delegate(TItem item) {
-            TValue x = getter(item);
-            if (x.Equals(dbNullValue2)) return canBeNull ^ (!notFlag);
-            foreach (PredicateItem<TValue> pitem in pItems) {
-              // 50% slower: if (x1.GetResult(x)) return true;
-              if (pitem._predicate(x, pitem._value1, pitem._value2)) return !notFlag;
-            }
-            return notFlag;
-          };
-        }
       }
 
       //GetWhereDelegate_Class

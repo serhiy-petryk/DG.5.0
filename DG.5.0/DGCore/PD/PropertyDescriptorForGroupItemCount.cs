@@ -22,7 +22,6 @@ namespace DGCore.PD
         public override Type ComponentType => typeof(object);
         public override bool IsReadOnly => true;
         public override Type PropertyType => typeof(int?);
-        public object DbNullValue => null;
         public string DisplayFormat => "N0";
 
         //==========  Not implemented  ===========

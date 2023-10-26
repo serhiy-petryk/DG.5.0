@@ -62,10 +62,6 @@ namespace DGCore.DB {
             TypeConverter objectTypeConverter;
             if (!DbReader_isColumnValid(dbType, notNullableObjectType, e.MemberDescriptor.Converter, out objectTypeConverter)) continue;
 
-            // object dbNullValue = ((PD.IMemberDescriptor)e.MemberDescriptor).DbNullValue;
-            string propName = e.MemberDescriptor.Name;
-            // Check column
-
             Label lblNull = il.DefineLabel();
             Label lblSaveProperty = il.DefineLabel();
             //          TypeClass readerTypeClass = GetTypeClass(dbType);
