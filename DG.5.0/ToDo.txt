@@ -72,3 +72,6 @@ done: 43. Max column width -> move to Constant.
 46. Autoupdate number formats in datagrid row header and group row count columns while language is changed
 done: 47. Check GetWhereDelegate_ValueType method for different types (class, nullable, value type)
 done: 48. Check MemoryLeak.
+
+2023-10-26
+49. Refactoring DbColumnMap
