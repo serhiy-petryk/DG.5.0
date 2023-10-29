@@ -28,9 +28,11 @@ namespace DGCore.DB {
         string char2 = ((char)2).ToString();
         StringBuilder sb = new StringBuilder(itemType.FullName + char1);
         foreach (DbColumnMapElement e in columnMap) {
-          if (e.IsValid) {
-            sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 + "" + char1 +
-              (e.DbColumn.IsNullable ? "1" : "0") + char1 + e.MemberDescriptor.Name + char1 + e.DbColumn.Position.ToString() + char2);
+          if (e.IsValid)
+          {
+              sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 +
+                        (e.DbColumn.IsNullable ? "1" : "0") + char1 + e.MemberDescriptor.Name + char1 +
+                        e.DbColumn.Position.ToString() + char2);
           }
         }
         return sb.ToString();
