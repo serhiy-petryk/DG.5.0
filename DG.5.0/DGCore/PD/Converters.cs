@@ -6,56 +6,6 @@ using System.Globalization;
 using System.Text;
 
 namespace DGCore.PD {
-  // =======================  ConverterWithNonStandardDefaultValue  ================
-  public class ConverterWithNonStandardDefaultValue : TypeConverter {
-    //====== Static section
-    static Dictionary<TypeConverter, Dictionary<object, ConverterWithNonStandardDefaultValue>> _cached = new Dictionary<TypeConverter, Dictionary<object, ConverterWithNonStandardDefaultValue>>();
-
-    public static ConverterWithNonStandardDefaultValue GetConverter(TypeConverter baseConverter, object defaultValue) {
-      if (!_cached.ContainsKey(baseConverter)) _cached.Add(baseConverter, new Dictionary<object, ConverterWithNonStandardDefaultValue>());
-      Dictionary<object, ConverterWithNonStandardDefaultValue> x = _cached[baseConverter];
-      if (!x.ContainsKey(defaultValue)) x.Add(defaultValue, new ConverterWithNonStandardDefaultValue(baseConverter, defaultValue));
-      return x[defaultValue];
-    }
-
-    //=========  Object
-    object _defaultValue;
-    TypeConverter _baseConverter;
-
-    ConverterWithNonStandardDefaultValue(TypeConverter baseConverter, object defaultValue) {
-      this._baseConverter = baseConverter; this._defaultValue = defaultValue;
-    }
-
-    public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
-      if (_defaultValue != null && sourceType == typeof(DBNull)) return true;
-      return _baseConverter.CanConvertFrom(context, sourceType);
-    }
-    public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) => _baseConverter.CanConvertTo(context, destinationType);
-
-    public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
-      if (value is DBNull) return _defaultValue;
-      return _baseConverter.ConvertFrom(context, culture, value);
-    }
-    public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType) {
-      if (destinationType == typeof(string)) {
-        if (Utils.Tips.IsValueEquals(_defaultValue, value)) return "";
-      }
-      return _baseConverter.ConvertTo(context, culture, value, destinationType);
-    }
-    public override object CreateInstance(ITypeDescriptorContext context, IDictionary propertyValues) => _baseConverter.CreateInstance(context, propertyValues);
-
-    public override bool GetCreateInstanceSupported(ITypeDescriptorContext context) => _baseConverter.GetCreateInstanceSupported(context);
-
-    public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context) => _baseConverter.GetStandardValues(context);
-
-    public override bool GetStandardValuesExclusive(ITypeDescriptorContext context) => _baseConverter.GetStandardValuesExclusive(context);
-
-    public override bool GetStandardValuesSupported(ITypeDescriptorContext context) => _baseConverter.GetStandardValuesSupported(context);
-
-    public override bool IsValid(ITypeDescriptorContext context, object value) => _baseConverter.IsValid(context, value);
-  }
-
-  //======================================
   public class ByteArrayToHexStringConverter : TypeConverter
   {
     public static void Test()
