@@ -27,13 +27,11 @@ namespace DGCore.DB {
         string char1 = ((char)1).ToString();
         string char2 = ((char)2).ToString();
         StringBuilder sb = new StringBuilder(itemType.FullName + char1);
-        foreach (DbColumnMapElement e in columnMap) {
-          if (e.IsValid)
-          {
-              sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 +
-                        (e.DbColumn.IsNullable ? "1" : "0") + char1 + e.MemberDescriptor.Name + char1 +
-                        e.DbColumn.Position.ToString() + char2);
-          }
+        foreach (DbColumnMapElement e in columnMap)
+        {
+          sb.Append(e.DbColumn.SqlName + char1 + e.DbColumn.DataType.FullName + char1 +
+                    (e.DbColumn.IsNullable ? "1" : "0") + char1 + e.MemberDescriptor.Name + char1 +
+                    e.DbColumn.Position.ToString() + char2);
         }
         return sb.ToString();
       }
@@ -58,7 +56,6 @@ namespace DGCore.DB {
           int columnCount = 0;
           //        for (int i = 0; i < cols.Count; i++) {
           foreach (DbColumnMapElement e in columnMap) {
-            if (!e.IsValid) continue;
             Type dbType = e.DbColumn.DataType;
             Type notNullableObjectType = Utils.Types.GetNotNullableType(e.ItemDataType);
             TypeConverter objectTypeConverter;
