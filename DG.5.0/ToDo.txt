@@ -65,7 +65,7 @@ done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
 
 2023-10-25
 41. Check image column performance -> based on quote images
-42. Remove convertor and other properties from MemberDescriptor.
+done: 42. Remove convertor and other properties from MemberDescriptor.
 done: 43. Max column width -> move to Constant.
 44. Highlight the active cell in edit setting form.
 45. Do text search action on Enter key press in 'Find' form.
@@ -76,3 +76,5 @@ done: 48. Check MemoryLeak.
 2023-10-26
 49. Refactoring DbColumnMap
 50. Чому: час завантаження похожих даних з даними які вже існують близько 0 для 10000 рядків. Якщо схожих даних не існує, то ча завантаження десь ~1 секунда.
+
+2023-10-30
