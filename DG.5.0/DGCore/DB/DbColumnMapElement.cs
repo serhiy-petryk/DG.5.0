@@ -69,11 +69,11 @@ namespace DGCore.DB {
       MemberDescriptor = pd;
     }
 
-    public DbSchemaColumn DbColumn { get; set; }
+    public DbSchemaColumn DbColumn { get; }
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public PropertyDescriptor MemberDescriptor { get; set; }
+    public PropertyDescriptor MemberDescriptor { get; }
 
     [Browsable(false)]
     public bool IsValid => this.MemberDescriptor != null;
