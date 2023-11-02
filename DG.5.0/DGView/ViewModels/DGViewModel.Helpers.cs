@@ -74,10 +74,9 @@ namespace DGView.ViewModels
 
                     if (propertyType == typeof(byte[]) && !string.Equals(gridFormat, "image", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (string.Equals(gridFormat, "hex", StringComparison.OrdinalIgnoreCase))
-                            binding.Converter = Helpers.ByteArrayToHexStringConverter.Instance;
-                        else
-                            binding.Converter = null;
+                        binding.Converter = string.Equals(gridFormat, "hex", StringComparison.OrdinalIgnoreCase)
+                            ? Helpers.ByteArrayToHexStringConverter.Instance
+                            : null;
                     }
                     else if (!string.IsNullOrEmpty(gridFormat))
                         binding.StringFormat = gridFormat;
