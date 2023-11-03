@@ -219,7 +219,7 @@ namespace DGView.ViewModels
         {
             if (GroupItemCountColumn == null)
             {
-                GroupItemCountColumn = DGControl.Resources["GroupItemCountColumn"] as DataGridColumn;
+                GroupItemCountColumn = DGControl.Resources["GroupItemCountColumn"] as DataGridTextColumn;
                 DGControl.Columns.Insert(0, GroupItemCountColumn);
             }
 
