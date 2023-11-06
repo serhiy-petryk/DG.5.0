@@ -43,6 +43,17 @@ namespace DGView.Controls
             ViewModel = new DGViewModel(this);
             DataContext = ViewModel;
             VirtualizingPanel.SetVirtualizationMode(this, VirtualizationMode.Recycling);
+            LocalizationHelper.LanguageChanged += LocalizationHelperOnLanguageChanged;
+        }
+
+        private void LocalizationHelperOnLanguageChanged(object sender, EventArgs e)
+        {
+            foreach (var row in this.GetVisualChildren().OfType<DataGridRow>())
+            {
+                OnRowIsReady(row);
+                var rowHeaderText = (row.GetIndex() + 1).ToString("N0", LocalizationHelper.CurrentCulture);
+                if (!Equals(row.Header, rowHeaderText)) row.Header = rowHeaderText;
+            }
         }
 
         #region =======  Public methods  ============
@@ -102,7 +113,6 @@ namespace DGView.Controls
             base.ClearContainerForItemOverride(element, item);
 
             var row = (DataGridRow)element;
-
             var isGroupRow = row.DataContext is IDGVList_GroupItem;
             var groupItem = isGroupRow ? (IDGVList_GroupItem)row.DataContext : null;
 
@@ -348,6 +358,7 @@ namespace DGView.Controls
 
         public void Dispose()
         {
+            LocalizationHelper.LanguageChanged -= LocalizationHelperOnLanguageChanged;
             SelectedCells.Clear();
             SelectedItems.Clear();
             Columns.Clear();
