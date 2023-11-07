@@ -317,9 +317,9 @@ namespace DGCore.DGVList
     private async void RefreshDataInternalAsync(RefreshMode mode, params object[] parameters)
     {
       await _refreshLock.WaitAsync();
-      if (_isDisposing) return;
       try
       {
+        if (_isDisposing) return;
         await Task.Factory.StartNew(() => RefreshDataCore(mode, parameters));
         ResetBindings(); // Need for sorting visualiztion
       }
