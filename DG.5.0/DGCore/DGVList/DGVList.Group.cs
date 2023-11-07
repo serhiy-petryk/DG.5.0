@@ -299,9 +299,9 @@ namespace DGCore.DGVList
     private async void RefreshDataInternal(RefreshMode mode, params object[] parameters)
     {
       await _refreshLock.WaitAsync();
-      if (_isDisposing) return;
       try
       {
+        if (_isDisposing) return;
         RefreshDataCore(mode, parameters);
         ResetBindings(); // Need for sorting visualization
       }
