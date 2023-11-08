@@ -146,6 +146,7 @@ namespace WpfSpLib.Controls
         public void Close() => Close(null);
         private async void Close(object obj)
         {
+            Closing?.Invoke(this, EventArgs.Empty);
             if (IsWindowed)
             {
                 ((Window)Parent).Close();
@@ -205,6 +206,7 @@ namespace WpfSpLib.Controls
         #endregion
 
         #region =============  Properties  =================
+        public event EventHandler Closing;
         public event EventHandler Closed;
         public MwiContainer MwiContainer; // !! Must be field, not property => important for clearing when unloaded
 
