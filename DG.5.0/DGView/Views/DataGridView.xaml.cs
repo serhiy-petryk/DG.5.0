@@ -39,6 +39,8 @@ namespace DGView.Views
             var mwiChild = (MwiChild) Parent;
             mwiChild.InputBindings.Clear();
             mwiChild.GotFocus -= MwiChild_GotFocus;
+            mwiChild.Closing -= MwiChildOnClosing;
+            mwiChild.Closing += MwiChildOnClosing;
 
             var key = new KeyBinding(ViewModel.CmdSearch, Key.F, ModifierKeys.Control);
             mwiChild.InputBindings.Add(key);
@@ -51,6 +53,11 @@ namespace DGView.Views
                     .FirstOrDefault();
                 WireScrollViewer();
             }
+        }
+
+        private void MwiChildOnClosing(object sender, EventArgs e)
+        {
+            ViewModel.Data.ClearData();
         }
 
         private void MwiChild_GotFocus(object sender, RoutedEventArgs e)
@@ -79,6 +86,9 @@ namespace DGView.Views
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
             UnwireScrollViewer();
+            if (Parent is MwiChild mwiChild2)
+                mwiChild2.Closing -= MwiChildOnClosing;
+
             if (this.IsElementDisposing())
             {
                 DataGrid.SelectedCellsChanged -= OnDataGridSelectedCellsChanged;

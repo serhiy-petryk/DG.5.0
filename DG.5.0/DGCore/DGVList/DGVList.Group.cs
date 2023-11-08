@@ -267,9 +267,13 @@ namespace DGCore.DGVList
     }
 
     // ============   Refresh  =====================
-    enum RefreshMode { Common, AfterCommonColumnSortChanged, AfterGroupColumnSortChanged, AfterTotalGroupSortChanged, AfterFastFilterChanged, AfterFilterByValueChanged };
+    enum RefreshMode { Common, AfterCommonColumnSortChanged, AfterGroupColumnSortChanged, AfterTotalGroupSortChanged, AfterFastFilterChanged, AfterFilterByValueChanged, Clear };
 
     public void RefreshData() => RefreshDataInternal(RefreshMode.Common);
+    public void ClearData()
+    {
+        RefreshDataInternal(RefreshMode.Clear);
+    }
 
     private void RefreshDataAfterCommonColumnSortChanged()
     {
@@ -394,7 +398,10 @@ namespace DGCore.DGVList
         else
         {
           // common
-          data = SetFiltersWhileRefresh(data);
+          if (mode == RefreshMode.Clear)
+            ((IList) data).Clear();
+          else
+            data = SetFiltersWhileRefresh(data);
           this._rootGroup = new DGVList_GroupItem<TItem>();
           if (Groups.Count > 0)
             this._rootGroup.ChildGroups = new List<DGVList_GroupItem<TItem>>();
@@ -417,7 +424,10 @@ namespace DGCore.DGVList
       else
       {
         // not group mode
-        data = SetFiltersWhileRefresh(data);
+        if (mode == RefreshMode.Clear)
+          ((IList)data).Clear();
+        else
+          data = SetFiltersWhileRefresh(data);
         CurrentExpandedGroupLevel = int.MaxValue;
         this.SortRecursive(data, 0, this);
         FilteredRowCount = this.Count;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -175,7 +174,7 @@ namespace DGView.ViewModels
                     case DataSourceBase.DataEventKind.BeforeRefresh:
                         break;
                     case DataSourceBase.DataEventKind.Refreshed:
-                        if (!(Keyboard.FocusedElement is TextBox)) // QuickFilter
+                        if (Data!= null && !(Keyboard.FocusedElement is TextBox)) // QuickFilter
                         {
                             // Restore last active cell
                             var lastActiveItem = _lastCurrentCellInfo.Item;
