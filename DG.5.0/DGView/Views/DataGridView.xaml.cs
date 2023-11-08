@@ -39,8 +39,8 @@ namespace DGView.Views
             var mwiChild = (MwiChild) Parent;
             mwiChild.InputBindings.Clear();
             mwiChild.GotFocus -= MwiChild_GotFocus;
-            mwiChild.Closing -= MwiChildOnClosing;
-            mwiChild.Closing += MwiChildOnClosing;
+            mwiChild.BeforeClose -= MwiChildOnBeforeClose;
+            mwiChild.BeforeClose += MwiChildOnBeforeClose;
 
             var key = new KeyBinding(ViewModel.CmdSearch, Key.F, ModifierKeys.Control);
             mwiChild.InputBindings.Add(key);
@@ -55,7 +55,7 @@ namespace DGView.Views
             }
         }
 
-        private void MwiChildOnClosing(object sender, EventArgs e)
+        private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
             ViewModel.Data.ClearData();
         }
@@ -87,7 +87,7 @@ namespace DGView.Views
         {
             UnwireScrollViewer();
             if (Parent is MwiChild mwiChild2)
-                mwiChild2.Closing -= MwiChildOnClosing;
+                mwiChild2.BeforeClose -= MwiChildOnBeforeClose;
 
             if (this.IsElementDisposing())
             {

@@ -270,10 +270,7 @@ namespace DGCore.DGVList
     enum RefreshMode { Common, AfterCommonColumnSortChanged, AfterGroupColumnSortChanged, AfterTotalGroupSortChanged, AfterFastFilterChanged, AfterFilterByValueChanged, Clear };
 
     public void RefreshData() => RefreshDataInternal(RefreshMode.Common);
-    public void ClearData()
-    {
-        RefreshDataInternal(RefreshMode.Clear);
-    }
+    public void ClearData() => RefreshDataInternal(RefreshMode.Clear);
 
     private void RefreshDataAfterCommonColumnSortChanged()
     {
@@ -307,7 +304,8 @@ namespace DGCore.DGVList
       {
         if (_isDisposing) return;
         RefreshDataCore(mode, parameters);
-        ResetBindings(); // Need for sorting visualization
+        if (mode != RefreshMode.Clear)
+            ResetBindings(); // Need for sorting visualization
       }
       catch (Exception ex)
       {
@@ -399,7 +397,7 @@ namespace DGCore.DGVList
         {
           // common
           if (mode == RefreshMode.Clear)
-            ((IList) data).Clear();
+            ((IList)data).Clear();
           else
             data = SetFiltersWhileRefresh(data);
           this._rootGroup = new DGVList_GroupItem<TItem>();
