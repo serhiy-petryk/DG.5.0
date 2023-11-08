@@ -57,6 +57,7 @@ namespace DGView.Views
 
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
+            ViewModel.Data.ResetSettings();
             ViewModel.Data.ClearData();
         }
 
