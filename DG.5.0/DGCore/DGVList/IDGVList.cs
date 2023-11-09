@@ -46,6 +46,8 @@ namespace DGCore.DGVList
     void ClearData();
     void ItemExpandedChanged(int rowIndex);
 
+    void ResetBindings();
+
     event Sql.DataSourceBase.dlgDataStatusChangedDelegate DataStateChanged;
   }
 

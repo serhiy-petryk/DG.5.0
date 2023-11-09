@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using DGCore.DGVList;
 using DGView.Helpers;
 using DGView.ViewModels;
 using WpfSpLib.Controls;
@@ -53,6 +54,8 @@ namespace DGView.Views
                     .FirstOrDefault();
                 WireScrollViewer();
             }
+
+            ((IDGVList)ViewModel.Data).ResetBindings(); // for Detach/Atach window event
         }
 
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
