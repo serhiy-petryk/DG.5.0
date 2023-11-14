@@ -47,6 +47,7 @@ namespace DGCore.DGVList
     void ItemExpandedChanged(int rowIndex);
 
     void ResetBindings();
+    bool NoDataFilter { get; set; }
 
     event Sql.DataSourceBase.dlgDataStatusChangedDelegate DataStateChanged;
   }

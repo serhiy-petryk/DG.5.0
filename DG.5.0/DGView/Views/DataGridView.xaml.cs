@@ -60,8 +60,18 @@ namespace DGView.Views
 
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
-            ViewModel.Data.ResetSettings();
-            ViewModel.Data.ClearData();
+            var btns = this.GetVisualChildren().OfType<ToggleButton>().ToArray();
+            var contextMenu = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+            btns[0].IsChecked = true;
+            contextMenu.Width = 0;
+            contextMenu.Height = 0;
+
+            var a1 = ViewModel.GetBlankSetting();
+            a1.AllColumns.Where(c => !c.IsHidden).ToList().ForEach(c => c.IsHidden = true);
+            ViewModel.Data.NoDataFilter = true;
+            ViewModel.ApplySetting(a1);
+
+            contextMenu.IsOpen = false;
         }
 
         private void MwiChild_GotFocus(object sender, RoutedEventArgs e)

@@ -147,6 +147,7 @@ namespace WpfSpLib.Controls
         private async void Close(object obj)
         {
             BeforeClose?.Invoke(this, EventArgs.Empty);
+
             if (IsWindowed)
             {
                 ((Window)Parent).Close();

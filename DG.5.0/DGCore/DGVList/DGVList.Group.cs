@@ -437,6 +437,12 @@ namespace DGCore.DGVList
 
     private IEnumerable<TItem> SetFiltersWhileRefresh(IEnumerable<TItem> data)
     {
+      if (NoDataFilter)
+      {
+        data = data.Where(a => false);
+        return data;
+      }
+
       // Apply ByValue Filter
       if (FilterByValue != null)
       {
