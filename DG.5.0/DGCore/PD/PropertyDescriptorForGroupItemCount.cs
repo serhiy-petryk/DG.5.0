@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
-using DGCore.Common;
 using DGCore.DGVList;
 
 namespace DGCore.PD

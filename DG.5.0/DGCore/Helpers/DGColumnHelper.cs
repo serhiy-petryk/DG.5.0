@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using DGCore.PD;
 
 namespace DGCore.Helpers
 {
