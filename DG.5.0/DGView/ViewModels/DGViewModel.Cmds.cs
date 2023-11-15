@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using DGCore.Helpers;
 using DGView.Controls.Printing;
@@ -82,22 +84,21 @@ namespace DGView.ViewModels
         }
         private void cmdSetFont(object o)
         {
-            foreach (PropertyDescriptor p in Properties)
-            {
-                if (p.PropertyType == typeof(byte[]))
-                {
-                    var format = GetColumnActualFormat(p);
-                    var column = _columns.FirstOrDefault(a => string.Equals(a.Id, p.Name, StringComparison.OrdinalIgnoreCase));
-                    if (string.Equals(format, "image"))
-                        column.Format_UserDefined = "hex";
-                    else if (string.Equals(format, "hex"))
-                        column.Format_UserDefined = null;
-                    else
-                        column.Format_UserDefined = "image";
-                }
-            }
-            GenerateColumns();
+            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
+            var btns =dgView.GetVisualChildren().OfType<ToggleButton>().ToArray();
+            var cm = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+            btns[0].IsChecked = true;
+            cm.Width = 0;
+            cm.Height = 0;
+
+            CmdSetSetting.Execute("no data/no columns (for memory leak test)");
+
+            cm.IsOpen = false;
+            cm.Visibility = Visibility.Visible;
+            var mwiChild = DGControl.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+            mwiChild?.CmdClose.Execute(null);
         }
+
         private void cmdRowDisplayMode(object p)
         {
             var rowViewMode = (DGCore.Common.Enums.DGRowViewMode)Enum.Parse(typeof(DGCore.Common.Enums.DGRowViewMode), (string)p);
