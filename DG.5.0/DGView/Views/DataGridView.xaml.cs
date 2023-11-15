@@ -61,9 +61,9 @@ namespace DGView.Views
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
             // Minimized memory leak
-            var btns = this.GetVisualChildren().OfType<ToggleButton>().ToArray();
-            var contextMenu = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
-            btns[0].IsChecked = true;
+            var btn = this.GetVisualChildren().OfType<ToggleButton>().First();
+            btn.IsChecked = true;
+            var contextMenu = btn.Resources.Values.OfType<ContextMenu>().First();
             contextMenu.Width = 0;
             contextMenu.Height = 0;
             contextMenu.IsOpen = false;
