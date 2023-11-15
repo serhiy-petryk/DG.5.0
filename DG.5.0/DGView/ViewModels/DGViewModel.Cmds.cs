@@ -85,7 +85,7 @@ namespace DGView.ViewModels
         private void cmdSetFont(object o)
         {
             var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
-            var btns =dgView.GetVisualChildren().OfType<ToggleButton>().ToArray();
+            var btns = dgView.GetVisualChildren().OfType<ToggleButton>().ToArray();
             var cm = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
             btns[0].IsChecked = true;
             cm.Width = 0;
