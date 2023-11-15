@@ -60,6 +60,7 @@ namespace DGView.Views
 
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
+            // Minimized memory leak
             var btns = this.GetVisualChildren().OfType<ToggleButton>().ToArray();
             var contextMenu = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
             btns[0].IsChecked = true;
@@ -67,7 +68,7 @@ namespace DGView.Views
             contextMenu.Height = 0;
             contextMenu.IsOpen = false;
 
-            Window.GetWindow(this).Focus();
+            Window.GetWindow(this).Focus(); // Need because error after close detached window
         }
 
         private void MwiChild_GotFocus(object sender, RoutedEventArgs e)
