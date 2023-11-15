@@ -62,15 +62,6 @@ namespace DGView.Controls
             foreach (var row in this.GetVisualChildren().OfType<DataGridRow>())
                 OnRowIsReady(row);
         }
-        public void ClearRows()
-        {
-          foreach (var row in this.GetVisualChildren().OfType<DataGridRow>())
-          {
-            base.ClearContainerForItemOverride(row, row.DataContext);
-            row.InputBindings.Clear();
-          }
-
-        }
         #endregion
 
         #region =======  Override methods  ============
