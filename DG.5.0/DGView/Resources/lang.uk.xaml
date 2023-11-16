@@ -17,7 +17,7 @@
     <v:String x:Key="Loc:DGV.Status.PartiallyLoaded">Дані завантажені частково!</v:String>
     <v:String x:Key="Loc:DGV.Status.Rows">Елементів: {0}</v:String>
 
-    <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader">К-сть елементів</v:String>
+    <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">К-сть&#x0a;елементів</v:String>
 
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
 </ResourceDictionary>
