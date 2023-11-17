@@ -10,6 +10,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.Resources>
+        <common:LocalizationProxy x:Key="LoadDataLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.LoadDataLabel}"/>
+        <common:LocalizationProxy x:Key="FilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.FilterLabel}"/>
+        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.ClearFilterLabel}"/>
+    </UserControl.Resources>
+
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,7 +23,8 @@
         </Grid.RowDefinitions>
 
         <WrapPanel Height="28" Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+5%}">
-            <Button x:Name="LoadButton" Content="Завантажити дані" BorderThickness="0" Padding="2 2 4 2"
+            <Button x:Name="LoadButton" BorderThickness="0" Padding="2 2 4 2"
+                    Content="{Binding Source={StaticResource LoadDataLabelProxy}, Path=Value}"
                     Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
@@ -31,7 +38,8 @@
                 <Path Data="{StaticResource FilterGeometry}"
                       Fill="{Binding RelativeSource={RelativeSource AncestorType=WrapPanel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"/>
             </Viewbox>
-            <TextBlock Text="Filter :" VerticalAlignment="Center" Padding="0" Margin="-8 0 8 0"
+            <TextBlock Text="{Binding Source={StaticResource FilterLabelProxy}, Path=Value}"
+                       VerticalAlignment="Center" Padding="0" Margin="-8 0 8 0"
                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=WrapPanel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"/>
 
             <ToggleButton Focusable="False" Padding="0" BorderThickness="0" ToolTip="Select filter"
@@ -55,11 +63,12 @@
                     Command="{Binding CmdSaveFilter}"/>
 
             <Button BorderThickness="0" Padding="2" ToolTip="Clear filter"
+                    Content="{Binding Source={StaticResource ClearFilterLabelProxy}, Path=Value}"
                     Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource CloseGeometry}"
-                    effects:IconEffect.Margin="5"
+                    effects:IconEffect.Margin="8 8 2 8"
                     Command="{Binding CmdClearFilter}"/>
 
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>

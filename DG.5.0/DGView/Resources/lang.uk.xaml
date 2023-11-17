@@ -20,4 +20,9 @@
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">К-сть&#x0a;елементів</v:String>
 
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
+
+    <!-- DBFilterView -->
+    <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Завантажити дані</v:String>
+    <v:String x:Key="Loc:DBFilterView.FilterLabel">Фільтр :</v:String>
+    <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Очистити фільтр</v:String>
 </ResourceDictionary>

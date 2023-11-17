@@ -20,4 +20,9 @@
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">Number&#x0a;of items</v:String>
 
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Search and replace text</v:String>
+
+    <!-- DBFilterView -->
+    <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Load data</v:String>
+    <v:String x:Key="Loc:DBFilterView.FilterLabel">Filter :</v:String>
+    <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Clear filter</v:String>
 </ResourceDictionary>
