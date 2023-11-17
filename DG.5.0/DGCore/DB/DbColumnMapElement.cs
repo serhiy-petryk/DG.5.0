@@ -33,7 +33,7 @@ namespace DGCore.DB
         private static DbColumnMapElement[] PrepareDefaultColumnMap<T>(IEnumerable<DbSchemaColumn> dbColumns)
         {
             var pdc = PD.MemberDescriptorUtils.GetTypeMembers(typeof(T));
-            return dbColumns.Where(c => pdc[c.SqlName] != null).Select(c => new DbColumnMapElement(c, pdc[c.SqlName])).ToArray();
+            return dbColumns.Where(c => pdc.Find(c.SqlName, true) != null).Select(c => new DbColumnMapElement(c, pdc.Find(c.SqlName, true))).ToArray();
         }
 
         // ====================================
