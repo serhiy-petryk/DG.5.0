@@ -21,8 +21,17 @@
 
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Search and replace text</v:String>
 
+    <!-- MwiLeftPanelView -->
+    <v:String x:Key="Loc:MwiLeftPanelView.DataSettingLabel">Data setting:</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.DataFilterLabel">Data filter</v:String>
+
     <!-- DBFilterView -->
     <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Load data</v:String>
     <v:String x:Key="Loc:DBFilterView.FilterLabel">Filter :</v:String>
+    <v:String x:Key="Loc:DBFilterView.SelectFilterLabel">Select filter</v:String>
+    <v:String x:Key="Loc:DBFilterView.SaveFilterLabel">Save filter</v:String>
     <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Clear filter</v:String>
+
+    <!-- FilterGridView -->
+    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Value of database filter:</v:String>
 </ResourceDictionary>

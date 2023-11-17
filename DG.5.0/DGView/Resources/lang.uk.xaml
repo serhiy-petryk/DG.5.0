@@ -21,8 +21,17 @@
 
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
 
+    <!-- MwiLeftPanelView -->
+    <v:String x:Key="Loc:MwiLeftPanelView.DataSettingLabel">Налаштування даних:</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.DataFilterLabel">Фільтр даних</v:String>
+
     <!-- DBFilterView -->
     <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Завантажити дані</v:String>
     <v:String x:Key="Loc:DBFilterView.FilterLabel">Фільтр :</v:String>
+    <v:String x:Key="Loc:DBFilterView.SelectFilterLabel">Вибрати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.SaveFilterLabel">Записати фільтр</v:String>
     <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Очистити фільтр</v:String>
+
+    <!-- FilterGridView -->
+    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Значення фільтра бази даних:</v:String>
 </ResourceDictionary>

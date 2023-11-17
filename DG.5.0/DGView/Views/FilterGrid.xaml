@@ -7,6 +7,10 @@
              xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <common:LocalizationProxy x:Key="DatabaseFilterLabelProxy" InputValue="{DynamicResource Loc:FilterGridView.DatabaseFilterLabel}"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -91,7 +95,7 @@
             </Grid.RowDefinitions>
             <controls:LabelBox Grid.Row="0" FontStyle="Italic" TextDecorations="Underline"
                                Background="Transparent" Foreground="{Binding Foreground}"
-                               Text="Database filter:"/>
+                               Text="{Binding Source={StaticResource DatabaseFilterLabelProxy}, Path=Value, Mode=OneWay}"/>
             <controls:LabelBox Grid.Row="1" FontWeight="Bold" TextWrapping="Wrap" Background="Transparent" Foreground="{Binding Foreground}"
                                Text="{Binding FilterList.StringPresentation, Mode=OneWay}"/>
         </Grid>
