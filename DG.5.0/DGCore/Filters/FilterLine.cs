@@ -91,11 +91,11 @@ namespace DGCore.Filters
         protected bool _not = false;
         protected bool? _ignoreCase;
 
-        public Type PropertyType { get; internal set; }
-        public string UniqueID { get; internal set; }
-        public string DisplayName { get; internal set; }
-        public string Description { get; internal set; }
-        public bool PropertyCanBeNull { get; internal set; }
+        public Type PropertyType { get; protected set; }
+        public string UniqueID { get; protected set; }
+        public string DisplayName { get; protected set; }
+        public string Description { get; protected set; }
+        public bool PropertyCanBeNull { get; protected set; }
 
         public string StringPresentation
         {
