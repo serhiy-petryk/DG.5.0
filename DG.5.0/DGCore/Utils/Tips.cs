@@ -100,8 +100,20 @@ namespace DGCore.Utils {
       return Equals(o1, o2);
     }
 
+    public static bool CanConvertStringTo(Type destinationType)
+    {
+      if (destinationType == typeof(string)) return true;
+      if (Types.GetNotNullableType(destinationType) == typeof(bool)) return true;
+      TypeConverter tc = TypeDescriptor.GetConverter(destinationType);
+      if (tc != null && tc.CanConvertFrom(typeof(string))) return true;
+      if (destinationType.GetInterface("System.IConvertible") != null) return true;
+      if (Types.IsNullableType(destinationType)) return true;
+
+      return false;
+    }
+
     public static object ConvertTo(object value, Type destinationType, TypeConverter valueConverter) {
-      if (value == null || value==DBNull.Value ) return null;
+      if (value == null || value == DBNull.Value) return null;
       Type valueType = value.GetType();
       if (valueType == destinationType) return value;
       if (destinationType == typeof(string)) return value.ToString();

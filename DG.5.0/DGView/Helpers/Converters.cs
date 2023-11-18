@@ -7,6 +7,16 @@ using DGCore.DGVList;
 
 namespace DGView.Helpers
 {
+    public class CanConvertStringTo : IValueConverter
+    {
+        public static CanConvertStringTo Instance = new CanConvertStringTo();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DGCore.Utils.Tips.CanConvertStringTo((Type)value);
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
     public class ListSortDirectionConverter : IValueConverter
     {
         // Converts ListSortDirection to bool and vice versa

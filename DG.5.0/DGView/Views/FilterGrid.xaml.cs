@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using DGView.Helpers;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
@@ -38,6 +39,9 @@ namespace DGView.Views
         {
             var cell = (DataGridCell)sender;
             var filterLine = cell.DataContext as DGCore.Filters.FilterLineBase;
+            if (!(bool)CanConvertStringTo.Instance.Convert(filterLine.PropertyType, null, null, null))
+                return;
+
             var view = new FilterLineView(filterLine);
             var container = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
             var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
