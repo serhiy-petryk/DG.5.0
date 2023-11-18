@@ -79,3 +79,10 @@ done: 50. Чому: час завантаження похожих даних з
 
 2023-11-03
 done: 51. Memory leak -> операції головної книги -> Level: Вся інформація -> Close window
+
+2023-11-18
+52. Localization -> Filters: operand, text, ..
+53. Adjust dbfilter form
+53. Adjust filterline form
+54. Autoupdate FilterTextOrDescription
+55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
