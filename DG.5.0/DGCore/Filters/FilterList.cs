@@ -61,8 +61,6 @@ namespace DGCore.Filters {
       }
     }
 
-    public bool IgnoreCaseSupport => this._dbProviderNamespace == null;
-
     public bool IsEmpty => this.All(line => !line.Items.Any(item => item.IsValid));
 
     public string StringPresentation

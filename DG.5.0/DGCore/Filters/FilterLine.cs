@@ -16,13 +16,13 @@ namespace DGCore.Filters
             Description = (string.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
             PropertyCanBeNull = dbColumn.IsNullable;
         }
-
-        public override bool IgnoreCaseSupport => false;
     }
 
     //=================================
     public class FilterLine_Item : FilterLineBase
     {
+        private readonly Delegate _nativeGetter;
+
         public FilterLine_Item(PropertyDescriptor pd)
         {
             PropertyType = pd.PropertyType;
@@ -36,11 +36,9 @@ namespace DGCore.Filters
             _nativeGetter = ((PD.IMemberDescriptor) pd).NativeGetter;
         }
 
-        public override bool IgnoreCaseSupport => true;
         public Type ComponentType { get; }
         public TypeConverter Converter { get; }
-        private readonly Delegate _nativeGetter;
-
+        
         public Delegate GetWherePredicate()
         {
             Type typePredicateItem = typeof(PredicateItem<>).MakeGenericType(Utils.Types.GetNotNullableType(this.PropertyType));
@@ -135,7 +133,6 @@ namespace DGCore.Filters
             }
         }
         public string FilterTextOrDescription => StringPresentation ?? Description;
-        public abstract bool IgnoreCaseSupport { get; }
         public FilterLineSubitemCollection Items { get; }
         public FilterLineSubitemCollection FrmItems { get; } //для редактирования в форме
         public bool Not {get; set;}
