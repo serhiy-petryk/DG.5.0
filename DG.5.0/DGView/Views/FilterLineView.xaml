@@ -103,7 +103,7 @@
                     effects:CornerRadiusEffect.CornerRadius="3"
                     effects:ChromeEffect.Monochrome="{StaticResource DangerColor}"
                     effects:ClickEffect.RippleColor="White"
-                    Content="Відмінити" Click="CloseButton_OnClick"/>
+                    Content="Відмінити" Click="CloseButton_OnClick" IsCancel="True"/>
             <Button Grid.Column="2" HorizontalAlignment="Center" Padding="4" BorderThickness="2"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:CornerRadiusEffect.CornerRadius="3"
