@@ -84,6 +84,7 @@ done: 51. Memory leak -> операції головної книги -> Level: 
 52. Localization -> Filters: operand, text, ..
 53. Adjust dbfilter form
 53. Adjust filterline form
-54. Autoupdate FilterTextOrDescription
+done: 54. Autoupdate FilterTextOrDescription
 55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
-56. Filter line for image data type
+done: 56. FilterLine for image data type
+57. FilterLine: set value in ValueEditor -> for different value type use different editor
