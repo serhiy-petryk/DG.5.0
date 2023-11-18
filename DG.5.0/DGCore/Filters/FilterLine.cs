@@ -11,48 +11,36 @@ namespace DGCore.Filters
   {
 
     public readonly DB.DbSchemaColumn _dbColumn;
-    readonly string _displayName;
-    readonly string _description;
 
     public FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
     {
       this._dbColumn = dbColumn;
-      this._displayName = (String.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
-      this._description = (String.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
+      DisplayName = (String.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
+      Description = (String.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
       this._items = new FilterLineSubitemCollection(this);
       this._frmItems = new FilterLineSubitemCollection(this);
     }
 
     [Browsable(false)]
-    public override Type PropertyType
-    {
-      get { return this._dbColumn.DataType; }
-    }
+    public override Type PropertyType => this._dbColumn.DataType;
+
     [Browsable(false)]
-    public override string UniqueID
-    {
-      get { return this._dbColumn.SqlName; }
-    }
+    public override string UniqueID => this._dbColumn.SqlName;
+
     [Browsable(false)]
-    public override string DisplayName
-    {
-      get { return this._displayName ?? this._dbColumn.DisplayName; }
-    }
+    public override string DisplayName { get; }
+
     [Browsable(false)]
-    public override string Description
-    {
-      get { return this._description ?? this._dbColumn.Description; }
-    }
+    public override string Description { get; }
+    
+    public string FilterTextOrDescription => StringPresentation ?? Description;
+
     [Browsable(false)]
-    public override bool PropertyCanBeNull
-    {
-      get { return this._dbColumn.IsNullable; }
-    }
+    public override bool PropertyCanBeNull => this._dbColumn.IsNullable;
+
     [Browsable(false)]
-    public override bool IgnoreCaseSupport
-    {
-      get { return false; }
-    }
+    public override bool IgnoreCaseSupport => false;
+
     /*[Browsable(false)]
     public override object GetNullValue() {
       return null;
