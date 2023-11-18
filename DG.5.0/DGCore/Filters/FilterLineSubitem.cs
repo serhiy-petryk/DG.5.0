@@ -92,7 +92,7 @@ namespace DGCore.Filters
                     value = null;
 
                 if (Owner is FilterLine_Item)
-                    _value1 = Utils.Tips.ConvertTo(value, Owner.PropertyType, ((FilterLine_Item)Owner)._pd.Converter);
+                    _value1 = Utils.Tips.ConvertTo(value, Owner.PropertyType, ((FilterLine_Item)Owner).Converter);
                 else
                     _value1 = Utils.Tips.ConvertTo(value, Owner.PropertyType, null);
                 
@@ -119,7 +119,7 @@ namespace DGCore.Filters
                     value = null;
 
                 if (Owner is FilterLine_Item)
-                    _value2 = Utils.Tips.ConvertTo(value, Owner.PropertyType, ((FilterLine_Item) Owner)._pd.Converter);
+                    _value2 = Utils.Tips.ConvertTo(value, Owner.PropertyType, ((FilterLine_Item) Owner).Converter);
                 else
                     _value2 = Utils.Tips.ConvertTo(value, Owner.PropertyType, null);
                 

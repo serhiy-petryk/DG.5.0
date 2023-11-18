@@ -8,81 +8,54 @@ namespace DGCore.Filters
 {
     public class FilterLine_Database : FilterLineBase
     {
-
-        public readonly DB.DbSchemaColumn _dbColumn;
-
         public FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
         {
-            this._dbColumn = dbColumn;
+            PropertyType = dbColumn.DataType;
+            UniqueID = dbColumn.SqlName;
             DisplayName = (String.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
             Description = (String.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
-            this._items = new FilterLineSubitemCollection(this);
-            this._frmItems = new FilterLineSubitemCollection(this);
+            PropertyCanBeNull = dbColumn.IsNullable;
         }
-        public override Type PropertyType => this._dbColumn.DataType;
-        public override string UniqueID => this._dbColumn.SqlName;
-        public override string DisplayName { get; }
-        public override string Description { get; }
-        public string FilterTextOrDescription => StringPresentation ?? Description;
-        public override bool PropertyCanBeNull => this._dbColumn.IsNullable;
+
         public override bool IgnoreCaseSupport => false;
     }
 
     //=================================
     public class FilterLine_Item : FilterLineBase
     {
-
-        public PropertyDescriptor _pd; // of type MemberDescriptor<T>
-
         public FilterLine_Item(PropertyDescriptor pd)
         {
-            this._pd = pd;
-            this._items = new FilterLineSubitemCollection(this);
-            this._frmItems = new FilterLineSubitemCollection(this);
-            if (this._pd.PropertyType == typeof(string)) this._ignoreCase = false;
+            PropertyType = pd.PropertyType;
+            UniqueID = pd.Name;
+            DisplayName = pd.DisplayName;
+            Description = pd.Description;
+            PropertyCanBeNull = pd.PropertyType.IsClass || Utils.Types.IsNullableType(pd.PropertyType);
+            ComponentType = pd.ComponentType;
+            Converter = pd.Converter;
+            if (pd.PropertyType == typeof(string)) _ignoreCase = false;
             else this._ignoreCase = null;
+
+
+            _nativeGetter = ((PD.IMemberDescriptor) pd).NativeGetter;
         }
 
-        public override Type PropertyType
-        {
-            get { return this._pd.PropertyType; }
-        }
-        public override string UniqueID
-        {
-            get { return this._pd.Name; }
-        }
-        public override string DisplayName
-        {
-            get { return this._pd.DisplayName; }
-        }
-        public override string Description
-        {
-            get { return this._pd.Description; }
-        }
-        public override bool PropertyCanBeNull => _pd.PropertyType.IsClass || Utils.Types.IsNullableType(_pd.PropertyType);
-        public override bool IgnoreCaseSupport
-        {
-            get { return true; }
-        }
-        public Type ComponentType
-        {
-            get { return this._pd.ComponentType; }
-        }
+        public override bool IgnoreCaseSupport => true;
+        public Type ComponentType { get; }
+        public TypeConverter Converter { get; }
+        private readonly Delegate _nativeGetter;
 
         public Delegate GetWherePredicate()
         {
-            Type propertyType = this.PropertyType;
-
             Type typePredicateItem = typeof(PredicateItem<>).MakeGenericType(Utils.Types.GetNotNullableType(this.PropertyType));
             Type typeListPredicateItems = typeof(List<>).MakeGenericType(typePredicateItem);
 
             MethodInfo miGetDelegat = null;
-            if (propertyType.IsClass)
+            if (PropertyType.IsClass)
             {
                 MethodInfo miGetDelegatGeneric = typePredicateItem.GetMethod("GetWhereDelegate_Class", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 miGetDelegat = miGetDelegatGeneric.MakeGenericMethod(this.ComponentType);
             }
-            else if (Utils.Types.IsNullableType(propertyType))
+            else if (Utils.Types.IsNullableType(PropertyType))
             {
                 MethodInfo miGetDelegatGeneric = typePredicateItem.GetMethod("GetWhereDelegate_Nullable", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 miGetDelegat = miGetDelegatGeneric.MakeGenericMethod(this.ComponentType, Utils.Types.GetNotNullableType(this.PropertyType));
@@ -102,22 +75,28 @@ namespace DGCore.Filters
                 }
             }
 
-            return (Delegate)miGetDelegat.Invoke(null, new object[] { ((PD.IMemberDescriptor)this._pd).NativeGetter, items, this.CanBeNull, this.Not });
+            return (Delegate)miGetDelegat.Invoke(null, new object[] { _nativeGetter, items, this.CanBeNull, this.Not });
         }
     }
 
     //===============================
-    public abstract class FilterLineBase : IDataErrorInfo
+    public abstract class FilterLineBase : IDataErrorInfo, INotifyPropertyChanged
     {
+        public FilterLineBase()
+        {
+            Items = new FilterLineSubitemCollection(this);
+            FrmItems = new FilterLineSubitemCollection(this);
+        }
 
-        protected FilterLineSubitemCollection _items;
-        protected FilterLineSubitemCollection _frmItems;//для редактирования в форме
         protected bool _not = false;
         protected bool? _ignoreCase;
 
-        public abstract Type PropertyType { get; }
-        public abstract string UniqueID { get; }
-        public abstract string DisplayName { get; }
+        public Type PropertyType { get; internal set; }
+        public string UniqueID { get; internal set; }
+        public string DisplayName { get; internal set; }
+        public string Description { get; internal set; }
+        public bool PropertyCanBeNull { get; internal set; }
+
         public string StringPresentation
         {
             get
@@ -159,17 +138,10 @@ namespace DGCore.Filters
                 else return null;
             }
         }
-        public abstract string Description { get; }
-        public abstract bool PropertyCanBeNull { get; }
+        public string FilterTextOrDescription => StringPresentation ?? Description;
         public abstract bool IgnoreCaseSupport { get; }
-        public FilterLineSubitemCollection Items
-        {
-            get { return this._items; }
-        }
-        public FilterLineSubitemCollection FrmItems
-        {
-            get { return this._frmItems; }
-        }
+        public FilterLineSubitemCollection Items { get; }
+        public FilterLineSubitemCollection FrmItems { get; } //для редактирования в форме
         public bool Not
         {
             get { return this._not; }
@@ -195,7 +167,7 @@ namespace DGCore.Filters
         {
             get
             {
-                foreach (FilterLineSubitem item in this._items)
+                foreach (FilterLineSubitem item in this.Items)
                 {
                     if (item.IsValid && item.FilterOperand == Common.Enums.FilterOperand.CanBeNull) return true;
                 }
@@ -216,7 +188,7 @@ namespace DGCore.Filters
         {
             get
             {
-                foreach (FilterLineSubitem item in this._items)
+                foreach (FilterLineSubitem item in this.Items)
                 {
                     if (item.IsValid) return true;
                 }
@@ -228,7 +200,7 @@ namespace DGCore.Filters
             get
             {
                 int rows = 0;
-                foreach (FilterLineSubitem e in this._items)
+                foreach (FilterLineSubitem e in this.Items)
                 {
                     if (e.IsValid) rows++;
                 }
@@ -249,7 +221,7 @@ namespace DGCore.Filters
                 if (columnName == "RowsString")
                 {
                     int errors = 0;
-                    foreach (FilterLineSubitem item in this._items)
+                    foreach (FilterLineSubitem item in this.Items)
                     {
                         if (item.IsError) errors++;
                     }
@@ -259,6 +231,15 @@ namespace DGCore.Filters
             }
         }
 
+        #endregion
+
+        #region =================  INotifyPropertyChanged  ==================
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
 
         public override string ToString() => StringPresentation;

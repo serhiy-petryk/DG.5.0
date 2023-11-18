@@ -56,6 +56,7 @@ namespace DGView.Views
 
         private void CloseButton_OnClick(object sender, RoutedEventArgs e)
         {
+            FilterLine.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription));
             ParentWindow?.CmdClose.Execute(null);
         }
         #endregion
