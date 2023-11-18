@@ -135,6 +135,7 @@ namespace DGCore.Filters
         public string FilterTextOrDescription => StringPresentation ?? Description;
         public FilterLineSubitemCollection Items { get; }
         public FilterLineSubitemCollection FrmItems { get; } //для редактирования в форме
+        public bool HasFilter => Items.Count != 0;
         public bool Not {get; set;}
         public bool? IgnoreCase
         {
