@@ -86,3 +86,4 @@ done: 51. Memory leak -> операції головної книги -> Level: 
 53. Adjust filterline form
 54. Autoupdate FilterTextOrDescription
 55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
+56. Filter line for image data type
