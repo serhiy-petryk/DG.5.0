@@ -12,8 +12,8 @@ namespace DGCore.Filters
         {
             PropertyType = dbColumn.DataType;
             UniqueID = dbColumn.SqlName;
-            DisplayName = (String.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
-            Description = (String.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
+            DisplayName = (string.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
+            Description = (string.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
             PropertyCanBeNull = dbColumn.IsNullable;
         }
 
@@ -32,10 +32,7 @@ namespace DGCore.Filters
             PropertyCanBeNull = pd.PropertyType.IsClass || Utils.Types.IsNullableType(pd.PropertyType);
             ComponentType = pd.ComponentType;
             Converter = pd.Converter;
-            if (pd.PropertyType == typeof(string)) _ignoreCase = false;
-            else this._ignoreCase = null;
-
-
+            IgnoreCase = pd.PropertyType == typeof(string) ? (bool?) false : null;
             _nativeGetter = ((PD.IMemberDescriptor) pd).NativeGetter;
         }
 
@@ -88,8 +85,7 @@ namespace DGCore.Filters
             FrmItems = new FilterLineSubitemCollection(this);
         }
 
-        protected bool _not = false;
-        protected bool? _ignoreCase;
+        private bool? _ignoreCase;
 
         public Type PropertyType { get; protected set; }
         public string UniqueID { get; protected set; }
@@ -126,15 +122,15 @@ namespace DGCore.Filters
                 {
                     if (this.Not)
                     {
-                        ss1.Add("окрім((" + String.Join(") або (", ss2.ToArray()) + "))");
+                        ss1.Add("окрім((" + string.Join(") або (", ss2.ToArray()) + "))");
                     }
                     else
                     {
-                        ss1.Add("(" + String.Join(") або (", ss2.ToArray()) + ")");
+                        ss1.Add("(" + string.Join(") або (", ss2.ToArray()) + ")");
                     }
                 }
-                if (ss1.Count == 1) return String.Join(" і ", ss1.ToArray());
-                else if (ss1.Count > 1) return "{" + String.Join("} і {", ss1.ToArray()) + "}";
+                if (ss1.Count == 1) return string.Join(" і ", ss1.ToArray());
+                else if (ss1.Count > 1) return "{" + string.Join("} і {", ss1.ToArray()) + "}";
                 else return null;
             }
         }
@@ -142,25 +138,11 @@ namespace DGCore.Filters
         public abstract bool IgnoreCaseSupport { get; }
         public FilterLineSubitemCollection Items { get; }
         public FilterLineSubitemCollection FrmItems { get; } //для редактирования в форме
-        public bool Not
-        {
-            get { return this._not; }
-            set { this._not = value; }
-        }
+        public bool Not {get; set;}
         public bool? IgnoreCase
         {
-            get { return this._ignoreCase; }
-            set
-            {
-                if (this.PropertyType == typeof(string))
-                {
-                    this._ignoreCase = value ?? false;
-                }
-                else
-                {
-                    this._ignoreCase = null;
-                }
-            }
+            get => this._ignoreCase;
+            set => _ignoreCase = PropertyType == typeof(string) ? (bool?) (value ?? false) : null;
         }
         //=====  Service items ===
         public bool CanBeNull
