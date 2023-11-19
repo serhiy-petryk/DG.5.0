@@ -89,3 +89,7 @@ done: 54. Autoupdate FilterTextOrDescription
 done: 56. FilterLine for image data type
 57. FilterLine: set value in ValueEditor -> for different value type use different editor
 checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstrip.
+
+2023-11-19
+59. DataGrid Expande/Collapse group button -> remove selection on empty cells
+60. Implement: FilterOnValue for totals
