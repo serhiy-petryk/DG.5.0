@@ -125,7 +125,7 @@ namespace DGView.ViewModels
             {
                 _isGridLinesVisible = value;
                 OnPropertiesChanged(nameof(IsGridLinesVisible));
-                ((Controls.CustomDataGrid)DGControl).RepaintRows();
+                ((Controls.CustomDataGrid)DGControl).RepaintRows(); // more faster than Data.ResetBindings();
             }
         }
 
