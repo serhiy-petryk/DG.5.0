@@ -88,4 +88,4 @@ done: 54. Autoupdate FilterTextOrDescription
 55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
 done: 56. FilterLine for image data type
 57. FilterLine: set value in ValueEditor -> for different value type use different editor
-58. CustomDataGrid scrolling speed: check if no toolstrip.
+checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstrip.
