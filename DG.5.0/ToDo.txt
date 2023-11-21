@@ -95,5 +95,7 @@ checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstr
 60. Implement: FilterOnValue for totals
 
 2023-11-21
-61. Filter on value: for total items
+61. Implement: Sorting on number of items column
+62. Refactore RefreshBinding after Expande/Collapse group button click
+
 
