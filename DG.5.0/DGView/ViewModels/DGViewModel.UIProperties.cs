@@ -52,6 +52,8 @@ namespace DGView.ViewModels
                         break;
                     case DataSourceBase.DataEventKind.Refreshed:
                         sb.Append(" " + string.Format((string)Application.Current.Resources["Loc:DGV.Status.DataProcessed"], Data?.LastRefreshedTimeInMsecs ?? 0));
+                        if (_dataNavigationTime.HasValue)
+                            sb.Append(". " + string.Format((string)Application.Current.Resources["Loc:DGV.Status.NavigationTime"], _dataNavigationTime.Value));
                         break;
                 }
 

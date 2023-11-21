@@ -13,7 +13,8 @@
     <v:String x:Key="Loc:DGV.Status.LoadedTime">Дані завантажені за {0:N0} мілісекунд.</v:String>
     <v:String x:Key="Loc:DGV.Status.PreparingData">Підготовка даних...</v:String>
     <v:String x:Key="Loc:DGV.Status.DataProcessing">Обробка даних...</v:String>
-    <v:String x:Key="Loc:DGV.Status.DataProcessed">Дані оброблені. Час обробки: {0:N0} мілісекунд</v:String>
+    <v:String x:Key="Loc:DGV.Status.DataProcessed">Час обробки даних: {0:N0} мілісекунд</v:String>
+    <v:String x:Key="Loc:DGV.Status.NavigationTime">Час навігації: {0:N0} мілісекунд.</v:String>
     <v:String x:Key="Loc:DGV.Status.PartiallyLoaded">Дані завантажені частково!</v:String>
     <v:String x:Key="Loc:DGV.Status.Rows">Елементів: {0}</v:String>
 

@@ -149,6 +149,7 @@ namespace DGView.ViewModels
         private Stopwatch _dataLoadedTimer;
         private readonly DispatcherTimer _dataRecordsTimer = new DispatcherTimer {Interval = TimeSpan.FromMilliseconds(250)};
         private int? _dataLoadedTime;
+        private int? _dataNavigationTime;
 
         private void DataSource_DataStateChanged(object sender, DataSourceBase.SqlDataEventArgs e)
         {
@@ -174,6 +175,7 @@ namespace DGView.ViewModels
                     case DataSourceBase.DataEventKind.BeforeRefresh:
                         break;
                     case DataSourceBase.DataEventKind.Refreshed:
+                        _dataNavigationTime = null;
                         if (Data!= null && !(Keyboard.FocusedElement is TextBox)) // QuickFilter
                         {
                             // Restore last active cell
@@ -190,6 +192,8 @@ namespace DGView.ViewModels
 
                             if (lastActiveItem != null && lastActiveColumn != null)
                             {
+                                var dataNavigationSW = new Stopwatch();
+                                dataNavigationSW.Start();
                                 DGControl.Dispatcher.BeginInvoke(new Action(() =>
                                 {
                                     var newItem = new DataGridCellInfo(lastActiveItem, lastActiveColumn);
@@ -197,6 +201,9 @@ namespace DGView.ViewModels
                                         DGControl.SelectedCells.Add(newItem);
                                     DGControl.ScrollIntoView(lastActiveItem, lastActiveColumn);
                                     DGHelper.GetDataGridCell(new DataGridCellInfo(lastActiveItem, lastActiveColumn))?.Focus();
+                                    _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
+                                    dataNavigationSW.Stop();
+                                    OnPropertiesChanged(nameof(StatusTextOfLeftLabel));
                                 }), DispatcherPriority.Background);
                             }
                         }
