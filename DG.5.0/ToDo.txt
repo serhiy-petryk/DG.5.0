@@ -64,6 +64,7 @@ done: 51. Memory leak -> операції головної книги -> Level: 
 
 2023-11-18
 done: 54. Autoupdate FilterTextOrDescription
+55. Fixed: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
 done: 56. FilterLine for image data type
 checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstrip.
 
@@ -97,7 +98,6 @@ done: 69. Hide datagrid on data loading
 52. Localization -> Filters: operand, text, ..
 53. Adjust dbfilter form
 53. Adjust filterline form
-55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
 57. FilterLine: set value in ValueEditor -> for different value type use different editor
 59. DataGrid Expande/Collapse group button -> remove selection on empty cells
 60. Implement: FilterOnValue for totals
