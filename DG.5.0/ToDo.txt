@@ -93,3 +93,7 @@ checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstr
 2023-11-19
 59. DataGrid Expande/Collapse group button -> remove selection on empty cells
 60. Implement: FilterOnValue for totals
+
+2023-11-21
+61. Filter on value: for total items
+
