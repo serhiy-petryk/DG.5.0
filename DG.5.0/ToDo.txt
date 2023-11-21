@@ -8,15 +8,12 @@ done: 6. Bug: Системні дані -> User Settings -> не відобра�
 
 2023-09-12
 done: 7. Bug: compare План рахунків -> Check upper/lower case for group/properties in DGVList
-8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 not possible (see fast filter): 9. Clear filter by value in group mode: don't collapse rows
-10. Global: FastFilter/ClearFilterByValue/Show-hide grid in group mode -> don't collapse grid rows 
 
 2023-09-21
 done: 11. Show/hide grid action -> remove refresh data grid & collapsing of detail lines in group mode
 
 2023-09-22
-12. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 done: 13. MemberDescriptor: remove DbNullValue property
 done: 14. MemberDescriptor: remove Format property
 done: 14. MemberDescriptor: remove Alignment property
@@ -27,24 +24,16 @@ not need: 16. Add GridPropertyDescriptor (MemberPropertyDescriptor + Format/Conv
 
 2023-10-05
 done: 17. Clear MemberDescriptor.cs
-??? 18. Smart format for byte array: Picture/hex string, ..
-	IsImage(byte[]): https://www.c-sharpcorner.com/blogs/auto-detecting-image-type-and-extension-from-byte-in-c-sharp
 done: 19. Check Helpers.DGCellValueFormatter -> check format/converters -> must be the same as DGHelper.GenerateColumns
 done: 20. DbSchemaColumn -> use uniqueId
 not need: 21. UniqueId -> use from Constant.cs
-22. DbSchemaColumn -> Id as key
 done: 23. Add helper class for datagrid column visibility properties (format,converters, ??)
-24. Global bug: зависання при друку великої кількості сторінок (більше 5-10)
 
 2023-10-17
-25. Try to use GridColumnFormat in setting.
 done: 26. Read/Save DGV setting -> support GridFormat
 done: 27. FastFilter/Search, other filters -> support GridFormat
-28. DGV Settings edit -> support GridFormat
-29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
 2023-10-19
-30. Remove converter/dbNullValue/.. in property (MemberDescriptor)
 
 2023-10-21
 node need: 31. DGV.Settings.AllColumns <==> DGViewModel._columns
@@ -57,58 +46,68 @@ done: 35. Actual format (refactoring DGCellValueFormatter)
 	printer DGDirectRenderingPrintContentGenerator/_columnGetters
 	search
 	FastFilter(QuickFilter) DGVListGroup.PrepareFastFilter, DGVListGroup.ApplyFastFilterPredicate
-36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
 done: 37: To fix: 'Test bad picture' menu option -> Unknown image type -> see C# converter from byte[] to image (ILSpy: datagridcell)
-38. To fix: 'Number of items' column -> grid data don't refresh after language changed
 done: 39. Replace getAllValidColumns -> getAllValidColumnHelpers
 done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
 
 2023-10-25
-41. Check image column performance -> based on quote images
 done: 42. Remove convertor and other properties from MemberDescriptor.
 done: 43. Max column width -> move to Constant.
-44. Highlight the active cell in edit setting form.
-45. Do text search action on Enter key press in 'Find' form.
-46. Autoupdate number formats in datagrid row header and group row count columns while language is changed
 done: 47. Check GetWhereDelegate_ValueType method for different types (class, nullable, value type)
 done: 48. Check MemoryLeak.
 
 2023-10-26
-49. Refactoring DbColumnMap
 done: 50. Чому: час завантаження похожих даних з даними які вже існують близько 0 для 10000 рядків. Якщо схожих даних не існує, то ча завантаження десь ~1 секунда.
 
 2023-11-03
 done: 51. Memory leak -> операції головної книги -> Level: Вся інформація -> Close window
 
 2023-11-18
-52. Localization -> Filters: operand, text, ..
-53. Adjust dbfilter form
-53. Adjust filterline form
 done: 54. Autoupdate FilterTextOrDescription
-55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
 done: 56. FilterLine for image data type
-57. FilterLine: set value in ValueEditor -> for different value type use different editor
 checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstrip.
 
 2023-11-19
-59. DataGrid Expande/Collapse group button -> remove selection on empty cells
-60. Implement: FilterOnValue for totals
 
 2023-11-21
-61. Implement: Sorting on number of items column
 impossible: 62. Refactore RefreshBinding after Expande/Collapse group button click
 done: 63. Add cell navigation time in status line of datagrid view
-64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
-65. Use unique id to property descriptor
 done: ok 66. Compare speed of data cell navigation with old version.
-67. Memory leak for menu item
 done: 68. Remove width in database setting.
 done: 69. Hide datagrid on data loading
+
+8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
+10. Global: FastFilter/ClearFilterByValue/Show-hide grid in group mode -> don't collapse grid rows 
+12. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
+??? 18. Smart format for byte array: Picture/hex string, ..
+	IsImage(byte[]): https://www.c-sharpcorner.com/blogs/auto-detecting-image-type-and-extension-from-byte-in-c-sharp
+22. DbSchemaColumn -> Id as key
+24. Global bug: зависання при друку великої кількості сторінок (більше 5-10)
+25. Try to use GridColumnFormat in setting.
+28. DGV Settings edit -> support GridFormat
+29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
+30. Remove converter/dbNullValue/.. in property (MemberDescriptor)
+36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
+38. To fix: 'Number of items' column -> grid data don't refresh after language changed
+41. Check image column performance -> based on quote images
+44. Highlight the active cell in edit setting form.
+45. Do text search action on Enter key press in 'Find' form.
+46. Autoupdate number formats in datagrid row header and group row count columns while language is changed
+49. Refactoring DbColumnMap
+52. Localization -> Filters: operand, text, ..
+53. Adjust dbfilter form
+53. Adjust filterline form
+55. Fix: sort buttons for group rows in customdatagrid (enable/disable, sort direction)
+57. FilterLine: set value in ValueEditor -> for different value type use different editor
+59. DataGrid Expande/Collapse group button -> remove selection on empty cells
+60. Implement: FilterOnValue for totals
+61. Implement: Sorting on number of items column
+64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
+65. Use unique id to property descriptor
+67. Memory leak for menu item
 70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
 	target: DataGridColumnHeader.Background
 	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
-
-
 
 
 
