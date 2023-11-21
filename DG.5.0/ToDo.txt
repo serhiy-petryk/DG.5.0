@@ -97,5 +97,8 @@ checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstr
 2023-11-21
 61. Implement: Sorting on number of items column
 62. Refactore RefreshBinding after Expande/Collapse group button click
+63. Add cell navigation time in status line of datagrid view
+64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
+
 
 
