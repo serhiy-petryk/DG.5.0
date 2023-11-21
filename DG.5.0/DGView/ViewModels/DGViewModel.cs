@@ -159,14 +159,20 @@ namespace DGView.ViewModels
                 switch (e.EventKind)
                 {
                     case DataSourceBase.DataEventKind.Clear:
+                        if (DGControl.Visibility != Visibility.Collapsed)
+                            DGControl.Visibility = Visibility.Collapsed;
                         _dataLoadedTime = null;
                         _dataLoadedTimer = new Stopwatch();
                         _dataLoadedTimer.Start();
                         _dataRecordsTimer.Start();
                         break;
                     case DataSourceBase.DataEventKind.Loading:
+                        if (DGControl.Visibility != Visibility.Collapsed)
+                            DGControl.Visibility = Visibility.Collapsed;
                         break;
                     case DataSourceBase.DataEventKind.Loaded:
+                        if (DGControl.Visibility != Visibility.Collapsed)
+                            DGControl.Visibility = Visibility.Collapsed;
                         _dataLoadedTimer.Stop();
                         _dataRecordsTimer.Stop();
                         _dataLoadedTime = Convert.ToInt32(_dataLoadedTimer.ElapsedMilliseconds);
@@ -175,6 +181,8 @@ namespace DGView.ViewModels
                     case DataSourceBase.DataEventKind.BeforeRefresh:
                         break;
                     case DataSourceBase.DataEventKind.Refreshed:
+                        if (DGControl.Visibility != Visibility.Visible)
+                            DGControl.Visibility = Visibility.Visible;
                         _dataNavigationTime = null;
                         if (Data!= null && !(Keyboard.FocusedElement is TextBox)) // QuickFilter
                         {

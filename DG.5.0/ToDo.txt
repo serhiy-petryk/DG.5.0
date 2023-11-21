@@ -103,7 +103,7 @@ done: 63. Add cell navigation time in status line of datagrid view
 done: ok 66. Compare speed of data cell navigation with old version.
 67. Memory leak for menu item
 done: 68. Remove width in database setting.
-69. Hide datagrid on data loading
+done: 69. Hide datagrid on data loading
 70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
 	target: DataGridColumnHeader.Background
 	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
