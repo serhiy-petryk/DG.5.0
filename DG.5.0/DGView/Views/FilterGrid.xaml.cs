@@ -68,6 +68,7 @@ namespace DGView.Views
         public void RefreshUI()
         {
             OnPropertiesChanged(nameof(FilterList));
+            DefinitionGrid.Items.Refresh();
         }
         #endregion
     }
