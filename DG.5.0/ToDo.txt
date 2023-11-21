@@ -100,8 +100,10 @@ impossible: 62. Refactore RefreshBinding after Expande/Collapse group button cli
 done: 63. Add cell navigation time in status line of datagrid view
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
 65. Use unique id to property descriptor
-66. Compare speed of data cell navigation with old version.
+done: ok 66. Compare speed of data cell navigation with old version.
 67. Memory leak for menu item
+68. Remove width in database setting.
+
 
 
 
