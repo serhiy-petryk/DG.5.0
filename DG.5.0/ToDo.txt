@@ -99,6 +99,8 @@ checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstr
 62. Refactore RefreshBinding after Expande/Collapse group button click
 63. Add cell navigation time in status line of datagrid view
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
+65. Use unique id to property descriptor
+
 
 
 
