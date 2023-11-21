@@ -64,7 +64,7 @@ namespace DGView.ViewModels
 
         private void cmdEditSetting(object p)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
+            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
             var geometry = (Geometry) dgView.Resources["SettingsGeometry"];
             Misc.OpenDGDialog(DGControl, new DGEditSettingsView(this), "Edit setting", geometry);
         }
@@ -78,15 +78,15 @@ namespace DGView.ViewModels
         }
         private void cmdSaveSetting(object p)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
+            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
             var geometry = (Geometry)dgView.Resources["SaveGeometry"];
             Misc.OpenDGDialog(DGControl, new DGSaveSettingView(this, LastAppliedLayoutName), "Save setting", geometry);
         }
         private void cmdSetFont(object o)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().FirstOrDefault();
+            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
             var btns = dgView.GetVisualChildren().OfType<ToggleButton>().ToArray();
-            var cm = btns[0].Resources.Values.OfType<ContextMenu>().FirstOrDefault();
+            var cm = btns[0].Resources.Values.OfType<ContextMenu>().First();
             btns[0].IsChecked = true;
             cm.Width = 0;
             cm.Height = 0;
@@ -112,7 +112,7 @@ namespace DGView.ViewModels
         }
         private void cmdSetSortAsc(object p)
         {
-            if (IsSetFilterOnValueOrSortingEnable)
+            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item1)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 Data.A_ApplySorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item, ListSortDirection.Ascending);
@@ -120,7 +120,7 @@ namespace DGView.ViewModels
         }
         private void cmdSetSortDesc(object p)
         {
-            if (IsSetFilterOnValueOrSortingEnable)
+            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item2)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 Data.A_ApplySorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item, ListSortDirection.Descending);
@@ -128,16 +128,15 @@ namespace DGView.ViewModels
         }
         private void cmdClearSortings(object p)
         {
-            if (DGControl.SelectedCells.Count != 1) return;
-            var cell = DGControl.SelectedCells[0];
-            if (!cell.IsValid || cell.Item == null || string.IsNullOrEmpty(cell.Column.SortMemberPath)) return;
-
-            _lastCurrentCellInfo = cell;
-            Data.A_RemoveSorting(cell.Column.SortMemberPath, cell.Item);
+            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item3)
+            {
+                _lastCurrentCellInfo = DGControl.SelectedCells[0];
+                Data.A_RemoveSorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item);
+            }
         }
         private void cmdSetFilterOnValue(object p)
         {
-            if (IsSetFilterOnValueOrSortingEnable)
+            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item4)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 var pd = Data.Properties[_lastCurrentCellInfo.Column.SortMemberPath];

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DGCore.Common;
-using DGCore.DGVList;
 using DGCore.Sql;
 
 namespace DGView.ViewModels
@@ -130,67 +128,11 @@ namespace DGView.ViewModels
         }
 
         public bool IsGroupLevelButtonEnabled => Data != null && Data.Groups.Count > 0;
-        public bool IsSetFilterOnValueOrSortingEnable => DGControl.SelectedCells.Count == 1 && DGControl.SelectedCells.Any(c => c.Column.CanUserSort && !string.IsNullOrEmpty(c.Column.SortMemberPath));
-
-        public bool IsClearSortingEnable {
-            get
-            {
-                UpdateColumnSortGlyphs();
-                if (Data == null || DGControl.SelectedCells.Count != 1)
-                    return false;
-                var cell = DGControl.SelectedCells[0];
-                if (!cell.IsValid || cell.Item == null || string.IsNullOrEmpty(cell.Column.SortMemberPath))
-                    return false;
-
-                var propertyName = cell.Column.SortMemberPath;
-                var groupItem = cell.Item as IDGVList_GroupItem;
-                if (groupItem == null || groupItem.Level == 0) // detail area or total row
-                {
-                    var a1 = Data.Sorts.FirstOrDefault(a=> a.PropertyDescriptor.Name == propertyName);
-                    return a1 != null;
-                }
-
-                // group row
-                var a2 = Data.SortsOfGroups[groupItem.Level - 1].FirstOrDefault(a => a.PropertyDescriptor.Name == propertyName);
-                return a2 != null;
-            }
-        }
-
-        private void UpdateColumnSortGlyphs()
-        {
-            if (Data != null)
-            {
-                var levels = DGControl.SelectedCells.Where(c => c.IsValid).Select(c => c.Item is IDGVList_GroupItem ? ((IDGVList_GroupItem)c.Item).Level : 0).Distinct().ToArray();
-                var properties = new Dictionary<string, List<ListSortDirection>>();
-                foreach(var level in levels)
-                {
-                    var sorts = level == 0 ? Data.Sorts : Data.SortsOfGroups[level - 1];
-                    foreach (var a1 in sorts)
-                    {
-                        if (!properties.ContainsKey(a1.PropertyDescriptor.Name))
-                            properties.Add(a1.PropertyDescriptor.Name, new List<ListSortDirection>());
-                        properties[a1.PropertyDescriptor.Name].Add(a1.SortDirection);
-                    }
-                }
-                foreach(var property in properties.Keys.ToArray())
-                {
-                    var values = properties[property];
-                    if (values.Min() != values.Max())
-                        properties.Remove(property);
-                }
-                foreach(var column in DGControl.Columns.Where(c=>!string.IsNullOrEmpty(c.SortMemberPath)))
-                {
-                    var sort = properties.ContainsKey(column.SortMemberPath) && properties[column.SortMemberPath].Count == levels.Length ? properties[column.SortMemberPath][0] : (ListSortDirection?)null;
-                    if (!Equals(column.SortDirection, sort))
-                        column.SortDirection = sort;
-                }
-            }
-        }
 
         public bool IsClearFilterOnValueEnable => Data?.FilterByValue != null && !Data.FilterByValue.IsEmpty;
 
-    //===================
-    //public string[] UserSettings => DesignerProperties.GetIsInDesignMode(this) ? new string[0] : DGCore.UserSettings.UserSettingsUtils.GetKeysFromDb(this).ToArray();
+        //===================
+        //public string[] UserSettings => DesignerProperties.GetIsInDesignMode(this) ? new string[0] : DGCore.UserSettings.UserSettingsUtils.GetKeysFromDb(this).ToArray();
         public string[] UserSettings => new string[]{null}.Union(DGCore.UserSettings.UserSettingsUtils.GetKeysFromDb(this)).ToArray();
         public bool IsSelectSettingEnabled => UserSettings.Length > 0;
 

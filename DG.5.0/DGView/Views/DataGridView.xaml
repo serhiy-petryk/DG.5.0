@@ -147,18 +147,15 @@
 
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>
             <!-- Sorting icons -->
-            <Button Focusable="False" Padding="6" ToolTip="Sort in ascending order" BorderThickness="0"
-                    IsEnabled="{Binding IsSetFilterOnValueOrSortingEnable}"
+            <Button Focusable="False" Name="BtnSortAsc" Padding="6" ToolTip="Sort in ascending order" BorderThickness="0"
                     Command="{Binding CmdSetSortAsc}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource SortAscGeometry}"/>
-            <Button Focusable="False" Padding="6" ToolTip="Sort in descending order" BorderThickness="0"
-                    IsEnabled="{Binding IsSetFilterOnValueOrSortingEnable}"
+            <Button Focusable="False" Name="BtnSortDesc" Padding="6" ToolTip="Sort in descending order" BorderThickness="0"
                     Command="{Binding CmdSetSortDesc}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource SortDescGeometry}"/>
-            <Button Focusable="False" Padding="4" ToolTip="Remove sorting" BorderThickness="0"
-                    IsEnabled="{Binding IsClearSortingEnable}"
+            <Button Focusable="False" Name="BtnRemoveSort" Padding="4" ToolTip="Remove sorting" BorderThickness="0"
                     Command="{Binding CmdClearSortings}"
                     Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
@@ -174,8 +171,7 @@
 
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>
             <!-- Filters -->
-            <Button Focusable="False" Padding="2" ToolTip="Filter by cell value" BorderThickness="0"
-                    IsEnabled="{Binding IsSetFilterOnValueOrSortingEnable}"
+            <Button Focusable="False" Name="BtnFilterOnValue" Padding="2" ToolTip="Filter by cell value" BorderThickness="0"
                     Command="{Binding CmdSetFilterOnValue}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource FilterGeometry}"

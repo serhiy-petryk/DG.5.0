@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using DGCore.Common;
 using DGCore.DGVList;
 using DGView.Helpers;
 using DGView.ViewModels;
@@ -30,9 +32,93 @@ namespace DGView.Views
             DataContext = ViewModel;
         }
 
+        public (bool, bool, bool, bool) GetStatusOfSortButtons()
+        {
+            var activeCell = DataGrid.SelectedCells.Count == 1 ? DataGrid.SelectedCells[0] : (DataGridCellInfo?)null;
+            var rowValue = activeCell?.Item;
+            var rowGroupLevel = rowValue is IDGVList_GroupItem groupItem ? groupItem.Level : -1;
+            if (activeCell == null || rowGroupLevel == 0 || !activeCell.Value.Column.CanUserSort || string.IsNullOrEmpty(activeCell.Value.Column.SortMemberPath))
+                return (false, false, false, false);
+
+            var propertyName = activeCell.Value.Column.SortMemberPath;
+            var columnGroupLevel = ViewModel.Data.Groups.FindIndex(g => string.Equals(g.PropertyDescriptor.Name,
+                propertyName, StringComparison.OrdinalIgnoreCase));
+            var columnGroupPropertyLevel = ViewModel.Data.Groups.FindIndex(g =>
+                propertyName.StartsWith(g.PropertyDescriptor.Name + Constants.MDelimiter,
+                    StringComparison.OrdinalIgnoreCase));
+
+            if (rowGroupLevel == -1) // detail lines
+            {
+                if (columnGroupLevel != -1 || columnGroupPropertyLevel != -1)
+                    return (false, false, false, true);
+                else
+                {
+                    var sortDescription = ViewModel.Data.Sorts.FirstOrDefault(s =>
+                        string.Equals(s.PropertyDescriptor.Name, propertyName, StringComparison.OrdinalIgnoreCase));
+                    if (sortDescription == null)
+                        return (true, true, false, true);
+                    else
+                    {
+                        var asc = sortDescription.SortDirection == ListSortDirection.Ascending;
+                        return (!asc, asc, true, true);
+                    }
+                }
+            }
+
+            var totalsIndex = ViewModel.Data.LiveTotalLines.FindIndex(l =>
+                string.Equals(l.PropertyDescriptor.Name, propertyName, StringComparison.OrdinalIgnoreCase));
+
+            if (totalsIndex != -1) // column with statistical function
+            {
+                var sortDescription = ViewModel.Data.SortsOfGroups[rowGroupLevel - 1].FirstOrDefault(s =>
+                    string.Equals(s.PropertyDescriptor.Name, propertyName, StringComparison.OrdinalIgnoreCase));
+                if (sortDescription == null)
+                    return (true, true, false, true);
+                else
+                {
+                    var asc = sortDescription.SortDirection == ListSortDirection.Ascending;
+                    return (!asc, asc, true, true);
+                }
+            }
+
+            if (columnGroupLevel == -1 && columnGroupPropertyLevel == -1) // detail columns in group row => everything is disabled
+                return (false, false, false, false);
+
+            var maxColumnGroupLevel = columnGroupLevel > columnGroupPropertyLevel
+                ? columnGroupLevel
+                : columnGroupPropertyLevel;
+
+            if (maxColumnGroupLevel + 1 != rowGroupLevel) // groups of row and column are different
+                return (false, false, false, maxColumnGroupLevel < rowGroupLevel);
+
+            if (columnGroupLevel != -1) // Group id column
+            {
+                var asc = ViewModel.Data.Groups[columnGroupLevel].SortDirection == ListSortDirection.Ascending;
+                return (!asc, asc, false, true);
+            }
+
+            { //  GroupProperty column (for example the name of group id)
+                var sortDescription = ViewModel.Data.SortsOfGroups[rowGroupLevel - 1].FirstOrDefault(s =>
+                    string.Equals(s.PropertyDescriptor.Name, propertyName, StringComparison.OrdinalIgnoreCase));
+                if (sortDescription == null)
+                    return (true, true, false, true);
+                else
+                {
+                    var asc = sortDescription.SortDirection == ListSortDirection.Ascending;
+                    return (!asc, asc, true, true);
+                }
+            }
+
+            throw new Exception("Trap!!!");
+        }
+
         private void OnDataGridSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            ViewModel.OnPropertiesChanged(nameof(ViewModel.IsSetFilterOnValueOrSortingEnable), nameof(ViewModel.IsClearSortingEnable));
+            var statuses = GetStatusOfSortButtons();
+            if (BtnSortAsc.IsEnabled != statuses.Item1) BtnSortAsc.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item1);
+            if (BtnSortDesc.IsEnabled != statuses.Item2) BtnSortDesc.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item2);
+            if (BtnRemoveSort.IsEnabled != statuses.Item3) BtnRemoveSort.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item3);
+            if (BtnFilterOnValue.IsEnabled != statuses.Item4) BtnFilterOnValue.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item4);
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
