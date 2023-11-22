@@ -108,6 +108,6 @@ done: 69. Hide datagrid on data loading
 70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
 	target: DataGridColumnHeader.Background
 	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
-
+done: 71. Change SortDesc icon.
 
 
