@@ -109,5 +109,8 @@ done: 69. Hide datagrid on data loading
 	target: DataGridColumnHeader.Background
 	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 done: 71. Change SortDesc icon.
+72. WPF binding error: Edit setting form -> when drag & drop grid row:
+	target: DataGridRowHeader.(ChromeEffect.Monochrome)
+	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
 
