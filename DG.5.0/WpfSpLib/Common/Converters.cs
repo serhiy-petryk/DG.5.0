@@ -11,17 +11,6 @@ using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Common
 {
-    public class DataGridBackgroundConverter : DependencyObject, IValueConverter // to fix binding errors
-    {
-        public static DataGridBackgroundConverter Instance = new DataGridBackgroundConverter();
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var grid = ((DependencyObject)value).GetVisualParents().OfType<DataGrid>().FirstOrDefault();
-            return ColorHslBrush.Instance.Convert(grid?.Background ?? Brushes.White, targetType, parameter, culture);
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-    }
-
     public class GetParentOfTypeConverter : IValueConverter
     {
         public static GetParentOfTypeConverter Instance = new GetParentOfTypeConverter();
