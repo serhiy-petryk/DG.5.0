@@ -25,7 +25,7 @@ namespace DGCore.PD
     //======================================
     public class MemberDescriptor<T> : PropertyDescriptor, IMemberDescriptor
     {
-        public readonly MemberElement _member;
+        private readonly MemberElement _member;
 
         private readonly string[] _members;
 
@@ -42,6 +42,7 @@ namespace DGCore.PD
         }
 
         public MemberKind MemberKind => _member._memberKind;
+        public bool IsValid => _member.IsValid;
         public string DisplayFormat { get; }
         public MemberInfo ReflectedMemberInfo => _member._memberKind == MemberKind.Property ? _member._memberInfo.ReflectedType.GetProperty(Name) : _member._memberInfo;
         public Delegate NativeGetter => _member._nativeGetter;

@@ -44,7 +44,7 @@ namespace DGCore.PD
                 foreach (PropertyDescriptor pd in pdc)
                 {
                     MemberDescriptor<T> md = (MemberDescriptor<T>)pd;
-                    if (md._member._memberKind == MemberKind.Property && String.Equals(memberName, md.Name, StringComparison.OrdinalIgnoreCase)) return pd;
+                    if (md.MemberKind == MemberKind.Property && String.Equals(memberName, md.Name, StringComparison.OrdinalIgnoreCase)) return pd;
                 }
                 foreach (PropertyDescriptor pd in pdc)
                 {
@@ -59,7 +59,7 @@ namespace DGCore.PD
                 }
             }
             MemberDescriptor<T> x = new MemberDescriptor<T>(memberName);
-            return (x._member.IsValid ? x : null);
+            return (x.IsValid ? x : null);
             //      return null;
         }
 
@@ -71,7 +71,7 @@ namespace DGCore.PD
             foreach (string s in sTokens)
             {
                 MemberDescriptor<T> md = new MemberDescriptor<T>(s);
-                if (md._member.IsValid)
+                if (md.IsValid)
                 {
                     //          members.Add(new MemberDescriptor<T>(s));
                     members.Add(md);
