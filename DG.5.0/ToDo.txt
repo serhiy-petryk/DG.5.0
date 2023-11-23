@@ -79,6 +79,7 @@ checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstr
 impossible: 62. Refactore RefreshBinding after Expande/Collapse group button click
 done: 63. Add cell navigation time in status line of datagrid view
 done: ok 66. Compare speed of data cell navigation with old version.
+done: no memoryleak -> DataDefinition is created when menu option changed. 67. Memory leak for menu item
 done: 68. Remove width in database setting.
 done: 69. Hide datagrid on data loading
 done: 70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
@@ -112,4 +113,3 @@ Open tasks:
 61. Implement: Sorting on number of items column
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
 65. Use unique id to property descriptor
-67. Memory leak for menu item
