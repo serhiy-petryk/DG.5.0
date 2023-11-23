@@ -5,6 +5,7 @@
 
     <Style x:Key="MonochromeDGTopLeftButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <!-- not need? For correction of WPF binding error: <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:DataGridBackgroundConverter.Instance}}"/>-->
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%/+30%,+10%/+50%,40, +10%,+10%/+30%,+10%/+50%,100, +20%,+10%/+30%,+20%/+50%,100, +30%,+10%/+30%,+30%/+50%,100"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -37,6 +38,7 @@
             </Style>
         </Style.Resources>
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"/>
+        <!--<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:DataGridBackgroundConverter.Instance}, ConverterParameter=+10%}"/>-->
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
         <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
         <Setter Property="BorderThickness" Value="0 0 1 1"/>
@@ -79,10 +81,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <!-- To remove BindingErrors in DGView, EditSetting forms -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+                <Setter Property="Background" Value="White"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MonochromeDGRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
+        <!-- not need? For correction of WPF binding error: <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:DataGridBackgroundConverter.Instance}}"/>-->
         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%/+75%,+10%/+50%,40, +10%,+10%/+75%,+10%/+50%,100"/>
         <Setter Property="BorderThickness" Value="0 0 1 1"/>
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.8*}"/>
@@ -101,6 +110,7 @@
         <Style.Triggers>
             <!-- To remove BindingError after reorder item (drag&drop action) -->
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="White"/>
                 <Setter Property="Background" Value="Red"/>
                 <Setter Property="BorderBrush" Value="Black"/>
                 <Setter Property="FontSize" Value="5"/>
