@@ -63,6 +63,7 @@ done: 47. Check GetWhereDelegate_ValueType method for different types (class, nu
 done: 48. Check MemoryLeak.
 
 2023-10-26
+done: 49. Refactoring DbColumnMap
 done: 50. Чому: час завантаження похожих даних з даними які вже існують близько 0 для 10000 рядків. Якщо схожих даних не існує, то ча завантаження десь ~1 секунда.
 
 2023-11-03
@@ -104,7 +105,6 @@ Open tasks:
 36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
 41. Check image column performance -> based on quote images
 44. Highlight the active cell in edit setting form.
-49. Refactoring DbColumnMap
 52. Localization -> Filters: operand, text, ..
 53. Adjust dbfilter form
 53. Adjust filterline form
