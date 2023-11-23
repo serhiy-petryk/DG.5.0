@@ -4,8 +4,6 @@ namespace DGCore.DB {
 
     public class DbSchemaColumn
     {
-        public int Id = Utils.Tips.GetUniqueNumber();
-
         public string SqlName { get; }
         public int Size { get; }
         public Int16 Position { get; }
