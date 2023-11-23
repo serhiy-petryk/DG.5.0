@@ -53,6 +53,7 @@ done: 37: To fix: 'Test bad picture' menu option -> Unknown image type -> see C#
 done: 38. To fix: 'Number of items' column -> grid data don't refresh after language changed
 done: 39. Replace getAllValidColumns -> getAllValidColumnHelpers
 done: 40. Move GenerateColumns to DGViewModel class (file DGViewModel.Helpers)
+checked -> ok:41. Check image column performance -> based on quote images
 
 2023-10-25
 done: 42. Remove convertor and other properties from MemberDescriptor.
@@ -76,6 +77,8 @@ done: 56. FilterLine for image data type
 checked (no difference): 58. CustomDataGrid scrolling speed: check if no toolstrip.
 
 2023-11-19
+not need??: 59. DataGrid Expande/Collapse group button -> remove selection on empty cells
+later: 60. Implement: FilterOnValue for totals
 
 2023-11-21
 impossible: 62. Refactore RefreshBinding after Expande/Collapse group button click
@@ -103,13 +106,10 @@ Open tasks:
 25. Try to use GridColumnFormat in setting.
 28. DGV Settings edit -> support GridFormat
 36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
-41. Check image column performance -> based on quote images
 44. Highlight the active cell in edit setting form.
 52. Localization -> Filters: operand, text, ..
 53. Adjust dbfilter form
 53. Adjust filterline form
 57. FilterLine: set value in ValueEditor -> for different value type use different editor
-59. DataGrid Expande/Collapse group button -> remove selection on empty cells
-60. Implement: FilterOnValue for totals
 61. Implement: Sorting on number of items column
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..

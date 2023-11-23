@@ -73,11 +73,11 @@ namespace DGView.Views
                 var sortDescription = ViewModel.Data.SortsOfGroups[rowGroupLevel - 1].FirstOrDefault(s =>
                     string.Equals(s.PropertyDescriptor.Name, propertyName, StringComparison.OrdinalIgnoreCase));
                 if (sortDescription == null)
-                    return (true, true, false, true);
+                    return (true, true, false, false); // ToDo! filter on total values
                 else
                 {
                     var asc = sortDescription.SortDirection == ListSortDirection.Ascending;
-                    return (!asc, asc, true, true);
+                    return (!asc, asc, true, false); // ToDo! filter on total values 
                 }
             }
 
