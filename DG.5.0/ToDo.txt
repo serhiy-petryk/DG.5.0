@@ -34,6 +34,7 @@ done: 26. Read/Save DGV setting -> support GridFormat
 done: 27. FastFilter/Search, other filters -> support GridFormat
 
 2023-10-19
+done: 29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
 2023-10-21
 node need: 31. DGV.Settings.AllColumns <==> DGViewModel._columns
@@ -76,17 +77,24 @@ done: 63. Add cell navigation time in status line of datagrid view
 done: ok 66. Compare speed of data cell navigation with old version.
 done: 68. Remove width in database setting.
 done: 69. Hide datagrid on data loading
+done: 70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
+	target: DataGridColumnHeader.Background
+	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
+done: 71. Change SortDesc icon.
+done: 72. WPF binding error: Edit setting form -> when drag & drop grid row:
+	target: DataGridRowHeader.(ChromeEffect.Monochrome)
+	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 
+Open tasks:
+===========
 8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 10. Global: FastFilter/ClearFilterByValue/Show-hide grid in group mode -> don't collapse grid rows 
-12. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 ??? 18. Smart format for byte array: Picture/hex string, ..
 	IsImage(byte[]): https://www.c-sharpcorner.com/blogs/auto-detecting-image-type-and-extension-from-byte-in-c-sharp
 22. DbSchemaColumn -> Id as key
 24. Global bug: зависання при друку великої кількості сторінок (більше 5-10)
 25. Try to use GridColumnFormat in setting.
 28. DGV Settings edit -> support GridFormat
-29. Wpf Bug -> Run MdbTest menu option -> Change format of "Picture" -> Error: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
 30. Remove converter/dbNullValue/.. in property (MemberDescriptor)
 36. Different string presentation for byte[] (System.Byte[]/Byte[] Array)
 38. To fix: 'Number of items' column -> grid data don't refresh after language changed
@@ -105,12 +113,3 @@ done: 69. Hide datagrid on data loading
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
 65. Use unique id to property descriptor
 67. Memory leak for menu item
-70. Clear FilterOnValue in detail row in 'Операції ГК' menu option -> a lot of WPF binding errors ->
-	target: DataGridColumnHeader.Background
-	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
-done: 71. Change SortDesc icon.
-72. WPF binding error: Edit setting form -> when drag & drop grid row:
-	target: DataGridRowHeader.(ChromeEffect.Monochrome)
-	description: Cannot find source: RelativeSource FindAncestor, AncestorType='System.Windows.Controls.DataGrid', AncestorLevel='1'.
-
-
