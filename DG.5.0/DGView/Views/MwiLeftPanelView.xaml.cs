@@ -233,16 +233,17 @@ namespace DGView.Views
 
             if ((DataDefinition?.DbParameters?._parameters.Count ?? 0) == 0)
             {
-                DbProcedureParameterArea.Visibility = Visibility.Collapsed;
-                FilterArea.Visibility = whereFilter == null ? Visibility.Collapsed : Visibility.Visible;
+                DbFilterGridRow.Height = new GridLength(1, GridUnitType.Star);
+                DbProcedureParameterRow.Height = new GridLength(0, GridUnitType.Pixel);
                 ErrorText = null;
                 if (whereFilter != null)
                     DbFilterView.Bind(DataDefinition.WhereFilter, DataDefinition.SettingID, ActionProcedure, null);
             }
             else
             {
-                DbProcedureParameterArea.Visibility = Visibility.Visible;
-                FilterArea.Visibility = Visibility.Collapsed;
+                DbFilterGridRow.Height = new GridLength(0, GridUnitType.Pixel);
+                DbProcedureParameterRow.Height = new GridLength(1, GridUnitType.Star);
+
                 ErrorText = DataDefinition.DbParameters.GetError();
                 // ToDo: Bind ParameterView & parameter list: this.pg.SelectedObject = parameters;
             }

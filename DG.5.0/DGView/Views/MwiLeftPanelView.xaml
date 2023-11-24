@@ -122,9 +122,9 @@
         <Grid Grid.Column="2" Visibility="{Binding FilterPanelVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition x:Name="DbFilterGridRow" Height="*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition x:Name="DbProcedureParameterRow" Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid Row="0" Margin="0 4 0 0" IsEnabled="{Binding IsCbDataSettingEnabled}" >
@@ -150,7 +150,7 @@
                           effects:ChromeEffect.ChromeMatrix="-70%,-70%/+70%,-70%/+70%,50, -80%,-80%/+70%,-80%/+70%,100, -50%,-50%/+75%,-50%/+75%,100"/>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="FilterArea" Margin="0 8 0 0">
+            <Grid Grid.Row="1" Margin="0 8 0 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -163,7 +163,7 @@
             <TextBlock Grid.Row="2" x:Name="ErrorLabel" Text="lblError" Margin="0 10 0 4" FontWeight="SemiBold"
                        Visibility="{Binding ErrorText, Converter={x:Static common:VisibilityConverter.Instance}}"/>
 
-            <Grid Grid.Row="3" x:Name="DbProcedureParameterArea" Margin="0 8 0 0" Background="Yellow">
+            <Grid Grid.Row="3" Margin="0 8 0 0" Background="Yellow">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
