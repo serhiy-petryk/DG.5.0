@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -267,6 +268,15 @@ namespace DGView.Views
             Settings.WhereFilter.Clear();
         }
         #endregion
+
+        private void PropertyList_OnCurrentCellChanged(object sender, EventArgs e)
+        {
+            var grid = (DataGrid) sender;
+            if (Equals(grid.CurrentCell.Column?.SortMemberPath, "DataContext.Format"))
+            {
+                grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
+            }
+        }
     }
 }
 
