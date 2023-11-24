@@ -21,6 +21,7 @@
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="27" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
+                      SelectionUnit="Cell" SelectionMode="Single" SelectedCellsChanged="DbPropertiesDataGrid_SelectedCellsChanged"
                       CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>
                     <Style x:Key="EditingElementStyle" TargetType="{x:Type TextBox}">
@@ -66,7 +67,7 @@
                                             SelectedValueBinding="{Binding FilterOperand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}" />
                     <DataGridTextColumn Header="Вираз 1" Width="1*" MinWidth="100"
-                                        Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"
+                                        Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                         ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
                     <DataGridTextColumn Header="Вираз 2" Width="1*" MinWidth="100"
                                         Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"

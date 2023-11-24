@@ -4,6 +4,7 @@
 // - (difficult to remove event handlers after disposed and/or get access to mwiChild in FilterLineView) 3. MwiChild + Disposable => close
 // 4. Button => monochrome or flat style
 
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,5 +61,20 @@ namespace DGView.Views
             ParentWindow?.CmdClose.Execute(null);
         }
         #endregion
+
+        private void DbPropertiesDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            if (e.AddedCells.Count == 1)
+            {
+                var g = (DataGrid)sender;
+                g.Dispatcher.BeginInvoke(new Action((() => g.BeginEdit())));
+            }
+
+            var blankLines = e.RemovedCells.Where(c =>
+                c.Item is FilterLineSubitem si && Equals(si.FilterOperand, DGCore.Common.Enums.FilterOperand.None) &&
+                Equals(si.Value1, null) && Equals(si.Value2, null)).ToArray();
+            for (var k = 0; k < blankLines.Length; k++)
+                Clone_FilterLines.Remove((FilterLineSubitem) blankLines[k].Item);
+        }
     }
 }
