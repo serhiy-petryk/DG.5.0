@@ -66,8 +66,8 @@ namespace DGView.Views
         {
             if (e.AddedCells.Count == 1)
             {
-                var g = (DataGrid)sender;
-                g.Dispatcher.BeginInvoke(new Action((() => g.BeginEdit())));
+                var grid = (DataGrid)sender;
+                grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
             }
 
             var blankLines = e.RemovedCells.Where(c =>
