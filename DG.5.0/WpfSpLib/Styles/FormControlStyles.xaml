@@ -228,17 +228,19 @@
                                           ClickMode="Press"/>
 
                             <ContentControl x:Name="ContentSite" Grid.Column="0"
-                                              Margin="{TemplateBinding Padding}"
-                                              Background="{Binding ElementName=ToggleButton, Path=Background}"
-                                              Foreground="{Binding ElementName=ToggleButton, Path=Foreground}"
-                                              Content="{TemplateBinding SelectionBoxItem}"
-                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              IsHitTestVisible="False"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                            IsTabStop="{TemplateBinding IsTabStop}"
+                                            Focusable="{TemplateBinding Focusable}"
+                                            Margin="{TemplateBinding Padding}"
+                                            Background="{Binding ElementName=ToggleButton, Path=Background}"
+                                            Foreground="{Binding ElementName=ToggleButton, Path=Foreground}"
+                                            Content="{TemplateBinding SelectionBoxItem}"
+                                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                            ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            IsHitTestVisible="False"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
 
                             <!-- The TextBox must be named PART_EditableTextBox or ComboBox will not recognize it -->
                             <!-- <TextBox x:Name="PART_EditableTextBox" Margin="3,3,23,3" Visibility="Hidden" HorizontalAlignment="Left"
