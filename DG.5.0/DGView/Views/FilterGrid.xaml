@@ -9,6 +9,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
+        <common:LocalizationProxy x:Key="ColumnNameTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.ColumnNameTitle}"/>
+        <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
         <common:LocalizationProxy x:Key="DatabaseFilterLabelProxy" InputValue="{DynamicResource Loc:FilterGridView.DatabaseFilterLabel}"/>
     </UserControl.Resources>
 
@@ -26,7 +28,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="Назва колонки (для установки фільтра рядків натисніть тут)" Binding="{Binding DisplayName}" IsReadOnly="True" Width="SizeToCells"/>-->
-                <DataGridTextColumn Header="Назва колонки" MaxWidth="200">
+                <DataGridTextColumn Header="{Binding Source={StaticResource ColumnNameTitleProxy}, Path=Value, Mode=OneWay}" MaxWidth="200">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="ContentTemplate">
@@ -41,6 +43,7 @@
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
                             <Setter Property="ContentTemplate">
                                 <Setter.Value>
                                     <DataTemplate>
@@ -53,8 +56,8 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <!-- <DataGridCheckBoxColumn x:Name="IgnoreCaseDgColumn" Header="Не враховувати регістр букв" Binding="{Binding IgnoreCase}" IsThreeState="False"/>-->
-                <DataGridTemplateColumn Header="Фільтр" Width="1*" MinWidth="200">
+
+                <DataGridTemplateColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
                     <DataGridTemplateColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Setter Property="BorderBrush" Value="LightCyan"/>
@@ -84,12 +87,11 @@
                                                 <TextBlock Text="{Binding FilterTextOrDescription}" VerticalAlignment="Center" TextWrapping="Wrap">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
-                                                            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.85*}"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.HasFilter}" Value="True">
                                                                     <Setter Property="FontWeight" Value="Bold"/>
                                                                     <Setter Property="Foreground" Value="Blue"/>
-                                                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize}"/>
+                                                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.1*}"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>

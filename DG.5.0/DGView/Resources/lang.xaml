@@ -34,5 +34,7 @@
     <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Clear filter</v:String>
 
     <!-- FilterGridView -->
+    <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Column name</v:String>
+    <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Filter or description of column</v:String>
     <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Value of database filter:</v:String>
 </ResourceDictionary>
