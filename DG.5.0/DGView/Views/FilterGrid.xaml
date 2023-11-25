@@ -59,59 +59,8 @@
 
                 <DataGridTemplateColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
                     <DataGridTemplateColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="BorderBrush" Value="LightCyan"/>
-                            <Setter Property="Background" Value="LightCyan"/>
-                            <Setter Property="ContentTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Viewbox Grid.Column="0" Width="20" Margin="2">
-                                                <Path Fill="#FF333333" Data="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                                <Viewbox.Style>
-                                                    <Style TargetType="Viewbox">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Viewbox.Style>
-                                            </Viewbox>
-                                            <Grid Grid.Column="1" VerticalAlignment="Stretch" Margin="4 0 0 0">
-                                                <TextBlock Text="{Binding FilterTextOrDescription}" VerticalAlignment="Center" TextWrapping="Wrap">
-                                                    <TextBlock.Style>
-                                                        <Style TargetType="TextBlock">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.HasFilter}" Value="True">
-                                                                    <Setter Property="FontWeight" Value="Bold"/>
-                                                                    <Setter Property="Foreground" Value="Blue"/>
-                                                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.1*}"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </TextBlock.Style>
-                                                </TextBlock>
-                                            </Grid>
-                                        </Grid>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
+                        <Style TargetType="DataGridCell" BasedOn="{StaticResource FilterOrDescriptionCellStyle}">
                             <EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FFC7FFFF"></Setter>
-                                </Trigger>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
-                                    <Setter Property="Background" Value="LightGray"/>
-                                    <Setter Property="BorderBrush" Value="LightGray"/>
-                                </DataTrigger>
-                            </Style.Triggers>
                         </Style>
                     </DataGridTemplateColumn.CellStyle>
                 </DataGridTemplateColumn>

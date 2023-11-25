@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib">
+                    xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
+                    xmlns:helpers="clr-namespace:DGView.Helpers">
 
     <Geometry x:Key="PrintGeometry">M0 0Z M32 32Z M26,27 L28.0057181,27 C29.6594143,27 31,25.6556493 31,24.0005775 L31,14.9994225 C31,13.3428872 29.6594313,12 28.0057181,12 L26,12 L26,4.99961498 C26,3.89525812 25.1090746,3 24.0025781,3 L8.99742191,3 C7.89427625,3 7,3.88743329 7,4.99961498 L7,12 L7,12 L4.99428189,12 C3.34058566,12 2,13.3443507 2,14.9994225 L2,24.0005775 C2,25.6571128 3.3405687,27 4.99428189,27 L7,27 L7,28.000385 C7,29.1047419 7.89092539,30 8.99742191,30 L24.0025781,30 C25.1057238,30 26,29.1125667 26,28.000385 L26,27 L26,27 L26,27 Z M7,26 L5.00732994,26 C3.89833832,26 3,25.1033337 3,23.9972399 L3,15.0027601 C3,13.8935426 3.89871223,13 5.00732994,13 L27.9926701,13 C29.1016617,13 30,13.8966663 30,15.0027601 L30,23.9972399 C30,25.1064574 29.1012878,26 27.9926701,26 L26,26 L26,20 L7,20 L7,26 L7,26 L7,26 Z M8.9999602,4 C8.44769743,4 8,4.45303631 8,4.99703014 L8,12 L25,12 L25,4.99703014 C25,4.4463856 24.5452911,4 24.0000398,4 L8.9999602,4 L8.9999602,4 Z M8,21 L8,28.0029699 C8,28.5536144 8.45470893,29 8.9999602,29 L24.0000398,29 C24.5523026,29 25,28.5469637 25,28.0029699 L25,21 L8,21 L8,21 Z M25,17 C25.5522848,17 26,16.5522848 26,16 C26,15.4477152 25.5522848,15 25,15 C24.4477152,15 24,15.4477152 24,16 C24,16.5522848 24.4477152,17 25,17 L25,17 Z M9,23 L9,24 L24,24 L24,23 L9,23 L9,23 Z M9,26 L9,27 L24,27 L24,26 L9,26 L9,26 Z</Geometry>
     <Geometry x:Key="PDFGeometry">M0 0 Z M16 16Z M 2.238281 0.640625 L 2.238281 15.359375 L 13.761719 15.359375 L 13.761719 4.671875 L 13.671875 4.570312 L 9.828125 0.730469 L 9.730469 0.640625 Z M 2.878906 1.28125 L 9.28125 1.28125 L 9.28125 5.121094 L 13.121094 5.121094 L 13.121094 14.71875 L 2.878906 14.71875 Z M 9.921875 1.738281 L 12.660156 4.480469 L 9.921875 4.480469 Z M4.603 14.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645 19.697 19.697 0 0 0 1.062-2.227 7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.188-.012.396-.047.614-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686 5.753 5.753 0 0 1 1.334.05c.364.066.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.712 5.712 0 0 1-.911-.95 11.651 11.651 0 0 0-1.997.406 11.307 11.307 0 0 1-1.02 1.51c-.292.35-.609.656-.927.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361.01.022.02.036.026.044a.266.266 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.71 12.71 0 0 1 1.01-.193 11.744 11.744 0 0 1-.51-.858 20.801 20.801 0 0 1-.5 1.05zm2.446.45c.15.163.296.3.435.41.24.19.407.253.498.256a.107.107 0 0 0 .07-.015.307.307 0 0 0 .094-.125.436.436 0 0 0 .059-.2.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.876 3.876 0 0 0-.612-.053zM8.078 7.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822.024.111.054.227.09.346z</Geometry>
@@ -31,5 +32,60 @@
         <Setter Property="Margin" Value="2 4" />
         <Setter Property="Opacity" Value="0.5" />
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
+    </Style>
+
+    <Style x:Key="FilterOrDescriptionCellStyle" TargetType="DataGridCell">
+        <Setter Property="BorderBrush" Value="LightCyan"/>
+        <Setter Property="Background" Value="LightCyan"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="0" Width="20" Margin="2">
+                            <Path Fill="#FF333333" Data="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            <Viewbox.Style>
+                                <Style TargetType="Viewbox">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Viewbox.Style>
+                        </Viewbox>
+                        <Grid Grid.Column="1" VerticalAlignment="Stretch" Margin="4 0 0 0">
+                            <TextBlock Text="{Binding FilterTextOrDescription}" VerticalAlignment="Center" TextWrapping="Wrap">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.HasFilter}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="Foreground" Value="Blue"/>
+                                                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.1*}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFC7FFFF"></Setter>
+            </Trigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>
