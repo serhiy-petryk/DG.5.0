@@ -170,7 +170,7 @@ namespace DGView.Views
                 throw new Exception($"Trap!!! MwiChild_GotFocus is wrong");
             }
 
-            if (Keyboard.FocusedElement is MwiChild)
+            if (Keyboard.FocusedElement is MwiChild || Keyboard.FocusedElement is MwiStartup)
             {
                 var activeCell = DGHelper.GetActiveCellInfo(DataGrid);
                 if (activeCell.IsValid)
