@@ -18,6 +18,7 @@ namespace DGView.Views
     public partial class DBFilterView : UserControl, INotifyPropertyChanged, IUserSettingSupport<List<Filter>>
     {
         public bool IsOpenSettingsButtonEnabled => UserSettingsUtils.GetKeysFromDb(this).Count > 0;
+        public bool IsClearFilterButtonEnabled => !string.IsNullOrEmpty(FilterGrid.FilterList?.StringPresentation);
         public RelayCommand CmdLoadData { get; }
         public RelayCommand CmdSaveFilter { get; }
         public RelayCommand CmdClearFilter { get; }
@@ -85,10 +86,15 @@ namespace DGView.Views
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private bool _isRefreshing = false;
         private void RefreshUI()
         {
-            OnPropertiesChanged(nameof(ApplyAction), nameof(IsOpenSettingsButtonEnabled));
+            if (_isRefreshing) return;
+            _isRefreshing = true;
+            OnPropertiesChanged(nameof(ApplyAction), nameof(IsOpenSettingsButtonEnabled), nameof(IsClearFilterButtonEnabled));
             FilterGrid.RefreshUI();
+            _isRefreshing = false;
         }
         #endregion
 
@@ -106,5 +112,10 @@ namespace DGView.Views
         void IUserSettingSupport<List<Filter>>.ApplySetting(List<Filter> settings) =>
             ((IUserSettingSupport<List<Filter>>)FilterGrid.FilterList).ApplySetting(settings);
         #endregion
+
+        private void FilterGrid_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            RefreshUI();
+        }
     }
 }

@@ -69,6 +69,7 @@
             <Button BorderThickness="0" Padding="2"
                     Content="{Binding Source={StaticResource ClearFilterLabelProxy}, Path=Value}"
                     Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
+                    IsEnabled="{Binding IsClearFilterButtonEnabled}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource CloseGeometry}"
@@ -78,6 +79,6 @@
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>
         </WrapPanel>
 
-        <views:FilterGrid Grid.Row="1" x:Name="FilterGrid"/>
+        <views:FilterGrid Grid.Row="1" x:Name="FilterGrid" PropertyChanged="FilterGrid_OnPropertyChanged"/>
     </Grid>
 </UserControl>
