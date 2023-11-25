@@ -58,7 +58,7 @@ namespace DGView.Views
             DataContext = this;
             _viewModel = dgViewModel;
             Settings = ((IUserSettingSupport<DGV>)_viewModel).GetSettings();
-            PropertiesData = new ObservableCollection<DGProperty_ItemModel>(Settings.AllColumns.Select(o => new DGProperty_ItemModel(this, o, Settings, (IMemberDescriptor)_viewModel.Data.Properties[o.Id])));
+            PropertiesData = new ObservableCollection<DGProperty_ItemModel>(Settings.AllColumns.Select(o => new DGProperty_ItemModel(this, o, Settings, _viewModel.Data.Properties[o.Id])));
 
             CmdApply = new RelayCommand(cmdApply);
             CmdClearFilter = new RelayCommand(cmdClearFilter);

@@ -67,14 +67,15 @@ namespace DGView.ViewModels
         }
 
         public bool IsSortingSupport => typeof(IComparable).IsAssignableFrom(DGCore.Utils.Types.GetNotNullableType(_propertyType));
+        // public FilterLine_Item FilterLine { get; }
 
         private readonly Type _propertyType;
 
-        public DGProperty_ItemModel(DGEditSettingsView host, Column column, DGV settings, IMemberDescriptor descriptor)
+        public DGProperty_ItemModel(DGEditSettingsView host, Column column, DGV settings, PropertyDescriptor descriptor)
         {
             _host = host;
             Column = column;
-            Name = ((PropertyDescriptor)descriptor).DisplayName;
+            Name = descriptor.DisplayName;
             Format = column.Format_Actual;
             
             var item = settings.Groups.FirstOrDefault(o => o.Id == Id);
@@ -82,8 +83,10 @@ namespace DGView.ViewModels
                 GroupDirection = item.SortDirection;
 
             IsFrozen = settings.FrozenColumns.Contains(Id);
-            Description = ((PropertyDescriptor)descriptor).Description;
-            _propertyType = ((PropertyDescriptor)descriptor).PropertyType;
+            Description = descriptor.Description;
+            _propertyType = descriptor.PropertyType;
+          /*  FilterLine = settings.WhereFilter.FirstOrDefault(f => string.Equals(f.Name,
+                ((PropertyDescriptor) descriptor).Name, StringComparison.InvariantCultureIgnoreCase));*/
         }
 
         public override string ToString() => Name;
