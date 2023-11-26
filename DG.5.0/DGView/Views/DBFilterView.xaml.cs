@@ -40,7 +40,7 @@ namespace DGView.Views
             CmdClearFilter = new RelayCommand(p =>
             {
                 FilterGrid.FilterList.ClearFilter();
-                RefreshUI();
+                RefreshUI(true);
             });
         }
 
@@ -50,7 +50,7 @@ namespace DGView.Views
             ApplyAction = applyAction;
             FilterGrid.Bind(newFilterList, dataSource);
             UserSettingsUtils.Init(this, null);
-            RefreshUI();
+            RefreshUI(true);
         }
 
         #region ==========  Event handlers  ==========
@@ -70,7 +70,7 @@ namespace DGView.Views
                         {
                             UserSettingsUtils.SetSetting(this, settingName);
                             _lastAppliedLayoutName = settingName;
-                            RefreshUI();
+                            RefreshUI(true);
                         })
                     });
                 }
@@ -87,14 +87,11 @@ namespace DGView.Views
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool _isRefreshing = false;
-        private void RefreshUI()
+        private void RefreshUI(bool refreshFilterGrid)
         {
-            if (_isRefreshing) return;
-            _isRefreshing = true;
             OnPropertiesChanged(nameof(ApplyAction), nameof(IsOpenSettingsButtonEnabled), nameof(IsClearFilterButtonEnabled));
-            FilterGrid.RefreshUI();
-            _isRefreshing = false;
+            if (refreshFilterGrid)
+                FilterGrid.RefreshUI();
         }
         #endregion
 
@@ -113,9 +110,6 @@ namespace DGView.Views
             ((IUserSettingSupport<List<Filter>>)FilterGrid.FilterList).ApplySetting(settings);
         #endregion
 
-        private void FilterGrid_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            RefreshUI();
-        }
+        private void FilterGrid_OnPropertyChanged(object sender, PropertyChangedEventArgs e) => RefreshUI(false);
     }
 }
