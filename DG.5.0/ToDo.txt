@@ -124,3 +124,4 @@ Open tasks:
 	- merge DGEditSettingsModel and FilterLine_Item
 	- remove FrmItems in FilterLine_Item
 	- remove unused properties in FilterLine_Item
+76. Add OnFilterEditPreviewMouseDown method to Common.cs oor create FilterOrDescription data grid column control.
