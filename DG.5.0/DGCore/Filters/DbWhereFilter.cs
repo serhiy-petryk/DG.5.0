@@ -17,7 +17,7 @@ namespace DGCore.Filters
       List<string> lineTokens = new List<string>();
       foreach (FilterLineBase line in filterList)
       {
-        if (line.IsNotEmpty)
+        if (line.HasFilter)
         {
           List<object> equalValues = new List<object>();
           List<object> notEqualValues = new List<object>();

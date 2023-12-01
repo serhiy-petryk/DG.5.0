@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace DGCore.Filters
@@ -80,7 +81,6 @@ namespace DGCore.Filters
         public FilterLineBase()
         {
             Items = new FilterLineSubitemCollection(this);
-            FrmItems = new FilterLineSubitemCollection(this);
         }
 
         private bool? _ignoreCase;
@@ -134,8 +134,7 @@ namespace DGCore.Filters
         }
         public string FilterTextOrDescription => StringPresentation ?? Description;
         public FilterLineSubitemCollection Items { get; }
-        public FilterLineSubitemCollection FrmItems { get; } //для редактирования в форме
-        public bool HasFilter => Items.Count != 0;
+        public bool HasFilter => Items.Any(a => a.IsValid);
         public bool Not {get; set;}
         public bool? IgnoreCase
         {
@@ -164,17 +163,6 @@ namespace DGCore.Filters
             }
         }
 
-        public bool IsNotEmpty
-        {
-            get
-            {
-                foreach (FilterLineSubitem item in this.Items)
-                {
-                    if (item.IsValid) return true;
-                }
-                return false;
-            }
-        }
         public int ValidLineNumbers
         {
             get

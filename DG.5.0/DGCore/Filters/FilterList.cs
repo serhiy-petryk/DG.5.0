@@ -112,7 +112,8 @@ namespace DGCore.Filters {
         }
     }
 
-    public Delegate[] GetWherePredicates() => this.Where(item => item.ValidLineNumbers > 0).OrderBy(item => item.ValidLineNumbers).Select(item=>((FilterLine_Item)item).GetWherePredicate()).ToArray();
+    public Delegate[] GetWherePredicates() => this.Where(item => item.HasFilter).OrderBy(item => item.ValidLineNumbers)
+        .Select(item => ((FilterLine_Item) item).GetWherePredicate()).ToArray();
 
     public Delegate SetFilterByValue(string propertyName, object value) {
       foreach (FilterLineBase item in this) {
@@ -143,7 +144,7 @@ namespace DGCore.Filters {
       var oo = new List<UserSettings.Filter>();
       foreach (var line in this)
       {
-        if (line.IsNotEmpty)
+        if (line.HasFilter)
         {
           var oLine = new UserSettings.Filter();
           oo.Add(oLine);

@@ -266,7 +266,7 @@ namespace DGView.Views
             }
 
             Settings.WhereFilter.Clear();
-            foreach (var o in PropertiesData.Where(a => a.IsNotEmpty))
+            foreach (var o in PropertiesData.Where(a => a.HasFilter))
             {
                 var filter =new Filter{Name = o.Id, IgnoreCase = o.IgnoreCase, Not=o.Not, Lines= new List<FilterLine>()};
                 foreach (var line in o.Items)
