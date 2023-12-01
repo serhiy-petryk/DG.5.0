@@ -120,9 +120,14 @@ Open tasks:
 2023-11-30
 74. Bug: edit filter line -> hold only 1 blank row
 75. DGEditSettings:
-	- add method 'Clear filter'
-	- merge DGEditSettingsModel and FilterLine_Item
+done:	- add method 'Clear filter'
+not possible:	- merge DGEditSettingsModel and FilterLine_Item
 	- remove FrmItems in FilterLine_Item
 	- remove unused properties in FilterLine_Item
 76. Add OnFilterEditPreviewMouseDown method to Common.cs oor create FilterOrDescription data grid column control.
-77. Add filter text label in DGEditSettingsView
+done: 77. Add filter text label in DGEditSettingsView
+78. Localization:
+	- DGEditSettings view
+	- DBFilter view
+done: 79. Rename FilterGrid on DBFilterGridView (?)
+
