@@ -113,3 +113,14 @@ Open tasks:
 57. FilterLine: set value in ValueEditor -> for different value type use different editor
 61. Implement: Sorting on number of items column
 64. WPF datagrid navigation: tab/arrow keys, edit mode on activate, ..
+
+2023-11-27
+73. Clipboard paste/copy: Filter, DataGrid, ..
+
+2023-11-30
+74. Bug: edit filter line -> hold only 1 blank row
+75. DGEditSettings:
+	- add method 'Clear filter'
+	- merge DGEditSettingsModel and FilterLine_Item
+	- remove FrmItems in FilterLine_Item
+	- remove unused properties in FilterLine_Item
