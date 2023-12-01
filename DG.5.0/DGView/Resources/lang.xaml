@@ -37,4 +37,7 @@
     <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Column name</v:String>
     <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Filter or description of column</v:String>
     <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Expression of database filter:</v:String>
+
+    <!-- DGEditSettingsView -->
+    <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Filter expression:</v:String>
 </ResourceDictionary>

@@ -24,11 +24,13 @@ namespace DGView.Views
     /// <summary>
     /// Interaction logic for DGEditSettingsView.xaml
     /// </summary>
-    public partial class DGEditSettingsView : UserControl
+    public partial class DGEditSettingsView : UserControl, INotifyPropertyChanged
     {
         public FilterList PropertiesData { get; }
         public PropertyGroupItem GroupItem { get; } = new PropertyGroupItem(null);
         public DGV Settings { get; }
+        public bool IsClearFilterButtonEnabled => !string.IsNullOrEmpty(PropertiesData.StringPresentation);
+        public string FilterText => PropertiesData.StringPresentation;
 
         private readonly DGViewModel _viewModel;
 
@@ -116,7 +118,7 @@ namespace DGView.Views
         {
             await DragDropHelper.DropTarget_OnPreviewDrop(sender, e, new[] {"TreeView", "DataGrid"}, ConverterForTreeView);
             foreach (var child in PropertyGroupItem.GetAllChildren(GroupItem))
-                child.UpdateUI();
+                child.RefreshUI();
         }
 
         #endregion
@@ -177,6 +179,7 @@ namespace DGView.Views
                     data[i] = new PropertyGroupItem(targetItem.Parent, propertyItem);
             }
         }
+
         #endregion
 
         private void PropertyList_OnLoadingRow(object sender, DataGridRowEventArgs e)
@@ -217,7 +220,7 @@ namespace DGView.Views
             GroupTreeView.ItemContainerGenerator.StatusChanged -= ItemsControlHelper.OnItemContainerGeneratorStatusChanged;
 
             foreach (var child in PropertyGroupItem.GetAllChildren(GroupItem))
-                child.UpdateUI();
+                child.RefreshUI();
         }
 
         internal async void ReorderFrozenItems()
@@ -274,10 +277,12 @@ namespace DGView.Views
             _viewModel.ApplySetting(Settings);
             _viewModel.GenerateColumns();
         }
+
         private void cmdClearFilter(object p)
         {
             PropertyList.CommitEdit();
             PropertiesData.ClearFilter();
+            RefreshUI();
         }
         #endregion
 
@@ -308,8 +313,26 @@ namespace DGView.Views
                 child.Theme = container?.ActualTheme;
                 child.ThemeColor = container?.ActualThemeColor;
             });
-            // RefreshUI();
+            RefreshUI();
         }
+
+        #region ============  INotifyPropertyChanged  ============
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertiesChanged(params string[] propertyNames)
+        {
+            foreach (var propertyName in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void RefreshUI()
+        {
+            OnPropertiesChanged(nameof(FilterText), nameof(IsClearFilterButtonEnabled));
+            foreach (var o in PropertiesData)
+                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter));
+        }
+        #endregion
+
     }
 }
 

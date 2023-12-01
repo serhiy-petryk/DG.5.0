@@ -97,7 +97,7 @@ namespace DGView.ViewModels
             return newItem;
         }
 
-        public void UpdateUI()
+        public void RefreshUI()
         {
             OnPropertiesChanged(nameof(BaseColor));
         }

@@ -19,6 +19,7 @@
         <SolidColorBrush x:Key="DataGridBaseBrush" Color="{StaticResource DataGridBaseColor}"/>
 
         <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
+        <common:LocalizationProxy x:Key="FilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.FilterLabel}"/>
 
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />
@@ -56,8 +57,8 @@
 
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>
 
-            <Button x:Name="ClearFilterButton" BorderThickness="0" Padding="2"
-                    HorizontalAlignment="Left"
+            <Button x:Name="ClearFilterButton" BorderThickness="0" Padding="2" HorizontalAlignment="Left"
+                    IsEnabled="{Binding IsClearFilterButtonEnabled}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     Command="{Binding CmdClearFilter}">
@@ -75,6 +76,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -225,6 +227,19 @@
 
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Grid Grid.Row="2" 
+                  Visibility="{Binding FilterText, Converter={x:Static common:VisibilityConverter.Instance}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <controls:LabelBox Grid.Row="0" FontStyle="Italic" TextDecorations="Underline"
+                                   Background="Transparent" Foreground="{Binding Foreground}"
+                                   Text="{Binding Source={StaticResource FilterLabelProxy}, Path=Value, Mode=OneWay}"/>
+                <controls:LabelBox Grid.Row="1" FontWeight="Bold" TextWrapping="Wrap" Background="Transparent" Foreground="{Binding Foreground}"
+                                   Text="{Binding FilterText, Mode=OneWay}"/>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1" Margin="5 0 0 0">
