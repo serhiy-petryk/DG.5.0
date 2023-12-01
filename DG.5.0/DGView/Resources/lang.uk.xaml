@@ -36,5 +36,5 @@
     <!-- FilterGridView -->
     <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Назва колонки</v:String>
     <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Фільтр або опис колонки</v:String>
-    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Значення фільтра бази даних:</v:String>
+    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Вираз фільтра бази даних:</v:String>
 </ResourceDictionary>

@@ -277,7 +277,7 @@ namespace DGView.Views
         private void cmdClearFilter(object p)
         {
             PropertyList.CommitEdit();
-            Settings.WhereFilter.Clear();
+            PropertiesData.ClearFilter();
         }
         #endregion
 

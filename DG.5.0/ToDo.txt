@@ -125,3 +125,4 @@ Open tasks:
 	- remove FrmItems in FilterLine_Item
 	- remove unused properties in FilterLine_Item
 76. Add OnFilterEditPreviewMouseDown method to Common.cs oor create FilterOrDescription data grid column control.
+77. Add filter text label in DGEditSettingsView
