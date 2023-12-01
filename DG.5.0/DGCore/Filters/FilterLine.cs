@@ -142,17 +142,8 @@ namespace DGCore.Filters
             set => _ignoreCase = PropertyType == typeof(string) ? (bool?) (value ?? false) : null;
         }
         //=====  Service items ===
-        public bool CanBeNull
-        {
-            get
-            {
-                foreach (FilterLineSubitem item in this.Items)
-                {
-                    if (item.IsValid && item.FilterOperand == Common.Enums.FilterOperand.CanBeNull) return true;
-                }
-                return false;
-            }
-        }
+        public bool CanBeNull => Items.Any(item => item.IsValid && item.FilterOperand == Common.Enums.FilterOperand.CanBeNull);
+
         public string RowsString
         {
             get
@@ -163,18 +154,7 @@ namespace DGCore.Filters
             }
         }
 
-        public int ValidLineNumbers
-        {
-            get
-            {
-                int rows = 0;
-                foreach (FilterLineSubitem e in this.Items)
-                {
-                    if (e.IsValid) rows++;
-                }
-                return rows;
-            }
-        }
+        public int ValidLineNumbers => Items.Count(a => a.IsValid);
 
         public IEnumerable PossibleOperands => Common.Enums.FilterOperandTypeConverter.GetPossibleOperands(PropertyType, PropertyCanBeNull);
 
