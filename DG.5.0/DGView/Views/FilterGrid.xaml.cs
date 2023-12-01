@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using DGCore.Filters;
 using DGView.Helpers;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
@@ -68,7 +69,8 @@ namespace DGView.Views
         public void RefreshUI()
         {
             OnPropertiesChanged(nameof(FilterList));
-            DefinitionGrid.Items.Refresh();
+            foreach (var o in FilterList)
+                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter));
         }
         #endregion
     }
