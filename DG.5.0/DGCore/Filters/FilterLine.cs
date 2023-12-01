@@ -83,8 +83,6 @@ namespace DGCore.Filters
             Items = new FilterLineSubitemCollection(this);
         }
 
-        private bool? _ignoreCase;
-
         public Type PropertyType { get; protected set; }
         public string Id { get; protected set; }
         public string DisplayName { get; protected set; }
@@ -136,11 +134,14 @@ namespace DGCore.Filters
         public FilterLineSubitemCollection Items { get; }
         public bool HasFilter => Items.Any(a => a.IsValid);
         public bool Not {get; set;}
+
+        private bool? _ignoreCase;
         public bool? IgnoreCase
         {
             get => this._ignoreCase;
             set => _ignoreCase = PropertyType == typeof(string) ? (bool?) (value ?? false) : null;
         }
+        
         //=====  Service items ===
         public bool CanBeNull => Items.Any(item => item.IsValid && item.FilterOperand == Common.Enums.FilterOperand.CanBeNull);
 
