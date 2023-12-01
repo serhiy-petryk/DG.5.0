@@ -23,7 +23,7 @@ namespace DGCore.Filters
           List<object> notEqualValues = new List<object>();
           List<string> tokens = new List<string>();
 
-          string columnName = DB.DbMetaData.QuotedColumnName(this._dbProviderNamespace, line.UniqueID);
+          string columnName = DB.DbMetaData.QuotedColumnName(this._dbProviderNamespace, line.Id);
           foreach (FilterLineSubitem item in line.Items)
           {
             switch (item.FilterOperand)

@@ -11,7 +11,7 @@ namespace DGCore.Filters
         public FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
         {
             PropertyType = dbColumn.DataType;
-            UniqueID = dbColumn.SqlName;
+            Id = dbColumn.SqlName;
             DisplayName = (string.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
             Description = (string.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
             PropertyCanBeNull = dbColumn.IsNullable;
@@ -26,7 +26,7 @@ namespace DGCore.Filters
         public FilterLine_Item(PropertyDescriptor pd)
         {
             PropertyType = pd.PropertyType;
-            UniqueID = pd.Name;
+            Id = pd.Name;
             DisplayName = pd.DisplayName;
             Description = pd.Description;
             PropertyCanBeNull = pd.PropertyType.IsClass || Utils.Types.IsNullableType(pd.PropertyType);
@@ -86,7 +86,7 @@ namespace DGCore.Filters
         private bool? _ignoreCase;
 
         public Type PropertyType { get; protected set; }
-        public string UniqueID { get; protected set; }
+        public string Id { get; protected set; }
         public string DisplayName { get; protected set; }
         public string Description { get; protected set; }
         public bool PropertyCanBeNull { get; protected set; }

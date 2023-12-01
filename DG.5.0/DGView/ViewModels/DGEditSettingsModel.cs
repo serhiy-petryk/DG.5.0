@@ -2,19 +2,17 @@
 using System.ComponentModel;
 using System.Linq;
 using DGCore.Common;
+using DGCore.Filters;
 using DGCore.UserSettings;
 using DGView.Views;
 
 namespace DGView.ViewModels
 {
-    public class DGProperty_ItemModel: INotifyPropertyChanged
+    public class DGEditSettingsModel: FilterLine_Item //  FilterLineBase : IDataErrorInfo, INotifyPropertyChanged
     {
         private readonly DGEditSettingsView _host;
 
         public Column Column;
-        public string Id => Column.Id;
-        public string Name { get; }
-        public string Description { get; }
         public string Format
         {
             get => Column.Format_Actual;
@@ -26,7 +24,7 @@ namespace DGView.ViewModels
         }
 
         public Enums.TotalFunction? TotalFunction { get; set; }
-        public bool IsTotalSupport => DGCore.Utils.Types.IsNumericType(_propertyType);
+        public bool IsTotalSupport => DGCore.Utils.Types.IsNumericType(PropertyType);
         public bool IsHidden
         {
             get => Column.IsHidden;
@@ -60,44 +58,33 @@ namespace DGView.ViewModels
                     IsFrozen = true;
                 else if (!_groupDirection.HasValue && IsFrozen)
                     IsFrozen = false;
-                // _host.GroupChanged(this);
+                _host.GroupChanged(this);
                 OnPropertiesChanged(nameof(GroupDirection));
             }
         }
 
-        public bool IsSortingSupport => typeof(IComparable).IsAssignableFrom(DGCore.Utils.Types.GetNotNullableType(_propertyType));
-        // public FilterLine_Item FilterLine { get; }
+        public bool IsSortingSupport => typeof(IComparable).IsAssignableFrom(DGCore.Utils.Types.GetNotNullableType(PropertyType));
 
-        private readonly Type _propertyType;
-
-        public DGProperty_ItemModel(DGEditSettingsView host, Column column, DGV settings, PropertyDescriptor descriptor)
+        public DGEditSettingsModel(DGEditSettingsView host, Column column, DGV settings, PropertyDescriptor descriptor): base(descriptor)
         {
             _host = host;
             Column = column;
-            Name = descriptor.DisplayName;
             Format = column.Format_Actual;
-            
-            var item = settings.Groups.FirstOrDefault(o => o.Id == Id);
-            if (item != null)
-                GroupDirection = item.SortDirection;
-
+            if (settings.Groups.FirstOrDefault(o => o.Id == Id) is Sorting sorting)
+                GroupDirection = sorting.SortDirection;
             IsFrozen = settings.FrozenColumns.Contains(Id);
-            Description = descriptor.Description;
-            _propertyType = descriptor.PropertyType;
-          /*  FilterLine = settings.WhereFilter.FirstOrDefault(f => string.Equals(f.Name,
-                ((PropertyDescriptor) descriptor).Name, StringComparison.InvariantCultureIgnoreCase));*/
+            var filter = settings.WhereFilter.FirstOrDefault(f => string.Equals(f.Name, Id, StringComparison.OrdinalIgnoreCase));
+            if (filter != null)
+            {
+                IgnoreCase = filter.IgnoreCase;
+                Not = filter.Not;
+                foreach (var o in filter.Lines)
+                {
+                  Items.Add(new FilterLineSubitem{Owner = this, FilterOperand = o.Operand, Value1 = o.Value1, Value2 = o.Value2});
+                }
+            }
         }
 
-        public override string ToString() => Name;
-
-        #region ===========  INotifyPropertyChanged  ==============
-        public event PropertyChangedEventHandler PropertyChanged;
-        internal void OnPropertiesChanged(params string[] propertyNames)
-        {
-            foreach (var propertyName in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
-
+        public override string ToString() => DisplayName;
     }
 }

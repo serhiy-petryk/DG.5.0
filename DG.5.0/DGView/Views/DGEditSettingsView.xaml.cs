@@ -8,12 +8,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using DGCore.Common;
-using DGCore.PD;
+using DGCore.Filters;
 using DGCore.UserSettings;
+using DGView.Helpers;
 using DGView.ViewModels;
 using WpfSpLib.Common;
+using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
 namespace DGView.Views
@@ -23,7 +26,7 @@ namespace DGView.Views
     /// </summary>
     public partial class DGEditSettingsView : UserControl
     {
-        public ObservableCollection<DGProperty_ItemModel> PropertiesData { get; }
+        public FilterList PropertiesData { get; }
         public PropertyGroupItem GroupItem { get; } = new PropertyGroupItem(null);
         public DGV Settings { get; }
 
@@ -49,7 +52,7 @@ namespace DGView.Views
             view.Filter += Filter;
             // DataGrid.SelectedItem = DataGrid.Items.OfType<object>().FirstOrDefault();
         }
-        private bool Filter(object obj) => Helpers.Misc.SetFilter(((DGProperty_ItemModel) obj).Name, QuickFilterText);
+        private bool Filter(object obj) => Helpers.Misc.SetFilter(((DGEditSettingsModel) obj).DisplayName, QuickFilterText);
         #endregion
 
         public DGEditSettingsView(DGViewModel dgViewModel)
@@ -58,7 +61,7 @@ namespace DGView.Views
             DataContext = this;
             _viewModel = dgViewModel;
             Settings = ((IUserSettingSupport<DGV>)_viewModel).GetSettings();
-            PropertiesData = new ObservableCollection<DGProperty_ItemModel>(Settings.AllColumns.Select(o => new DGProperty_ItemModel(this, o, Settings, _viewModel.Data.Properties[o.Id])));
+            PropertiesData = new DGCore.Filters.FilterList(Settings.AllColumns.Select(o => new DGEditSettingsModel(this, o, Settings, _viewModel.Data.Properties[o.Id])));
 
             CmdApply = new RelayCommand(cmdApply);
             CmdClearFilter = new RelayCommand(cmdClearFilter);
@@ -67,12 +70,12 @@ namespace DGView.Views
             for (var i1 = 0; i1 < Settings.Groups.Count; i1++)
             {
                 var groupItem = Settings.Groups[i1];
-                var item = PropertiesData.FirstOrDefault(o => o.Id == groupItem.Id);
+                var item = (DGEditSettingsModel)PropertiesData.FirstOrDefault(o => o.Id == groupItem.Id);
                 var group = GroupItem.AddNewItem(item, groupItem.SortDirection);
                 for (var i2 = 0; i2 < Settings.SortsOfGroup[i1].Count; i2++)
                 {
                     var sortItem = Settings.SortsOfGroup[i1][i2];
-                    item = PropertiesData.FirstOrDefault(o => o.Id == sortItem.Id);
+                    item = (DGEditSettingsModel)PropertiesData.FirstOrDefault(o => o.Id == sortItem.Id);
                     group.AddNewItem(item, sortItem.SortDirection);
                 }
             }
@@ -81,13 +84,13 @@ namespace DGView.Views
             for (var i = 0; i < Settings.Sorts.Count; i++)
             {
                 var sortItem = Settings.Sorts[i];
-                var item = PropertiesData.FirstOrDefault(o => o.Id == sortItem.Id);
+                var item = (DGEditSettingsModel)PropertiesData.FirstOrDefault(o => o.Id == sortItem.Id);
                 detailsGroup.AddNewItem(item, sortItem.SortDirection);
             }
 
             foreach (var item in Settings.TotalLines.Where(o => o.TotalFunction != Enums.TotalFunction.None))
             {
-                var pitem = PropertiesData.FirstOrDefault(o => o.Id == item.Id);
+                var pitem = (DGEditSettingsModel)PropertiesData.FirstOrDefault(o => o.Id == item.Id);
                 pitem.TotalFunction = item.TotalFunction;
             }
         }
@@ -123,7 +126,7 @@ namespace DGView.Views
 
         private static void GroupTreeView_AfterDefiningIndex(object[] dragData, ItemsControl control, DragEventArgs e)
         {
-            if (dragData.Length == 0 || dragData.OfType<DGProperty_ItemModel>().Any(o => !o.IsSortingSupport))
+            if (dragData.Length == 0 || dragData.OfType<DGEditSettingsModel>().Any(o => !o.IsSortingSupport))
             {
                 DragDropHelper.Drag_Info.DragDropEffect = DragDropEffects.None;
                 return;
@@ -138,7 +141,7 @@ namespace DGView.Views
                 return;
             }
 
-            if (internalDragItem != null || dragData.OfType<DGProperty_ItemModel>().Count() == dragData.Length)
+            if (internalDragItem != null || dragData.OfType<DGEditSettingsModel>().Count() == dragData.Length)
             {
                 if (hoveredItem.Type == PropertyGroupItem.ItemType.Label)
                 {
@@ -170,7 +173,7 @@ namespace DGView.Views
             var targetItem = hoveredElement?.DataContext as PropertyGroupItem;
             for (var i = 0; i < data.Length; i++)
             {
-                if (data[i] is DGProperty_ItemModel propertyItem)
+                if (data[i] is DGEditSettingsModel propertyItem)
                     data[i] = new PropertyGroupItem(targetItem.Parent, propertyItem);
             }
         }
@@ -183,7 +186,7 @@ namespace DGView.Views
         }
 
         // ==================
-        internal async void GroupChanged (DGProperty_ItemModel item)
+        internal async void GroupChanged (DGEditSettingsModel item)
         {
             GroupTreeView.ItemContainerGenerator.StatusChanged += ItemsControlHelper.OnItemContainerGeneratorStatusChanged;
             var groupItem = GroupItem.Children.FirstOrDefault(o => o.Item == item);
@@ -222,7 +225,7 @@ namespace DGView.Views
             if (PropertiesData == null) return;
             PropertyList.CommitEdit();
 
-            var frozenItems = PropertiesData.Where(o => o.IsFrozen).ToArray();
+            var frozenItems = PropertiesData.Where(o => ((DGEditSettingsModel)o).IsFrozen).ToArray();
             if (frozenItems.Length > 0)
                 await PropertyList.AddOrReorderItems(frozenItems, 0);
 
@@ -237,7 +240,7 @@ namespace DGView.Views
         {
             PropertyList.CommitEdit();
             
-            Settings.AllColumns = PropertiesData.OrderBy(o => o.IsHidden).ThenByDescending(o => o.IsFrozen).Select(o => o.Column).ToList();
+            Settings.AllColumns = PropertiesData.OrderBy(o => ((DGEditSettingsModel)o).IsHidden).ThenByDescending(o => ((DGEditSettingsModel)o).IsFrozen).Select(o => ((DGEditSettingsModel)o).Column).ToList();
 
             var details = GroupItem.Children.First(o => o.Type == PropertyGroupItem.ItemType.Details);
             Settings.Sorts = details.Children.Where(o => o.Type == PropertyGroupItem.ItemType.Sorting)
@@ -253,10 +256,19 @@ namespace DGView.Views
             }
 
             Settings.TotalLines = new List<TotalLine>();
-            foreach (var item in PropertiesData.Where(o => o.TotalFunction.HasValue && o.TotalFunction.Value != Enums.TotalFunction.None))
+            foreach (DGEditSettingsModel item in PropertiesData.Where(o => ((DGEditSettingsModel)o).TotalFunction.HasValue && ((DGEditSettingsModel)o).TotalFunction.Value != Enums.TotalFunction.None))
             {
                 var total = new TotalLine {Id = item.Id, TotalFunction = item.TotalFunction.Value};
                 Settings.TotalLines.Add(total);
+            }
+
+            Settings.WhereFilter.Clear();
+            foreach (var o in PropertiesData.Where(a => a.IsNotEmpty))
+            {
+                var filter =new Filter{Name = o.Id, IgnoreCase = o.IgnoreCase, Not=o.Not, Lines= new List<FilterLine>()};
+                foreach (var line in o.Items)
+                    filter.Lines.Add(new FilterLine {Operand = line.FilterOperand, Value1 = line.Value1, Value2 = line.Value2});
+                Settings.WhereFilter.Add(filter);
             }
 
             _viewModel.ApplySetting(Settings);
@@ -276,6 +288,27 @@ namespace DGView.Views
             {
                 grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
             }
+        }
+
+        private void OnFilterEditPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cell = (DataGridCell)sender;
+            var filterLine = cell.DataContext as DGCore.Filters.FilterLineBase;
+            if (!(bool)CanConvertStringTo.Instance.Convert(filterLine.PropertyType, null, null, null))
+                return;
+
+            var view = new FilterLineView(filterLine);
+            var container = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
+            var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
+            var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
+            var height = Math.Max(200, Window.GetWindow(this).ActualHeight * 2 / 3 / transforms.Value.M22);
+            Helpers.Misc.OpenMwiDialog(container, view, "Filter Setup", geometry, (child, adorner) =>
+            {
+                child.Height = height;
+                child.Theme = container?.ActualTheme;
+                child.ThemeColor = container?.ActualThemeColor;
+            });
+            // RefreshUI();
         }
     }
 }

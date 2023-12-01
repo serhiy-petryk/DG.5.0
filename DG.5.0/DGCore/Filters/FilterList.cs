@@ -1,19 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
 namespace DGCore.Filters {
 
-  public class FilterList : List<FilterLineBase>, UserSettings.IUserSettingSupport<List<UserSettings.Filter>>
+  public class FilterList : ObservableCollection<FilterLineBase>, UserSettings.IUserSettingSupport<List<UserSettings.Filter>>
   {
     internal string _dbProviderNamespace;
 
     // Constructor for Item Filter
-    public FilterList(PropertyDescriptorCollection pdc) =>
-      AddRange(pdc.Cast<PropertyDescriptor>()
-        .Where(pd => pd.IsBrowsable && Utils.Types.GetNotNullableType(pd.PropertyType).GetInterface("System.IComparable") != null)
-        .Select(pd => new FilterLine_Item(pd)));
+    public FilterList(PropertyDescriptorCollection pdc)
+    {
+        foreach (var o in pdc.Cast<PropertyDescriptor>().Where(pd =>
+                pd.IsBrowsable && Utils.Types.GetNotNullableType(pd.PropertyType).GetInterface("System.IComparable") !=
+                null).Select(pd => new FilterLine_Item(pd)))
+            Add(o);
+    }
+
+    public FilterList(IEnumerable<FilterLineBase> filterLines)
+    {
+        foreach(var o in filterLines)
+            Add(o);
+    }
 
     // Constructor for Database Filter: itemType needs for DisplayName/Descriptions only
     public FilterList(DB.DbCmd cmd, Type itemType, Dictionary<string, AttributeCollection> columnAttributes) {
@@ -106,7 +116,7 @@ namespace DGCore.Filters {
 
     public Delegate SetFilterByValue(string propertyName, object value) {
       foreach (FilterLineBase item in this) {
-        if (item.UniqueID == propertyName) {
+        if (item.Id == propertyName) {
           item.Items.Clear();
           item.IgnoreCase = false;
           FilterLineSubitem lineItem = new FilterLineSubitem();
@@ -137,7 +147,7 @@ namespace DGCore.Filters {
         {
           var oLine = new UserSettings.Filter();
           oo.Add(oLine);
-          oLine.Name = line.UniqueID;
+          oLine.Name = line.Id;
           oLine.Not = line.Not;
           oLine.IgnoreCase = line.IgnoreCase;
           foreach (var item in line.Items)
@@ -183,7 +193,7 @@ namespace DGCore.Filters {
         var name = o.Name;// Get saved property name
         foreach (var line in this)
         {
-          if (string.Equals(line.UniqueID, name, StringComparison.InvariantCultureIgnoreCase))
+          if (string.Equals(line.Id, name, StringComparison.InvariantCultureIgnoreCase))
           {// Saved property name exists in current FilterObject == ApplyInfo
             line.Not = o.Not;
             line.IgnoreCase = o.IgnoreCase;

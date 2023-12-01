@@ -18,6 +18,8 @@
         <Color x:Key="DataGridBaseColor">#FFF5FAFF</Color>
         <SolidColorBrush x:Key="DataGridBaseBrush" Color="{StaticResource DataGridBaseColor}"/>
 
+        <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
+
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />
             <Setter Property="IsTabStop" Value="False" />
@@ -188,7 +190,7 @@
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="Не&#x0a;показувати" Binding="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}"
                                             ElementStyle="{StaticResource CheckBoxColumnElementStyle}" EditingElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
-                    <DataGridTextColumn Header="Назва колонки" Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Назва колонки" Binding="{Binding DisplayName}" IsReadOnly="True"/>
                     <DataGridCheckBoxColumn Header="Закріплено" Binding="{Binding IsFrozen, UpdateSourceTrigger=PropertyChanged}"
                                             ElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
                     <DataGridCheckBoxColumn Header="Групувати?" MinWidth="26" IsThreeState="True"
@@ -212,7 +214,15 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Формат&#x0a;підсумків" Binding="{Binding TotalFormat}"/>-->
-                    <DataGridTextColumn Header="Опис" Binding="{Binding Description}" IsReadOnly="True" MaxWidth="400"/>
+                    <!--<DataGridTextColumn Header="Опис" Binding="{Binding FilterTextOrDescription}" IsReadOnly="True" MaxWidth="400"/>-->
+                    <DataGridTemplateColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
+                        <DataGridTemplateColumn.CellStyle>
+                            <Style TargetType="DataGridCell" BasedOn="{StaticResource FilterOrDescriptionCellStyle}">
+                                <EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>
+                            </Style>
+                        </DataGridTemplateColumn.CellStyle>
+                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

@@ -24,7 +24,7 @@ namespace DGView.ViewModels
         }
 
         public PropertyGroupItem Parent { get; }
-        public DGProperty_ItemModel Item { get; }
+        public DGEditSettingsModel Item { get; }
 
         private ListSortDirection _sortDirection;
         public ListSortDirection SortDirection
@@ -40,7 +40,7 @@ namespace DGView.ViewModels
         }
 
         public bool CanSort => Type == ItemType.Group  || Type == ItemType.Sorting;
-        public string Name => Type == ItemType.Details  ? "Sortings of detail items:" : (Type == ItemType.Root ? "Root" : (Item == null ? "Sortings:" : Item.Name));
+        public string Name => Type == ItemType.Details  ? "Sortings of detail items:" : (Type == ItemType.Root ? "Root" : (Item == null ? "Sortings:" : Item.DisplayName));
         public ItemType Type => Parent == null ? ItemType.Root : (Item == null ? (Parent.Type == ItemType.Root  ? ItemType.Details : ItemType.Label) : (Parent.Type == ItemType.Root ? ItemType.Group : ItemType.Sorting));
         public ObservableCollection<PropertyGroupItem> Children { get; } = new ObservableCollection<PropertyGroupItem>();
         public PropertyGroupItem Root => Parent == null ? this : Parent.Root;
@@ -62,7 +62,7 @@ namespace DGView.ViewModels
 
         public RelayCommand CmdRemove { get; }
 
-        public PropertyGroupItem(PropertyGroupItem parent, DGProperty_ItemModel item = null)
+        public PropertyGroupItem(PropertyGroupItem parent, DGEditSettingsModel item = null)
         {
             Parent = parent;
             Item = item;
@@ -84,7 +84,7 @@ namespace DGView.ViewModels
             }
         }
 
-        public PropertyGroupItem AddNewItem(DGProperty_ItemModel item, ListSortDirection sortDirection)
+        public PropertyGroupItem AddNewItem(DGEditSettingsModel item, ListSortDirection sortDirection)
         {
             var oldItem = Children.FirstOrDefault(o => o.Item == item);
             if (oldItem != null)
