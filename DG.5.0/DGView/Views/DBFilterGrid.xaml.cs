@@ -16,13 +16,13 @@ namespace DGView.Views
     /// <summary>
     /// Interaction logic for FilterGrid.xaml
     /// </summary>
-    public partial class FilterGrid : UserControl, INotifyPropertyChanged
+    public partial class DBFilterGrid : UserControl, INotifyPropertyChanged
     {
         public DGCore.Filters.FilterList FilterList { get; private set; }
 
         private ICollection _dataSource;
 
-        public FilterGrid()
+        public DBFilterGrid()
         {
             InitializeComponent();
             DataContext = this;
