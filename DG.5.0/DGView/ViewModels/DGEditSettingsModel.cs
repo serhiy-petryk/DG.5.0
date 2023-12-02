@@ -80,7 +80,7 @@ namespace DGView.ViewModels
                 Not = filter.Not;
                 foreach (var o in filter.Lines)
                 {
-                  Items.Add(new FilterLineSubitem{Owner = this, FilterOperand = o.Operand, Value1 = o.Value1, Value2 = o.Value2});
+                    Items.Add(new FilterLineSubitem { Owner = this, FilterOperand = o.Operand, Value1 = o.Value1, Value2 = o.Value2 });
                 }
             }
         }
