@@ -20,29 +20,9 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="27" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
+            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
                       SelectionUnit="Cell" SelectionMode="Single" SelectedCellsChanged="DbPropertiesDataGrid_SelectedCellsChanged"
                       CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
-                <DataGrid.Resources>
-                    <Style x:Key="EditingElementStyle" TargetType="{x:Type TextBox}">
-                        <Setter Property="Padding" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="Foreground" Value="Red"/>
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)/ErrorContent}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                    <Style x:Key="ElementStyle" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Padding" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="Validation.HasError" Value="True">
-                                <Setter Property="Foreground" Value="DarkRed"/>
-                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)/ErrorContent}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.Resources>
 
                 <DataGrid.RowValidationErrorTemplate>
                     <ControlTemplate/>
@@ -50,7 +30,7 @@
 
                 <DataGrid.RowHeaderTemplate>
                     <DataTemplate>
-                        <Grid Width="32"
+                        <Grid Width="16" Margin="-2 0 0 0"
                               ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
                               Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
                               Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
@@ -67,11 +47,9 @@
                                             SelectedValueBinding="{Binding FilterOperand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}" />
                     <DataGridTextColumn Header="Вираз 1" Width="1*" MinWidth="100"
-                                        Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                        ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
+                                        Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     <DataGridTextColumn Header="Вираз 2" Width="1*" MinWidth="100"
-                                        Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"
-                                        ElementStyle="{StaticResource ElementStyle}" EditingElementStyle="{StaticResource EditingElementStyle}"/>
+                                        Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"/>
                 </DataGrid.Columns>
 
             </DataGrid>
