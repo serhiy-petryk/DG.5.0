@@ -45,7 +45,7 @@ namespace DGView.Views
         {
             FilterLine.Items.Clear();
             foreach (var item in Clone_FilterLines.Where(a => a.IsValid))
-                FilterLine.Items.Add(new FilterLineSubitem { Owner = item.Owner, FilterOperand = item.FilterOperand, Value1 = item.Value1, Value2 = item.Value2 });
+                FilterLine.Items.Add(item);
             FilterLine.Not = Clone_Not;
             CloseButton_OnClick(sender, e);
         }
@@ -70,11 +70,11 @@ namespace DGView.Views
                 grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
             }
 
-            var blankLines = e.RemovedCells.Where(c =>
+            /*var blankLines = e.RemovedCells.Where(c =>
                 c.Item is FilterLineSubitem si && Equals(si.FilterOperand, DGCore.Common.Enums.FilterOperand.None) &&
                 Equals(si.Value1, null) && Equals(si.Value2, null)).ToArray();
             for (var k = 0; k < blankLines.Length; k++)
-                Clone_FilterLines.Remove((FilterLineSubitem) blankLines[k].Item);
+                Clone_FilterLines.Remove((FilterLineSubitem) blankLines[k].Item);*/
         }
     }
 }

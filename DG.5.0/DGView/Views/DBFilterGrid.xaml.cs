@@ -70,7 +70,7 @@ namespace DGView.Views
         {
             OnPropertiesChanged(nameof(FilterList));
             foreach (var o in FilterList)
-                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter));
+                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter), nameof(FilterLineBase.Error));
         }
         #endregion
     }

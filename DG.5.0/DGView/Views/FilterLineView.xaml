@@ -21,26 +21,9 @@
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
+                      RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderTemplate}"
                       SelectionUnit="Cell" SelectionMode="Single" SelectedCellsChanged="DbPropertiesDataGrid_SelectedCellsChanged"
                       CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
-
-                <DataGrid.RowValidationErrorTemplate>
-                    <ControlTemplate/>
-                </DataGrid.RowValidationErrorTemplate>
-
-                <DataGrid.RowHeaderTemplate>
-                    <DataTemplate>
-                        <Grid Width="16" Margin="-2 0 0 0"
-                              ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
-                              Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
-                              Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
-                            <Ellipse StrokeThickness="0" Fill="Red"
-                                     Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
-                                     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
-                            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
-                        </Grid>
-                    </DataTemplate>
-                </DataGrid.RowHeaderTemplate>
 
                 <DataGrid.Columns>
                     <DataGridComboBoxColumn Header="Операнд" Width="Auto" MinWidth="100"

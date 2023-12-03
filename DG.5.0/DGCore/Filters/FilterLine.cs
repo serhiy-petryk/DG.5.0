@@ -145,40 +145,21 @@ namespace DGCore.Filters
         //=====  Service items ===
         public bool CanBeNull => Items.Any(item => item.IsValid && item.FilterOperand == Common.Enums.FilterOperand.CanBeNull);
 
-        public string RowsString
-        {
-            get
-            {
-                int rows = this.ValidLineNumbers;
-                if (rows == 0) return null;
-                else return rows.ToString();
-            }
-        }
-
         public int ValidLineNumbers => Items.Count(a => a.IsValid);
 
         public IEnumerable PossibleOperands => Common.Enums.FilterOperandTypeConverter.GetPossibleOperands(PropertyType, PropertyCanBeNull);
 
         #region IDataErrorInfo Members
 
-        public string Error => null;
-
-        public string this[string columnName]
+        public string Error
         {
-            get
-            {
-                if (columnName == "RowsString")
-                {
-                    int errors = 0;
-                    foreach (FilterLineSubitem item in this.Items)
-                    {
-                        if (item.IsError) errors++;
-                    }
-                    if (errors != 0) return errors.ToString() + " помилкових рядків";
-                }
-                return null;
+            get {
+                var errors = Items.Count(a => a.IsError);
+                return errors == 0 ? null : $"У фільтрі {errors} помилкових рядків";
             }
         }
+
+        public string this[string columnName] => columnName == nameof(FilterTextOrDescription) ? Error : null;
 
         #endregion
 

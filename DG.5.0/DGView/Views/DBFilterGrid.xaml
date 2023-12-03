@@ -21,13 +21,14 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Column="0" x:Name="DefinitionGrid" AutoGenerateColumns="False" ItemsSource="{Binding FilterList}"
-                  HeadersVisibility="Column" SelectionUnit="Cell" SelectionMode="Single" CanUserSortColumns="False"
+                  RowHeaderWidth="20" SelectionUnit="Cell" SelectionMode="Single" CanUserSortColumns="False"
                   CanUserAddRows="False"
+                  RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderTemplate}"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
+
             <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="Назва колонки (для установки фільтра рядків натисніть тут)" Binding="{Binding DisplayName}" IsReadOnly="True" Width="SizeToCells"/>-->
                 <DataGridTextColumn Header="{Binding Source={StaticResource ColumnNameTitleProxy}, Path=Value, Mode=OneWay}" MaxWidth="200">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">

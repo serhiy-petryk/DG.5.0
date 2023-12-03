@@ -27,14 +27,14 @@ namespace DGCore.Filters
         public object Clone()
         {
             var newCollection = new FilterLineSubitemCollection(_owner);
-            foreach (var item in this.Where(a => a.IsValid))
-                newCollection.Add(new FilterLineSubitem {Owner = _owner, FilterOperand = item.FilterOperand, Value1 = item.Value1, Value2 = item.Value2});
+            foreach (var item in this)
+                newCollection.Add((FilterLineSubitem)item.Clone());
             return newCollection;
         }
     }
 
     //===============  Class FilterLineItem  ==============
-    public class FilterLineSubitem : INotifyPropertyChanged, IDataErrorInfo, IEditableObject
+    public class FilterLineSubitem : INotifyPropertyChanged, IDataErrorInfo, IEditableObject, ICloneable
     {
         private Common.Enums.FilterOperand _operand;
         private object _value1;
@@ -171,6 +171,9 @@ namespace DGCore.Filters
         public bool IsError => !string.IsNullOrEmpty(Error);
 
         public override string ToString() => GetStringPresentation();
+
+        public object Clone() => new FilterLineSubitem
+            {Owner = Owner, _operand = _operand, _value1 = _value1, _value2 = _value2};
 
         private void RefreshUI()
         {
