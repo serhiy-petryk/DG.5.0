@@ -91,7 +91,7 @@
 
     <DataTemplate x:Key="IDataErrorInfoRowHeaderTemplate">
         <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=RowHeaderWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-}" Margin="-2 0 0 0"
-              ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay, Converter={x:Static common:DummyConverter.Instance}}"
+              ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
               Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
               Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
             <Ellipse StrokeThickness="0" Fill="Red"
