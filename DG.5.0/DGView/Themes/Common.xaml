@@ -97,7 +97,7 @@
             <Ellipse StrokeThickness="0" Fill="Red"
                      Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
                      Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
-            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
     </DataTemplate>
 
