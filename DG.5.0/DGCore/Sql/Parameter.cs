@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 
 namespace DGCore.Sql {
 
+  [SupportedOSPlatform("windows")]
   [TypeConverter(typeof(SqlParameterConverter))]
   public class ParameterCollection {
 
@@ -59,10 +61,11 @@ namespace DGCore.Sql {
     public override string ToString() => GetStringPresentation();
   }
 
-  //==============================================================
-  /// <summary>
-  /// Параметры пользовательского интерфейса, которые используются в вызове процедуры/запроса к данным
-  /// </summary>
+    //==============================================================
+    /// <summary>
+    /// Параметры пользовательского интерфейса, которые используются в вызове процедуры/запроса к данным
+    /// </summary>
+  [SupportedOSPlatform("windows")]
   public class Parameter{// : ParameterStandardValuesConverter.IParameterStandardValuesConverterSupport {
 
     static Parameter() {
@@ -120,6 +123,7 @@ namespace DGCore.Sql {
   }
 
   //=========================================================
+  [SupportedOSPlatform("windows")]
   public class ParameterStandardValuesConverter : TypeConverter {
 
     static Dictionary<string, StandardValuesCollection> _cache = new Dictionary<string, StandardValuesCollection>(StringComparer.OrdinalIgnoreCase);
@@ -188,6 +192,7 @@ namespace DGCore.Sql {
   }
 
   //=========================================
+  [SupportedOSPlatform("windows")]
   class ParameterPropertyDescriptor : PropertyDescriptor {
 
     Parameter _sqlParameter;
@@ -248,6 +253,7 @@ namespace DGCore.Sql {
   }
 
   //==============================
+  [SupportedOSPlatform("windows")]
   public class SqlParameterConverter : TypeConverter {
     public SqlParameterConverter() {}
     public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes) {

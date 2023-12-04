@@ -4,10 +4,12 @@ using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 
 namespace DGCore.DB
 {
+    [SupportedOSPlatform("windows")]
     public static partial class DbUtils
     {
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 
 namespace DGCore.Filters {
 
+  [SupportedOSPlatform("windows")]
   public class FilterList : ObservableCollection<FilterLineBase>, UserSettings.IUserSettingSupport<List<UserSettings.Filter>>
   {
     internal string _dbProviderNamespace;

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Runtime.Versioning;
 
 namespace DGCore.DB
 {
+    [SupportedOSPlatform("windows")]
     public static partial class DbMetaData
     {
         //To Do: 

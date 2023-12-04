@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using DGCore.Common;
 
 namespace DGCore.DB
 {
+    [SupportedOSPlatform("windows")]
     public static class DbDynamicType
     {
         private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);

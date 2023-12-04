@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 using DGCore.DB;
 
 namespace Models
 {
+    [SupportedOSPlatform("windows")]
     public class VCubeMastAccount: CustomTypeDescriptor
     {
         private static PropertyDescriptorCollection _pdc = DGCore.PD.MemberDescriptorUtils.GetTypeMembers(typeof(VCubeMastAccount));

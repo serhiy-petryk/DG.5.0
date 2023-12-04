@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 namespace DGCore.Sql {
 
-  //======================  Static section  ===============================
+  [SupportedOSPlatform("windows")]
   public partial class DbDataSource : DataSourceBase {//, IDisposable {
-
-    interface IDbDataSourceExtension {//: IDisposable {
+      interface IDbDataSourceExtension {//: IDisposable {
       ICollection GetData(bool requeryFlag);
       int RecordCount { get; }
       bool DataLoadingCancelFlag { set; }
-    }
+  }
 
     /* Not need: use LookupTableConverter  public class DbDataSourceExtension<TItemType, TKeyType> : IDbDataSourceExtension {
           Dictionary<TKeyType, TItemType> _data;

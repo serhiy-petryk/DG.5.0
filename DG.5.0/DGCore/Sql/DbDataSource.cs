@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Runtime.Versioning;
 
 namespace DGCore.Sql {
 
-  //======================  Static section  ===============================
+  [SupportedOSPlatform("windows")]
   public partial class DbDataSource : DataSourceBase {
     //======================   Static section  =========================
     public static DbDataSource GetDataSource(DB.DbCmd cmd, Filters.DbWhereFilter whereFilter, Type itemType, string primaryKeyMemberName, IComponent consumer) {
@@ -17,7 +18,7 @@ namespace DGCore.Sql {
       return dsNew;
     }
 
-    //======================   Object section  =========================
+    //======================   Instance section  =========================
     DB.DbCmd _cmdData;// With filters
     DB.DbCmd _cmd;
     PropertyDescriptor _pdPrimaryKey;

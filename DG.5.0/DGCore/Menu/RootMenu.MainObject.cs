@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Text.Json;
 
 namespace DGCore.Menu
 {
     public partial class RootMenu
     {
+        [SupportedOSPlatform("windows")]
         public class MainObject
         {
             public string Title { get; set; }

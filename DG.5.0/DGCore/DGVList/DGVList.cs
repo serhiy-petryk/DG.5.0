@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using DGCore.Common;
 using DGCore.Helpers;
 
 namespace DGCore.DGVList
 {
+  [SupportedOSPlatform("windows")]
   public partial class DGVList<TItem> : BindingList<object>, IDGVList
   {
     public Dictionary<string, string> Formats { get; } = new Dictionary<string, string>();

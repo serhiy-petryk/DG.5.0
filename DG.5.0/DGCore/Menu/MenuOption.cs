@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Versioning;
 
 namespace DGCore.Menu
 {
+    [SupportedOSPlatform("windows")]
     public class MenuOption : SqlObject
     {
         private static int idCnt = 0;

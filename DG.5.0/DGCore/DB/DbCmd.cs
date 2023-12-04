@@ -5,11 +5,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Threading;
 
 namespace DGCore.DB
 {
-
+  [SupportedOSPlatform("windows")]
   public class DbCmd : IComponent, IDisposable, ICloneable
   {
     public enum DbCmdKind { Query, Procedure, File }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using System.Text.Json.Serialization;
 
 namespace DGCore.Menu
 {
+  [SupportedOSPlatform("windows")]
   public class DbParameter
   {
     private static DateTime _baseDate = DateTime.Today.AddDays(-DateTime.Today.Day + 1); // first day of current month

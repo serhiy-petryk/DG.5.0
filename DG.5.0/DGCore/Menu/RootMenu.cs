@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Text.Json;
 using DGCore.Common;
 
@@ -14,6 +15,7 @@ namespace DGCore.Menu
         File
     }
 
+    [SupportedOSPlatform("windows")]
     public partial class RootMenu : SubMenu
     {
         private MainObject _mainObject;
