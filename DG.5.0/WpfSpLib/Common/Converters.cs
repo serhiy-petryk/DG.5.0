@@ -175,7 +175,7 @@ namespace WpfSpLib.Common
         /// Support polish notation (https://en.wikipedia.org/wiki/Polish_notation). Math expressions are stored in ConverterParameter.
         /// Supported operators: '+,-,*,/,%' for double, '!' for boolean. Supported types of return value: double, bool, Thickness, GridLength, Visibility.
         /// Usage example (single input value):
-        ///             Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
+        ///   Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=12%8+}">
         /// Usage example (multiple input values) (OutputValue = (ActualWidth + ActualHeight)/2 * 10 /100 + 8 => 10% of average of ActualWidth and ActualHeight, and plus 8):
         ///             <Thumb.Width>
         ///                 <MultiBinding Converter="{x:Static common:MathConverter.Instance}" ConverterParameter="+2/10%8+">
