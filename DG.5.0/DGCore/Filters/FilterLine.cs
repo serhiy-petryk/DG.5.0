@@ -9,7 +9,7 @@ namespace DGCore.Filters
 {
     public class FilterLine_Database : FilterLineBase
     {
-        public FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
+        protected FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
         {
             PropertyType = dbColumn.DataType;
             Id = dbColumn.SqlName;
@@ -78,7 +78,7 @@ namespace DGCore.Filters
     //===============================
     public abstract class FilterLineBase : IDataErrorInfo, INotifyPropertyChanged
     {
-        public FilterLineBase()
+        protected FilterLineBase()
         {
             Items = new FilterLineSubitemCollection(this);
         }

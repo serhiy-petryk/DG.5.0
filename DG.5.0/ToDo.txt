@@ -123,8 +123,8 @@ Open tasks:
 done:	- add method 'Clear filter'
 not possible:	- merge DGEditSettingsModel and FilterLine_Item
 done:	- remove FrmItems in FilterLine_Item
-	- remove unused properties in FilterLine_Item
-76. Add OnFilterEditPreviewMouseDown method to Common.cs oor create FilterOrDescription data grid column control.
+done:	- remove unused properties in FilterLine_Item
+76. Add OnFilterEditPreviewMouseDown method to Common.cs or create FilterOrDescription data grid column control.
 done: 77. Add filter text label in DGEditSettingsView
 78. Localization:
 	- DGEditSettings view
