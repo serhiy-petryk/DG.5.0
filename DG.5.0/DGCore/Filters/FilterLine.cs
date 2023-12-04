@@ -9,7 +9,7 @@ namespace DGCore.Filters
 {
     public class FilterLine_Database : FilterLineBase
     {
-        protected FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
+        public FilterLine_Database(DB.DbSchemaColumn dbColumn, string itemDisplayName, string itemDescription)
         {
             PropertyType = dbColumn.DataType;
             Id = dbColumn.SqlName;
