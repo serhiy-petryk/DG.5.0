@@ -89,16 +89,22 @@
         </Style.Triggers>
     </Style>
 
-    <DataTemplate x:Key="IDataErrorInfoRowHeaderTemplate">
-        <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=RowHeaderWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-}" Margin="-2 0 0 0"
-              ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
-              Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
-              Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
-            <Ellipse StrokeThickness="0" Fill="Red"
-                     Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
-                     Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
-            <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </Grid>
-    </DataTemplate>
+    <ControlTemplate x:Key="IDataErrorInfoRowHeaderControlTemplate">
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding Background}"
+                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=RowHeaderWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-}" Margin="-2 0 0 0"
+                  ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
+                  Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
+                  Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
+                <Ellipse StrokeThickness="0" Fill="Red"
+                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
+                         Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}" />
+                <TextBlock Text="!" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+    </ControlTemplate>
 
+    <DataTemplate x:Key="IDataErrorInfoRowHeaderDataTemplate">
+        <Control Template="{StaticResource IDataErrorInfoRowHeaderControlTemplate}"/>
+    </DataTemplate>
 </ResourceDictionary>

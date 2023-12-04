@@ -329,7 +329,7 @@ namespace DGView.Views
         {
             OnPropertiesChanged(nameof(FilterText), nameof(IsClearFilterButtonEnabled));
             foreach (var o in PropertiesData)
-                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter));
+                o.OnPropertiesChanged(nameof(FilterLineBase.FilterTextOrDescription), nameof(FilterLineBase.HasFilter), nameof(FilterLineBase.Error));
         }
         #endregion
 

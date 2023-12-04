@@ -167,6 +167,16 @@
                     </Style>
                 </DataGrid.Resources>
 
+                <DataGrid.RowHeaderStyle>
+                    <Style TargetType="{x:Type DataGridRowHeader}" BasedOn="{StaticResource MonochromeDGRowHeaderStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static helpers:IsNotNull.Instance}}" Value="true">
+                                <Setter Property="Template" Value="{StaticResource IDataErrorInfoRowHeaderControlTemplate}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowHeaderStyle>
+
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Setter Property="Background" Value="{StaticResource DataGridBaseBrush}"/>

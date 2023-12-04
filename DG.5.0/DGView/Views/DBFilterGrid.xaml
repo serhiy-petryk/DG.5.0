@@ -23,7 +23,7 @@
         <DataGrid Grid.Column="0" x:Name="DefinitionGrid" AutoGenerateColumns="False" ItemsSource="{Binding FilterList}"
                   RowHeaderWidth="20" SelectionUnit="Cell" SelectionMode="Single" CanUserSortColumns="False"
                   CanUserAddRows="False"
-                  RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderTemplate}"
+                  RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
