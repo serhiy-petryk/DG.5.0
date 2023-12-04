@@ -8,7 +8,9 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using DGCore.Filters;
+using DGView.Helpers;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
@@ -19,6 +21,28 @@ namespace DGView.Views
     /// </summary>
     public partial class FilterLineView : UserControl
     {
+        #region ========  Static section =============
+        internal static void OnFilterEditPreviewMouseDown(DataGridCell cell)
+        {
+            // var cell = (DataGridCell)sender;
+            var filterLine = cell.DataContext as DGCore.Filters.FilterLineBase;
+            if (!(bool)CanConvertStringTo.Instance.Convert(filterLine.PropertyType, null, null, null))
+                return;
+
+            var view = new FilterLineView(filterLine);
+            var container = cell.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
+            var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
+            var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
+            var height = Math.Max(200, Window.GetWindow(cell).ActualHeight * 2 / 3 / transforms.Value.M22);
+            Helpers.Misc.OpenMwiDialog(container, view, "Filter Setup", geometry, (child, adorner) =>
+            {
+                child.Height = height;
+                child.Theme = container?.ActualTheme;
+                child.ThemeColor = container?.ActualThemeColor;
+            });
+        }
+        #endregion
+
         public FilterLineBase FilterLine { get; }
         public FilterLineSubitemCollection Clone_FilterLines { get; }
         public bool Clone_Not { get; set; }
@@ -45,6 +69,7 @@ namespace DGView.Views
         {
             FilterLine.Items.Clear();
             foreach (var item in Clone_FilterLines.Where(a => a.IsValid))
+            // foreach (var item in Clone_FilterLines)
                 FilterLine.Items.Add(item);
             FilterLine.Not = Clone_Not;
             CloseButton_OnClick(sender, e);

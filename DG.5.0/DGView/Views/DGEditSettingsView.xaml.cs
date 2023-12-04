@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,15 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Threading;
 using DGCore.Common;
 using DGCore.Filters;
 using DGCore.UserSettings;
-using DGView.Helpers;
 using DGView.ViewModels;
 using WpfSpLib.Common;
-using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
 namespace DGView.Views
@@ -297,22 +293,7 @@ namespace DGView.Views
 
         private void OnFilterEditPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cell = (DataGridCell)sender;
-            var filterLine = cell.DataContext as DGCore.Filters.FilterLineBase;
-            if (!(bool)CanConvertStringTo.Instance.Convert(filterLine.PropertyType, null, null, null))
-                return;
-
-            var view = new FilterLineView(filterLine);
-            var container = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
-            var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
-            var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
-            var height = Math.Max(200, Window.GetWindow(this).ActualHeight * 2 / 3 / transforms.Value.M22);
-            Helpers.Misc.OpenMwiDialog(container, view, "Filter Setup", geometry, (child, adorner) =>
-            {
-                child.Height = height;
-                child.Theme = container?.ActualTheme;
-                child.ThemeColor = container?.ActualThemeColor;
-            });
+            FilterLineView.OnFilterEditPreviewMouseDown((DataGridCell)sender);
             RefreshUI();
         }
 
