@@ -80,7 +80,7 @@
         <!--<EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>-->
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FFC7FFFF"></Setter>
+                <Setter Property="Background" Value="#FFC7FFFF"/>
             </Trigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
                 <Setter Property="Background" Value="LightGray"/>
