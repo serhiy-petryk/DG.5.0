@@ -129,12 +129,12 @@
                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" />
             </Trigger>
             <!-- To remove BindingError -->
-            <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
                 <Setter Property="Background" Value="Red"/>
-            </DataTrigger>-->
-            <Trigger Property="IsVisible" Value="False" >
+            </DataTrigger>
+            <!--<Trigger Property="IsVisible" Value="False" >
                 <Setter Property="Background" Value="Red"/>
-            </Trigger>
+            </Trigger>-->
         </Style.Triggers>
     </Style>
 
@@ -157,7 +157,7 @@
         <Setter Property="VerticalGridLinesBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%/+50%}"/>
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MonochromeDGColumnHeaderStyle}"/>
         <Setter Property="RowHeaderStyle" Value="{StaticResource MonochromeDGRowHeaderStyle}"/>
-        <Setter Property="RowStyle" Value="{StaticResource MonochromeDGRowStyle}"/>
+        <!--<Setter Property="RowStyle" Value="{StaticResource MonochromeDGRowStyle}"/>-->
         <Setter Property="CellStyle" Value="{StaticResource MonochromeDGCellStyle}"/>
         <Style.Resources>
             <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
