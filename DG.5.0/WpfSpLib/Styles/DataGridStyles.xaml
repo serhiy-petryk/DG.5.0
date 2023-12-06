@@ -118,9 +118,64 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="MonochromeDGCellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Padding="1" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="False">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+0%}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+0%}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MonochromeDGEditableCellStyle" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource MonochromeDGCellStyle}">
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+0%}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+0%}" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+65%}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+65%}" />
+            </Trigger>
+            <Trigger Property="IsReadOnly" Value="False">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
+                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+65%}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MonochromeDGRowStyle" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background}"/>
+            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}" />
+                </Trigger>
+            </Style.Triggers>
+    </Style>
+
     <Style x:Key="MonochromeDGStyle" TargetType="{x:Type DataGrid}">
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MonochromeDGColumnHeaderStyle}"/>
         <Setter Property="RowHeaderStyle" Value="{StaticResource MonochromeDGRowHeaderStyle}"/>
+        <Setter Property="RowStyle" Value="{StaticResource MonochromeDGRowStyle}"/>
+        <Setter Property="CellStyle" Value="{StaticResource MonochromeDGCellStyle}"/>
         <Style.Resources>
             <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                    BasedOn="{StaticResource MonochromeDGTopLeftButtonStyle}"/>
