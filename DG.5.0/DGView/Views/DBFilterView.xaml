@@ -79,6 +79,8 @@
             <Separator Style="{DynamicResource BarSeparatorStyle}"/>
         </WrapPanel>
 
-        <views:DBFilterGrid Grid.Row="1" x:Name="FilterGrid" PropertyChanged="FilterGrid_OnPropertyChanged"/>
+        <views:DBFilterGrid Grid.Row="1" x:Name="FilterGrid"
+                            Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0%}"
+                            PropertyChanged="FilterGrid_OnPropertyChanged"/>
     </Grid>
 </UserControl>

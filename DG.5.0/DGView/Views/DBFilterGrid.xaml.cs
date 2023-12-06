@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DGCore.Filters;
+using WpfSpLib.Helpers;
 
 namespace DGView.Views
 {
@@ -29,6 +30,12 @@ namespace DGView.Views
         }
 
         #region =========  Event handlers  ===========
+        private void DefinitionGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            var rowHeaderText = (e.Row.GetIndex() + 1).ToString("N0", LocalizationHelper.CurrentCulture);
+            if (!Equals(e.Row.Header, rowHeaderText)) e.Row.Header = rowHeaderText;
+        }
+
         private void OnFilterEditPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             FilterLineView.OnFilterEditPreviewMouseDown((DataGridCell)sender);
