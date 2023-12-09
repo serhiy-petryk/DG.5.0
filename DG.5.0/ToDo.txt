@@ -143,3 +143,4 @@ done: 79. Rename FilterGrid on DBFilterGridView (?)
 83. IDataErroInfo support for DataGrid: see original <Style TargetType="{x:Type DataGridRow}"> of AeroClone.xaml in WpfInvestigation project
 	- see example of IDataErrorInfo
 
+84. Bug: XAML, Modal window -> DGEditSetting view -> press tab several times -> focus will go to disable area
