@@ -5,7 +5,7 @@
 
     <Style x:Key="MonochromeDGTopLeftButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"/>
-        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%/+30%,+10%/+50%,40, +10%,+10%/+30%,+10%/+50%,100, +20%,+10%/+30%,+20%/+50%,100, +30%,+10%/+30%,+30%/+50%,100"/>
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+10%,+10%,+10%/+50%,100, +10%,+10%/+30%,+10%/+50%,100, +20%,+10%/+30%,+20%/+50%,100, +30%,+10%/+30%,+30%/+50%,100"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
