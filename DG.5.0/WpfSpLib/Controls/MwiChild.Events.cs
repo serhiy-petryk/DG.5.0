@@ -61,8 +61,6 @@ namespace WpfSpLib.Controls
             {
                 _activatedHost.KeyDown -= OnHostKeyDown;
                 _activatedHost.Closed -= OnHostClosed;
-                _activatedHost.Activated -= OnWindowActivated;
-                _activatedHost.Deactivated -= OnWindowDeactivated;
                 _activatedHost = null;
                 return;
             }
@@ -81,8 +79,6 @@ namespace WpfSpLib.Controls
             OnHostClosed(_activatedHost, null);
             _activatedHost.KeyDown += OnHostKeyDown;
             _activatedHost.Closed += OnHostClosed;
-            _activatedHost.Activated += OnWindowActivated;
-            _activatedHost.Deactivated += OnWindowDeactivated;
 
             void OnHostKeyDown(object sender, KeyEventArgs e)
             {
@@ -98,12 +94,8 @@ namespace WpfSpLib.Controls
                 {
                     wnd.Closed -= OnHostClosed;
                     wnd.KeyDown -= OnHostKeyDown;
-                    wnd.Activated -= OnWindowActivated;
-                    wnd.Deactivated -= OnWindowDeactivated;
                 }
             }
-            void OnWindowActivated(object sender, EventArgs e) => Activate();
-            void OnWindowDeactivated(object sender, EventArgs e) => IsActive = false;
         }
     }
 }

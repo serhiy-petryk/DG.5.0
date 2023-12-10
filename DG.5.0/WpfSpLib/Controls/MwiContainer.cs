@@ -145,28 +145,11 @@ namespace WpfSpLib.Controls
             if (GetTemplateChild("WindowsMenuButton") is ToggleButton windowsMenuButton)
                 windowsMenuButton.Checked += OnWindowsMenuButtonChecked;
 
-            if (Window.GetWindow(this) is Window wnd) // need to check because an error in VS wpf designer
-            {
-                wnd.Activated += OnWindowActivated;
-                wnd.Deactivated += OnWindowDeactivated;
-            }
-
             if (DesignerProperties.GetIsInDesignMode(this)) // only for correct view in VS designer
                 Dispatcher.BeginInvoke(new Action(() => OnChildrenCollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Children))), DispatcherPriority.Background);
             // To fix VS correct view of MwiStartup: DesignerProperties.GetIsInDesignMode(this) ? DispatcherPriority.Background : DispatcherPriority.Normal)
 
             UpdateColorTheme(false, true);
-            // =======================
-            void OnWindowActivated(object sender, EventArgs e)
-            {
-                if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
-                    ActiveMwiChild.Activate();
-            }
-            void OnWindowDeactivated(object sender, EventArgs e)
-            {
-                if (ActiveMwiChild != null && !ActiveMwiChild.IsWindowed)
-                    ActiveMwiChild.IsActive = false;
-            }
         }
 
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)

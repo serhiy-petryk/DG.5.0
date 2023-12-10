@@ -89,7 +89,7 @@ namespace WpfSpLib.Controls
             // ??? MwiChild bringToFront: only when mouse is captured: have other issues
             // var isUnderMouse = Mouse.DirectlyOver is FrameworkElement fe && fe.GetVisualParents().FirstOrDefault(a => a == this) != null;
             // if (Focusable && !IsKeyboardFocusWithin && !isUnderMouse) Focus();
-            if (Focusable && !IsKeyboardFocusWithin) Focus();
+            if (Focusable && !IsKeyboardFocusWithin) ControlHelper.SetFocus(this);
             if (!IsWindowed && Panel.GetZIndex(this) != ZIndexCount)
                 Panel.SetZIndex(this, ++ZIndexCount);
         }
