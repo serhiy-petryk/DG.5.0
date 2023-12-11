@@ -157,3 +157,5 @@ done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit 
 	- link to ActualThemeColor -> autoupdate
 89. Refactore DataGrid (DbFilterView, DGEditSettingsView)
 90. Bug: error when set filter in DGEditSettingsView -> LookupTableTypeConverter.GetItemByKeyValue
+91: Check color converter: +50%:50:50
+
