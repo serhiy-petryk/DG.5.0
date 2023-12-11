@@ -394,6 +394,7 @@
       }
     },
     "Quote 2022": {
+      "Open/Close": {"cs": "dbQ2023","sql": "SELECT RN = ROW_NUMBER() OVER (PARTITION BY Date3 ORDER BY K_OpenClose desc), * FROM temp_OpenClose"},
       "Gap Up (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from vDayYahooGaps WHERE prevClose<Low"},
       "Gap Down (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from vDayYahooGaps WHERE prevClose>High"},
       "Gap Up 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013Gaps] WHERE [prevClose]<[Low];"},
