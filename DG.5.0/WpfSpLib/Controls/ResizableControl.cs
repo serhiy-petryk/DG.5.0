@@ -289,7 +289,7 @@ namespace WpfSpLib.Controls
 
         #region =================  INotifyPropertyChanged  ==================
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertiesChanged(params string[] propertyNames)
+        protected void OnPropertiesChanged(params string[] propertyNames)
         {
             foreach (var propertyName in propertyNames)
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

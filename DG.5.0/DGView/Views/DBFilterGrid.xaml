@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <DataGrid Grid.Column="0" x:Name="DefinitionGrid" AutoGenerateColumns="False" ItemsSource="{Binding FilterList}"
-                  RowHeaderWidth="20" SelectionUnit="Cell" SelectionMode="Single" CanUserSortColumns="False"
+                  RowHeaderWidth="20" SelectionUnit="CellOrRowHeader" SelectionMode="Single" CanUserSortColumns="False"
                   CanUserAddRows="False"
                   Background="{Binding ElementName=Root, Path=Background}"
                   Style="{StaticResource MonochromeDGStyle}"
@@ -68,13 +68,15 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>-->
 
-                <DataGridTemplateColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
-                    <DataGridTemplateColumn.CellStyle>
+                <DataGridTextColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200"
+                                    Binding="{Binding FilterTextOrDescription}"/>
+                <DataGridTextColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
+                    <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource FilterOrDescriptionCellStyle}">
                             <EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>
                         </Style>
-                    </DataGridTemplateColumn.CellStyle>
-                </DataGridTemplateColumn>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

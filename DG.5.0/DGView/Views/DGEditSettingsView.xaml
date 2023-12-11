@@ -11,7 +11,10 @@
              xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              xmlns:dgCoreCommon="clr-namespace:DGCore.Common;assembly=DGCore"
              xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             x:Name="Root"
+             Background="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:50:50}"
+             Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
@@ -23,12 +26,18 @@
 
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />
-            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="IsTabStop" Value="True" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=IsReadOnly}" Value="True">
                     <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+                    <Setter Property="effects:ChromeEffect.Monochrome" Value="Red" />
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="FontSize" Value="5"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -46,7 +55,7 @@
 
         <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    Height="28" Margin="0 0 0 4"
-                   Background="{Binding RelativeSource={RelativeSource AncestorType=wpfSpLibHelpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+25%}">
+                   Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
             <Button x:Name="ApplyButton" Content="Примінити" BorderThickness="0" Padding="2 2 4 2"
                     HorizontalAlignment="Left"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
@@ -63,7 +72,7 @@
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     Command="{Binding CmdClearFilter}">
                 <StackPanel Orientation="Horizontal">
-                    <ContentControl Margin="0 0 0 2" Content="{StaticResource ClearFilterIcon}"/>
+                    <ContentControl Margin="0 0 0 2" Content="{StaticResource ClearFilterIcon}" IsTabStop="False"/>
                     <TextBlock Padding="4 0" VerticalAlignment="Center" Text="Очистити фільтр"/>
                 </StackPanel>
             </Button>
@@ -99,7 +108,7 @@
                       Foreground="{Binding Source={StaticResource DataGridBaseBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
                       ItemsSource="{Binding PropertiesData}"
                       HeadersVisibility="All" AutoGenerateColumns="False"
-                      SelectionMode="Extended" SelectionUnit="FullRow"
+                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader"
                       CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserResizeRows="False"
                       CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
                       Style="{StaticResource MonochromeDGStyle}"
@@ -119,7 +128,7 @@
                 <DataGrid.Resources>
                     <Style x:Key="TextColumnStyle" TargetType="DataGridCell">
                         <Setter Property="Focusable" Value="True"/>
-                        <Setter Property="IsTabStop" Value="False"/>
+                        <Setter Property="IsTabStop" Value="True"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -144,7 +153,7 @@
                     <Style x:Key="TotalFunctionColumnStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MonochromeComboBoxStyle}" x:Shared="False">
                         <Setter Property="HorizontalAlignment" Value="Stretch" />
                         <Setter Property="Focusable" Value="True" />
-                        <Setter Property="IsTabStop" Value="False" />
+                        <Setter Property="IsTabStop" Value="True" />
                         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" />
                         <Setter Property="effects:ComboBoxEffects.ClearButtonStyle" Value="{StaticResource MonochromeComboBoxClearButtonStyle}"/>
                         <Style.Triggers>
@@ -156,7 +165,7 @@
 
                     <Style x:Key="GroupDirectionCellStyle" TargetType="CheckBox" BasedOn="{StaticResource SortingCheckBoxStyle}">
                         <Setter Property="Focusable" Value="True"/>
-                        <Setter Property="IsTabStop" Value="False"/>
+                        <Setter Property="IsTabStop" Value="True"/>
                         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" />
                         <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+0%,+67%,+67%,67, ,+67%,+67%,100, +10%,+10%/+85%,+10%/+85%,100" />
                         <Style.Triggers>
@@ -195,9 +204,9 @@
                     </Style>
                 </DataGrid.RowStyle>
 
-                <DataGrid.CellStyle>
+                <!--<DataGrid.CellStyle>
                     <Style TargetType="DataGridCell" BasedOn="{StaticResource TextColumnStyle}"/>
-                </DataGrid.CellStyle>
+                </DataGrid.CellStyle>-->
 
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Header="Не&#x0a;показувати" Binding="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}"
@@ -209,13 +218,14 @@
                                             Binding="{Binding GroupDirection, UpdateSourceTrigger=PropertyChanged, Converter={x:Static helpers:ListSortDirectionConverter.Instance}}"
                                             ElementStyle="{StaticResource GroupDirectionCellStyle}" EditingElementStyle="{StaticResource GroupDirectionCellStyle}"/>
                     <DataGridTextColumn Header="Формат&#x0a;даних" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=DataContext.Format, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <DataGridTextColumn.CellStyle>
+                        <!--<DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource TextColumnStyle}">
                                 <Setter Property="IsTabStop" Value="True"/>
                             </Style>
-                        </DataGridTextColumn.CellStyle>
+                        </DataGridTextColumn.CellStyle>-->
                     </DataGridTextColumn>
-                    <DataGridComboBoxColumn Header="Підсумок" IsReadOnly="True" SelectedValueBinding="{Binding TotalFunction, UpdateSourceTrigger=PropertyChanged}"
+                    <DataGridComboBoxColumn Header="Підсумок" IsReadOnly="True"
+                                            SelectedValueBinding="{Binding TotalFunction, UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding Source={x:Static dgCoreCommon:Enums.TotalFunctionsWithoutNull}}"
                                             ElementStyle="{StaticResource TotalFunctionColumnStyle}"/>
 <!--                    <DataGridTemplateColumn Header="Формат&#x0a;підсумків">
@@ -227,13 +237,13 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Формат&#x0a;підсумків" Binding="{Binding TotalFormat}"/>-->
                     <!--<DataGridTextColumn Header="Опис" Binding="{Binding FilterTextOrDescription}" IsReadOnly="True" MaxWidth="400"/>-->
-                    <DataGridTemplateColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
-                        <DataGridTemplateColumn.CellStyle>
+                    <DataGridTextColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
+                        <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell" BasedOn="{StaticResource FilterOrDescriptionCellStyle}">
                                 <EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>
                             </Style>
-                        </DataGridTemplateColumn.CellStyle>
-                    </DataGridTemplateColumn>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
 
                 </DataGrid.Columns>
             </DataGrid>

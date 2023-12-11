@@ -146,3 +146,14 @@ done: 79. Rename FilterGrid on DBFilterGridView (?)
 done: 84. Bug: XAML, Modal window -> DGEditSetting view -> deactivate app -> activate app -> focus will go to disable area
 done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit -> press tab on DataGrid
 86. Bug: calculator error -> when change digital places
+
+2023-12-11
+==========
+87. Global ActualThemeColor -> may be use singleton or App.xaml or like languageId
+	- autoupdate WviChild, DGEditSettings, LeftPanel.xaml
+	- ? MwiChild -> own OnPropertyChange
+88. DGEditSettings:
+	- change tabStop for column
+	- link to ActualThemeColor -> autoupdate
+89. Refactore DataGrid (DbFilterView, DGEditSettingsView)
+90. Bug: error when set filter in DGEditSettingsView -> LookupTableTypeConverter.GetItemByKeyValue
