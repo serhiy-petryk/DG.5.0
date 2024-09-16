@@ -64,12 +64,13 @@
     "UOD_ALL_UA": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=UOD_ALL_UA;Integrated Security=True;Encrypt=false"},
     "dbLvivFlat2021": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbLvivFlat2021;Integrated Security=True;Encrypt=false"},
     "dbQuote2022": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQuote2022;Integrated Security=True;Connection Timeout=300;Encrypt=false"},
-    "dbQ2023": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQ2023;Integrated Security=True;Connection Timeout=300;Encrypt=false"}
+    "dbQ2023": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQ2023;Integrated Security=True;Connection Timeout=300;Encrypt=false"},
+    "dbQ2024": {"provider": "SqlClient", "cs": "Data Source=localhost;Initial Catalog=dbQ2024;Integrated Security=True;Connection Timeout=300;Encrypt=false"}
     /*"TestCsvDataSource": {"provider": "DGVCube.Test.TestCsvDataSource", "cs": "Data Source=D:\\UserData\\SP\\Downloads\\offshore_leaks_csvs-20160510\\Entities.csv"}*/
   },
 
   "Lookups": {
-    "quoteSymbols": {"cs": "dbQuote2022", "sql": "select * from vSymbolsLive", "isExclusive": true},
+    "quoteSymbols": {"cs": "dbQ2024", "sql": "select * from vSymbolsLive", "isExclusive": true},
     "period": {"cs": "oneSAPConn", "sql": "select distinct period from gldoclist order by 1 desc", "isExclusive": true},
     "plant": {"cs": "oneSAPConn", "sql": "select 'UA' as plant UNION ALL select distinct plant from mat_ledger order by 1", "isExclusive": true},
     "materialClass": {"cs": "oneSAPConn", "sql": "select * from v_rpt_mat_class_list order by 1", "isExclusive": true},
@@ -107,11 +108,11 @@
       "Test db schema": {"cs": "oneSAPConn", "sql": "select b.altacc altacc1, a.*, b.altacc AltAcc2 from [dbOneSAP_DW].[dbo].mast_coa a left join dbOneSAP_DW..[mast_coa_alt] b on a.altacc = b.altacc"},
       "Test db schema (column name has space)": {"cs": "oneSAPConn", "sql": "select b.altacc \"123 alt acc 1\", a.*, b.altacc AltAcc2 from [dbOneSAP_DW].[dbo].mast_coa a left join dbOneSAP_DW..[mast_coa_alt] b on a.altacc = b.altacc"},
       "Test db schema (columns with the same name)": {"cs": "oneSAPConn", "sql": "select b.altacc altacc1, * from dbOneSAP_DW..mast_coa a left join dbOneSAP_DW..mast_coa_alt b on a.altacc = b.altacc"},
-      "SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon"},
-      "SymbolsPolygon clone with column property": {"cs": "dbQ2023", "sql": "select * from SymbolsPolygon",
+      "SymbolsPolygon": {"cs": "dbQ2024", "sql": "select * from SymbolsPolygon"},
+      "SymbolsPolygon clone with column property": {"cs": "dbQ2024", "sql": "select * from SymbolsPolygon",
         "columns": {"Type": { "label": "CustomLabel" }}},
-      "dbQ2023 -> SymbolsPolygon": {"cs": "dbQ2023", "sql": "select * from dbQ2023..SymbolsPolygon"},
-      "dbQ2023 -> SymbolsEoddata": {"cs": "dbQ2023", "sql": "select * from dbQ2023Others..SymbolsEoddata"},
+      "dbQ2024 -> SymbolsPolygon": {"cs": "dbQ2024", "sql": "select * from dbQ2024..SymbolsPolygon"},
+      "dbQ2024 -> SymbolsEoddata": {"cs": "dbQ2024", "sql": "select * from dbQ2024..SymbolsEoddata"},
       "План рахунків (other db)": {"layoutId": "vcube_mastaccount", "cs": "dbQ2023", "sql": "select * from dbOneSAP_DW..vcube_mastaccount"},
       "Quote Snapshots (images test)": {"cs": "dbQ2023", "sql": "select * from IntradaySnapshots"}
     },
@@ -400,8 +401,8 @@
       "Gap Up 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013Gaps] WHERE [prevClose]<[Low];"},
       "Gap Down 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013Gaps] WHERE [prevClose]>[Low];"},
       "Big Volume 2013 (Yahoo daily)": {"cs": "dbQuote2022","sql": "select * from [vDayYahoo2013BigVolume];"},
-      "Symbols Eoddata": {"cs": "dbQuote2022","sql": "select * from SymbolsEoddata"},
-      "Live Symbols": {"cs": "dbQuote2022","sql": "select * from vSymbolsLive"},
+      "Symbols Eoddata": {"cs": "dbQ2024","sql": "select * from SymbolsEoddata"},
+      "Live Symbols": {"cs": "dbQ2024","sql": "select * from vSymbolsLive"},
       "Symbols Nasdaq": {"cs": "dbQuote2022","sql": "select * from SymbolsNasdaq;"},
       "Symbols Nasdaq (all)": {"cs": "dbQuote2022","sql": "select * from SymbolsNasdaqAll;"},
       "Screener Nasdaq (from 2021)": {"cs": "dbQuote2022","sql": "select len(Name) NameLen, * from dbQuote2023..HScreenerNasdaqStockDetails"},
