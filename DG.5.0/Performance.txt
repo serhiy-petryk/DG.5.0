@@ -1,0 +1,8 @@
+Windows 10 (.Net 5.0, Framework 4.5.2) is 2-3 times slower than windows 7.
+WPF application (.Net 5.0):
+	- 'data loading' is ~15% worse in comparison with the Windows application (~ 9 seconds for 1'000'000 rows)
+	- 'binding reset' is 7-10 times better in comparison with the Windows application (~0.5 sec for 1'000'000 rows) 
+
+Conclusion:
+==========
+The WPF application on Windows 7 is the best.
