@@ -159,3 +159,7 @@ done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit 
 90. Bug: error when set filter in DGEditSettingsView -> LookupTableTypeConverter.GetItemByKeyValue
 91: Check color converter: +50%:50:50
 
+2025-02-18
+==========
+92. Показати стрілку напрямку сортування у загодовці колонки (як в DG.4.0).
+93. Restore column width for picture column, після того як 'Row display mode' змінюється з 'One row' to 'Word wrap' і обратно (опція меню Mdb tests -> MdbCategories)).
