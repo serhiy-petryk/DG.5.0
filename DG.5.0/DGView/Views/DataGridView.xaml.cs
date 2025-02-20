@@ -119,6 +119,8 @@ namespace DGView.Views
             if (BtnSortDesc.IsEnabled != statuses.Item2) BtnSortDesc.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item2);
             if (BtnRemoveSort.IsEnabled != statuses.Item3) BtnRemoveSort.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item3);
             if (BtnFilterOnValue.IsEnabled != statuses.Item4) BtnFilterOnValue.SetCurrentValueSmart(Button.IsEnabledProperty, statuses.Item4);
+
+            ViewModel.UpdateColumnSortGlyphs();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using DGCore.Common;
+using DGCore.DGVList;
 using DGCore.Sql;
 
 namespace DGView.ViewModels
@@ -147,6 +149,34 @@ namespace DGView.ViewModels
         internal List<double> _fontFactors = new List<double>();
         internal List<DGCore.UserSettings.Column> _columns = new List<DGCore.UserSettings.Column>();
         private List<string> _frozenColumns = new List<string>();
+
+        internal void UpdateColumnSortGlyphs()
+        {
+            var levels = DGControl.SelectedCells.Where(c => c.IsValid).Select(c => c.Item is IDGVList_GroupItem ? ((IDGVList_GroupItem)c.Item).Level : 0).Distinct().ToArray();
+            var properties = new Dictionary<string, ListSortDirection>();
+            if (levels.Length == 1)
+            {
+                var level = levels[0];
+                var sorts = level == 0 ? Data.Sorts : Data.SortsOfGroups[level - 1];
+                foreach (var a1 in sorts)
+                    properties.TryAdd(a1.PropertyDescriptor.Name, a1.SortDirection);
+                if (level != 0)
+                {
+                    for (var k = 0; k < level; k++)
+                    {
+                        var g = Data.Groups[k];
+                        properties.TryAdd(g.PropertyDescriptor.Name, g.SortDirection);
+                    }
+                }
+            }
+
+            foreach (var column in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
+            {
+                var sort = properties.TryGetValue(column.SortMemberPath, out var property) ? property : (ListSortDirection?)null;
+                if (!Equals(column.SortDirection, sort))
+                    column.SortDirection = sort;
+            }
+        }
 
         //========================
         private DGCore.Helpers.DGColumnHelper[] GetAllValidColumnHelpers() => DGControl.Columns
