@@ -150,6 +150,7 @@ namespace DGView.ViewModels
         internal List<DGCore.UserSettings.Column> _columns = new List<DGCore.UserSettings.Column>();
         private List<string> _frozenColumns = new List<string>();
 
+        // bug 92. Change at 2025-02-20. Show arrow direction of sorting in column header (see DG.4.0)
         internal void UpdateColumnSortGlyphs()
         {
             var levels = DGControl.SelectedCells.Where(c => c.IsValid).Select(c => c.Item is IDGVList_GroupItem ? ((IDGVList_GroupItem)c.Item).Level : 0).Distinct().ToArray();
