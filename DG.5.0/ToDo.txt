@@ -164,4 +164,4 @@ done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit 
 92. done: Показати стрілку напрямку сортування у заголовці колонки (як в DG.4.0).
 93. Restore column width for picture column, після того як 'Row display mode' змінюється з 'One row' to 'Word wrap' і обратно (опція меню Mdb tests -> MdbCategories)).
 94. done: Bug: when 'Apply' setting with filter.
-95. Bug: no label for checkboxes in 'Save setting' forms
+95. done: Bug: no label for checkboxes in 'Save setting' forms
