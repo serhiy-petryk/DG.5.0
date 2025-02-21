@@ -264,9 +264,16 @@ namespace DGView.Views
             Settings.WhereFilter.Clear();
             foreach (var o in PropertiesData.Where(a => a.HasFilter))
             {
+                // bug 94. Change at 2025-02-21
+                var tc = TypeDescriptor.GetConverter(o.PropertyType) as ILookupTableTypeConverter;
                 var filter = new Filter { Name = o.Id, IgnoreCase = o.IgnoreCase, Not = o.Not, Lines = new List<FilterLine>() };
                 foreach (var line in o.Items)
-                    filter.Lines.Add(new FilterLine { Operand = line.FilterOperand, Value1 = line.Value1, Value2 = line.Value2 });
+                {
+                    var value1 = tc == null ? line.Value1 : tc.GetKeyByItemValue(line.Value1);
+                    var value2 = tc == null ? line.Value2 : tc.GetKeyByItemValue(line.Value2);
+                    filter.Lines.Add(new FilterLine { Operand = line.FilterOperand, Value1 = value1, Value2 = value2 });
+                }
+
                 Settings.WhereFilter.Add(filter);
             }
 
