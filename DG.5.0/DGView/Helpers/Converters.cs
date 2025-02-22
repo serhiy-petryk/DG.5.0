@@ -16,6 +16,23 @@ namespace DGView.Helpers
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 
+    // bug 96. Format for column of Dynamic type object key value.
+    public class DGDynamicObjectConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DGCore.Helpers.DGCellValueFormatter.DynamicObjectConverter(value, targetType, _converter, culture);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+
+        private readonly DGCore.Common.ILookupTableTypeConverter _converter;
+        public DGDynamicObjectConverter(object converter)
+        {
+            _converter = (DGCore.Common.ILookupTableTypeConverter)converter;
+        }
+    }
+
     public class IsNotNull : IValueConverter
     {
         public static IsNotNull Instance = new IsNotNull();

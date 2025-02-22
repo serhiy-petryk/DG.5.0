@@ -79,7 +79,13 @@ namespace DGView.ViewModels
                             : null;
                     }
                     else if (!string.IsNullOrEmpty(gridFormat))
+                    {
                         binding.StringFormat = gridFormat;
+                        // bug 96. Format for column of Dynamic type object key value.
+                        var tc = TypeDescriptor.GetConverter(pd.PropertyType) as ILookupTableTypeConverter;
+                        if (tc != null)
+                            binding.Converter = new DGDynamicObjectConverter(tc);
+                    }
                     else if (Types.GetNotNullableType(pd.PropertyType) == typeof(DateTime)) // set smart format for DateTime
                         binding.Converter = DGDateTimeConverter.Instance;
 

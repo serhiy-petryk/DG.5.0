@@ -9,6 +9,14 @@ namespace DGCore.Helpers
     {
         public static readonly TypeConverter DateTimeDefaultConverter = new DateTimeConverter();
 
+        // bug 96. Format for column of Dynamic type object key value.
+        public static readonly Func<object, Type, object, CultureInfo, object> DynamicObjectConverter =
+            (value, targetType, parameter, culture) =>
+            {
+                if (Equals(value, null)) return null;
+                return ((DGCore.Common.ILookupTableTypeConverter)parameter).GetKeyByItemValue(value);
+            };
+
         public static readonly Func<object, Type, object, CultureInfo, string> ByteArrayToHexStringConverter =
             (value, targetType, parameter, culture) =>
             {

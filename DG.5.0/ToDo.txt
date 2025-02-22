@@ -165,3 +165,7 @@ done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit 
 93. Restore column width for picture column, після того як 'Row display mode' змінюється з 'One row' to 'Word wrap' і обратно (опція меню Mdb tests -> MdbCategories)).
 94. done: Bug: when 'Apply' setting with filter.
 95. done: Bug: no label for checkboxes in 'Save setting' forms
+
+2025-02-21
+==========
+96. Format for column of Dynamic type object key value.
