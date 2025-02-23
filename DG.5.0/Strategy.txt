@@ -1,0 +1,5 @@
+2025-02-23
+==========
+1. Disassembling BinaryList.RessetBinding.
+2. Simplify DataNavigation to reduce dataNavigationTime. Activate the first cell of Datagrid
+3. DynamicType object in grid must to be like int, string, etc. Example: CostComponent column in ChartOfAccount form.
