@@ -161,14 +161,10 @@ namespace DGView.ViewModels
                 var sorts = level == 0 ? Data.Sorts : Data.SortsOfGroups[level - 1];
                 foreach (var a1 in sorts)
                     properties.TryAdd(a1.PropertyDescriptor.Name, a1.SortDirection);
-                if (level != 0)
-                {
-                    for (var k = 0; k < level; k++)
-                    {
-                        var g = Data.Groups[k];
-                        properties.TryAdd(g.PropertyDescriptor.Name, g.SortDirection);
-                    }
-                }
+
+                // bug 92. Correction
+                foreach (var g in Data.Groups)
+                    properties.TryAdd(g.PropertyDescriptor.Name, g.SortDirection);
             }
 
             foreach (var column in DGControl.Columns.Where(c => !string.IsNullOrEmpty(c.SortMemberPath)))
