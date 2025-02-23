@@ -169,4 +169,9 @@ done: 85. Bug: Check box tab selection marker (dots) - bad size; DGSettingsEdit 
 2025-02-21
 ==========
 96. ? not need: Format for column of Dynamic type object key value.
-97. Bug: check execution of bug 92. Run many times. Flickers (мерехтіння).
+97. Bug: check execution UpdateColumnSortGlyphs (see bug 92). UpdateColumnSortGlyphs is running many times. Flickers (мерехтіння).
+
+2025-02-23
+==========
+98. ToDo: add delete row for table in filter line form.
+99. ToDo: DynamicType object in grid must to be like int, string, etc. Example: CostComponent column in ChartOfAccount form.

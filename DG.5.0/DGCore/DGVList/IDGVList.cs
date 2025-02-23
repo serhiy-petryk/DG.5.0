@@ -21,6 +21,7 @@ namespace DGCore.DGVList
     int CurrentExpandedGroupLevel { get; }
     int LastRefreshedTimeInMsecs { get; }
     int FilteredRowCount { get; }
+    bool IsBindingsReseting { get; }
 
     Filters.FilterList WhereFilter { get; }
     Filters.FilterList FilterByValue { get; }

@@ -592,7 +592,9 @@ namespace DGCore.DGVList
 
       //_timer.Stop();
       //_timer.Restart();
+      IsBindingsReseting = true;
       base.ResetBindings(); // Need for sorting visualiztion
+      IsBindingsReseting = false;
 
       _timer.Stop();
       LastRefreshedTimeInMsecs = Convert.ToInt32(_timer.Elapsed.TotalMilliseconds);

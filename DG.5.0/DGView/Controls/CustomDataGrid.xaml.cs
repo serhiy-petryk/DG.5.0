@@ -139,6 +139,9 @@ namespace DGView.Controls
 
         protected override void OnSelectedCellsChanged(SelectedCellsChangedEventArgs e)
         {
+            // Bug 97: check execution UpdateColumnSortGlyphs (see bug 92). UpdateColumnSortGlyphs is running many times. Flickers (мерехтіння).
+            if (((IDGVList)ItemsSource).IsBindingsReseting) return;
+
             base.OnSelectedCellsChanged(e);
             foreach (var cellInfo in e.RemovedCells.Where(c => c.IsValid))
             {

@@ -42,6 +42,8 @@ namespace DGCore.DGVList
     public bool IsGroupMode => Groups.Count > 0 || ShowTotalRow;
     public int CurrentExpandedGroupLevel { get; private set; } = 0;
     public int FilteredRowCount { get; private set; } = 0;
+    // Bug 97: check execution UpdateColumnSortGlyphs (see bug 92). UpdateColumnSortGlyphs is running many times. Flickers (мерехтіння).
+    public bool IsBindingsReseting { get; private set; }
 
     public Filters.FilterList WhereFilter { get; private set; }
     public Filters.FilterList FilterByValue { get; private set; }
