@@ -130,6 +130,9 @@ namespace DGView.Controls.Printing
                 VisualHelper.DoEvents(DispatcherPriority.Render);
                 _printContentGenerator.GeneratePrintContent(newDocument, margins);
 
+                LoadingPageCount = newDocument.Pages.Count;
+
+                /* Strategy 4. 2025-02-26. Speed up the document printing
                 foreach (var page in newDocument.Pages)
                 {
                     LoadingPageCount++;
@@ -139,7 +142,7 @@ namespace DGView.Controls.Printing
                         break;
                     var element = page.Child.Children[0] as FrameworkElement;
                     element?.Arrange(new Rect(element.DesiredSize));
-                }
+                }*/
 
                 IsGenerating = false;
 
