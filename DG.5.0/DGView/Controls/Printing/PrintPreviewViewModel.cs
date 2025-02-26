@@ -141,7 +141,7 @@ namespace DGView.Controls.Printing
                     if (_printContentGenerator == null || _printContentGenerator.StopPrintGeneration)
                         break;
                     var element = page.Child.Children[0] as FrameworkElement;
-                    element?.Arrange(new Rect(element.DesiredSize));
+                    element?.Arrange(new Rect(element.DesiredSize)); //very slow
                 }*/
 
                 IsGenerating = false;
