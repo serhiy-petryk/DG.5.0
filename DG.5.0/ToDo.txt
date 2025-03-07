@@ -98,7 +98,7 @@ done: 72. WPF binding error: Edit setting form -> when drag & drop grid row:
 
 Open tasks:
 ===========
-8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
+Can't reproduce: 8. Wpf Bug in top toolbar: compare План рахунків -> After clear filter on detail cell in group mode
 10. Global: FastFilter/ClearFilterByValue/Show-hide grid in group mode -> don't collapse grid rows 
 ??? 18. Smart format for byte array: Picture/hex string, ..
 	IsImage(byte[]): https://www.c-sharpcorner.com/blogs/auto-detecting-image-type-and-extension-from-byte-in-c-sharp
