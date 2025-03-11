@@ -10,7 +10,6 @@ namespace DGCore.DB
     [SupportedOSPlatform("windows")]
     public class DbColumnMapElement
     {
-
         //=============  Static section  ==================
         private static readonly Dictionary<string, DbColumnMapElement[]> _defaultMaps =
             new Dictionary<string, DbColumnMapElement[]>(StringComparer.OrdinalIgnoreCase);
