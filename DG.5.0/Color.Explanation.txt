@@ -1,0 +1,34 @@
+matrixDefinition = "+0%,+70%,+0%,40, +0%,+70%,+0%,100, +25%,+25%/+75%,+25%/+50%,100, +60%,+60%/+75%,+60%/+50%,100";
+4 set of parameters: Disabled, normal, IsMouseOver, IsPressed
+Every set has 4 values: background color, foreground color, border color, opacity
+
+        internal static double ConvertValue(double value, object parameter, bool? isUp = null, double multiplier = 100.0)
+            /* Process parameter of ColorHslBrush/ColorLabBrush/ColorGrayScaleBrush
+             value is double in range [0-1.0]
+             format of parameter: [+ or -]NN[%] where NN is double between 0-100
+             split is double in range [0-1.0] or null
+
+            1. split = null ( no split):
+             NN[%] return = NN / 100
+             +NN  return = value + NN / 100
+             -NN    return = value - NN / 100
+             +NN% return = value + (1 - value) * NN/100
+             -NN%:  return = value - value * NN/100
+
+            2. split has value:
+             NN[%] return = NN / 100
+
+             if (value < split)
+             +NN  return = value + NN / 100
+             -NN    return = value - NN / 100
+             +NN% return = value + (1 - value) * NN/100
+             -NN%:  return = value - value * NN/100
+
+             if (value >= split)
+             +NN  return = value - NN / 100
+             -NN    return = value + NN / 100
+             +NN% return = value - value * NN/100
+             -NN%:  return = value + (1 - value) * NN/100
+
+             return: double in [0-1.0]  or null(if bad parameter)
+             */
