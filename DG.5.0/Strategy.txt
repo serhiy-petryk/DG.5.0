@@ -5,3 +5,17 @@
 3. DynamicType object in grid must to be like int, string, etc. Example: CostComponent column in ChartOfAccount form.
 4. Fixed: (use the pdf printing -> very fast). PrintForm -> take from WindowsForm
 4-1. May be add 'Export to pdf' option (PdfSharpCore, PDFsharp or .. library: see 'PDF' in nuget package manager)
+
+2025-03-14
+==========
+1. WPF color picker
+	- create Color.Explanation.txt
+	- internet links in ColorPicker form
+	- add color support for TreeView, ..
+2. Add 'Memory Used', 'Linked objects', .. buttons in top taskbar
+3. Fix small issues.
+4. Check Sorting in DGView
+5. Format control for grid in setting form
+6. Review all forms
+7. Export to PDF
+8. Edit mode for DGView
