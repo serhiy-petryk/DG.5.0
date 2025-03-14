@@ -70,7 +70,9 @@ namespace WpfSpLib.Common
                 if (double.TryParse(sParameter, NumberStyles.Any, LocalizationHelper.InvariantCulture, out temp))
                 {
                     double result;
-                    var dParameter = temp / multiplier;
+                    // fixed bug 91 at 2025-03-15: Check color converter: +50%:50:50
+                    // var dParameter = temp / multiplier;
+                    var dParameter = isPercent ? temp / 100 : temp / multiplier;
 
                     if (isEqual)
                         return dParameter;
