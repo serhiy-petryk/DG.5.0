@@ -38,7 +38,8 @@ namespace DGView.ViewModels
             timer.Start();
 
             // fixed bug 91 at 2025-03-15: Check color converter: +50%:50:50
-            var b = new Binding { Path = new PropertyPath("ActualThemeColor"), Source = host, Converter = ColorHslBrush.Instance, ConverterParameter = "+10%:+0%:+0%" };
+            // var b = new Binding { Path = new PropertyPath("ActualThemeColor"), Source = host, Converter = ColorHslBrush.Instance, ConverterParameter = "+45%:+0%:+0%" };
+            var b = new Binding { Path = new PropertyPath("ActualThemeColor"), Source = host, Converter = ColorHslBrush.Instance, ConverterParameter = "+25%:+0%:+0%" };
             child.SetBinding(MwiChild.ThemeColorProperty, b);
 
             host.Children.Add(child);
