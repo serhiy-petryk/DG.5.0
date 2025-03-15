@@ -277,7 +277,8 @@
                             Visibility="{Binding DataStatus, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=3-!}"/>
 
             <!-- Left label -->
-            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="0 0 2 0" TextWrapping="Wrap" Text="{Binding StatusTextOfLeftLabel}"/>
+            <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="0 0 2 0" TextWrapping="Wrap" Text="{Binding StatusTextOfLeftLabel}"
+                       Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
 
             <!-- IsPartiallyLoaded label -->
             <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="0 0 5 0" Text="{DynamicResource Loc:DGV.Status.PartiallyLoaded}"
@@ -288,7 +289,8 @@
             <!-- Row count label (Visible when DataStatus = 4) -->
             <TextBlock Grid.Column="3" VerticalAlignment="Center"
                            Text="{Binding Source={StaticResource StatusRowsLabel}, Path=Value}"
-                           Visibility="{Binding DataStatus, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-!}"/>
+                           Visibility="{Binding DataStatus, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-!}"
+                           Foreground="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>
         </Grid>
     </Grid>
 </UserControl>
