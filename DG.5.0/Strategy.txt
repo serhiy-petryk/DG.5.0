@@ -9,7 +9,7 @@
 2025-03-14
 ==========
 1. WPF color picker
-	- create Color.Explanation.txt
+	done: - create Color.Explanation.txt
 	- internet links in ColorPicker form
 	- add color support for TreeView, ..
 2. Add 'Memory Used', 'Linked objects', .. buttons in top taskbar
