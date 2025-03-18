@@ -38,6 +38,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" BorderThickness="1" Background="Transparent" Margin="4 10 0 4" Padding="4"
@@ -91,31 +92,31 @@
                         effects:ChromeEffect.Monochrome="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+35%}"
                         effects:CornerRadiusEffect.CornerRadius="3"/>
             </StackPanel>
-            <GroupBox Grid.Row="2" BorderThickness="1" Background="Transparent" Margin="4 10 0 4" Padding="4"
+            <GroupBox Grid.Row="3" BorderThickness="1" Background="Transparent" Margin="4 10 0 4" Padding="4"
                       Header="{DynamicResource $ThemeSelector.HyperlinkHeader}"
                       BorderBrush="{Binding ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0 2">
                         <Hyperlink NavigateUri="ColorModel">
                             <Run Text="{DynamicResource $ThemeSelector.HyperlinkText_ColorModel}"/>
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0 2">
                         <Hyperlink NavigateUri="RGB">
                             <Run Text="{DynamicResource $ThemeSelector.HyperlinkText_RGB}"/>
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0 2">
                         <Hyperlink NavigateUri="HSL_HSV">
                             <Run Text="{DynamicResource $ThemeSelector.HyperlinkText_HSL_HSV}"/>
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0 2">
                         <Hyperlink NavigateUri="CIELAB">
                             <Run Text="{DynamicResource $ThemeSelector.HyperlinkText_CIELAB}"/>
                         </Hyperlink>
                     </TextBlock>
-                    <TextBlock TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap" Margin="0 2">
                         <Hyperlink NavigateUri="YCbCr">
                             <Run Text="{DynamicResource $ThemeSelector.HyperlinkText_YCbCr}"/>
                         </Hyperlink>
