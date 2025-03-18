@@ -14,6 +14,17 @@
     <v:String x:Key="$ThemeSelector.Apply">Apply</v:String>
     <v:String x:Key="$ThemeSelector.Restore">Restore</v:String>
     <v:String x:Key="$ThemeSelector.ApplyAndClose">Apply and Close</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkHeader">Useful links</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_ColorModel">Color model</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_ColorModel">https://en.wikipedia.org/wiki/Color_model</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_RGB">RGB color model</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_RGB">https://en.wikipedia.org/wiki/RGB_color_model</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_HSL_HSV">HSL and HSV color model</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_HSL_HSV">https://en.wikipedia.org/wiki/HSL_and_HSV</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_CIELAB">CIELAB color space</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_CIELAB">https://en.wikipedia.org/wiki/CIELAB_color_space</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_YCbCr">Family of color spaces YCbCr</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_YCbCr">https://en.wikipedia.org/wiki/YCbCr</v:String>
 
     <v:String x:Key="$ColorControl.GrayLevel">Gray level: {0:F1}%</v:String>
     <v:String x:Key="$ColorControl.Shades">Shades</v:String>

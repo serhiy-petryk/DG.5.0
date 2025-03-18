@@ -14,6 +14,17 @@
     <v:String x:Key="$ThemeSelector.Apply">Застосувати</v:String>
     <v:String x:Key="$ThemeSelector.Restore">Відновити</v:String>
     <v:String x:Key="$ThemeSelector.ApplyAndClose">Застосувати і закрити</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkHeader">Корисні посилання</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_ColorModel">Колірна модель</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_ColorModel">https://uk.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D1%96%D1%80%D0%BD%D0%B0_%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_RGB">Колірна модель RGB</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_RGB">https://uk.wikipedia.org/wiki/RGB</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_HSL_HSV">Колірні моделі HSL і HSV</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_HSL_HSV">https://uk.wikipedia.org/wiki/HSL_%D1%96_HSV</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_CIELAB">Система кольорів LAB</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_CIELAB">https://uk.wikipedia.org/wiki/Lab</v:String>
+    <v:String x:Key="$ThemeSelector.HyperlinkText_YCbCr">Сімейство колірних просторів YCbCr</v:String>
+    <v:String x:Key="$ThemeSelector.Hyperlink_YCbCr">https://en.wikipedia.org/wiki/YCbCr</v:String>
 
     <v:String x:Key="$ColorControl.GrayLevel">Рівень сірого: {0:F1}%</v:String>
     <v:String x:Key="$ColorControl.Shades">Відтінки</v:String>

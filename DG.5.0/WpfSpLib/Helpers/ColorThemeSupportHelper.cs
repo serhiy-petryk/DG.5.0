@@ -37,7 +37,7 @@ namespace WpfSpLib.Helpers
             var mwiChild = new MwiChild
             {
                 Content = themeSelector,
-                Width = 786,
+                Width = 788,
                 Height = 600,
                 MinWidth = 700,
                 MinHeight = 500,

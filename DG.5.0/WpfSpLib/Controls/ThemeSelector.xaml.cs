@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using WpfSpLib.Helpers;
 using WpfSpLib.Themes;
 
@@ -209,6 +211,17 @@ namespace WpfSpLib.Controls
             else
                 Target.ThemeColor = ThemeColor;
             UpdateUI();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            var key = e.Uri.OriginalString;
+            var url = TryFindResource($"$ThemeSelector.Hyperlink_{key}");
+            if (url is string sUrl)
+            {
+                Process.Start(new ProcessStartInfo(sUrl) { UseShellExecute = true });
+                e.Handled = true;
+            }
         }
     }
 }
