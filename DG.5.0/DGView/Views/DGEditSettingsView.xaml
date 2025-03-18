@@ -13,7 +13,7 @@
              xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
              mc:Ignorable="d"
              x:Name="Root"
-             Background="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%:+10%:+0%}"
+             Background="{Binding RelativeSource={RelativeSource AncestorType=controls:MwiChild}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+0:+10%:+10%}"
              Foreground="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"
              d:DesignHeight="450" d:DesignWidth="800">
 
