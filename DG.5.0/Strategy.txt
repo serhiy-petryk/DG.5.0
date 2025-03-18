@@ -18,4 +18,5 @@
 5. Format control for grid in setting form
 6. Review all forms
 7. Export to PDF
-8. Edit mode for DGView
+8. Calculated columns
+9. Edit mode for DGView

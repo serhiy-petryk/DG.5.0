@@ -181,3 +181,11 @@ done: 97. Bug: check execution UpdateColumnSortGlyphs (see bug 92). UpdateColumn
 ==========
 done: 101. Smart format for TimeSpan
 done: 102. Bug: bad color of status bar in DataGridView
+
+2025-03-18
+==========
+103. Bug: 'Chart of account' form. Якщо встановити формат 'X', 'D3', .. для колонки 'Елемент собівартості->Код елемента собівартості', то
+рядки групи не відображають значення 'Код елемента собівартості'
+	format for numbers:
+	- support for all types: C($), E(exp), F(fixed), G(shortest), N(thousand separator), P(percent)
+	- support for intgral types (doesn't support for totals): D(decimal), R, X(hex)
