@@ -140,8 +140,8 @@
         <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+15%}" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Mwi.BarItem.Selected.BackgroundBrush" EndPoint="0,1">
-        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+35%:+35%:+10%'}" Offset="0" />
-        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+35%:+35%:+35%'}" Offset="1" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+15%:+35%:+10%'}" Offset="0" />
+        <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+15%:+35%:+35%'}" Offset="1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Mwi.BarItem.MouseOver.BackgroundBrush" EndPoint="0,1">
         <GradientStop Color="{Binding Source={StaticResource Mwi.Bar.BackgroundBrush}, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter='+10%/+10'}" Offset="0" />
