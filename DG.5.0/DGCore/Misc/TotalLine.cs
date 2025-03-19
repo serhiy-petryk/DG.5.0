@@ -26,9 +26,6 @@ namespace DGCore.Misc
         // PropertyDescriptor _pd;// can be null; before work with pd you need to activate it (use PropertyDescriptor property set)
         // Common.Enums.TotalFunction _totalFunction = Common.Enums.TotalFunction.None;
 
-        // Valid only for AverageFunction
-        private int? _dpTotals = null;
-
         public TotalLine() { }
 
         public TotalLine(PropertyDescriptor pd)
@@ -43,7 +40,6 @@ namespace DGCore.Misc
         public Common.Enums.TotalFunction TotalFunction { get; set; }
         [Browsable(false)]
         public PropertyDescriptor PropertyDescriptor { get; set; }
-        public UserSettings.TotalLine ToSettingsTotalLine() => new UserSettings.TotalLine { Id = Id, TotalFunction = TotalFunction };
         public override string ToString() => Id;
     }
 
