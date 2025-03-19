@@ -292,7 +292,8 @@
     <!-- <Style x:Key="SimpleTextBox" TargetType="{x:Type TextBox}"> -->
     <Style x:Key="MonochromeTextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor}" />
-        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="-90%,-90%/+80%,-90%/+50%,50, -90%,-90%/+80%,-90%/+50%,100" />
+<!--        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="-90%,-90%/+80%,-90%/+50%,50, -90%,-90%/+80%,-90%/+50%,100" />-->
+        <Setter Property="effects:ChromeEffect.ChromeMatrix" Value="+5%,+5%/+85%,+5%/+50%,50, +5%,+5%/+85%,+5%/+50%,100" />
     </Style>
 
 <!-- <Style x:Key="SimpleLabel" TargetType="{x:Type Label}"> -->

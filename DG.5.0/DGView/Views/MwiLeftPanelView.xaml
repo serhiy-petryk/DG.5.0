@@ -147,8 +147,9 @@
                 <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300"
                           Style="{StaticResource MonochromeComboBoxStyle}"
                           effects:ComboBoxEffects.ClearButtonStyle="{StaticResource MonochromeComboBoxClearButtonStyle}"
-                          effects:ChromeEffect.ChromeMatrix="-70%,-70%/+70%,-70%/+70%,50, -80%,-80%/+70%,-80%/+70%,100, -50%,-50%/+75%,-50%/+75%,100"/>
-            </Grid>
+                          effects:ChromeEffect.ChromeMatrix="+5%,+5%/+85%,+5%/+85%,50, +5%,+5%/+85%,+5%/+85%,100, +15%,+15%/+85%,+15%/+85%,100"/>
+<!--                effects:ChromeEffect.ChromeMatrix="-70%,-70%/+70%,-70%/+70%,50, -80%,-80%/+70%,-80%/+70%,100, -50%,-50%/+75%,-50%/+75%,100"/>
+    -->        </Grid>
 
             <Grid Grid.Row="1" Margin="0 8 0 0">
                 <Grid.RowDefinitions>
