@@ -189,3 +189,7 @@ done: 102. Bug: bad color of status bar in DataGridView
 	format for numbers:
 	- support for all types: C($), E(exp), F(fixed), G(shortest), N(thousand separator), P(percent)
 	- support for intgral types (doesn't support for totals): D(decimal), R, X(hex)
+	format for string -> supported like 'AAA: {0}'
+	format for DateTime:
+	format for TimeSpan:
+	format for image type:
