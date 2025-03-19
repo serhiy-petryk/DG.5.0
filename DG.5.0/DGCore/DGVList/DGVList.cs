@@ -12,7 +12,7 @@ namespace DGCore.DGVList
     [SupportedOSPlatform("windows")]
     public partial class DGVList<TItem> : BindingList<object>, IDGVList
     {
-        public Dictionary<string, string> Formats { get; } = new Dictionary<string, string>();
+        // public Dictionary<string, string> Formats { get; } = new Dictionary<string, string>();
         public PropertyDescriptorCollection Properties => UnderlyingData.Properties;
         public Sql.DataSourceBase UnderlyingData { get; }
         public List<ListSortDescription> Sorts { get; } = new List<ListSortDescription>();

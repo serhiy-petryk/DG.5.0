@@ -6,7 +6,7 @@ namespace DGCore.DGVList
 {
     public interface IDGVList : ITypedList, IDisposable
     {
-        Dictionary<string, string> Formats { get; }
+        // Dictionary<string, string> Formats { get; }
         PropertyDescriptorCollection Properties { get; }
         Sql.DataSourceBase UnderlyingData { get; }
         List<ListSortDescription> Sorts { get; }
