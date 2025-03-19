@@ -229,7 +229,7 @@ namespace DGView.Views
             CbDataSettingName.SelectedIndex = -1;
             CbDataSettingName.ItemsSource = settingKeys;
             if (settingKeys.Count > 0)
-                CbDataSettingName.Width = settingKeys.Max(k => ControlHelper.MeasureStringForDisplay(k, CbDataSettingName).Width) + 10.0;
+                CbDataSettingName.Width = settingKeys.Max(k => ControlHelper.MeasureStringForDisplay(k, CbDataSettingName).Width) + 46.0;
 
             if ((DataDefinition?.DbParameters?._parameters.Count ?? 0) == 0)
             {
