@@ -40,4 +40,6 @@
 
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Filter expression:</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.Apply">Apply</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.ClearFilterLabel">Clear filter</v:String>
 </ResourceDictionary>

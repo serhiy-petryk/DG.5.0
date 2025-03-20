@@ -23,6 +23,8 @@
 
         <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
         <common:LocalizationProxy x:Key="FilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.FilterLabel}"/>
+        <common:LocalizationProxy x:Key="ApplyLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Apply}"/>
+        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.ClearFilterLabel}"/>
 
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />
@@ -56,8 +58,8 @@
         <WrapPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    Height="28" Margin="0 0 0 4"
                    Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}">
-            <Button x:Name="ApplyButton" Content="Примінити" BorderThickness="0" Padding="2 2 4 2"
-                    HorizontalAlignment="Left"
+            <Button x:Name="ApplyButton" BorderThickness="0" Padding="2 2 4 2" HorizontalAlignment="Left"
+                    Content="{Binding Source={StaticResource ApplyLabelProxy}, Path=Value, Mode=OneWay}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource LightningGeometry}"
@@ -73,7 +75,8 @@
                     Command="{Binding CmdClearFilter}">
                 <StackPanel Orientation="Horizontal">
                     <ContentControl Margin="0 0 0 2" Content="{StaticResource ClearFilterIcon}" IsTabStop="False"/>
-                    <TextBlock Padding="4 0" VerticalAlignment="Center" Text="Очистити фільтр"/>
+                    <TextBlock Padding="4 0" VerticalAlignment="Center"
+                               Text="{Binding Source={StaticResource ClearFilterLabelProxy}, Path=Value, Mode=OneWay}"/>
                 </StackPanel>
             </Button>
 
@@ -224,7 +227,7 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>-->
                     </DataGridTextColumn>
-                    <DataGridComboBoxColumn Header="Підсумок" IsReadOnly="True"
+                    <DataGridComboBoxColumn Header="Підсумок" IsReadOnly="True" MinWidth="70"
                                             SelectedValueBinding="{Binding TotalFunction, UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding Source={x:Static dgCoreCommon:Enums.TotalFunctionsWithoutNull}}"
                                             ElementStyle="{StaticResource TotalFunctionColumnStyle}"/>

@@ -189,6 +189,6 @@ done: 102. Bug: bad color of status bar in DataGridView
 	format for image type:
 
 2025-03-19
-used in data export: 104. Check unused method: DGViewModel.GetColumnHelpers
+104. Check language support for DGEditSettingsView
 used in data export: 105. Check unused DGColumnHelper
 done: 106. Bug: Data windows in max mode is showing very slow

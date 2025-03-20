@@ -40,4 +40,6 @@
 
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Вираз фільтра:</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.Apply">Примінити</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.ClearFilterLabel">Очистити фільтр</v:String>
 </ResourceDictionary>
