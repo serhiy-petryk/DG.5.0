@@ -108,7 +108,8 @@
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" ToolTip="Change filter">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
+                          ToolTip="{DynamicResource Loc:DBFilterView.ChangeFilterToolTip}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>

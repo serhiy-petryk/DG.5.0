@@ -28,9 +28,10 @@
 
     <!-- DBFilterView -->
     <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Завантажити дані</v:String>
-    <v:String x:Key="Loc:DBFilterView.FilterLabel">Фільтр :</v:String>
-    <v:String x:Key="Loc:DBFilterView.SelectFilterLabel">Вибрати фільтр</v:String>
-    <v:String x:Key="Loc:DBFilterView.SaveFilterLabel">Записати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.FilterLabel">Фільтр:</v:String>
+    <v:String x:Key="Loc:DBFilterView.SelectFilterToolTip">Вибрати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.SaveFilterToolTip">Записати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.ChangeFilterToolTip">Змінити фільтр</v:String>
     <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Очистити фільтр</v:String>
 
     <!-- FilterGridView -->

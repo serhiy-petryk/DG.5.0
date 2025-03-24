@@ -13,8 +13,6 @@
     <UserControl.Resources>
         <common:LocalizationProxy x:Key="LoadDataLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.LoadDataLabel}"/>
         <common:LocalizationProxy x:Key="FilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.FilterLabel}"/>
-        <common:LocalizationProxy x:Key="SelectFilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.SelectFilterLabel}"/>
-        <common:LocalizationProxy x:Key="SaveFilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.SaveFilterLabel}"/>
         <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.ClearFilterLabel}"/>
     </UserControl.Resources>
 
@@ -45,7 +43,7 @@
                        Foreground="{Binding RelativeSource={RelativeSource AncestorType=WrapPanel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+80%}"/>
 
             <ToggleButton Focusable="False" Padding="0" BorderThickness="0"
-                          ToolTip="{Binding Source={StaticResource SelectFilterLabelProxy}, Path=Value}"
+                          ToolTip="{DynamicResource Loc:DBFilterView.SelectFilterToolTip}"
                           IsEnabled="{Binding IsOpenSettingsButtonEnabled}"
                           Style="{StaticResource MonochromeDropDownButtonStyle}" 
                           effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
@@ -58,7 +56,7 @@
             </ToggleButton>
 
             <Button BorderThickness="0" Padding="2"
-                    ToolTip="{Binding Source={StaticResource SaveFilterLabelProxy}, Path=Value}"
+                    ToolTip="{DynamicResource Loc:DBFilterView.SaveFilterToolTip}"
                     Visibility="{Binding Path=ApplyAction, Converter={x:Static common:VisibilityConverter.Instance}}"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
