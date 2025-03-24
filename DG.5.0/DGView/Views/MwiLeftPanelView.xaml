@@ -19,9 +19,6 @@
         <Geometry x:Key="FolderGeometry">M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z</Geometry>
         <Geometry x:Key="TableGeometry">M0 0 Z M24 24Z M5,4H19A2,2 0 0,1 21,6V18A2,2 0 0,1 19,20H5A2,2 0 0,1 3,18V6A2,2 0 0,1 5,4M5,8V12H11V8H5M13,8V12H19V8H13M5,14V18H11V14H5M13,14V18H19V14H13Z</Geometry>
 
-        <common:LocalizationProxy x:Key="DataSettingLabelProxy" InputValue="{DynamicResource Loc:MwiLeftPanelView.DataSettingLabel}"/>
-        <common:LocalizationProxy x:Key="DataFilterLabelProxy" InputValue="{DynamicResource Loc:MwiLeftPanelView.DataFilterLabel}"/>
-
         <Style TargetType="Path">
             <Setter Property="Fill" Value="{DynamicResource Mwi.WindowBar.ForegroundBrush}"/>
             <Setter Property="Width" Value="24"/>
@@ -142,7 +139,7 @@
                     </Style>
                 </Grid.Style>
                 <TextBlock Grid.Column="0" Margin="0 0 8 0" FontWeight="SemiBold" VerticalAlignment="Center"
-                           Text="{Binding Source={StaticResource DataSettingLabelProxy}, Path=Value}"/>
+                           Text="{DynamicResource Loc:MwiLeftPanelView.DataSettingLabel}"/>
 <!--                <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300" Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"/>-->
                 <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300"
                           Style="{StaticResource MonochromeComboBoxStyle}"
@@ -157,7 +154,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center" Margin="0 0 0 4" FontWeight="SemiBold"
-                           Text="{Binding Source={StaticResource DataFilterLabelProxy}, Path=Value}"/>
+                           Text="{DynamicResource Loc:MwiLeftPanelView.DataFilterLabel}"/>
                 <views:DBFilterView Grid.Row="1" x:Name="DbFilterView" HorizontalAlignment="Stretch" Background="{Binding ElementName=Root, Path=Background}"/>
             </Grid>
 
