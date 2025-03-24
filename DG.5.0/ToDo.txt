@@ -192,3 +192,5 @@ done: 102. Bug: bad color of status bar in DataGridView
 104. Check language support for DGEditSettingsView
 used in data export: 105. Check unused DGColumnHelper
 done: 106. Bug: Data windows in max mode is showing very slow
+done: 107. Replace common:LocalizationProxy by DynamicResource.
+	It's very difficult for DataGridColumnHeaders, Buttons with icon because binding text value isn't dependency property
