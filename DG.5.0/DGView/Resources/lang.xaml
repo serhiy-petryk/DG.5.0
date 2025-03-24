@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
 
+    <!-- MwiStartup -->
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Determines the UI scale factor</v:String>
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider.ResetButton">Reset zoom</v:String>
     <v:String x:Key="Loc:MwiStartup.Label.ScaleSlider">Zoom {0:P0}</v:String>
@@ -23,21 +24,22 @@
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Search and replace text</v:String>
 
     <!-- MwiLeftPanelView -->
-    <v:String x:Key="Loc:MwiLeftPanelView.DataSettingLabel">Data setting:</v:String>
-    <v:String x:Key="Loc:MwiLeftPanelView.DataFilterLabel">Data filter</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.TaskList">Task list</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.DataSetting">Data setting:</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.DataFilter">Data filter</v:String>
 
     <!-- DBFilterView -->
-    <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Load data</v:String>
-    <v:String x:Key="Loc:DBFilterView.FilterLabel">Filter:</v:String>
-    <v:String x:Key="Loc:DBFilterView.SelectFilterToolTip">Select filter</v:String>
-    <v:String x:Key="Loc:DBFilterView.SaveFilterToolTip">Save filter</v:String>
-    <v:String x:Key="Loc:DBFilterView.ChangeFilterToolTip">Change filter</v:String>
-    <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Clear filter</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.LoadData">Load data</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.Filter">Filter:</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.SelectFilter">Select filter</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.SaveFilter">Save filter</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.ChangeFilter">Change filter</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.ClearFilter">Clear filter</v:String>
 
     <!-- FilterGridView -->
     <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Column name</v:String>
     <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Filter or description of column</v:String>
-    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Expression of database filter:</v:String>
+    <v:String x:Key="Loc:FilterGridView.Label.DatabaseFilter">Expression of database filter:</v:String>
 
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Filter expression:</v:String>

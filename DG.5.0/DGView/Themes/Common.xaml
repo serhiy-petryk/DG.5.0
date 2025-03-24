@@ -109,7 +109,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
-                          ToolTip="{DynamicResource Loc:DBFilterView.ChangeFilterToolTip}">
+                          ToolTip="{DynamicResource Loc:DBFilterView.ToolTip.ChangeFilter}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>

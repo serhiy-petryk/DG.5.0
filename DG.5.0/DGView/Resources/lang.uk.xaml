@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
 
+    <!-- MwiStartup -->
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Визначає коефіцієнт масштабування інтерфейсу користувача</v:String>
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider.ResetButton">Скинути масштабування</v:String>
     <v:String x:Key="Loc:MwiStartup.Label.ScaleSlider">Масштабування {0:P0}</v:String>
@@ -23,21 +24,22 @@
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
 
     <!-- MwiLeftPanelView -->
-    <v:String x:Key="Loc:MwiLeftPanelView.DataSettingLabel">Налаштування даних:</v:String>
-    <v:String x:Key="Loc:MwiLeftPanelView.DataFilterLabel">Фільтр даних</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.TaskList">Список завдань</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.DataSetting">Налаштування даних:</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Label.DataFilter">Фільтр даних</v:String>
 
     <!-- DBFilterView -->
-    <v:String x:Key="Loc:DBFilterView.LoadDataLabel">Завантажити дані</v:String>
-    <v:String x:Key="Loc:DBFilterView.FilterLabel">Фільтр:</v:String>
-    <v:String x:Key="Loc:DBFilterView.SelectFilterToolTip">Вибрати фільтр</v:String>
-    <v:String x:Key="Loc:DBFilterView.SaveFilterToolTip">Записати фільтр</v:String>
-    <v:String x:Key="Loc:DBFilterView.ChangeFilterToolTip">Змінити фільтр</v:String>
-    <v:String x:Key="Loc:DBFilterView.ClearFilterLabel">Очистити фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.LoadData">Завантажити дані</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.Filter">Фільтр:</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.SelectFilter">Вибрати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.SaveFilter">Записати фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.ToolTip.ChangeFilter">Змінити фільтр</v:String>
+    <v:String x:Key="Loc:DBFilterView.Label.ClearFilter">Очистити фільтр</v:String>
 
     <!-- FilterGridView -->
     <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Назва колонки</v:String>
     <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Фільтр або опис колонки</v:String>
-    <v:String x:Key="Loc:FilterGridView.DatabaseFilterLabel">Вираз фільтра бази даних:</v:String>
+    <v:String x:Key="Loc:FilterGridView.Label.DatabaseFilter">Вираз фільтра бази даних:</v:String>
 
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Вираз фільтра:</v:String>

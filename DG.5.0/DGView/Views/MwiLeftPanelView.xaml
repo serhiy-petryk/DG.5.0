@@ -55,7 +55,8 @@
                 <Button HorizontalAlignment="Center" Margin="2 0" Content="Print" Click="OnPrintClick"/>
             </StackPanel>
 
-            <TextBlock Grid.Row="1" x:Name="Test0" HorizontalAlignment="Center" Margin="2" FontWeight="SemiBold" Text="Список задач"/>
+            <TextBlock Grid.Row="1" x:Name="Test0" HorizontalAlignment="Center" Margin="2" FontWeight="SemiBold"
+                       Text="{DynamicResource Loc:MwiLeftPanelView.Label.TaskList}"/>
             <TreeView Grid.Row="2" x:Name="MenuTreeView" ScrollViewer.HorizontalScrollBarVisibility="Auto" TreeViewItem.Selected="TreeViewItem_OnItemSelected">
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type menu:SubMenu}" ItemsSource="{Binding Items}">
@@ -139,7 +140,7 @@
                     </Style>
                 </Grid.Style>
                 <TextBlock Grid.Column="0" Margin="0 0 8 0" FontWeight="SemiBold" VerticalAlignment="Center"
-                           Text="{DynamicResource Loc:MwiLeftPanelView.DataSettingLabel}"/>
+                           Text="{DynamicResource Loc:MwiLeftPanelView.Label.DataSetting}"/>
 <!--                <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300" Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"/>-->
                 <ComboBox Grid.Column="1" x:Name="CbDataSettingName" HorizontalAlignment="Left" MinWidth="100" MaxWidth="300"
                           Style="{StaticResource MonochromeComboBoxStyle}"
@@ -154,7 +155,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center" Margin="0 0 0 4" FontWeight="SemiBold"
-                           Text="{DynamicResource Loc:MwiLeftPanelView.DataFilterLabel}"/>
+                           Text="{DynamicResource Loc:MwiLeftPanelView.Label.DataFilter}"/>
                 <views:DBFilterView Grid.Row="1" x:Name="DbFilterView" HorizontalAlignment="Stretch" Background="{Binding ElementName=Root, Path=Background}"/>
             </Grid>
 

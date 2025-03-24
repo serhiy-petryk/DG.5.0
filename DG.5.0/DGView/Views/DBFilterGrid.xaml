@@ -12,7 +12,6 @@
     <UserControl.Resources>
         <common:LocalizationProxy x:Key="ColumnNameTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.ColumnNameTitle}"/>
         <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
-        <common:LocalizationProxy x:Key="DatabaseFilterLabelProxy" InputValue="{DynamicResource Loc:FilterGridView.DatabaseFilterLabel}"/>
     </UserControl.Resources>
 
     <Grid>
@@ -35,41 +34,6 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{Binding Source={StaticResource ColumnNameTitleProxy}, Path=Value, Mode=OneWay}"
                                     MaxWidth="200" Binding="{Binding DisplayName}" IsReadOnly="True"/>
-                <!--<DataGridTextColumn Header="XX1" MaxWidth="200" Binding="{Binding Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
-                <DataGridTextColumn Header="XX" MaxWidth="200" Binding="{Binding FilterTextOrDescription, Mode=OneWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"
-                                    CellStyle="{StaticResource MonochromeDGEditableCellStyle}"/>-->
-
-                <!--<DataGridTextColumn Header="{Binding Source={StaticResource ColumnNameTitleProxy}, Path=Value, Mode=OneWay}" MaxWidth="200">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="ContentTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock TextWrapping="Wrap" Text="{Binding}"/>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="BorderBrush" Value="Transparent"/>
-                            <Setter Property="ToolTip" Value="{Binding Description}" />
-                            <Setter Property="ContentTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <Grid VerticalAlignment="Stretch" Background="White">
-                                            <TextBlock Text="{Binding DisplayName}" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="Black"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>-->
-
-                <DataGridTextColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200"
-                                    Binding="{Binding FilterTextOrDescription}"/>
                 <DataGridTextColumn Header="{Binding Source={StaticResource FilterOrDescriptionColumnTitleProxy}, Path=Value, Mode=OneWay}" Width="1*" MinWidth="200">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell" BasedOn="{StaticResource FilterOrDescriptionCellStyle}">
@@ -88,7 +52,7 @@
             </Grid.RowDefinitions>
             <controls:LabelBox Grid.Row="0" FontStyle="Italic" TextDecorations="Underline"
                                Background="Transparent" Foreground="{Binding Foreground}"
-                               Text="{Binding Source={StaticResource DatabaseFilterLabelProxy}, Path=Value, Mode=OneWay}"/>
+                               Text="{DynamicResource Loc:FilterGridView.Label.DatabaseFilter}"/>
             <controls:LabelBox Grid.Row="1" FontWeight="Bold" TextWrapping="Wrap" Background="Transparent" Foreground="{Binding Foreground}"
                                Text="{Binding FilterList.StringPresentation, Mode=OneWay}"/>
         </Grid>
