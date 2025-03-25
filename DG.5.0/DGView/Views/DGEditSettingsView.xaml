@@ -22,9 +22,8 @@
         <SolidColorBrush x:Key="DataGridBaseBrush" Color="{StaticResource DataGridBaseColor}"/>
 
         <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
-        <common:LocalizationProxy x:Key="FilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.FilterLabel}"/>
-        <common:LocalizationProxy x:Key="ApplyLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Apply}"/>
-        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.ClearFilterLabel}"/>
+        <common:LocalizationProxy x:Key="ApplyLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Label.Apply}"/>
+        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Label.ClearFilter}"/>
 
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />
@@ -259,7 +258,7 @@
                 </Grid.RowDefinitions>
                 <controls:LabelBox Grid.Row="0" FontStyle="Italic" TextDecorations="Underline"
                                    Background="Transparent" Foreground="{Binding Foreground}"
-                                   Text="{Binding Source={StaticResource FilterLabelProxy}, Path=Value, Mode=OneWay}"/>
+                                   Text="{DynamicResource Loc:DGEditSettingsView.Label.Filter}"/>
                 <controls:LabelBox Grid.Row="1" FontWeight="Bold" TextWrapping="Wrap" Background="Transparent" Foreground="{Binding Foreground}"
                                    Text="{Binding FilterText, Mode=OneWay}"/>
             </Grid>

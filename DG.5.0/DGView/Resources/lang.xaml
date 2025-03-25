@@ -35,14 +35,14 @@
     <v:String x:Key="Loc:DBFilterView.ToolTip.SaveFilter">Save filter</v:String>
     <v:String x:Key="Loc:DBFilterView.ToolTip.ChangeFilter">Change filter</v:String>
     <v:String x:Key="Loc:DBFilterView.Label.ClearFilter">Clear filter</v:String>
-
-    <!-- FilterGridView -->
-    <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Column name</v:String>
-    <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Filter or description of column</v:String>
     <v:String x:Key="Loc:FilterGridView.Label.DatabaseFilter">Expression of database filter:</v:String>
 
+    <!-- FilterGridView (Database filter and item filter) -->
+    <v:String x:Key="Loc:FilterGridView.ColumnNameTitle">Column name</v:String>
+    <v:String x:Key="Loc:FilterGridView.FilterOrDescriptionColumnTitle">Filter or description of column</v:String>
+
     <!-- DGEditSettingsView -->
-    <v:String x:Key="Loc:DGEditSettingsView.FilterLabel">Filter expression:</v:String>
-    <v:String x:Key="Loc:DGEditSettingsView.Apply">Apply</v:String>
-    <v:String x:Key="Loc:DGEditSettingsView.ClearFilterLabel">Clear filter</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.Label.Filter">Filter expression:</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.Label.Apply">Apply</v:String>
+    <v:String x:Key="Loc:DGEditSettingsView.Label.ClearFilter">Clear filter</v:String>
 </ResourceDictionary>
