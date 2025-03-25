@@ -21,6 +21,25 @@
 
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">К-сть&#x0a;елементів</v:String>
 
+    <v:String x:Key="Loc:DGV.ToolTip.EditSetting">Редагувати налаштування</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SelectSetting">Вибрати налаштування</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SaveSetting">Записати налаштування</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ToggleGridLines">Показати/Сховати лінії сітки</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.FontSettings">Налаштування шрифту</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.RowDisplayMode">Режим відображення рядків</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.GroupLevel">Рівень груп</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.AscendingSort">Сортування за зростанням</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.DescendingSort">Сортування за спаданням</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ClearSorting">Очистити сортування</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SetFilterByCellValue">Встановити фільтр за значенням клітинки</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ClearFilterByCellValue">Очистити фільтр за значенням клітинки</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SetQuickTextFilter">Встановити швидкий текстовий фільтр</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Clone">Клонувати це вікно</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ReloadData">Перезавантажити дані із бази даних</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Print">Відкрити вікно друку</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Excel">Експорт даних в тимчасовий файл Excel і його відкриття</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.TxtFile">Експорт даних в тимчасовий текстовий файл і його відкриття</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.PdfFile">Експорт даних в тимчасовий файл PDF і його відкриття</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Пошук та заміна тексту</v:String>
 
     <!-- MwiLeftPanelView -->

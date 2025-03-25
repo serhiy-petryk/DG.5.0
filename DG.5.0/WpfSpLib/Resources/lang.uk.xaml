@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
 
+    <v:String x:Key="$DialogBox.CollapsedDetailsHeader">Показати подробиці</v:String>
+    <v:String x:Key="$DialogBox.ExpandedDetailsHeader">Сховати подробиці</v:String>
+
     <v:String x:Key="$ThemeInfo.Name.Windows7">Windows 7</v:String>
     <v:String x:Key="$ThemeInfo.Name.Windows10">Windows 10</v:String>
     <v:String x:Key="$ThemeInfo.Name.Windows10-2">Windows 10 з каймою</v:String>

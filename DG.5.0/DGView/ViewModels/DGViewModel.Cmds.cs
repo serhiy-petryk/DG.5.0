@@ -34,6 +34,8 @@ namespace DGView.ViewModels
         public RelayCommand CmdRequery { get; private set; }
         public RelayCommand CmdSaveAsExcelFile { get; private set; }
         public RelayCommand CmdSaveAsTextFile { get; private set; }
+        public RelayCommand CmdSaveAsPdfFile { get; private set; }
+        public RelayCommand CmdTest { get; private set; }
 
         public string Title => DGControl.GetVisualParents().OfType<MwiChild>().First().Title;
 
@@ -60,6 +62,9 @@ namespace DGView.ViewModels
             CmdPrint = new RelayCommand(cmdPrint);
             CmdSaveAsExcelFile = new RelayCommand(cmdSaveAsExcelFile);
             CmdSaveAsTextFile = new RelayCommand(cmdSaveAsTextFile);
+            CmdSaveAsPdfFile = new RelayCommand(cmdSaveAsPdfFile);
+
+            CmdTest = new RelayCommand(cmdTest);
         }
 
         private void cmdEditSetting(object p)
@@ -202,6 +207,27 @@ namespace DGView.ViewModels
             var columnHelpers = GetColumnHelpers(columns, null);
             var filename = $"DGV_{LayoutId}.txt";
             SaveData.SaveAndOpenDataToTextFile(filename, items, columnHelpers);
+        }
+
+        private void cmdSaveAsPdfFile(object p)
+        {
+            DGHelper.GetSelectedArea(DGControl, out var items, out var columns);
+            var columnHelpers = GetColumnHelpers(columns, null);
+            var filename = $"DGV_{LayoutId}.pdf";
+
+            DGCore.Common.Shared.ShowMessage(@"Not ready!", "", DGCore.Common.Enums.MessageBoxButtons.OK, DGCore.Common.Enums.MessageBoxIcon.Error);
+            // SaveData.SaveAndOpenDataToTextFile(filename, items, columnHelpers);
+        }
+
+        private void cmdTest(object p)
+        {
+            new DialogBox(DialogBox.DialogBoxKind.Error)
+            {
+                // Host = Host,
+                Caption = "Помилка",
+                Message = "Not ready!",
+                Buttons = new[] { "OK" }
+            }.ShowDialog();
         }
     }
 }

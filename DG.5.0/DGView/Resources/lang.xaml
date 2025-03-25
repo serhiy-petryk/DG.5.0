@@ -21,6 +21,25 @@
 
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">Number&#x0a;of items</v:String>
 
+    <v:String x:Key="Loc:DGV.ToolTip.EditSetting">Edit setting</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SelectSetting">Select setting</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SaveSetting">Save setting</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ToggleGridLines">Show/Hide grid lines</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.FontSettings">Font settings</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.RowDisplayMode">Row display mode</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.GroupLevel">Group level</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.AscendingSort">Ascending sort</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.DescendingSort">Descending sort</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ClearSorting">Clear sorting</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SetFilterByCellValue">Set filter by cell value</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ClearFilterByCellValue">Clear filter by cell value</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.SetQuickTextFilter">Set quick text filter</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Clone">Clone this window</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.ReloadData">Reload data from database</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Print">Open print window</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.Excel">Exporting data to a temporary Excel file and opening it</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.TxtFile">Exporting data to a temporary text file and opening it</v:String>
+    <v:String x:Key="Loc:DGV.ToolTip.PdfFile">Exporting data to a temporary PDF file and opening it</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.SearchAndReplaceText">Search and replace text</v:String>
 
     <!-- MwiLeftPanelView -->

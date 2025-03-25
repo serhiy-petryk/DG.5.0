@@ -65,8 +65,8 @@ namespace WpfSpLib.Controls
         public string Caption { get; set; }
         public string Message { get; set; }
         public string Details { get; set; }
-        public string CollapsedDetailsHeader { get; set; } = "Show details";
-        public string ExpandedDetailsHeader { get; set; } = "Hide details";
+        public string CollapsedDetailsHeader => Application.Current.Resources["$DialogBox.CollapsedDetailsHeader"] as string;
+        public string ExpandedDetailsHeader => Application.Current.Resources["$DialogBox.ExpandedDetailsHeader"] as string;
         public Geometry Icon { get; set; }
         public Color? BaseIconColor { get; set; }
         public bool IsCloseButtonVisible { get; set; } = true;
