@@ -71,7 +71,7 @@ namespace DGView.ViewModels
         {
             var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
             var geometry = (Geometry) dgView.Resources["SettingsGeometry"];
-            Misc.OpenDGDialog(DGControl, new DGEditSettingsView(this), "Edit setting", geometry);
+            Misc.OpenDGDialog(DGControl, new DGEditSettingsView(this), "Loc:Common.EditSetting", geometry);
         }
         internal void cmdSetSetting(object p)
         {
@@ -85,7 +85,7 @@ namespace DGView.ViewModels
         {
             var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
             var geometry = (Geometry)dgView.Resources["SaveGeometry"];
-            Misc.OpenDGDialog(DGControl, new DGSaveSettingView(this, LastAppliedLayoutName), "Save setting", geometry);
+            Misc.OpenDGDialog(DGControl, new DGSaveSettingView(this, LastAppliedLayoutName), "Loc:Common.SaveSetting", geometry);
         }
         private void cmdSetFont(object o)
         {

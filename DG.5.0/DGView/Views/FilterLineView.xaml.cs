@@ -34,12 +34,12 @@ namespace DGView.Views
             var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
             var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
             var height = Math.Max(200, Window.GetWindow(cell).ActualHeight * 2 / 3 / transforms.Value.M22);
-            var title = Application.Current.Resources["Loc:FilterLineView.Title"] as string;
-            Helpers.Misc.OpenMwiDialog(container, view, title, geometry, (child, adorner) =>
+            Misc.OpenMwiDialog(container, view, geometry, (child, adorner) =>
             {
                 child.Height = height;
                 child.Theme = container?.ActualTheme;
                 child.ThemeColor = container?.ActualThemeColor;
+                child.SetResourceReference(MwiChild.TitleProperty, "Loc:FilterLineView.Title");
             });
         }
         #endregion

@@ -61,7 +61,7 @@
         <WrapPanel x:Name="CommandBar" ItemHeight="28"
                    Background="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"
                    IsEnabled="{Binding DataStatus, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=2Max2-}">
-            <Button Focusable="False" BorderThickness="0" Padding="6" ToolTip="{DynamicResource Loc:DGV.ToolTip.EditSetting}"
+            <Button Focusable="False" BorderThickness="0" Padding="6" ToolTip="{DynamicResource Loc:Common.EditSetting}"
                     Command="{Binding CmdEditSetting}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource SettingsGeometry}"/>
@@ -84,7 +84,7 @@
                 </ToggleButton.Resources>
             </ToggleButton>
 
-            <Button Focusable="False" BorderThickness="0" Padding="6" ToolTip="{DynamicResource Loc:DGV.ToolTip.SaveSetting}"
+            <Button Focusable="False" BorderThickness="0" Padding="6" ToolTip="{DynamicResource Loc:Common.SaveSetting}"
                     Command="{Binding CmdSaveSetting}"
                     effects:ChromeEffect.Monochrome="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                     effects:IconEffect.Geometry="{StaticResource SaveGeometry}"/>

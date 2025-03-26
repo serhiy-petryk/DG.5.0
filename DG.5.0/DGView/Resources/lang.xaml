@@ -8,6 +8,8 @@
     <v:String x:Key="Loc:Common.Cancel">Cancel</v:String>
     <v:String x:Key="Loc:Common.ClearFilter">Clear filter</v:String>
     <v:String x:Key="Loc:Common.Error">Error</v:String>
+    <v:String x:Key="Loc:Common.EditSetting">Edit setting</v:String>
+    <v:String x:Key="Loc:Common.SaveSetting">Save setting</v:String>
 
     <!-- MwiStartup -->
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Determines the UI scale factor</v:String>
@@ -28,9 +30,7 @@
 
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">Number&#x0a;of items</v:String>
 
-    <v:String x:Key="Loc:DGV.ToolTip.EditSetting">Edit setting</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.SelectSetting">Select setting</v:String>
-    <v:String x:Key="Loc:DGV.ToolTip.SaveSetting">Save setting</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.ToggleGridLines">Show/Hide grid lines</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.FontSettings">Font settings</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.RowDisplayMode">Row display mode</v:String>

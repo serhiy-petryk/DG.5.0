@@ -29,23 +29,28 @@ namespace DGView.Helpers
             return new DrawingImage { Drawing = geometryDrawing };
         }
 
-        public static void OpenDGDialog(DataGrid dataGrid, FrameworkElement dialogView, string title, Geometry icon)
+        public static void OpenDGDialog(DataGrid dataGrid, FrameworkElement dialogView, string titleResourceName, Geometry icon)
         {
             var owner = dataGrid.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
             var host = owner.GetDialogHost();
             var transforms = host.GetActualLayoutTransforms();
             var width = Math.Max(200, Window.GetWindow(host).ActualWidth * 2 / 3 / transforms.Value.M11);
             var height = Math.Max(200, Window.GetWindow(host).ActualHeight * 2 / 3 / transforms.Value.M22);
-            OpenMwiDialog(host, dialogView, title, icon, (child, adorner) =>
+            OpenMwiDialog(host, dialogView, icon, (child, adorner) =>
             {
                 child.Height = height;
                 child.Width = width;
                 child.Theme = owner.ActualTheme;
                 child.ThemeColor = owner.ActualThemeColor;
+                var titleResource = Application.Current.TryFindResource(titleResourceName);
+                if (titleResource == null)
+                    child.Title = titleResourceName;
+                else
+                    child.SetResourceReference(MwiChild.TitleProperty, titleResourceName);
             });
         }
 
-        public static void OpenMwiDialog(FrameworkElement host, FrameworkElement dialogContent, string title, Geometry icon, Action<MwiChild, DialogAdorner> beforeShowDialogAction)
+        public static void OpenMwiDialog(FrameworkElement host, FrameworkElement dialogContent, Geometry icon, Action<MwiChild, DialogAdorner> beforeShowDialogAction)
         {
             var width = dialogContent.Width;
             var height = dialogContent.Height;
@@ -56,7 +61,6 @@ namespace DGView.Helpers
             {
                 Content = dialogContent,
                 LimitPositionToPanelBounds = true,
-                Title = title,
                 VisibleButtons = MwiChild.Buttons.Close | MwiChild.Buttons.Maximize,
                 IsActive = true
             };

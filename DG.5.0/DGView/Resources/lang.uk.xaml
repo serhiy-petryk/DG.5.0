@@ -8,6 +8,8 @@
     <v:String x:Key="Loc:Common.Cancel">Відмінити</v:String>
     <v:String x:Key="Loc:Common.ClearFilter">Очистити фільтр</v:String>
     <v:String x:Key="Loc:Common.Error">Помилка</v:String>
+    <v:String x:Key="Loc:Common.EditSetting">Редагувати налаштування</v:String>
+    <v:String x:Key="Loc:Common.SaveSetting">Записати налаштування</v:String>
 
     <!-- MwiStartup -->
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Визначає коефіцієнт масштабування інтерфейсу користувача</v:String>
@@ -28,9 +30,7 @@
 
     <v:String x:Key="Loc:DGV.GroupItemCountColumnHeader" xml:space="preserve">К-сть&#x0a;елементів</v:String>
 
-    <v:String x:Key="Loc:DGV.ToolTip.EditSetting">Редагувати налаштування</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.SelectSetting">Вибрати налаштування</v:String>
-    <v:String x:Key="Loc:DGV.ToolTip.SaveSetting">Записати налаштування</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.ToggleGridLines">Показати/Сховати лінії сітки</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.FontSettings">Налаштування шрифту</v:String>
     <v:String x:Key="Loc:DGV.ToolTip.RowDisplayMode">Режим відображення рядків</v:String>
