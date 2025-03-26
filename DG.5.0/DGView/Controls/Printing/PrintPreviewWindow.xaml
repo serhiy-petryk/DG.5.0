@@ -245,7 +245,7 @@
                                                     </Setter>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=printing:PrintPreviewWindow}, Path=DataContext.LoadingPageCount}" Value="0">
-                                                            <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PageCount, StringFormat='{}Сформовано {0} сторінок.'}"/>
+                                                            <Setter Property="Text" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PageCount, StringFormat='Сформовано {0} сторінок.'}"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>

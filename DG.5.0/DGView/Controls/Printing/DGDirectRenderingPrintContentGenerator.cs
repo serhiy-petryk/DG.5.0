@@ -81,7 +81,9 @@ namespace DGView.Controls.Printing
 
             if (_items.Count == 0)
             {
-                new DialogBox(DialogBox.DialogBoxKind.Warning) { Message = "No items to print!", Buttons = new[] { "OK" } }.ShowDialog();
+                var noItemsToPrint = Application.Current.Resources["Loc:PrintContentGenerator.Code.NoItemsToPrint"] as string;
+                var ok = Application.Current.Resources["Loc:Common.OK"] as string;
+                new DialogBox(DialogBox.DialogBoxKind.Warning) { Message = noItemsToPrint, Buttons = new[] { ok } }.ShowDialog();
                 return;
             }
 
@@ -451,7 +453,8 @@ namespace DGView.Controls.Printing
             // dc.DrawRectangle(Brushes.Yellow, null, new Rect(0, 0, pageWidth, pageHeight));
 
             // Draw page header
-            var rightHeaderText = $"{_timeStamp:G} / Сторінка {pageNo + 1} з {_itemsPerPage.Count}";
+            var headerLabel = Application.Current.Resources["Loc:PrintContentGenerator.Code.Header"] as string;
+            var rightHeaderText = string.Format(headerLabel, _timeStamp.ToString("G"), pageNo + 1, _itemsPerPage.Count);
             var rightHeaderFormattedText = new FormattedText(rightHeaderText, LocalizationHelper.CurrentCulture, FlowDirection.LeftToRight, _baseTypeface, 12.0, Brushes.Black, _pixelsPerDpi);
             rightHeaderFormattedText.MaxTextWidth = pageWidth;
             rightHeaderFormattedText.Trimming = TextTrimming.CharacterEllipsis;

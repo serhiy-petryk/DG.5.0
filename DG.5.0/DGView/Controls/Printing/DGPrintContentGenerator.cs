@@ -58,7 +58,9 @@ namespace DGView.Controls.Printing
 
             if (_items.Count == 0)
             {
-                new DialogBox(DialogBox.DialogBoxKind.Warning) {Message = "No items to print!", Buttons = new[] {"OK"}}.ShowDialog();
+                var noItemsToPrint = Application.Current.Resources["Loc:PrintContentGenerator.Code.NoItemsToPrint"] as string;
+                var ok = Application.Current.Resources["Loc:Common.OK"] as string;
+                new DialogBox(DialogBox.DialogBoxKind.Warning) { Message = noItemsToPrint, Buttons = new[] { ok } }.ShowDialog();
                 return;
             }
 

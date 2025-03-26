@@ -70,4 +70,8 @@
     <v:String x:Key="Loc:DGEditSettingsView.Label.Filter">Вираз фільтра:</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.Apply">Примінити</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.ClearFilter">Очистити фільтр</v:String>
+
+    <!-- PrintContentGenerator -->
+    <v:String x:Key="Loc:PrintContentGenerator.Code.NoItemsToPrint">Немає елементів для друку!</v:String>
+    <v:String x:Key="Loc:PrintContentGenerator.Code.Header">{0} / Сторінка {1} з {2}</v:String>
 </ResourceDictionary>

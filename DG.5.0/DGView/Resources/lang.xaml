@@ -70,4 +70,8 @@
     <v:String x:Key="Loc:DGEditSettingsView.Label.Filter">Filter expression:</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.Apply">Apply</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.ClearFilter">Clear filter</v:String>
+
+    <!-- PrintContentGenerator -->
+    <v:String x:Key="Loc:PrintContentGenerator.Code.NoItemsToPrint">No items to print!</v:String>
+    <v:String x:Key="Loc:PrintContentGenerator.Code.Header">{0} / Page {1} of {2}</v:String>
 </ResourceDictionary>
