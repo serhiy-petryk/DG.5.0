@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!-- Common -->
+    <v:String x:Key="Loc:Common.OK">Гаразд</v:String>
+    <v:String x:Key="Loc:Common.Error">Помилка</v:String>
 
     <!-- MwiStartup -->
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Визначає коефіцієнт масштабування інтерфейсу користувача</v:String>
@@ -46,6 +49,9 @@
     <v:String x:Key="Loc:MwiLeftPanelView.Label.TaskList">Список завдань</v:String>
     <v:String x:Key="Loc:MwiLeftPanelView.Label.DataSetting">Налаштування даних:</v:String>
     <v:String x:Key="Loc:MwiLeftPanelView.Label.DataFilter">Фільтр даних</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Code.ErrorFileName">Помилка у файлі конфігурації: {0}</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Code.ErrorLocation">Рядок файлу: {0}. Позиція: {1}.</v:String>
+    <v:String x:Key="Loc:MwiLeftPanelView.Code.ErrorMessage">Текст помилки:</v:String>
 
     <!-- DBFilterView -->
     <v:String x:Key="Loc:DBFilterView.Label.LoadData">Завантажити дані</v:String>

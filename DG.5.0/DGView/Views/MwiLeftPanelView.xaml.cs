@@ -61,14 +61,19 @@ namespace DGView.Views
                 }
                 catch (Exception ex)
                 {
+                    var errorLabel = Application.Current.Resources["Loc:Common.Error"] as string;
                     var sb = new StringBuilder();
                     if (ex is LoadJsonConfigException loadException)
                     {
-                        sb.AppendLine($@"Помилка у файлі конфігурації: {loadException.FileName}");
+                        var errorFileName = Application.Current.Resources["Loc:MwiLeftPanelView.Code.ErrorFileName"] as string;
+                        var errorLocation = Application.Current.Resources["Loc:MwiLeftPanelView.Code.ErrorLocation"] as string;
+                        var errorMessage = Application.Current.Resources["Loc:MwiLeftPanelView.Code.ErrorMessage"] as string;
+
+                        sb.AppendLine(string.Format(errorFileName, loadException.FileName));
                         if (loadException.LineNumber.HasValue)
-                            sb.AppendLine($"Рядок файлу: {loadException.LineNumber}. Позиція: {loadException.Position}.");
+                            sb.AppendLine(string.Format(errorLocation, loadException.LineNumber, loadException.Position));
                         sb.AppendLine(null);
-                        sb.AppendLine($@"Текст помилки:");
+                        sb.AppendLine(errorMessage);
                         sb.AppendLine(loadException.Message);
                     }
                     else
@@ -79,7 +84,7 @@ namespace DGView.Views
                         new DialogBox(DialogBox.DialogBoxKind.Error)
                         {
                             Host = Host,
-                            Caption = "Помилка",
+                            Caption = errorLabel,
                             Message = sb.ToString()
                         }.ShowDialog();
                         Application.Current.Shutdown();
@@ -218,10 +223,13 @@ namespace DGView.Views
             {
                 foreach (var item in menuItems)
                     item.TextDecorations = TextDecorations.Strikethrough;
+
+                var errorLabel = Application.Current.Resources["Loc:Common.Error"] as string;
+                var okLabel = Application.Current.Resources["Loc:Common.OK"] as string;
                 new DialogBox(DialogBox.DialogBoxKind.Error)
                 {
-                    Host = Host, Caption = "Помилка", Message = exception.Message,
-                    Buttons = new[] { "OK" }, Details = exception.ToString()
+                    Host = Host, Caption = errorLabel, Message = exception.Message,
+                    Buttons = new[] { okLabel }, Details = exception.ToString()
                 }.ShowDialog();
                 return false;
             }
