@@ -169,7 +169,7 @@ done: 95. no label for checkboxes in 'Save setting' forms
 done: 97. Bug: check execution UpdateColumnSortGlyphs (see bug 92). UpdateColumnSortGlyphs is running many times. Flickers (мерехтіння).
 
 2025-02-23
-98. ToDo: add delete row for table in filter line form.
+see 110: 98. ToDo: add delete row action for table in FilterLineView form.
 99. ToDo: DynamicType object in grid must to be like int, string, etc. Example: CostComponent column in ChartOfAccount form.
 100. Bug: group mode - не показувати рядки вищого рівня. Error for enable/disable of sort buttons. Method DataGridView.OnDataGridSelectedCellsChanged
 
@@ -194,3 +194,11 @@ used in data export: 105. Check unused DGColumnHelper
 done: 106. Bug: Data windows in max mode is showing very slow
 done: 107. Replace common:LocalizationProxy by DynamicResource.
 	It's very difficult for DataGridColumnHeaders, Buttons with icon because binding text value isn't dependency property
+108. ToDo: replace language by localization (example: US and GB have the same language and different datetime, number formats)
+109. Bug: The app is closing when open FontSetting. See font dialog in https://github.com/GiGong/WPF_FontDialog
+110. ToDo: customize FilterLineView:
+	customize datagrid
+	customize base color
+	add context menu to delete row
+	add localization for Operand selection
+	add ObjectEditor for Expression
