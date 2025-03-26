@@ -34,7 +34,8 @@ namespace DGView.Views
             var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
             var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
             var height = Math.Max(200, Window.GetWindow(cell).ActualHeight * 2 / 3 / transforms.Value.M22);
-            Helpers.Misc.OpenMwiDialog(container, view, "Filter Setup", geometry, (child, adorner) =>
+            var title = Application.Current.Resources["Loc:FilterLineView.Title"] as string;
+            Helpers.Misc.OpenMwiDialog(container, view, title, geometry, (child, adorner) =>
             {
                 child.Height = height;
                 child.Theme = container?.ActualTheme;

@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <common:LocalizationProxy x:Key="LoadDataLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.Label.LoadData}"/>
-        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DBFilterView.Label.ClearFilter}"/>
+        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:Common.ClearFilter}"/>
     </UserControl.Resources>
 
     <Grid Margin="0">

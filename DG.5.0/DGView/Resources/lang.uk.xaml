@@ -3,6 +3,10 @@
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!-- Common -->
     <v:String x:Key="Loc:Common.OK">Гаразд</v:String>
+    <!--<v:String x:Key="Loc:Common.Apply">Примінити</v:String>-->
+    <v:String x:Key="Loc:Common.Confirm">Підтвердити</v:String>
+    <v:String x:Key="Loc:Common.Cancel">Відмінити</v:String>
+    <v:String x:Key="Loc:Common.ClearFilter">Очистити фільтр</v:String>
     <v:String x:Key="Loc:Common.Error">Помилка</v:String>
 
     <!-- MwiStartup -->
@@ -59,7 +63,6 @@
     <v:String x:Key="Loc:DBFilterView.ToolTip.SelectFilter">Вибрати фільтр</v:String>
     <v:String x:Key="Loc:DBFilterView.ToolTip.SaveFilter">Записати фільтр</v:String>
     <v:String x:Key="Loc:DBFilterView.ToolTip.ChangeFilter">Змінити фільтр</v:String>
-    <v:String x:Key="Loc:DBFilterView.Label.ClearFilter">Очистити фільтр</v:String>
     <v:String x:Key="Loc:FilterGridView.Label.DatabaseFilter">Вираз фільтра бази даних:</v:String>
 
     <!-- FilterGridView (Database filter and item filter) -->
@@ -69,9 +72,15 @@
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.Label.Filter">Вираз фільтра:</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.Apply">Примінити</v:String>
-    <v:String x:Key="Loc:DGEditSettingsView.Label.ClearFilter">Очистити фільтр</v:String>
 
     <!-- PrintContentGenerator -->
     <v:String x:Key="Loc:PrintContentGenerator.Code.NoItemsToPrint">Немає елементів для друку!</v:String>
     <v:String x:Key="Loc:PrintContentGenerator.Code.Header">{0} / Сторінка {1} з {2}</v:String>
+
+    <!-- FilterLineView -->
+    <v:String x:Key="Loc:FilterLineView.Title">Налаштування фільтру</v:String>
+    <v:String x:Key="Loc:FilterLineView.OperandTitle">Операнд</v:String>
+    <v:String x:Key="Loc:FilterLineView.Expression1Title">Вираз 1</v:String>
+    <v:String x:Key="Loc:FilterLineView.Expression2Title">Вираз 2</v:String>
+    <v:String x:Key="Loc:FilterLineView.Label.Except">Окрім (будуть включені всі дані, крім тих, що вказані у виразі)</v:String>
 </ResourceDictionary>

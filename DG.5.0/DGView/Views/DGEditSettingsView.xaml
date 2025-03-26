@@ -23,7 +23,7 @@
 
         <common:LocalizationProxy x:Key="FilterOrDescriptionColumnTitleProxy" InputValue="{DynamicResource Loc:FilterGridView.FilterOrDescriptionColumnTitle}"/>
         <common:LocalizationProxy x:Key="ApplyLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Label.Apply}"/>
-        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:DGEditSettingsView.Label.ClearFilter}"/>
+        <common:LocalizationProxy x:Key="ClearFilterLabelProxy" InputValue="{DynamicResource Loc:Common.ClearFilter}"/>
 
         <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
             <Setter Property="Focusable" Value="True" />

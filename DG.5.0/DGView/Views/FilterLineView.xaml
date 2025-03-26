@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
              xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
-             xmlns:helpers="clr-namespace:DGView.Helpers"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -24,29 +23,32 @@
                       RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
                       SelectionUnit="Cell" SelectionMode="Single" SelectedCellsChanged="DbPropertiesDataGrid_SelectedCellsChanged"
                       CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
+                <DataGrid.Resources>
+                    <common:LocalizationProxy x:Key="OperandTitleProxy" InputValue="{DynamicResource Loc:FilterLineView.OperandTitle}"/>
+                    <common:LocalizationProxy x:Key="Expression1TitleProxy" InputValue="{DynamicResource Loc:FilterLineView.Expression1Title}"/>
+                    <common:LocalizationProxy x:Key="Expression2TitleProxy" InputValue="{DynamicResource Loc:FilterLineView.Expression2Title}"/>
+                </DataGrid.Resources>
 
                 <DataGrid.Columns>
-                    <DataGridComboBoxColumn Header="Операнд" Width="Auto" MinWidth="100"
+                    <DataGridComboBoxColumn Width="Auto" MinWidth="100"
+                                            Header="{Binding Source={StaticResource OperandTitleProxy}, Path=Value, Mode=OneWay}"
                                             SelectedValueBinding="{Binding FilterOperand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}" />
-                    <DataGridTextColumn Header="Вираз 1" Width="1*" MinWidth="100"
+                    <DataGridTextColumn Width="1*" MinWidth="100"
+                                        Header="{Binding Source={StaticResource Expression1TitleProxy}, Path=Value, Mode=OneWay}"
                                         Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="Вираз 2" Width="1*" MinWidth="100"
+                    <DataGridTextColumn Width="1*" MinWidth="100"
+                                        Header="{Binding Source={StaticResource Expression2TitleProxy}, Path=Value, Mode=OneWay}"
                                         Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"/>
                 </DataGrid.Columns>
 
             </DataGrid>
         </ScrollViewer>
 
-        <Grid Grid.Row="1" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <CheckBox Grid.Column="0" x:Name="cbNot" VerticalAlignment="Center" IsChecked="{Binding Clone_Not}"
-                      Style="{StaticResource MonochromeCheckBoxStyle}"/>
-            <TextBlock Grid.Column="1" Margin="4 0 0 0" FontWeight="Bold" Text="Окрім (будуть попадати всі дані, окрім вказаних у виразі)"/>
-        </Grid>
+        <CheckBox Grid.Row="1" Margin="5" x:Name="cbNot" VerticalAlignment="Center" IsChecked="{Binding Clone_Not}"
+                  Style="{StaticResource MonochromeCheckBoxStyle}"
+                  Content="{DynamicResource Loc:FilterLineView.Label.Except}"
+                  FontWeight="Bold"/>
 
         <Grid Grid.Row="2" Margin="0 5 0 10">
             <Grid.ColumnDefinitions>
@@ -59,19 +61,19 @@
                     effects:CornerRadiusEffect.CornerRadius="3"
                     effects:ChromeEffect.Monochrome="{StaticResource SuccessColor}"
                     effects:ClickEffect.RippleColor="White" 
-                    UseLayoutRounding="False" Content="Підтвердити" Click="SaveButton_OnClick"/>
+                    UseLayoutRounding="False" Content="{DynamicResource Loc:Common.Confirm}" Click="SaveButton_OnClick"/>
             <Button Grid.Column="1" HorizontalAlignment="Center" Padding="4" BorderThickness="2" FontWeight="Bold"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:CornerRadiusEffect.CornerRadius="3"
                     effects:ChromeEffect.Monochrome="{StaticResource DangerColor}"
                     effects:ClickEffect.RippleColor="White"
-                    Content="Відмінити" Click="CloseButton_OnClick" IsCancel="True"/>
+                    Content="{DynamicResource Loc:Common.Cancel}" Click="CloseButton_OnClick" IsCancel="True"/>
             <Button Grid.Column="2" HorizontalAlignment="Center" Padding="4" BorderThickness="2"
                     Style="{StaticResource MonochromeButtonBaseStyle}"
                     effects:CornerRadiusEffect.CornerRadius="3"
                     effects:ChromeEffect.Monochrome="{StaticResource InfoColor}"
                     effects:ClickEffect.RippleColor="White"
-                    UseLayoutRounding="False" Content="Очистити фільтр" Click="ClearButton_OnClick"/>
+                    UseLayoutRounding="False" Content="{DynamicResource Loc:Common.ClearFilter}" Click="ClearButton_OnClick"/>
         </Grid>
 
     </Grid>

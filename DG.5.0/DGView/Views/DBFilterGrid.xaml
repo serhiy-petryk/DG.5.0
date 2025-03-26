@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:WpfSpLib.Controls;assembly=WpfSpLib"
              xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
-             xmlns:helpers="clr-namespace:DGView.Helpers"
              mc:Ignorable="d"
              x:Name="Root">
 

@@ -3,6 +3,10 @@
 					xmlns:v="clr-namespace:System;assembly=mscorlib">
     <!-- Common -->
     <v:String x:Key="Loc:Common.OK">OK</v:String>
+<!--    <v:String x:Key="Loc:Common.Apply">Apply</v:String>-->
+    <v:String x:Key="Loc:Common.Confirm">Confirm</v:String>
+    <v:String x:Key="Loc:Common.Cancel">Cancel</v:String>
+    <v:String x:Key="Loc:Common.ClearFilter">Clear filter</v:String>
     <v:String x:Key="Loc:Common.Error">Error</v:String>
 
     <!-- MwiStartup -->
@@ -59,7 +63,6 @@
     <v:String x:Key="Loc:DBFilterView.ToolTip.SelectFilter">Select filter</v:String>
     <v:String x:Key="Loc:DBFilterView.ToolTip.SaveFilter">Save filter</v:String>
     <v:String x:Key="Loc:DBFilterView.ToolTip.ChangeFilter">Change filter</v:String>
-    <v:String x:Key="Loc:DBFilterView.Label.ClearFilter">Clear filter</v:String>
     <v:String x:Key="Loc:FilterGridView.Label.DatabaseFilter">Expression of database filter:</v:String>
 
     <!-- FilterGridView (Database filter and item filter) -->
@@ -69,9 +72,15 @@
     <!-- DGEditSettingsView -->
     <v:String x:Key="Loc:DGEditSettingsView.Label.Filter">Filter expression:</v:String>
     <v:String x:Key="Loc:DGEditSettingsView.Label.Apply">Apply</v:String>
-    <v:String x:Key="Loc:DGEditSettingsView.Label.ClearFilter">Clear filter</v:String>
 
     <!-- PrintContentGenerator -->
     <v:String x:Key="Loc:PrintContentGenerator.Code.NoItemsToPrint">No items to print!</v:String>
     <v:String x:Key="Loc:PrintContentGenerator.Code.Header">{0} / Page {1} of {2}</v:String>
+
+    <!-- FilterLineView -->
+    <v:String x:Key="Loc:FilterLineView.Title">Filter Setup</v:String>
+    <v:String x:Key="Loc:FilterLineView.OperandTitle">Operand</v:String>
+    <v:String x:Key="Loc:FilterLineView.Expression1Title">Expression 1</v:String>
+    <v:String x:Key="Loc:FilterLineView.Expression2Title">Expression 2</v:String>
+    <v:String x:Key="Loc:FilterLineView.Label.Except">Except (all data except those specified in the expression will be included)</v:String>
 </ResourceDictionary>
