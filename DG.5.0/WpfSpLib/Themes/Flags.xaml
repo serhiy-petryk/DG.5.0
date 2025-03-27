@@ -3,6 +3,50 @@
 
     <!-- flag library: https://github.com/lipis/flag-icon-css (MIT license): svg-(640x480) 2390KB (258 items); flags are taken from Panayiotis Lipiridis and Jakob Flierl (also see https://github.com/datawrapper/datawrapper/wiki/Country-flag-icons)  -->
 
+    <DrawingImage x:Key="LanguageIcon_EN-US">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#FFbd3d44" Geometry="M0 0h640v480H0"/>
+                <GeometryDrawing Geometry="M0 55.3h640M0 129h640M0 203h640M0 277h640M0 351h640M0 425h640" >
+                    <GeometryDrawing.Pen>
+                        <Pen Thickness="37" Brush="#FFFFFFFF" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#FF192f5d" Geometry="M0 0h364.8v258.5H0" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M16 11 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M47 37 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M16 63 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M47 89 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M16 115 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M47 141 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M16 166 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M47 192 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z" />
+                <GeometryDrawing Brush="#FFFFFFFF"  Geometry="F1 M16 218 m14 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m61 0 9 27l-23 -17h28l-23 17z m60 0 9 27l-23 -17h28l-23 17z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="LanguageIcon_EN-GB">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#FF012169" Geometry="F1 M640,480z M0,0z M0,0L640,0 640,480 0,480z"/>
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M640,480z M0,0z M75,0L319,181 562,0 640,0 640,62 400,241 640,419 640,480 560,480 320,301 81,480 0,480 0,420 239,242 0,64 0,0 75,0z" />
+                <GeometryDrawing Brush="#FFC8102E" Geometry="F1 M640,480z M0,0z M424,281L640,440 640,480 369,281 424,281z M240,301L246,336 54,480 0,480 240,301z M640,0L640,3 391,191 393,147 590,0 640,0z M0,0L239,176 179,176 0,42 0,0z" />
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M640,480z M0,0z M241,0L241,480 401,480 401,0 241,0z M0,160L0,320 640,320 640,160 0,160z" />
+                <GeometryDrawing Brush="#FFC8102E" Geometry="F1 M640,480z M0,0z M0,193L0,289 640,289 640,193 0,193z M273,0L273,480 369,480 369,0 273,0z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="LanguageIcon_UK-UA">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#FFFFD500" Geometry="F0 M640,480z M0,0z M0,0L640,0 640,480 0,480z" />
+                <GeometryDrawing Brush="#FF005BBB" Geometry="F0 M640,480z M0,0z M0,0L640,0 640,240 0,240z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DrawingImage x:Key="LanguageIcon_EN">
         <DrawingImage.Drawing>
             <DrawingGroup>

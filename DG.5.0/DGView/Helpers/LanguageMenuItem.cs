@@ -8,8 +8,12 @@ namespace DGView.Helpers
 {
     public class LanguageMenuItem
     {
-        public static Dictionary<string, LanguageMenuItem> LanguageMenuItems = new Dictionary<string, LanguageMenuItem>
-            { {"EN", new LanguageMenuItem("en")}, {"UK", new LanguageMenuItem("uk")}};
+        public static Dictionary<string, LanguageMenuItem> LanguageMenuItems =
+            new(System.StringComparer.OrdinalIgnoreCase)
+            {
+                { "EN-US", new LanguageMenuItem("en-US") }, { "EN-GB", new LanguageMenuItem("en-GB") },
+                { "UK-UA", new LanguageMenuItem("uk-UA") }
+            };
 
         //========================
         public CultureInfo Culture { get; }

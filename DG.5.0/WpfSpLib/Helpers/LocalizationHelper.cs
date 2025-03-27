@@ -24,7 +24,7 @@ namespace WpfSpLib.Helpers
         public static event EventHandler LanguageChanged;
 
         public static readonly CultureInfo InvariantCulture = CultureInfo.InvariantCulture;
-        public static CultureInfo CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+        public static CultureInfo CurrentCulture = Thread.CurrentThread.CurrentCulture;
 
         private static readonly MethodInfo _miDatePickerRefresh = typeof(DatePicker).GetMethod("SetSelectedDate", BindingFlags.Instance | BindingFlags.NonPublic);
         public static void SetLanguage(CultureInfo newCulture)
@@ -63,10 +63,10 @@ namespace WpfSpLib.Helpers
         private static ResourceDictionary[] GetLocalizedResourceDictionaries(CultureInfo culture)
         {
             var dictionaries = new List<ResourceDictionary>();
-            var cultureName = culture.Name.ToLower();
-            var resourceName = String.IsNullOrEmpty(cultureName) || cultureName.StartsWith("en")
+            var languageId = culture.Name.Split('-')[0].ToLower();
+            var resourceName = string.IsNullOrEmpty(languageId) || languageId.StartsWith("en")
                 ? "resources/lang.xaml"
-                : $"resources/lang.{culture.Name.ToLower()}.xaml";
+                : $"resources/lang.{languageId}.xaml";
 
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var asm in assemblies.Where(a => !a.IsDynamic))

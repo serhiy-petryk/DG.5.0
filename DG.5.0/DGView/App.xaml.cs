@@ -17,11 +17,11 @@ namespace DGView
         {
             DGCore.Common.Shared.MessageBoxProxy = new MessageBoxProxy();
 
-            // Normalize Culture
-            var languageName = LocalizationHelper.CurrentCulture.IetfLanguageTag.Split('-')[0];
-            if (string.IsNullOrEmpty(languageName))
-                languageName = "en";
-            LocalizationHelper.SetLanguage(new CultureInfo(languageName));
+            var culture = LanguageMenuItem.LanguageMenuItems.ContainsKey(LocalizationHelper.CurrentCulture
+                .IetfLanguageTag)
+                ? LocalizationHelper.CurrentCulture
+                : LanguageMenuItem.LanguageMenuItems.First().Value.Culture;
+            LocalizationHelper.SetLanguage(culture);
 
             // global event handlers 
             EventManager.RegisterClassHandler(typeof(ToolTip), ToolTip.OpenedEvent, new RoutedEventHandler(OnToolTipOpened));
