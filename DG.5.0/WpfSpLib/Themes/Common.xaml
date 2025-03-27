@@ -6,7 +6,7 @@
                     xmlns:effects="clr-namespace:WpfSpLib.Effects"
                     xmlns:helpers="clr-namespace:WpfSpLib.Helpers">
 
-    <x:Static x:Key="CurrentLanguage" Member="x:XmlLanguage.Empty"/>
+    <x:Static x:Key="CurrentRegion" Member="x:XmlLanguage.Empty"/>
     <DropShadowEffect x:Key="ShadowEffect" BlurRadius="5" ShadowDepth="2" Direction="315" po:Freeze="True" />
 
     <!-- ========== -->

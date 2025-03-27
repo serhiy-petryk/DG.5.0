@@ -63,7 +63,7 @@ namespace WpfSpLib.Controls
         private static readonly TimeSpan MinTimeOfDay = TimeSpan.Zero;
         private static readonly TimeSpan MaxTimeOfDay = TimeSpan.FromDays(1) - TimeSpan.FromTicks(1);
 
-        public string LanguageChangeHook
+        public string RegionChangeHook
         {
             get
             {

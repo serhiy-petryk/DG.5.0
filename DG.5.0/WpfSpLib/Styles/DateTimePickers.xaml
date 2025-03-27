@@ -156,7 +156,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TimePickerBase}">
                     <Grid>
-                        <Label Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LanguageChangeHook}"/>
+                        <Label Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RegionChangeHook}"/>
                         <Border x:Name="Base" Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">

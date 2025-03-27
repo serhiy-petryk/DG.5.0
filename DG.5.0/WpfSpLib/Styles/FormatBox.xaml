@@ -51,7 +51,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="1" Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LanguageChangeHook}"/>
+                        <Label Grid.Column="1" Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RegionChangeHook}"/>
 
                         <TextBox Grid.Column="2" x:Name="PART_TextBox"
                                  BorderThickness="0" Margin="0" Padding="{TemplateBinding Padding}" MinWidth="20"

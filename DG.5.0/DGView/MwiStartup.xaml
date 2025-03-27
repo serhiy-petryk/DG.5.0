@@ -23,16 +23,16 @@
             <common:LocalizationProxy x:Key="ScaleValueProxy" InputValue="{DynamicResource Loc:MwiStartup.Label.ScaleSlider}"
                                       Argument0="{Binding ElementName=ScaleSlider, Path=Value}"/>
 
-            <Image x:Key="LanguageMenuIcon" Stretch="Fill" Source="{Binding Icon}" Width="24" Height="18" x:Shared="False"/>
+            <Image x:Key="RegionMenuIcon" Stretch="Fill" Source="{Binding Icon}" Width="24" Height="18" x:Shared="False"/>
 
-            <ResourceDictionary x:Key="LanguageMenu" x:Shared="False">
-                <ContextMenu x:Key="cm" StaysOpen="False" ItemsSource="{Binding Source={x:Static helpers:LanguageMenuItem.LanguageMenuItems}, Path=Values}">
+            <ResourceDictionary x:Key="RegionMenu" x:Shared="False">
+                <ContextMenu x:Key="cm" StaysOpen="False" ItemsSource="{Binding Source={x:Static helpers:RegionMenuItem.RegionMenuItems}, Path=Values}">
                     <ContextMenu.Resources>
                         <Style TargetType="{x:Type MenuItem}">
                             <Setter Property="Header" Value="{Binding Label}"/>
                             <Setter Property="IsChecked" Value="{Binding IsSelected, Mode=OneWay}"/>
-                            <Setter Property="Command" Value="{Binding CmdSetLanguage}"/>
-                            <Setter Property="Icon" Value="{StaticResource LanguageMenuIcon}"/>
+                            <Setter Property="Command" Value="{Binding CmdSetRegion}"/>
+                            <Setter Property="Icon" Value="{StaticResource RegionMenuIcon}"/>
                         </Style>
                     </ContextMenu.Resources>
                 </ContextMenu>
@@ -104,9 +104,9 @@
 
                 <Separator Grid.Column="3" Style="{DynamicResource Mwi.Startup.WindowHeaderSeparator}"/>
 
-                <!-- Language button for Windows 10 -->
+                <!-- Region button for Windows 10 -->
                 <ToggleButton Grid.Column="4" Padding="3 0 0 0" Style="{DynamicResource Mwi.WindowCommonButtonStyle}"
-                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectLanguageButton}"
+                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectRegionButton}"
                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               effects:DoubleIconToggleButtonEffect.Width="9"
@@ -114,19 +114,19 @@
                               effects:DoubleIconToggleButtonEffect.MarginOn="3 0"
                               effects:ChromeEffect.ChromeMatrix="+0%,+70%,+0%,60, ,+70%,+0%,100, +15,+15/+75%,+0%,100"
                               Visibility="{Binding Source={StaticResource IsWindows7Proxy}, Path=Value, Converter={x:Static common:VisibilityConverter.InverseInstance}}"
-                              Resources="{StaticResource LanguageMenu}">
-                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentLanguageIcon}"/>
+                              Resources="{StaticResource RegionMenu}">
+                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentRegionIcon}"/>
                 </ToggleButton>
 
-                <!-- Language button for Windows 7 -->
+                <!-- Region button for Windows 7 -->
                 <ToggleButton Grid.Column="4" Style="{DynamicResource Mwi.WindowCommonButtonStyle}"
-                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectLanguageButton}"
+                              ToolTip="{DynamicResource Loc:MwiStartup.ToolTip.SelectRegionButton}"
                               effects:DoubleIconToggleButtonEffect.GeometryOff="{StaticResource DownArrowGeometry}"
                               effects:DoubleIconToggleButtonEffect.GeometryOn="{StaticResource CloseGeometry}"
                               effects:DoubleIconToggleButtonEffect.Width="7"
                               Visibility="{Binding Source={StaticResource IsWindows7Proxy}, Path=Value, Converter={x:Static common:VisibilityConverter.Instance}}"
-                              Resources="{StaticResource LanguageMenu}">
-                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentLanguageIcon}"/>
+                              Resources="{StaticResource RegionMenu}">
+                    <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type dgView:MwiStartup}}, Path=CurrentRegionIcon}"/>
                 </ToggleButton>
             </Grid>
         </controls:MwiChild.RightHeaderBar>

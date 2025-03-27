@@ -15,7 +15,7 @@
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider">Визначає коефіцієнт масштабування інтерфейсу користувача</v:String>
     <v:String x:Key="Loc:MwiStartup.ToolTip.ScaleSlider.ResetButton">Скинути масштабування</v:String>
     <v:String x:Key="Loc:MwiStartup.Label.ScaleSlider">Масштабування {0:P0}</v:String>
-    <v:String x:Key="Loc:MwiStartup.ToolTip.SelectLanguageButton">Select language / Вибрати мову</v:String>
+    <v:String x:Key="Loc:MwiStartup.ToolTip.SelectRegionButton">Select region / Вибрати регіон</v:String>
 
     <!-- DatagridView -->
     <v:String x:Key="Loc:DGV.Status.StopLoading">Зупинити завантаження?</v:String>

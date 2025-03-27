@@ -15,19 +15,19 @@ namespace WpfSpLib.Helpers
 {
     public class LocalizationHelper
     {
-        public static ImageSource GetLanguageIcon(string IetfLanguageTag)
+        public static ImageSource GetRegionIcon(string IetfLanguageTag)
         {
-            var key = $"LanguageIcon_{IetfLanguageTag.ToUpper()}";
+            var key = $"RegionIcon_{IetfLanguageTag.ToUpper()}";
             return Application.Current.Resources.Contains(key) ? Application.Current.Resources[key] as ImageSource : null;
         }
 
-        public static event EventHandler LanguageChanged;
+        public static event EventHandler RegionChanged;
 
         public static readonly CultureInfo InvariantCulture = CultureInfo.InvariantCulture;
         public static CultureInfo CurrentCulture = Thread.CurrentThread.CurrentCulture;
 
         private static readonly MethodInfo _miDatePickerRefresh = typeof(DatePicker).GetMethod("SetSelectedDate", BindingFlags.Instance | BindingFlags.NonPublic);
-        public static void SetLanguage(CultureInfo newCulture)
+        public static void SetRegion(CultureInfo newCulture)
         {
             // if (Equals(newLanguage, Thread.CurrentThread.CurrentUICulture)) return;
 
@@ -40,7 +40,7 @@ namespace WpfSpLib.Helpers
                 FillResources(rd);
 
             CurrentCulture = newCulture;
-            Application.Current.Resources["CurrentLanguage"] = XmlLanguage.GetLanguage(newCulture.IetfLanguageTag);
+            Application.Current.Resources["CurrentRegion"] = XmlLanguage.GetLanguage(newCulture.IetfLanguageTag);
 
             // Update current date pickers, numericboxes, ..
             foreach (var wnd in Application.Current.Windows.OfType<Window>())
@@ -56,7 +56,7 @@ namespace WpfSpLib.Helpers
                 // FocusManager.SetFocusedElement(wnd, focusedControl);
             }
 
-            LanguageChanged?.Invoke(Application.Current, new EventArgs());
+            RegionChanged?.Invoke(Application.Current, new EventArgs());
         }
 
         #region ===========  Private methods  =============

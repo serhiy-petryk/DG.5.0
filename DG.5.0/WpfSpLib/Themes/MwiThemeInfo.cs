@@ -64,7 +64,7 @@ namespace WpfSpLib.Themes
             FixedColor = fixedColor;
             _assemblyName = assemblyName;
             _uris = uris;
-            LocalizationHelper.LanguageChanged += (sender, args) => UpdateUI();
+            LocalizationHelper.RegionChanged += (sender, args) => UpdateUI();
         }
 
         public ResourceDictionary[] GetResources()

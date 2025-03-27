@@ -383,7 +383,7 @@ namespace WpfSpLib.Controls
         #endregion
 
         #region =========  Properties/Events  ==========
-        public string LanguageChangeHook
+        public string RegionChangeHook
         {
             get
             {

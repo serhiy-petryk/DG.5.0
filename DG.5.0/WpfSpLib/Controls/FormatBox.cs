@@ -75,7 +75,7 @@ namespace WpfSpLib.Controls
             return Value;
         }
         #endregion
-        public string LanguageChangeHook
+        public string RegionChangeHook
         {
             get
             {

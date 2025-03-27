@@ -51,7 +51,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="1" Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LanguageChangeHook}"/>
+                            <Label Grid.Column="1" Visibility="Collapsed" Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RegionChangeHook}"/>
                             <Rectangle Grid.Column="1" Margin="0" Fill="{TemplateBinding BorderBrush}"
                                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SeparatorWidth}"
                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsLeftSeparatorVisible, Converter={x:Static common:VisibilityConverter.Instance}}"/>

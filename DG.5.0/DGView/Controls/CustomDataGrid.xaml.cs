@@ -43,7 +43,7 @@ namespace DGView.Controls
             ViewModel = new DGViewModel(this);
             DataContext = ViewModel;
             VirtualizingPanel.SetVirtualizationMode(this, VirtualizationMode.Recycling);
-            LocalizationHelper.LanguageChanged += LocalizationHelperOnLanguageChanged;
+            LocalizationHelper.RegionChanged += LocalizationHelperOnLanguageChanged;
         }
 
         private void LocalizationHelperOnLanguageChanged(object sender, EventArgs e)
@@ -361,7 +361,7 @@ namespace DGView.Controls
 
         public void Dispose()
         {
-            LocalizationHelper.LanguageChanged -= LocalizationHelperOnLanguageChanged;
+            LocalizationHelper.RegionChanged -= LocalizationHelperOnLanguageChanged;
             SelectedCells.Clear();
             SelectedItems.Clear();
             Columns.Clear();

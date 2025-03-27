@@ -48,7 +48,7 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="DataContext" Value="{Binding RelativeSource={RelativeSource Self}}"/>
-        <Setter Property="Language" Value="{DynamicResource CurrentLanguage}"/>
+        <Setter Property="Language" Value="{DynamicResource CurrentRegion}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MwiChild">
