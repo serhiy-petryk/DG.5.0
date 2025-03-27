@@ -9,12 +9,13 @@ namespace DGView.Helpers
 {
     public class RegionMenuItem
     {
-        public static Dictionary<string, RegionMenuItem> RegionMenuItems =
-            new(System.StringComparer.OrdinalIgnoreCase)
-            {
-                { "EN-US", new RegionMenuItem("en-US") }, { "EN-GB", new RegionMenuItem("en-GB") },
-                { "UK-UA", new RegionMenuItem("uk-UA") }
-            };
+        private static readonly Dictionary<string, RegionMenuItem> _regionMenuItems = CultureInfo
+            .GetCultures(CultureTypes.SpecificCultures)
+            .Where(a => a.IetfLanguageTag.StartsWith("en-") || a.IetfLanguageTag.StartsWith("uk-"))
+            .OrderBy(a => a.DisplayName).ToDictionary(a => a.IetfLanguageTag,
+                a => new RegionMenuItem(a.IetfLanguageTag), System.StringComparer.OrdinalIgnoreCase);
+
+        public static Dictionary<string, RegionMenuItem> RegionMenuItems = _regionMenuItems;
 
         //========================
         public CultureInfo Culture { get; }
@@ -26,7 +27,10 @@ namespace DGView.Helpers
         public RegionMenuItem(string id)
         {
             Culture = new CultureInfo(id ?? "");
-            Label = Culture.DisplayName + (Culture.DisplayName == Culture.NativeName ? "" : $" ({Culture.NativeName})");
+            Label = Culture.DisplayName +
+                    (Misc.MyCalculateSimilarity(Culture.DisplayName, Culture.NativeName) > 0.5
+                        ? ""
+                        : $" ({Culture.NativeName})");
             Icon = LocalizationHelper.GetRegionIcon(Culture.IetfLanguageTag);
             CmdSetRegion = new RelayCommand(o => LocalizationHelper.SetRegion(Culture), o => !IsSelected);
         }
