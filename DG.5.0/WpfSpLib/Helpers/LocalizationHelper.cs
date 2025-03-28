@@ -18,7 +18,14 @@ namespace WpfSpLib.Helpers
         public static ImageSource GetRegionIcon(string IetfLanguageTag)
         {
             var key = $"RegionIcon_{IetfLanguageTag.ToUpper()}";
-            return Application.Current.Resources.Contains(key) ? Application.Current.Resources[key] as ImageSource : null;
+            var image = Application.Current.Resources[key];
+            if (image == null)
+            {
+                var aa1 = IetfLanguageTag.Split('-');
+                var countryCode = aa1[aa1.Length - 1].ToUpper();
+                image = Application.Current.Resources[$"RegionIcon_{countryCode}"];
+            }
+            return image as ImageSource;
         }
 
         public static event EventHandler RegionChanged;
