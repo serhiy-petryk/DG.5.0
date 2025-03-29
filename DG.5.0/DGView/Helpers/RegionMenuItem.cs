@@ -11,7 +11,7 @@ namespace DGView.Helpers
     {
         private static readonly Dictionary<string, RegionMenuItem> _regionMenuItems = CultureInfo
             .GetCultures(CultureTypes.SpecificCultures)
-            .Where(a => !a.IsNeutralCulture && a.IetfLanguageTag.StartsWith("en-") || a.IetfLanguageTag.StartsWith("ca-") || a.IetfLanguageTag.StartsWith("uk-"))
+            .Where(a => !a.IsNeutralCulture && a.IetfLanguageTag.StartsWith("en-") || a.IetfLanguageTag.StartsWith("uk-"))
             .OrderBy(a => a.DisplayName).ToDictionary(a => a.IetfLanguageTag,
                 a => new RegionMenuItem(a.IetfLanguageTag), System.StringComparer.OrdinalIgnoreCase);
 
