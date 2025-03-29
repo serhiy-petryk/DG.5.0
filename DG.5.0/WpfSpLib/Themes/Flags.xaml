@@ -17,9 +17,6 @@
         <DrawingImage.Drawing>
             <DrawingGroup>
                 <DrawingGroup>
-                    <DrawingGroup.Transform>
-                        <TranslateTransform X="0.072819948196411133" Y="0" />
-                    </DrawingGroup.Transform>
                     <DrawingGroup Transform="1.1722,0,0,1.1426,-2.3,-0.1">
                         <DrawingGroup.ClipGeometry>
                             <RectangleGeometry RadiusX="0" RadiusY="0" Rect="1.9,0.1,546,420.1" />
@@ -28,13 +25,10 @@
                         <GeometryDrawing Brush="#FFFFD200" Geometry="F1 M0,60L840,60 840,360 0,360z"/>
                         <GeometryDrawing Brush="#FFD40000" Geometry="F1 M0,120L840,120 840,300 0,300z"/>
                         <GeometryDrawing Brush="#FF000001" Geometry="F1 M0,180L840,180 840,240 0,240z"/>
-                        <GeometryDrawing Brush="#FF000000">
+                        <GeometryDrawing Geometry="F1 M0,0L0,420 280,210z">
                             <GeometryDrawing.Pen>
                                 <Pen Brush="#FF000000" Thickness="20" StartLineCap="Flat" EndLineCap="Flat" LineJoin="Miter" />
                             </GeometryDrawing.Pen>
-                            <GeometryDrawing.Geometry>
-                                <PathGeometry FillRule="Nonzero" Figures="M0,0L0,420 280,210z" />
-                            </GeometryDrawing.Geometry>
                         </GeometryDrawing>
                         <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M0,0L0,420 280,210z"/>
                         <GeometryDrawing Brush="#FFD40000" Geometry="F1 M106.5,104.4L162,275.1 16.8,169.6 196.3,169.6 51,275.1z"/>
