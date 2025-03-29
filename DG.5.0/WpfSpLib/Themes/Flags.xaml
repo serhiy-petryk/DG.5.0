@@ -34,7 +34,6 @@
                     <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M0,160L640,160 640,320 0,320z" />
                     <GeometryDrawing Brush="#FF128807" Geometry="F1 M0,320L640,320 640,480 0,480z" />
                     <DrawingGroup Transform="3.2,0,0,3.2,320,240">
-                        <!-- Main circles -->
                         <GeometryDrawing Brush="#FF000088">
                             <GeometryDrawing.Geometry>
                                 <EllipseGeometry RadiusX="20" RadiusY="20" Center="0,0" />
@@ -50,124 +49,30 @@
                                 <EllipseGeometry RadiusX="3.5" RadiusY="3.5" Center="0,0" />
                             </GeometryDrawing.Geometry>
                         </GeometryDrawing>
-
-                        <!-- Other elements -->
                         <DrawingGroup Children="{StaticResource IndianRepeater}"/>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="15" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="30" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="45" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="60" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="75" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="90" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="105" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="120" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="135" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="150" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="165" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="180" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="195" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="210" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="225" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="240" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="255" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="270" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="285" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="300" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="315" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="330" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
-                        <DrawingGroup Children="{StaticResource IndianRepeater}">
-                            <DrawingGroup.Transform>
-                                <RotateTransform Angle="345" CenterX="0" CenterY="0"/>
-                            </DrawingGroup.Transform>
-                        </DrawingGroup>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.9659,0.2588,-0.2588,0.9659,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.866,0.5,-0.5,0.866,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.7071,0.7071,-0.7071,0.7071,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.5,0.866,-0.866,0.5,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.2588,0.9659,-0.9659,0.2588,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0,1,-1,0,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.2588,0.9659,-0.9659,-0.2588,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.5,0.866,-0.866,-0.5,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.7071,0.7071,-0.7071,-0.7071,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.866,0.5,-0.5,-0.866,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.9659,0.2588,-0.2588,-0.9659,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-1,0,0,-1,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.9659,-0.2588,0.2588,-0.9659,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.866,-0.5,0.5,-0.866,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.7071,-0.7071,0.7071,-0.7071,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.5,-0.866,0.866,-0.5,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="-0.2588,-0.9659,0.9659,-0.2588,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0,-1,1,0,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.2588,-0.9659,0.9659,0.2588,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.5,-0.866,0.866,0.5,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.7071,-0.7071,0.7071,0.7071,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.866,-0.5,0.5,0.866,0,0"/>
+                        <DrawingGroup Children="{StaticResource IndianRepeater}" Transform="0.9659,-0.2588,0.2588,0.9659,0,0"/>
                     </DrawingGroup>
                 </DrawingGroup>
             </DrawingGroup>
