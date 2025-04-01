@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Linq;
 using DGCore.Common;
 
 namespace DGCore.Filters
