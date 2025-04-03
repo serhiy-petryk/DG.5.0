@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace DGCore.Common
+﻿namespace DGCore.Common
 {
     public static class Shared
     {
@@ -10,7 +8,6 @@ namespace DGCore.Common
         {
             if (MessageBoxProxy == null)
             {
-                Debug.Print($"MESSAGEBOX: {message}");
                 switch (buttons)
                 {
                     case Enums.MessageBoxButtons.OK: return Enums.MessageBoxResult.OK;
