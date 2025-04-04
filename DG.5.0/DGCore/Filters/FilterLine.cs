@@ -13,8 +13,8 @@ namespace DGCore.Filters
         {
             PropertyType = dbColumn.DataType;
             Id = dbColumn.SqlName;
-            DisplayName = (string.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName);
-            Description = (string.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription);
+            DisplayName = string.IsNullOrEmpty(itemDisplayName) ? dbColumn.DisplayName ?? dbColumn.SqlName : itemDisplayName;
+            Description = string.IsNullOrEmpty(itemDescription) ? dbColumn.Description : itemDescription;
             PropertyCanBeNull = dbColumn.IsNullable;
         }
     }
