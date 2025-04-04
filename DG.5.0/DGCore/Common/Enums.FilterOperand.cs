@@ -29,7 +29,7 @@ namespace DGCore.Common
             CanBeNull = 15
         }
 
-        //=================  SubClass OperandTypeConverter  ================
+        #region =========  SubClass OperandTypeConverter  =========
         public class FilterOperandTypeConverter : TypeConverter
         {
             public static FilterOperand[] GetPossibleOperands(Type propertyType, bool propertyCanBeNull)
@@ -117,6 +117,6 @@ namespace DGCore.Common
                 return operandDisplayName[Convert.ToInt32(value)];
             }
         }
-
+        #endregion
     }
 }
