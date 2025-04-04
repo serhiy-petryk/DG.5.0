@@ -66,8 +66,9 @@ namespace DGCore.Common
                         {
                             oo.AddRange(new[]
                             {
-                FilterOperand.Between, FilterOperand.NotBetween, FilterOperand.Less, FilterOperand.NotLess, FilterOperand.Greater, FilterOperand.NotGreater
-              });
+                                FilterOperand.Between, FilterOperand.NotBetween, FilterOperand.Less,
+                                FilterOperand.NotLess, FilterOperand.Greater, FilterOperand.NotGreater
+                            });
                         }
 
                         break;
