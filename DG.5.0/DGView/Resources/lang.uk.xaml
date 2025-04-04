@@ -83,4 +83,25 @@
     <v:String x:Key="Loc:FilterLineView.Expression1Title">Вираз 1</v:String>
     <v:String x:Key="Loc:FilterLineView.Expression2Title">Вираз 2</v:String>
     <v:String x:Key="Loc:FilterLineView.Label.Except">Окрім (будуть включені всі дані, крім тих, що вказані у виразі)</v:String>
+
+    <!-- FilterOperand List -->
+    <x:Array x:Key="Loc:FilterOperandList" Type="{x:Type v:String}" >
+        <v:String>&lt;No operation&gt;</v:String>
+        <v:String>Містить</v:String>
+        <v:String>Не містить</v:String>
+        <v:String>=</v:String>
+        <v:String>&lt;&gt;</v:String>
+        <v:String>Між</v:String>
+        <v:String>За межами</v:String>
+        <v:String>&lt;</v:String>
+        <v:String>&gt;=</v:String>
+        <v:String>&gt;</v:String>
+        <v:String>&lt;=</v:String>
+        <v:String>Починаєтья з</v:String>
+        <v:String>Не починаєтья з</v:String>
+        <v:String>Закінчується на</v:String>
+        <v:String>Не закінчується на</v:String>
+        <v:String>Є пустим</v:String>
+        <v:String>Не є пустим</v:String>
+    </x:Array>
 </ResourceDictionary>

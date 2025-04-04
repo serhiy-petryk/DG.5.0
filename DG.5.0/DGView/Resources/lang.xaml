@@ -83,4 +83,25 @@
     <v:String x:Key="Loc:FilterLineView.Expression1Title">Expression 1</v:String>
     <v:String x:Key="Loc:FilterLineView.Expression2Title">Expression 2</v:String>
     <v:String x:Key="Loc:FilterLineView.Label.Except">Except (all data except those specified in the expression will be included)</v:String>
+
+    <!-- FilterOperand List -->
+    <x:Array x:Key="Loc:FilterOperandList" Type="{x:Type v:String}" >
+        <v:String>&lt;No operation&gt;</v:String>
+        <v:String>Contains</v:String>
+        <v:String>Does not contain</v:String>
+        <v:String>=</v:String>
+        <v:String>&lt;&gt;</v:String>
+        <v:String>Between</v:String>
+        <v:String>Does not between</v:String>
+        <v:String>&lt;</v:String>
+        <v:String>&lt;=</v:String>
+        <v:String>&gt;</v:String>
+        <v:String>&gt;=</v:String>
+        <v:String>Starts with</v:String>
+        <v:String>Does not start with</v:String>
+        <v:String>Ends with</v:String>
+        <v:String>Does not end with</v:String>
+        <v:String>Is empty</v:String>
+        <v:String>Is not empty</v:String>
+    </x:Array>
 </ResourceDictionary>

@@ -16,6 +16,8 @@ namespace DGView
         {
             DGCore.Common.Shared.MessageBoxProxy = new MessageBoxProxy();
 
+            LocalizationHelper.RegionChanged += OnRegionChanged;
+
             var culture = RegionMenuItem.RegionMenuItems.ContainsKey(LocalizationHelper.CurrentCulture
                 .IetfLanguageTag)
                 ? LocalizationHelper.CurrentCulture
@@ -31,6 +33,19 @@ namespace DGView
             SelectAllOnFocusForTextBox.ActivateGlobally();
 
             base.OnStartup(e);
+        }
+
+        private void OnRegionChanged(object sender, System.EventArgs e)
+        {
+            var filterOperands = (string[])Current.Resources["Loc:FilterOperandList"];
+            if (filterOperands != null)
+            {
+                for (var k = 0; k < filterOperands.Length; k++)
+                {
+                    if (k < DGCore.Common.Enums.FilterOperandTypeConverter.OperandDisplayName.Length)
+                        DGCore.Common.Enums.FilterOperandTypeConverter.OperandDisplayName[k] = filterOperands[k];
+                }
+            }
         }
 
         private void OnLabelClick(object sender, RoutedEventArgs e)

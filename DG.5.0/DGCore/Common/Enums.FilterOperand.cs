@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using DGCore.Utils;
 
@@ -91,11 +92,11 @@ namespace DGCore.Common
                 }
             }
 
-            private static string[] operandDisplayName = {
-        "", "містить", "не містить", "=", "<>", "між", "не між", "<", ">=", ">", "<=",
-        "починається з", "не починається з", "закінчується на", "не закінчується на", "є пустим"
-      };
-            private static FilterOperand Operand_GetOperandByName(string displayName) => (FilterOperand)Array.IndexOf<string>(operandDisplayName, displayName);
+            public static readonly string[] OperandDisplayName =
+                Enum.GetValues<FilterOperand>().Select(a => a.ToString()).ToArray();
+
+            private static FilterOperand Operand_GetOperandByName(string displayName) =>
+                (FilterOperand)Array.IndexOf<string>(OperandDisplayName, displayName);
 
             //================================
 
@@ -114,7 +115,7 @@ namespace DGCore.Common
               object value, Type destinationType)
             {
                 if (value == null || destinationType != typeof(string)) return null;
-                return operandDisplayName[Convert.ToInt32(value)];
+                return OperandDisplayName[Convert.ToInt32(value)];
             }
         }
         #endregion
