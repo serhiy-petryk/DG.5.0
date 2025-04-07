@@ -102,5 +102,8 @@ namespace DGView.Views
             for (var k = 0; k < blankLines.Length; k++)
                 Clone_FilterLines.Remove((FilterLineSubitem) blankLines[k].Item);*/
         }
+
+        private void DataGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e) =>
+            DGHelper.DataGrid_OnRowEditEnding((DataGrid)sender, e);
     }
 }

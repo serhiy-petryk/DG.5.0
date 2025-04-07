@@ -33,7 +33,7 @@ namespace DGCore.Filters
     }
 
     //===============  Class FilterLineItem  ==============
-    public class FilterLineSubitem : INotifyPropertyChanged, IDataErrorInfo, IEditableObject, ICloneable
+    public class FilterLineSubitem : INotifyPropertyChanged, IDataErrorInfo, IEditableObject, ICloneable, IIsEmptySupport
     {
         private Common.Enums.FilterOperand _operand;
         private object _value1;
@@ -170,6 +170,7 @@ namespace DGCore.Filters
         public bool IsError => !string.IsNullOrEmpty(Error);
 
         public override string ToString() => GetStringPresentation();
+        public bool IsEmpty() => _operand == Enums.FilterOperand.None;
 
         public object Clone() => new FilterLineSubitem
             {Owner = Owner, _operand = _operand, _value1 = _value1, _value2 = _value2};

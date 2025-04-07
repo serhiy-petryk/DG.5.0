@@ -4,12 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using DGCore.Utils;
+using WpfSpLib.Helpers;
 
 namespace DGView.Helpers
 {
     public static class DGHelper
     {
+        public static void DataGrid_OnRowEditEnding(DataGrid dataGrid, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.Cancel || e.EditAction != DataGridEditAction.Commit) return;
+
+            if (e.Row.DataContext is DGCore.Common.IIsEmptySupport item && dataGrid.ItemsSource is IList itemList)
+            {
+                dataGrid.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (item.IsEmpty())
+                    {
+                        itemList.Remove(item);
+                        dataGrid.UpdateAllBindings();
+                        // dataGrid.Items.Refresh();
+                    }
+                }), DispatcherPriority.Loaded);
+            }
+        }
+
         public static DataGridCellInfo GetActiveCellInfo(DataGrid dg)
         {
             var cellInfo = dg.CurrentCell;

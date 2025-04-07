@@ -22,6 +22,7 @@
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
                       RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
                       SelectionUnit="Cell" SelectionMode="Single" SelectedCellsChanged="DbPropertiesDataGrid_SelectedCellsChanged"
+                      RowEditEnding="DataGrid_OnRowEditEnding"
                       CanUserResizeRows="False" Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>
                     <common:LocalizationProxy x:Key="OperandTitleProxy" InputValue="{DynamicResource Loc:FilterLineView.OperandTitle}"/>
