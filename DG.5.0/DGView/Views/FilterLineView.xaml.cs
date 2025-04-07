@@ -95,12 +95,6 @@ namespace DGView.Views
                 var grid = (DataGrid)sender;
                 grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
             }
-
-            /*var blankLines = e.RemovedCells.Where(c =>
-                c.Item is FilterLineSubitem si && Equals(si.FilterOperand, DGCore.Common.Enums.FilterOperand.None) &&
-                Equals(si.Value1, null) && Equals(si.Value2, null)).ToArray();
-            for (var k = 0; k < blankLines.Length; k++)
-                Clone_FilterLines.Remove((FilterLineSubitem) blankLines[k].Item);*/
         }
 
         private void DataGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e) =>
