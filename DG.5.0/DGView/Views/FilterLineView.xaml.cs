@@ -88,15 +88,6 @@ namespace DGView.Views
         }
         #endregion
 
-        private void DbPropertiesDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            if (e.AddedCells.Count == 1)
-            {
-                var grid = (DataGrid)sender;
-                grid.Dispatcher.BeginInvoke(new Action((() => grid.BeginEdit())));
-            }
-        }
-
         private void DataGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e) =>
             DGHelper.DataGrid_OnRowEditEnding((DataGrid)sender, e);
     }
