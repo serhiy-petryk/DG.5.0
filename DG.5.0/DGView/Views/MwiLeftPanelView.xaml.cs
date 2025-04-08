@@ -98,7 +98,7 @@ namespace DGView.Views
                     app.Title = rootMenu.ApplicationTitle;
 
                 var mwiContainer = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
-                var resizeThumb = mwiContainer?.GetVisualChildren().OfType<FrameworkElement>().FirstOrDefault(a => a.Name == "LeftPanelDragThumb");
+                var resizeThumb = mwiContainer?.GetVisualChildren().OfType<Control>().FirstOrDefault(a => a.Name == "LeftPanelDragThumb");
                 if (resizeThumb != null)
                 {
                     var b = new Binding { Path = new PropertyPath("Background"), Source = this, Converter = ColorHslBrush.Instance, ConverterParameter = "+5%" };
