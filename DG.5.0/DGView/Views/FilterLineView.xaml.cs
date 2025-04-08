@@ -25,7 +25,7 @@ namespace DGView.Views
         internal static void OnFilterEditPreviewMouseDown(DataGridCell cell)
         {
             // var cell = (DataGridCell)sender;
-            var filterLine = cell.DataContext as DGCore.Filters.FilterLineBase;
+            var filterLine = cell.DataContext as FilterLineBase;
             if (!(bool)CanConvertStringTo.Instance.Convert(filterLine.PropertyType, null, null, null))
                 return;
 

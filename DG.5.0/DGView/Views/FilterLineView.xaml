@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:common="clr-namespace:WpfSpLib.Common;assembly=WpfSpLib"
              xmlns:effects="clr-namespace:WpfSpLib.Effects;assembly=WpfSpLib"
+             xmlns:helpers="clr-namespace:WpfSpLib.Helpers;assembly=WpfSpLib"
+             Background="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"
+             Name="Root"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -19,9 +22,11 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="400" ItemsSource="{Binding Clone_FilterLines}"
+            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
                       CanUserResizeRows="False"
+                      Background="{Binding RelativeSource={RelativeSource AncestorType=helpers:IColorThemeSupport}, Path=ActualThemeColor, Converter={x:Static common:ColorHslBrush.Instance}}"
                       RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
+                      Style="{StaticResource MonochromeDGStyle}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
                       Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>
@@ -48,6 +53,7 @@
 
         <CheckBox Grid.Row="1" Margin="5" x:Name="cbNot" VerticalAlignment="Center" IsChecked="{Binding Clone_Not}"
                   Style="{StaticResource MonochromeCheckBoxStyle}"
+                  effects:ChromeEffect.Monochrome="{Binding ElementName=Root, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}"
                   Content="{DynamicResource Loc:FilterLineView.Label.Except}"
                   FontWeight="Bold"/>
 
