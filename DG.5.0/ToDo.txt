@@ -202,3 +202,9 @@ done: 107. Replace common:LocalizationProxy by DynamicResource.
 	add context menu to delete row
 	add localization for Operand selection
 	add ObjectEditor for Expression
+
+2025-04-09
+111. Replace ResetBinding with 'dataGrid.UpdateAllBindings();' or 'dataGrid.Items.Refresh();'
+112. Check IDataErrorInfo for DataGrid
+113. Check DataGrid styles
+114. Common library for loc messages and interfaces (DGCore, WpfSpLib)
