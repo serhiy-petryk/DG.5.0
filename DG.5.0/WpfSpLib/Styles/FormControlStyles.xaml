@@ -308,6 +308,7 @@
     <!-- <Style x:Key="SimpleTreeViewItemToggleButton" TargetType="{x:Type ToggleButton}"> -->
     <!-- <Style x:Key="SimpleTreeViewItem" TargetType="{x:Type TreeViewItem}"> -->
 
+    <!-- Used in DGEditSettingsView.xaml -->
     <Style x:Key="SortingCheckBoxStyle" TargetType="{x:Type CheckBox}">
         <!--        <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}"/>-->
         <Setter Property="Padding" Value="3" />
