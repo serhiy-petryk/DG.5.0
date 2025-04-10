@@ -214,6 +214,9 @@ namespace DGView.ViewModels
                                     _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
                                     dataNavigationSW.Stop();
                                     OnPropertiesChanged(nameof(StatusTextOfLeftLabel));
+                                    // Clear DataLoadedTime
+                                    _dataLoadedTime = null;
+
                                 }), DispatcherPriority.Background);
                             }
                         }
@@ -221,12 +224,8 @@ namespace DGView.ViewModels
                         _lastCurrentCellInfo = new DataGridCellInfo();
                         break;
                 }
+
                 DataStatus = e.EventKind;
-
-                // Clear DataLoadedTime
-                if (DataStatus == DataSourceBase.DataEventKind.Refreshed)
-                    _dataLoadedTime = null;
-
                 // DoEventsHelper.DoEvents();
             }));
 
