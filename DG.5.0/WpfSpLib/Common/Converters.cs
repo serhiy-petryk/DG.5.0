@@ -143,7 +143,7 @@ namespace WpfSpLib.Common
     public class VisibilityConverter : IValueConverter
     {
         public static VisibilityConverter Instance = new VisibilityConverter();
-        public static VisibilityConverter InverseInstance = new VisibilityConverter {_inverse = true};
+        public static VisibilityConverter InverseInstance = new VisibilityConverter { _inverse = true };
         private bool _inverse;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
