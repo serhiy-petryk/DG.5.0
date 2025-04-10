@@ -208,3 +208,5 @@ done: 107. Replace common:LocalizationProxy by DynamicResource.
 112. Check IDataErrorInfo for DataGrid
 113. Check DataGrid styles
 114. Common library for loc messages and interfaces (DGCore, WpfSpLib)
+115. Bug: SortGlyph don't update after sorting
+116. DGSettingsEdit -> remove groups/sortings -> very slowly with color bugs
