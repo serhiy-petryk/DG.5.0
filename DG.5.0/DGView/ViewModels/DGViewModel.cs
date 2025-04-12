@@ -197,9 +197,9 @@ namespace DGView.ViewModels
                             var lastActiveColumn = _lastCurrentCellInfo.Column;
                             if (lastActiveItem != null && DGControl.Items.IndexOf(lastActiveItem) == -1) // FilterOnValue off for Group item
                                 lastActiveItem = null;
-                            if (lastActiveItem == null && ((IList) Data).Count > 0)
+                            if (lastActiveItem == null && ((IList)Data).Count > 0)
                             {
-                                lastActiveItem = ((IList) Data)[0];
+                                lastActiveItem = ((IList)Data)[0];
                                 lastActiveColumn = DGControl.Columns.Where(c => c.Visibility == Visibility.Visible)
                                     .OrderBy(c => c.DisplayIndex).FirstOrDefault();
                             }
@@ -211,13 +211,13 @@ namespace DGView.ViewModels
                                 {
                                     var dataNavigationSW = new Stopwatch();
                                     dataNavigationSW.Start();
-                                    DGControl.ScrollIntoView(lastActiveItem, lastActiveColumn);
 
+                                    DGControl.ScrollIntoView(lastActiveItem, lastActiveColumn);
+                                    var activeCell = DGHelper.GetDataGridCell(newItem);
                                     DGControl.Dispatcher.BeginInvoke(new Action(() =>
                                     {
                                         if (!DGControl.SelectedCells.Contains(newItem)) // Prevent the error
                                             DGControl.SelectedCells.Add(newItem);
-                                        var activeCell = DGHelper.GetDataGridCell(newItem);
                                         activeCell?.Focus(); // Show/'cursor navigation' the active cell
 
                                         _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);

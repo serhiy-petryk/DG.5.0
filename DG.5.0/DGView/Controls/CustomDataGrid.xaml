@@ -24,12 +24,13 @@
              Style="{StaticResource MonochromeDGStyle}"
              Background="#FFFFFFFF"
 
-             ScrollViewer.CanContentScroll="True"
-             ScrollViewer.VerticalScrollBarVisibility="Auto"
-             ScrollViewer.HorizontalScrollBarVisibility="Auto"
-             ScrollViewer.ScrollChanged="OnScrollChanged"
+             VerticalScrollBarVisibility="Auto"
              EnableRowVirtualization="True"
-             EnableColumnVirtualization="True">
+             EnableColumnVirtualization="True"
+             HorizontalScrollBarVisibility="Auto"
+             ScrollViewer.IsDeferredScrollingEnabled="True"
+             ScrollViewer.CanContentScroll="True"
+             ScrollViewer.ScrollChanged="OnScrollChanged">
 
     <DataGrid.Resources>
         <!-- need proxy because sometimes there are binding errors -->
