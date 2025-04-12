@@ -13,7 +13,7 @@ namespace WpfSpLib.Helpers
         public static void UpdateAllBindings(this DependencyObject target)
             // based on 'H.B.' comment in https://stackoverflow.com/questions/5023025/is-there-a-way-to-get-all-bindingexpression-objects-for-a-window
         {
-            foreach (var child in (new[] { target }).Union(target.GetVisualChildren()))
+            foreach (var child in (new[] { target })/*.Union(target.GetVisualChildren())*/)
             {
                 var fiOfDp = GetFieldInfosOfDp(child.GetType());
                 fiOfDp.ForEach(dp => BindingOperations.GetBindingExpression(child, dp.GetValue(child) as DependencyProperty)?.UpdateTarget());
