@@ -204,7 +204,13 @@ done: 107. Replace common:LocalizationProxy by DynamicResource.
 	add ObjectEditor for Expression
 
 2025-04-09
-111. Replace ResetBinding with 'dataGrid.UpdateAllBindings();' or 'dataGrid.Items.Refresh();'
+done: 111. Replace ResetBinding with 'dataGrid.UpdateAllBindings();' or 'dataGrid.Items.Refresh();'
+	- the best way is to use List and Items.Reset() in ResetBindings: 77% of time smple
+	- good is to use BindingList and base.ResetBindings() in ResetBindings: 90% of time sample
+	- Observable Collection is very slow because event on every add/remove row and it's impossible to suppress this events
+	- RefreshAllBindings() in ResetBinding gives an incorrect focusing of datagrid cell
+Conclusion: to use BindingList+base.ResetBindings() because good performance and add/remove item event support
+
 112. Check IDataErrorInfo for DataGrid
 113. Check DataGrid styles
 114. Common library for loc messages and interfaces (DGCore, WpfSpLib)
@@ -212,7 +218,7 @@ done: 107. Replace common:LocalizationProxy by DynamicResource.
 116. DGSettingsEdit -> remove groups/sortings -> very slowly with color bugs
 
 2025-04-11
-117. Try to use virtual ListView instead of DataGrid (HeidiSQL uses TVirtualStringTree control, similar to a Virtual ListView, which can manage dozens of millions of lines without problem)
+bad: no cell selection, .. 117. Try to use virtual ListView instead of DataGrid (HeidiSQL uses TVirtualStringTree control, similar to a Virtual ListView, which can manage dozens of millions of lines without problem)
 HeidiSQL show only 100'000 from 3'000'000 rows. Sorting of 100'000 rows take ~25 seconds
 https://learn.microsoft.com/en-us/answers/questions/253711/wpf-datagrid-scrolling-performance-issue
 https://stackoverflow.com/questions/1704512/wpf-toolkit-datagrid-scrolling-performance-problems-why
