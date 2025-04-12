@@ -217,3 +217,4 @@ HeidiSQL show only 100'000 from 3'000'000 rows. Sorting of 100'000 rows take ~25
 https://learn.microsoft.com/en-us/answers/questions/253711/wpf-datagrid-scrolling-performance-issue
 https://stackoverflow.com/questions/1704512/wpf-toolkit-datagrid-scrolling-performance-problems-why
 https://www.codeproject.com/Articles/5294035/WPF-DataGrid-Solving-Sorting-ScrollIntoView-Refres
+118. Investigate: Why to use: private void OnScrollBarPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) in DataGridView.xaml.cs?
