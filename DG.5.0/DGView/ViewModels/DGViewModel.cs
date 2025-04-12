@@ -80,10 +80,11 @@ namespace DGView.ViewModels
                 var listType = typeof(DGVList<>).MakeGenericType(ds.ItemType);
                 var dataSource = (IDGVList)Activator.CreateInstance(listType, ds, (Func<DGColumnHelper[]>)GetAllValidColumnHelpers);
                 Data = dataSource;
-                /*Data.FnResetBinding = () =>
+                /* Different scenarios for ResetBinding
+                 Data.FnResetBinding = () =>
                 {
-                    // DGControl.UpdateAllBindings();
-                    DGControl.Items.Refresh();
+                    DGControl.UpdateAllBindings();
+                    // DGControl.Items.Refresh();
                 };*/
                 Unwire();
                 Wire();
@@ -211,21 +212,24 @@ namespace DGView.ViewModels
                                 {
                                     var dataNavigationSW = new Stopwatch();
                                     dataNavigationSW.Start();
-
-                                    DGControl.ScrollIntoView(lastActiveItem, lastActiveColumn);
-                                    var activeCell = DGHelper.GetDataGridCell(newItem);
                                     DGControl.Dispatcher.BeginInvoke(new Action(() =>
                                     {
-                                        if (!DGControl.SelectedCells.Contains(newItem)) // Prevent the error
-                                            DGControl.SelectedCells.Add(newItem);
-                                        activeCell?.Focus(); // Show/'cursor navigation' the active cell
+                                        DGControl.ScrollIntoView(lastActiveItem, lastActiveColumn);
+                                        DGControl.Dispatcher.BeginInvoke(new Action(() =>
+                                        {
+                                            if (!DGControl.SelectedCells.Contains(newItem)) // Prevent the error
+                                                DGControl.SelectedCells.Add(newItem);
+                                            var activeCell = DGHelper.GetDataGridCell(newItem);
+                                            activeCell?.Focus(); // Show/'cursor navigation' the active cell
 
-                                        _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
-                                        dataNavigationSW.Stop();
-                                        OnPropertiesChanged(nameof(StatusTextOfLeftLabel));
-                                        // Clear DataLoadedTime
-                                        _dataLoadedTime = null;
-                                    }), DispatcherPriority.Background); // Highlight the focused cell
+                                            OnPropertiesChanged(nameof(StatusTextOfLeftLabel));
+                                            // Clear DataLoadedTime
+                                            _dataLoadedTime = null;
+
+                                            _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
+                                            dataNavigationSW.Stop();
+                                        }), DispatcherPriority.Render); // Highlight the focused cell
+                                    }), DispatcherPriority.Normal); // Restore the horizontal scroll bar
                                 }
                             }
                         }
