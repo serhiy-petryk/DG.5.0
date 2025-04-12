@@ -593,7 +593,10 @@ namespace DGCore.DGVList
             //_timer.Stop();
             //_timer.Restart();
             IsBindingsReseting = true;
-            base.ResetBindings(); // Need for sorting visualiztion
+            if (FnResetBinding != null)
+                FnResetBinding();
+            else
+                base.ResetBindings(); // Need for sorting visualiztion
             IsBindingsReseting = false;
 
             _timer.Stop();

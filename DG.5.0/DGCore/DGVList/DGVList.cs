@@ -49,6 +49,7 @@ namespace DGCore.DGVList
         public Filters.FilterList FilterByValue { get; private set; }
         public string TextFastFilter { get; private set; }
         public bool NoDataFilter { get; set; }
+        public Action FnResetBinding { get; set; }
 
         public bool IsPropertyVisible(string propertyName) =>
           CurrentExpandedGroupLevel == int.MaxValue ||
