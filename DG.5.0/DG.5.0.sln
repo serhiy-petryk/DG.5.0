@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8BD05131-7BEA-4CA1-A50B-A6D958F057F3}"
 	ProjectSection(SolutionItems) = preProject
 		Color.Explanation.txt = Color.Explanation.txt
+		Icons.txt = Icons.txt
 		Performance.txt = Performance.txt
 		RDBMS.txt = RDBMS.txt
 		Strategy.txt = Strategy.txt
