@@ -228,7 +228,7 @@ namespace DGView.ViewModels
                                             // Clear DataLoadedTime
                                             _dataLoadedTime = null;
                                         }), DispatcherPriority.Render); // Highlight the focused cell
-                                    }), DispatcherPriority.Normal); // Restore the horizontal scroll bar
+                                    }), DispatcherPriority.Normal); // Restore the horizontal scroll bar of datagrid
                                 }
                             }
                         }
