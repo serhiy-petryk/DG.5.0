@@ -222,12 +222,11 @@ namespace DGView.ViewModels
                                             var activeCell = DGHelper.GetDataGridCell(newItem);
                                             activeCell?.Focus(); // Show/'cursor navigation' the active cell
 
+                                            _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
+                                            dataNavigationSW.Stop();
                                             OnPropertiesChanged(nameof(StatusTextOfLeftLabel));
                                             // Clear DataLoadedTime
                                             _dataLoadedTime = null;
-
-                                            _dataNavigationTime = Convert.ToInt32(dataNavigationSW.ElapsedMilliseconds);
-                                            dataNavigationSW.Stop();
                                         }), DispatcherPriority.Render); // Highlight the focused cell
                                     }), DispatcherPriority.Normal); // Restore the horizontal scroll bar
                                 }
