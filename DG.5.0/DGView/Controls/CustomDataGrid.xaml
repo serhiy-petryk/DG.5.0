@@ -28,7 +28,7 @@
              EnableRowVirtualization="True"
              EnableColumnVirtualization="True"
              HorizontalScrollBarVisibility="Auto"
-             ScrollViewer.IsDeferredScrollingEnabled="True"
+             ScrollViewer.IsDeferredScrollingEnabled="False"
              ScrollViewer.CanContentScroll="True"
              ScrollViewer.ScrollChanged="OnScrollChanged">
 
