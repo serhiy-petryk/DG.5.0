@@ -28,6 +28,7 @@
              EnableRowVirtualization="True"
              EnableColumnVirtualization="True"
              HorizontalScrollBarVisibility="Auto"
+             VirtualizingStackPanel.VirtualizationMode="Recycling"
              ScrollViewer.IsDeferredScrollingEnabled="False"
              ScrollViewer.CanContentScroll="True"
              ScrollViewer.ScrollChanged="OnScrollChanged">

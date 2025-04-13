@@ -42,7 +42,6 @@ namespace DGView.Controls
             InitializeComponent();
             ViewModel = new DGViewModel(this);
             DataContext = ViewModel;
-            VirtualizingPanel.SetVirtualizationMode(this, VirtualizationMode.Recycling);
             LocalizationHelper.RegionChanged += LocalizationHelperOnLanguageChanged;
         }
 

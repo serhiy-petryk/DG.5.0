@@ -20,3 +20,10 @@
 7. Export to PDF
 8. Calculated columns
 9. Edit mode for DGView
+
+2025-04-13
+10. About scrolling in DataGrid.
+	2 strategies:
+		switch EnableColumnVirtualization
+		switch ScrollViewer.IsDeferredScrollingEnabled (true for vertical scroll, false - for horizontal scroll)
+	Current strategy is switch EnableColumnVirtualization. In most cases it works good.
