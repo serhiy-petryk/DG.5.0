@@ -219,10 +219,10 @@ Conclusion: to use BindingList+base.ResetBindings() because good performance and
 
 2025-04-11
 bad: no cell selection, .. 117. Try to use virtual ListView instead of DataGrid (HeidiSQL uses TVirtualStringTree control, similar to a Virtual ListView, which can manage dozens of millions of lines without problem)
-HeidiSQL show only 100'000 from 3'000'000 rows. Sorting of 100'000 rows take ~25 seconds
-https://learn.microsoft.com/en-us/answers/questions/253711/wpf-datagrid-scrolling-performance-issue
-https://stackoverflow.com/questions/1704512/wpf-toolkit-datagrid-scrolling-performance-problems-why
-https://www.codeproject.com/Articles/5294035/WPF-DataGrid-Solving-Sorting-ScrollIntoView-Refres
-118. Investigate: Why to use: private void OnScrollBarPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) in DataGridView.xaml.cs?
+	HeidiSQL show only 100'000 from 3'000'000 rows. Sorting of 100'000 rows take ~25 seconds
+	https://learn.microsoft.com/en-us/answers/questions/253711/wpf-datagrid-scrolling-performance-issue
+	https://stackoverflow.com/questions/1704512/wpf-toolkit-datagrid-scrolling-performance-problems-why
+	https://www.codeproject.com/Articles/5294035/WPF-DataGrid-Solving-Sorting-ScrollIntoView-Refres
+done (Uses by 'private const bool IsVerticalScrollBarDeferred = false' in DataGridView.xaml.cs): 118. Investigate: Why to use: private void OnScrollBarPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) in DataGridView.xaml.cs?
 	- differed scroll: for vertical scroll bar when many rows
 	- nondiffered scroll: always for horizontal scroll bar; vertical scroll bar when not many rows
