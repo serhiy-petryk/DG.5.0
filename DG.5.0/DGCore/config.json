@@ -530,6 +530,7 @@
     "UOD": {
       "Live UOD_ALL_UA (1'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 1000000 * from all_ua"},
       "Live UOD_ALL_UA (10'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 10000000 * from all_ua"},
+      "Live UOD_ALL_UA (15'000'000)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 15000000 * from all_ua"},
       "Live UOD_ALL_UA (1'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 1000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
       "Live UOD_ALL_UA (10'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 10000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
       "Live UOD_ALL_UA (15'000'000-DictionaryStore)": {"cs": "UOD_ALL_UA", "sql": "SELECT TOP 15000000 * from all_ua", "itemType": "Models.UOD_AllUA"},
