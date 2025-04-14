@@ -24,8 +24,8 @@
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
                       CanUserResizeRows="False"
-                      Background="{Binding ElementName=Root, Path=Background}"
                       RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
+                      Background="{Binding ElementName=Root, Path=Background}"
                       Style="{StaticResource MonochromeDGStyle}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
                       Unloaded="DataGrid_OnUnloaded">
@@ -47,7 +47,6 @@
                                         Header="{Binding Source={StaticResource Expression2TitleProxy}, Path=Value, Mode=OneWay}"
                                         Binding="{Binding Value2, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged }"/>
                 </DataGrid.Columns>
-
             </DataGrid>
         </ScrollViewer>
 
