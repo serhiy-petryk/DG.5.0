@@ -19,7 +19,6 @@ namespace DGView.Views
     /// </summary>
     public partial class DataGridView : UserControl
     {
-        private const bool IsVerticalScrollBarDeferred = false;
         public DGViewModel ViewModel => DataGrid.ViewModel;
 
         public DataGridView()
@@ -135,14 +134,6 @@ namespace DGView.Views
             mwiChild.InputBindings.Add(key);
             mwiChild.GotFocus += MwiChild_GotFocus;
 
-            if (IsVerticalScrollBarDeferred)
-            {
-                UnwireScrollViewer();
-                _scrollViewer = WpfSpLib.Helpers.VisualHelper.GetVisualChildren(DataGrid).OfType<ScrollViewer>()
-                    .FirstOrDefault();
-                WireScrollViewer();
-            }
-
             ((IDGVList)ViewModel.Data).ResetBindings(); // for Detach/Atach window event
         }
 
@@ -250,36 +241,6 @@ namespace DGView.Views
                 var rowViewMode = (DGCore.Common.Enums.DGRowViewMode)Enum.Parse(typeof(DGCore.Common.Enums.DGRowViewMode), (string)mi.CommandParameter);
                 mi.IsChecked = Equals(rowViewMode, ViewModel.RowViewMode);
             }
-        }
-        #endregion
-
-        #region ========  ScrollViewer  =========
-        private ScrollViewer _scrollViewer;
-        private void WireScrollViewer()
-        {
-            if (_scrollViewer != null)
-            {
-                foreach (var bar in _scrollViewer.GetVisualChildren().OfType<ScrollBar>())
-                    bar.PreviewMouseLeftButtonDown += OnScrollBarPreviewMouseLeftButtonDown;
-            }
-        }
-        private void UnwireScrollViewer()
-        {
-            if (_scrollViewer != null)
-            {
-                foreach (var bar in _scrollViewer.GetVisualChildren().OfType<ScrollBar>())
-                    bar.PreviewMouseLeftButtonDown -= OnScrollBarPreviewMouseLeftButtonDown;
-                _scrollViewer = null;
-            }
-        }
-
-        private void OnScrollBarPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var bar = (ScrollBar)sender;
-            var sv = (ScrollViewer)bar.TemplatedParent;
-            var isDeferredScrollingEnabled = bar.Orientation == Orientation.Vertical;
-            if (sv.IsDeferredScrollingEnabled != isDeferredScrollingEnabled)
-                sv.IsDeferredScrollingEnabled = isDeferredScrollingEnabled;
         }
         #endregion
 
