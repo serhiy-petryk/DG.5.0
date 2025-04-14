@@ -226,3 +226,6 @@ bad: no cell selection, .. 117. Try to use virtual ListView instead of DataGrid 
 done (Uses by 'private const bool IsVerticalScrollBarDeferred = false' in DataGridView.xaml.cs): 118. Investigate: Why to use: private void OnScrollBarPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) in DataGridView.xaml.cs?
 	- differed scroll: for vertical scroll bar when many rows
 	- nondiffered scroll: always for horizontal scroll bar; vertical scroll bar when not many rows
+
+2025-04-14
+119. Check usage ObservableCollection. May be replace it on BindingList.
