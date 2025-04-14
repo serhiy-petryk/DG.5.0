@@ -23,7 +23,33 @@
 
 2025-04-13
 10. About scrolling in DataGrid.
-	2 strategies:
-		switch EnableColumnVirtualization
+	3 strategies:
+		switch EnableColumnVirtualization (~5 sec delay when horizontal scrolling ('Операції головної Книги': group mode, 65 visible columns, 333 total columns, 122'000 filtered rows, 396'000 total rows))
 		switch ScrollViewer.IsDeferredScrollingEnabled (true for vertical scroll, false - for horizontal scroll)
+		set virtualiztions to constant: EnableRowVirtualization="True", EnableColumnVirtualization="True" (column scrolling is slighty slowly)
+			may be scrolling will be better if DGControl.Columns have only required columns (doesn't have hidden column)
 	Current strategy is switch EnableColumnVirtualization. In most cases it works good.
+11. Data engine. DGControl must has only required columns. To refactore data source creation for DataGrid:
+	- 1. get data structure from database query
+	- 2. if there is a saved setting - create data layout, if no - create data layout based on defaults.
+	- 3. GenerateColumns + apply layout 
+	- 4. Posibility to have multiple totals (Min. Max, Sum, ..)
+	Example (remove double call GenerateColumns)
+	                    DGControl.ItemsSource = (IEnumerable)Data;
+                    GenerateColumns();
+                    if (settings != null)
+                        ((IUserSettingSupport<DGV>) this).ApplySetting(settings);
+                    else
+                        UserSettingsUtils.Init(this, startUpLayoutName);
+                    GenerateColumns();
+	Remove unused columns:
+	       var allValidIds = settings.AllColumns.Where(a => !a.IsHidden).Select(a => a.Id).ToArray();
+            var allColumns = DGControl.Columns.Where(a=>!string.IsNullOrEmpty(a.SortMemberPath)).ToList();
+            for (var k = 0; k < allColumns.Count; k++)
+            {
+                var b = allValidIds.FirstOrDefault(a =>
+                    string.Equals(allColumns[k].SortMemberPath, a, StringComparison.InvariantCultureIgnoreCase));
+                if (b == null)
+                    DGControl.Columns.Remove(allColumns[k]);
+            }
+

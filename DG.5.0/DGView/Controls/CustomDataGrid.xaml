@@ -24,14 +24,14 @@
              Style="{StaticResource MonochromeDGStyle}"
              Background="#FFFFFFFF"
 
+             VirtualizingStackPanel.ScrollUnit="Pixel"
              VerticalScrollBarVisibility="Auto"
+             HorizontalScrollBarVisibility="Auto"
              EnableRowVirtualization="True"
              EnableColumnVirtualization="True"
-             HorizontalScrollBarVisibility="Auto"
              VirtualizingStackPanel.VirtualizationMode="Recycling"
              ScrollViewer.IsDeferredScrollingEnabled="False"
-             ScrollViewer.CanContentScroll="True"
-             ScrollViewer.ScrollChanged="OnScrollChanged">
+             ScrollViewer.CanContentScroll="True">
 
     <DataGrid.Resources>
         <!-- need proxy because sometimes there are binding errors -->
