@@ -175,7 +175,6 @@ namespace DGView.Views
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            UnwireScrollViewer();
             if (Parent is MwiChild mwiChild2)
                 mwiChild2.BeforeClose -= MwiChildOnBeforeClose;
 
@@ -189,7 +188,6 @@ namespace DGView.Views
                 }
 
                 InputBindings.Clear();
-                _scrollViewer = null;
                 ViewModel.Dispose();
                 DataGrid.Dispose();
             }
