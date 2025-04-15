@@ -22,7 +22,8 @@
         </Grid.RowDefinitions>
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
+            <DataGrid x:Name="DataGrid" AutoGenerateColumns="False"
+                      RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
                       CanUserResizeRows="False"
                       Background="{Binding ElementName=Root, Path=Background}"
                       RowHeaderStyle="{StaticResource MonochromeDGRowHeaderStyle_IDataErrorInfo}"
@@ -38,7 +39,12 @@
                     <DataGridComboBoxColumn Width="Auto" MinWidth="100"
                                             Header="{Binding Source={StaticResource OperandTitleProxy}, Path=Value, Mode=OneWay}"
                                             SelectedValueBinding="{Binding FilterOperand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                                            ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}" />
+                                            ItemsSource="{Binding Source={StaticResource FilterLineData}, Path=Value.FilterLine.PossibleOperands}"
+                                            EditingElementStyle="{StaticResource ComboBoxColumnElementStyle}">
+                        <!--<DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="{x:Type ComboBox}" BasedOn="{x:Static DataGridComboBoxColumn.DefaultElementStyle}"/>
+                        </DataGridComboBoxColumn.ElementStyle>-->
+                    </DataGridComboBoxColumn>
                     <DataGridTextColumn Width="1*" MinWidth="100"
                                         Header="{Binding Source={StaticResource Expression1TitleProxy}, Path=Value, Mode=OneWay}"
                                         Binding="{Binding Value1, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
