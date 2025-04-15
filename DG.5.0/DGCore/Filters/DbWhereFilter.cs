@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Versioning;
 
 namespace DGCore.Filters
@@ -25,7 +26,7 @@ namespace DGCore.Filters
                     List<string> tokens = new List<string>();
 
                     string columnName = DB.DbMetaData.QuotedColumnName(this._dbProviderNamespace, line.Id);
-                    foreach (FilterLineSubitem item in line.Items)
+                    foreach (FilterLineSubitem item in line.Items.Where(a=>a.IsValid))
                     {
                         switch (item.FilterOperand)
                         {
