@@ -24,7 +24,6 @@
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
                       CanUserResizeRows="False"
-                      RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
                       Background="{Binding ElementName=Root, Path=Background}"
                       Style="{StaticResource MonochromeDGStyle_IDataErrorInfo}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
