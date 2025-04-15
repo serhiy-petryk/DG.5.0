@@ -8,9 +8,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using DGCore.Filters;
 using DGView.Helpers;
+using WpfSpLib.Common;
 using WpfSpLib.Controls;
 using WpfSpLib.Helpers;
 
@@ -40,6 +42,9 @@ namespace DGView.Views
                 child.Theme = container?.ActualTheme;
                 child.ThemeColor = container?.ActualThemeColor;
                 child.SetResourceReference(MwiChild.TitleProperty, "Loc:FilterLineView.Title");
+                var parentDataGrid = cell.GetVisualParents().OfType<DataGrid>().FirstOrDefault();
+                var b = new Binding { Path = new PropertyPath("Background"), Source = parentDataGrid, Converter = ColorHslBrush.Instance, ConverterParameter = "+10%:+0%" };
+                child.SetBinding(MwiChild.ThemeColorProperty, b);
             });
         }
         #endregion
