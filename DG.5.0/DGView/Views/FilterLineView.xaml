@@ -26,7 +26,7 @@
                       CanUserResizeRows="False"
                       RowHeaderTemplate="{StaticResource IDataErrorInfoRowHeaderDataTemplate}"
                       Background="{Binding ElementName=Root, Path=Background}"
-                      Style="{StaticResource MonochromeDGStyle}"
+                      Style="{StaticResource MonochromeDGStyle_IDataErrorInfo}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
                       Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>
@@ -34,7 +34,6 @@
                     <common:LocalizationProxy x:Key="Expression1TitleProxy" InputValue="{DynamicResource Loc:FilterLineView.Expression1Title}"/>
                     <common:LocalizationProxy x:Key="Expression2TitleProxy" InputValue="{DynamicResource Loc:FilterLineView.Expression2Title}"/>
                 </DataGrid.Resources>
-
                 <DataGrid.Columns>
                     <DataGridComboBoxColumn Width="Auto" MinWidth="100"
                                             Header="{Binding Source={StaticResource OperandTitleProxy}, Path=Value, Mode=OneWay}"

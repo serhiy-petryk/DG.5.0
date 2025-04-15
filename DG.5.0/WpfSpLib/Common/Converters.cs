@@ -11,6 +11,18 @@ using WpfSpLib.Helpers;
 
 namespace WpfSpLib.Common
 {
+    public class OpacityForDataGridRowHeaderConverter : IValueConverter
+    {
+        // Hide row header content for new row in data grid
+        public static OpacityForDataGridRowHeaderConverter Instance = new OpacityForDataGridRowHeaderConverter();
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // value.GetType().Name == "NamedObject" => new row ({{NewItemPlaceholder}}) in DataGrid
+            return value == null || Equals(value.GetType().Name, "NamedObject") ? 0.0 : 1.0;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    }
+
     public class GetParentOfTypeConverter : IValueConverter
     {
         public static GetParentOfTypeConverter Instance = new GetParentOfTypeConverter();
