@@ -55,6 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Styles\DataGridColumnStyles.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Styles\FormControlStyles.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

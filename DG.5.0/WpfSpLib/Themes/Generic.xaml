@@ -21,6 +21,7 @@
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/PopupResizeControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/ResizableControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/WaitSpinner.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/DataGridColumnStyles.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/MwiContainer.xaml" />
         <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/MwiChild.xaml" />

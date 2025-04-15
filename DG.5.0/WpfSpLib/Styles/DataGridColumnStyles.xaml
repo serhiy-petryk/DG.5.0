@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:effects="clr-namespace:WpfSpLib.Effects"
+                    xmlns:common="clr-namespace:WpfSpLib.Common">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/WpfSpLib;component/Styles/FormControlStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="CheckBoxColumnElementStyle" TargetType="CheckBox" BasedOn="{StaticResource MonochromeCheckBoxStyle}">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" />
+        <Style.Triggers>
+            <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=IsReadOnly}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>-->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
+                <Setter Property="effects:ChromeEffect.Monochrome" Value="Red" />
+                <Setter Property="Background" Value="Red"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="FontSize" Value="5"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
