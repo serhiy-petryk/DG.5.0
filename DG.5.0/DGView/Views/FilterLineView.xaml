@@ -25,7 +25,8 @@
             <DataGrid AutoGenerateColumns="False" RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
                       CanUserResizeRows="False"
                       Background="{Binding ElementName=Root, Path=Background}"
-                      Style="{StaticResource MonochromeDGStyle_IDataErrorInfo}"
+                      RowHeaderStyle="{StaticResource MonochromeDGRowHeaderStyle_IDataErrorInfo}"
+                      Style="{StaticResource MonochromeDGStyle}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
                       Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>

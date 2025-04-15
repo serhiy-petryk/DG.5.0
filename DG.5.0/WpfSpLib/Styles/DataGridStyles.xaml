@@ -161,6 +161,7 @@
         </Style.Resources>
     </Style>
 
+    <!-- IDataErrorInfo support -->
     <Style x:Key="MonochromeDGRowHeaderStyle_IDataErrorInfo" TargetType="{x:Type DataGridRowHeader}" BasedOn="{StaticResource MonochromeDGRowHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
@@ -184,9 +185,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="MonochromeDGStyle_IDataErrorInfo" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource MonochromeDGStyle}">
-        <Setter Property="RowHeaderStyle" Value="{StaticResource MonochromeDGRowHeaderStyle_IDataErrorInfo}"/>
     </Style>
 </ResourceDictionary>
