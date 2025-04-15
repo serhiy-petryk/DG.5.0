@@ -34,76 +34,6 @@
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=Panel}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
     </Style>
 
-    <Style x:Key="xFilterOrDescriptionCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource MonochromeDGCellStyle}">
-        <!--<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background}"/>
-        <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background}"/>-->
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" ToolTip="Change filter">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Viewbox Grid.Column="0" Width="20" Margin="2">
-                            <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=Foreground}" Data="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                            <Viewbox.Style>
-                                <Style TargetType="Viewbox">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Viewbox.Style>
-                        </Viewbox>
-                        <Grid Grid.Column="1" VerticalAlignment="Stretch" Margin="4 0 0 0">
-                            <TextBlock Text="{Binding FilterTextOrDescription, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" TextWrapping="Wrap">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.HasFilter}" Value="True">
-                                                <Setter Property="FontWeight" Value="Bold"/>
-                                                <!--     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}"/>-->
-                                                <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridCell}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=1.1*}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <!--<EventSetter Event="PreviewMouseDown" Handler="OnFilterEditPreviewMouseDown"/>-->
-        <Style.Triggers>
-            <!--<Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsSelected" Value="True"/>
-                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}" />
-                <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+75%}" />
-            </MultiTrigger>-->
-            <!-- To remove BindingErrors in DGView, EditSetting forms -->
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Converter={x:Static common:GetParentOfTypeConverter.Instance}, ConverterParameter={x:Type DataGrid}}" Value="{x:Null}">
-                <Setter Property="Background" Value="White"/>
-            </DataTrigger>
-            <!--            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%:+65%:+35%}"/>
-            </Trigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.PropertyType, Converter={x:Static helpers:CanConvertStringTo.Instance}}" Value="False">
-                <Setter Property="Background" Value="LightGray"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
-            </DataTrigger>-->
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="FilterOrDescriptionCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource MonochromeDGCellStyle}">
         <Setter Property="ContentTemplate">
             <Setter.Value>
@@ -159,7 +89,7 @@
                 BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
             <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}, Path=RowHeaderWidth, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=4-}" Margin="-2 0 0 0"
                   ToolTip="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Mode=OneWay}"
-                  Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static helpers:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
+                  Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext, Converter={x:Static common:OpacityForDataGridRowHeaderConverter.Instance}, Mode=OneWay}"
                   Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=DataContext.Error, Converter={x:Static common:VisibilityConverter.Instance}, Mode=OneWay}">
                 <Ellipse StrokeThickness="0" Fill="Red"
                          Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}, Path=FontSize}"
