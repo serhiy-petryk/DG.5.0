@@ -17,6 +17,8 @@ namespace WpfSpLib.Effects
     /// </summary>
     public class ChromeEffect
     {
+        // States: disabled, normal, mouseOver, pressed;
+        // Colors: background, foreground, border, opacity
         #region ===========  OnPropertyChanged  ===========
         private static readonly ConcurrentDictionary<Control, SemaphoreSlim> _activated = new ConcurrentDictionary<Control, SemaphoreSlim>();
         private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

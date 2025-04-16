@@ -85,6 +85,8 @@
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"/>
         <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
         <Setter Property="BorderThickness" Value="0 0 1 1"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=FontSize, Converter={x:Static common:MathConverter.Instance}, ConverterParameter=0.8*}"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Template">
