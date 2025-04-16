@@ -184,8 +184,13 @@
                 </DataGrid.CellStyle>-->
 
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header="Не&#x0a;показувати" Binding="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}"
-                                            ElementStyle="{StaticResource CheckBoxColumnElementStyle}" EditingElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
+                    <DataGridCheckBoxColumn Header="Не&#x0a;показувати" Binding="{Binding IsHidden, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGridCheckBoxColumn.ElementStyle>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBoxColumnElementStyle}">
+                            <Setter Property="effects:ChromeEffect.Monochrome" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}}" />
+                        </Style>
+                        </DataGridCheckBoxColumn.ElementStyle>
+                    </DataGridCheckBoxColumn>
                     <DataGridTextColumn Header="Назва колонки" Binding="{Binding DisplayName}" IsReadOnly="True"/>
                     <DataGridCheckBoxColumn Header="Закріплено" Binding="{Binding IsFrozen, UpdateSourceTrigger=PropertyChanged}"
                                             ElementStyle="{StaticResource CheckBoxColumnElementStyle}"/>
