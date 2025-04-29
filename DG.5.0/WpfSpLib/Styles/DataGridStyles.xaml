@@ -158,6 +158,7 @@
         <!-- bug 106: fixed at 2025-03-19 Data windows in max mode are showing very slow <Setter Property="RowStyle" Value="{StaticResource MonochromeDGRowStyle}"/>
 -->        <Setter Property="CellStyle" Value="{StaticResource MonochromeDGCellStyle}"/>
         <Style.Resources>
+            <!-- TopLeftButton style -->
             <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
                    BasedOn="{StaticResource MonochromeDGTopLeftButtonStyle}"/>
         </Style.Resources>
