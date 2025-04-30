@@ -81,6 +81,19 @@
         </Setter>
     </Style>
 
+    <Style x:Key="RowResizeThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="FrameworkElement.Height" Value="4"/>
+        <Setter Property="Control.Background" Value="Transparent"/>
+        <Setter Property="FrameworkElement.Cursor" Value="SizeNS"/>
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border Padding="{TemplateBinding Control.Padding}" Background="{TemplateBinding Control.Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MonochromeDGRowHeaderStyle" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+10%}"/>
         <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={x:Static common:ColorHslBrush.Instance}, ConverterParameter=+50%}"/>
@@ -94,13 +107,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridRowHeader">
-                    <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter Margin="2 0"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
+                    <Grid>
+                        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter Margin="2 0"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <Thumb x:Name="PART_TopHeaderGripper" VerticalAlignment="Top" Style="{StaticResource RowResizeThumb}"/>
+                        <Thumb x:Name="PART_BottomHeaderGripper" VerticalAlignment="Bottom" Style="{StaticResource RowResizeThumb}"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -173,7 +190,8 @@
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource MonochromeDGColumnHeaderStyle}"/>
         <Setter Property="RowHeaderStyle" Value="{StaticResource MonochromeDGRowHeaderStyle}"/>
         <!-- bug 106: fixed at 2025-03-19 Data windows in max mode are showing very slow <Setter Property="RowStyle" Value="{StaticResource MonochromeDGRowStyle}"/>
--->        <Setter Property="CellStyle" Value="{StaticResource MonochromeDGCellStyle}"/>
+-->
+        <Setter Property="CellStyle" Value="{StaticResource MonochromeDGCellStyle}"/>
         <Style.Resources>
             <!-- TopLeftButton style -->
             <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
@@ -208,6 +226,8 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
+                            <Thumb x:Name="PART_TopHeaderGripper" VerticalAlignment="Top" Style="{StaticResource RowResizeThumb}"/>
+                            <Thumb x:Name="PART_BottomHeaderGripper" VerticalAlignment="Bottom" Style="{StaticResource RowResizeThumb}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
