@@ -56,10 +56,10 @@ namespace WpfSpLib.Effects
         #region ===============  Private methods  ===================
         private static void RemoveClearButton(ComboBox comboBox)
         {
-            var grid = comboBox.GetVisualChildren().OfType<Grid>().FirstOrDefault();
+            var grid = comboBox.GetVisualChildren<Grid>().FirstOrDefault();
             if (grid != null)
             {
-                foreach (var element in grid.GetVisualChildren().OfType<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
+                foreach (var element in grid.GetVisualChildren<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
                 {
                     if (element.Name.Contains("Clear"))
                         element.PreviewMouseLeftButtonDown -= ClearButton_OnClick;
@@ -80,7 +80,7 @@ namespace WpfSpLib.Effects
                 return;
             }
 
-            var grid = comboBox.GetVisualChildren().OfType<Grid>().FirstOrDefault();
+            var grid = comboBox.GetVisualChildren<Grid>().FirstOrDefault();
             if (grid != null)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto, Name = GridColumnPrefix + "Clear" });

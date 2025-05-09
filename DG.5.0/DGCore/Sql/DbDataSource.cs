@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Runtime.Versioning;
 
 namespace DGCore.Sql
 {
 
-    [SupportedOSPlatform("windows")]
     public partial class DbDataSource : DataSourceBase
     {
         //======================   Static section  =========================

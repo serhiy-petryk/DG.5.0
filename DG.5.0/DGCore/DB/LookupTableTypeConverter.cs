@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Runtime.Versioning;
 
 namespace DGCore.DB
 {
@@ -46,7 +45,6 @@ namespace DGCore.DB
         }
     }
 
-    [SupportedOSPlatform("windows")]
     public class LookupTableTypeConverter<TType, TKeyMemberType> : TypeConverter, IComponent, Common.ILookupTableTypeConverter
     {
         public static Common.BO_LookupTableAttribute publicAttribute;

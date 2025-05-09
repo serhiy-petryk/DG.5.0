@@ -109,7 +109,7 @@ namespace WpfSpLib.Controls
             var expander = GetTemplateChild("DetailsExpander");
             expander.Dispatcher.BeginInvoke(new Action(() =>
             {
-                foreach (var btn in expander.GetVisualChildren().OfType<ToggleButton>())
+                foreach (var btn in expander.GetVisualChildren<ToggleButton>())
                 {
                     FocusVisualEffect.SetAlwaysShowFocus(btn, FocusVisualEffect.GetAlwaysShowFocus(this));
                     FocusVisualEffect.SetFocusControlStyle(btn, FocusButtonStyle);

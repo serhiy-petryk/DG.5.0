@@ -26,7 +26,7 @@ namespace WpfSpLib.Controls
 
         private void AddLoadedEvents()
         {
-            foreach (var thumb in this.GetVisualChildren().OfType<Thumb>().Where(t => t.Name.StartsWith("Resize")))
+            foreach (var thumb in this.GetVisualChildren<Thumb>().Where(t => t.Name.StartsWith("Resize")))
             {
                 thumb.DragDelta -= ResizeThumb_OnDragDelta;
                 thumb.DragDelta += ResizeThumb_OnDragDelta;
@@ -134,7 +134,7 @@ namespace WpfSpLib.Controls
             {
                 var content1 = (FrameworkElement)sender;
                 content1.Loaded -= OnContentLoaded;
-                MovingThumb = MovingThumb ?? content1.GetVisualChildren().OfType<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
+                MovingThumb = MovingThumb ?? content1.GetVisualChildren<Thumb>().FirstOrDefault(e => e.Name == MovingThumbName);
             }
         }
 

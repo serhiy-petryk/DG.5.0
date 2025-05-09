@@ -25,7 +25,7 @@ namespace DGView.Controls.Printing
         private void OnPageSizeSelectorMouseEnter(object sender, MouseEventArgs e)
         {
             var btn = (ToggleButton) sender;
-            var txtBlock = btn.GetVisualChildren().OfType<TextBlock>().FirstOrDefault();
+            var txtBlock = btn.GetVisualChildren<TextBlock>().FirstOrDefault();
             if (txtBlock != null)
             {
                 if (!string.IsNullOrEmpty(txtBlock.Text) && WpfSpLib.Common.Tips.IsTextTrimmed(txtBlock))

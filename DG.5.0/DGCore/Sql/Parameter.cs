@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Text;
 
 namespace DGCore.Sql
 {
 
-    [SupportedOSPlatform("windows")]
     [TypeConverter(typeof(SqlParameterConverter))]
     public class ParameterCollection
     {
@@ -75,7 +73,6 @@ namespace DGCore.Sql
     /// <summary>
     /// Параметры пользовательского интерфейса, которые используются в вызове процедуры/запроса к данным
     /// </summary>
-    [SupportedOSPlatform("windows")]
     public class Parameter
     {// : ParameterStandardValuesConverter.IParameterStandardValuesConverterSupport {
 
@@ -138,7 +135,6 @@ namespace DGCore.Sql
     }
 
     //=========================================================
-    [SupportedOSPlatform("windows")]
     public class ParameterStandardValuesConverter : TypeConverter
     {
 
@@ -219,7 +215,6 @@ namespace DGCore.Sql
     }
 
     //=========================================
-    [SupportedOSPlatform("windows")]
     class ParameterPropertyDescriptor : PropertyDescriptor
     {
 
@@ -295,7 +290,6 @@ namespace DGCore.Sql
     }
 
     //==============================
-    [SupportedOSPlatform("windows")]
     public class SqlParameterConverter : TypeConverter
     {
         public SqlParameterConverter() { }

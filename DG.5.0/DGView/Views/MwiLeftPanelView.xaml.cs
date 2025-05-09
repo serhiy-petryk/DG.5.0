@@ -98,7 +98,7 @@ namespace DGView.Views
                     app.Title = rootMenu.ApplicationTitle;
 
                 var mwiContainer = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
-                var resizeThumb = mwiContainer?.GetVisualChildren().OfType<Control>().FirstOrDefault(a => a.Name == "LeftPanelDragThumb");
+                var resizeThumb = mwiContainer?.GetVisualChildren<Control>().FirstOrDefault(a => a.Name == "LeftPanelDragThumb");
                 if (resizeThumb != null)
                 {
                     var b = new Binding { Path = new PropertyPath("Background"), Source = this, Converter = ColorHslBrush.Instance, ConverterParameter = "+5%" };
@@ -179,11 +179,11 @@ namespace DGView.Views
                 return false;
 
             // Reset error decoration of menu item
-            var menuItems = MenuTreeView.GetVisualChildren().OfType<TextBlock>().Where(item => item.DataContext == menuOption);
+            var menuItems = MenuTreeView.GetVisualChildren<TextBlock>().Where(item => item.DataContext == menuOption);
             foreach (var item in menuItems.Where(i => i.TextDecorations.Contains(TextDecorations.Strikethrough[0])))
                 item.TextDecorations = new TextDecorationCollection();
 
-            var icons = MenuTreeView.GetVisualChildren().OfType<FrameworkElement>().Where(item => item.DataContext == menuOption && item.Name.EndsWith("Icon")).ToArray();
+            var icons = MenuTreeView.GetVisualChildren<FrameworkElement>().Where(item => item.DataContext == menuOption && item.Name.EndsWith("Icon")).ToArray();
             icons[0].Visibility = Visibility.Collapsed;
             icons[1].Visibility = Visibility.Visible;
             FilterPanelVisibility = Visibility.Collapsed;

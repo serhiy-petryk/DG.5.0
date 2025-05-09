@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 namespace DGCore.Sql {
 
-  [SupportedOSPlatform("windows")]
   public partial class DbDataSource : DataSourceBase {//, IDisposable {
       interface IDbDataSourceExtension {//: IDisposable {
       ICollection GetData(bool requeryFlag);

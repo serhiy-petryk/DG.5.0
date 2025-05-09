@@ -3,11 +3,9 @@ using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Diagnostics;
-using System.Runtime.Versioning;
 
 namespace Tests.Data
 {
-    [SupportedOSPlatform("windows")]
     [TestClass]
     public class MdbMetaData
     {

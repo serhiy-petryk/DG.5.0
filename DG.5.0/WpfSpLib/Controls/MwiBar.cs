@@ -196,7 +196,7 @@ namespace WpfSpLib.Controls
 
         internal void UpdateTabItems()
         {
-            foreach (var item in this.GetVisualChildren().OfType<TabItem>())
+            foreach (var item in this.GetVisualChildren<TabItem>())
                 AnimateTabButton(item);
         }
 
@@ -229,7 +229,7 @@ namespace WpfSpLib.Controls
             void OnTabItemToolTipOnOpened(object sender, RoutedEventArgs e)
             {
                 var toolTip = (ToolTip)sender;
-                var tabTextBlock = toolTip.PlacementTarget.GetVisualChildren().OfType<TextBlock>().First();
+                var tabTextBlock = toolTip.PlacementTarget.GetVisualChildren<TextBlock>().First();
                 toolTip.SetCurrentValueSmart(TagProperty, Tips.IsTextTrimmed(tabTextBlock) ? "1" : null);
             }
         }

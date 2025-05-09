@@ -130,6 +130,6 @@ namespace WpfSpLib.Effects
             }, DispatcherPriority.Background);
         }
 
-        private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(IconId));
+        private static Viewbox GetViewbox(ToggleButton tb) => tb.GetVisualChildren<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(IconId));
     }
 }

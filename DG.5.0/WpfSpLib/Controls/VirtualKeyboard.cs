@@ -40,7 +40,7 @@ namespace WpfSpLib.Controls
             OnUnloaded(sender, e);
             foreach (var language in AvailableKeyboardLayouts)
                 language.OnSelect += Language_OnSelect;
-            foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
+            foreach (var button in this.GetVisualChildren<ButtonBase>().Where(a => a.DataContext is KeyModel))
                 button.Click += Key_OnClick;
             if (!string.IsNullOrEmpty(_lastActiveLanguage))
                 PrepareKeyboardSet(_lastActiveLanguage);
@@ -49,7 +49,7 @@ namespace WpfSpLib.Controls
         {
             foreach (var language in AvailableKeyboardLayouts)
                 language.OnSelect -= Language_OnSelect;
-            foreach (var button in this.GetVisualChildren().OfType<ButtonBase>().Where(a => a.DataContext is KeyModel))
+            foreach (var button in this.GetVisualChildren<ButtonBase>().Where(a => a.DataContext is KeyModel))
                 button.Click -= Key_OnClick;
         }
 

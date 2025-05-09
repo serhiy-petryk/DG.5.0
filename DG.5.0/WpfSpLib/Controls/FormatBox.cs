@@ -35,12 +35,12 @@ namespace WpfSpLib.Controls
                 return;
 
             var popupContent = (GetTemplateChild("PART_Popup") as Popup).Child;
-            var formatTypeBtn = popupContent.GetVisualChildren().OfType<RadioButton>().FirstOrDefault(rb => rb.GroupName == "NumericFormat" && Value.StartsWith((string)rb.Tag));
+            var formatTypeBtn = popupContent.GetVisualChildren<RadioButton>().FirstOrDefault(rb => rb.GroupName == "NumericFormat" && Value.StartsWith((string)rb.Tag));
             if (formatTypeBtn != null)
             {
                 formatTypeBtn.IsChecked = true;
                 var dpString = Value.Substring(((string) formatTypeBtn.Tag).Length);
-                var dpBtns = popupContent.GetVisualChildren().OfType<RadioButton>().Where(rb => rb.GroupName == "DecimalPlaces").ToArray();
+                var dpBtns = popupContent.GetVisualChildren<RadioButton>().Where(rb => rb.GroupName == "DecimalPlaces").ToArray();
                 var dpBtn = dpBtns.FirstOrDefault(rb => Equals(rb.Content, dpString)) ??
                             dpBtns.FirstOrDefault(rb => Equals(rb.Tag, "Auto"));
                 if (dpBtn != null)
@@ -64,10 +64,10 @@ namespace WpfSpLib.Controls
                 return null;
 
             var popupContent = (GetTemplateChild("PART_Popup") as Popup).Child;
-            var formatTypeBtn = popupContent.GetVisualChildren().OfType<RadioButton>().FirstOrDefault(rb => rb.GroupName == "NumericFormat" && rb.IsChecked == true);
+            var formatTypeBtn = popupContent.GetVisualChildren<RadioButton>().FirstOrDefault(rb => rb.GroupName == "NumericFormat" && rb.IsChecked == true);
             if (formatTypeBtn?.Tag is string formatType)
             {
-                var dpBtn = popupContent.GetVisualChildren().OfType<RadioButton>().FirstOrDefault(rb => rb.GroupName == "DecimalPlaces" && rb.IsChecked == true);
+                var dpBtn = popupContent.GetVisualChildren<RadioButton>().FirstOrDefault(rb => rb.GroupName == "DecimalPlaces" && rb.IsChecked == true);
                 if (dpBtn != null && int.TryParse(dpBtn.Content.ToString(), out var dp))
                     return formatTypeBtn.Tag + dp.ToString();
                 return formatType;

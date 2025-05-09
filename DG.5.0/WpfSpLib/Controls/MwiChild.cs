@@ -52,7 +52,7 @@ namespace WpfSpLib.Controls
             CmdSelectTheme = new RelayCommand(o =>
             {
                 AllowSelectTheme = false;
-                this.SelectTheme(this.GetVisualChildren().OfType<MwiContainer>().FirstOrDefault());
+                this.SelectTheme(this.GetVisualChildren<MwiContainer>().FirstOrDefault());
                 AllowSelectTheme = true;
             }, _ => AllowSelectTheme);
 
@@ -372,7 +372,7 @@ namespace WpfSpLib.Controls
             OnPropertiesChanged(nameof(ActualTheme), nameof(ActualThemeColor));
 
             if (processChildren)
-                foreach (var element in this.GetVisualChildren().OfType<MwiContainer>())
+                foreach (var element in this.GetVisualChildren<MwiContainer>())
                     element.UpdateColorTheme(colorChanged, true);
         }
         private static void FillResources(FrameworkElement fe, ResourceDictionary resources)

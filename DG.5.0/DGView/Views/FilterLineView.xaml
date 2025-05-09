@@ -23,12 +23,14 @@
 
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
             <DataGrid x:Name="DataGrid" AutoGenerateColumns="False"
-                      RowHeaderWidth="20" MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
-                      CanUserResizeRows="False"
+                      MinWidth="350" ItemsSource="{Binding Clone_FilterLines}"
+                      CanUserResizeRows="False" SelectionMode="Single" SelectionUnit="CellOrRowHeader"
                       Background="{Binding ElementName=Root, Path=Background}"
                       RowHeaderStyle="{StaticResource MonochromeDGRowHeaderStyle_IDataErrorInfo}"
                       Style="{StaticResource MonochromeDGStyle}"
                       RowEditEnding="DataGrid_OnRowEditEnding"
+                      DataGridCell.GotFocus="DataGridCell_Selected"
+                      UseLayoutRounding="False"
                       Unloaded="DataGrid_OnUnloaded">
                 <DataGrid.Resources>
                     <common:LocalizationProxy x:Key="OperandTitleProxy" InputValue="{DynamicResource Loc:FilterLineView.OperandTitle}"/>

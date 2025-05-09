@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.Versioning;
 
 namespace DGCore.Misc
 {
-    [SupportedOSPlatform("windows")]
     public class DataDefinition : IDisposable
     {
 

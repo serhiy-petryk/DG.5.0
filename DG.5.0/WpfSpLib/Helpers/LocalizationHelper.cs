@@ -54,7 +54,7 @@ namespace WpfSpLib.Helpers
             {
                 wnd.Language = XmlLanguage.GetLanguage(newCulture.IetfLanguageTag);
 
-                foreach (var dp in wnd.GetVisualChildren().OfType<DatePicker>())
+                foreach (var dp in wnd.GetVisualChildren<DatePicker>())
                     _miDatePickerRefresh.Invoke(dp, null);
 
                 // var focusedControl = FocusManager.GetFocusedElement(wnd);

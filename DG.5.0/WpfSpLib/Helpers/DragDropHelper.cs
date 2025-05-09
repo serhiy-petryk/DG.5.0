@@ -222,7 +222,7 @@ namespace WpfSpLib.Helpers
         #region =============  Private methods  ================
         private static void CheckScroll(ItemsControl o, DragEventArgs e)
         {
-            var scrollViewer = o.GetVisualChildren().OfType<ScrollViewer>().FirstOrDefault();
+            var scrollViewer = o.GetVisualChildren<ScrollViewer>().FirstOrDefault();
             if (scrollViewer != null)
             {
                 const double scrollMargin = 25.0;

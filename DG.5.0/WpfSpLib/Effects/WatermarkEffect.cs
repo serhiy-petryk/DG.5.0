@@ -37,9 +37,9 @@ namespace WpfSpLib.Effects
                         control.Dispatcher.BeginInvoke(new Action(() => Activate(control)), DispatcherPriority.Render);
                     else
                     {
-                        if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+                        if ((control as TextBox ?? control.GetVisualChildren<TextBox>().FirstOrDefault()) is TextBox txtBox)
                             CheckWatermark(txtBox);
-                        else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+                        else if ((control as PasswordBox ?? control.GetVisualChildren<PasswordBox>().FirstOrDefault()) is PasswordBox pswBox)
                             CheckWatermark(pswBox);
                     }
                 }
@@ -57,14 +57,14 @@ namespace WpfSpLib.Effects
 
         private static void Activate(Control control)
         {
-            if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+            if ((control as TextBox ?? control.GetVisualChildren<TextBox>().FirstOrDefault()) is TextBox txtBox)
             {
                 txtBox.TextChanged += TxtBox_TextChanged;
                 txtBox.GotFocus += ControlBox_ChangeFocus;
                 txtBox.LostFocus += ControlBox_ChangeFocus;
                 CheckWatermark(txtBox);
             }
-            else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+            else if ((control as PasswordBox ?? control.GetVisualChildren<PasswordBox>().FirstOrDefault()) is PasswordBox pswBox)
             {
                 pswBox.PasswordChanged += ControlBox_ChangeFocus;
                 pswBox.GotFocus += ControlBox_ChangeFocus;
@@ -77,13 +77,13 @@ namespace WpfSpLib.Effects
 
         private static void Deactivate(Control control)
         {
-            if ((control as TextBox ?? control.GetVisualChildren().FirstOrDefault(c => c is TextBox)) is TextBox txtBox)
+            if ((control as TextBox ?? control.GetVisualChildren<TextBox>().FirstOrDefault()) is TextBox txtBox)
             {
                 txtBox.TextChanged -= TxtBox_TextChanged;
                 txtBox.GotFocus -= ControlBox_ChangeFocus;
                 txtBox.LostFocus -= ControlBox_ChangeFocus;
             }
-            else if ((control as PasswordBox ?? control.GetVisualChildren().FirstOrDefault(c => c is PasswordBox)) is PasswordBox pswBox)
+            else if ((control as PasswordBox ?? control.GetVisualChildren<PasswordBox>().FirstOrDefault()) is PasswordBox pswBox)
             {
                 pswBox.PasswordChanged -= ControlBox_ChangeFocus;
                 pswBox.GotFocus -= ControlBox_ChangeFocus;
@@ -149,7 +149,7 @@ namespace WpfSpLib.Effects
             var partWatermark = ctrlBox.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var ctrlBoxView = ctrlBox.GetVisualChildren().FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var ctrlBoxView = ctrlBox.GetVisualChildren<FrameworkElement>().FirstOrDefault(a => a.GetType().Name == "TextBoxView");
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
                 if (layer == null) return;
 
@@ -197,7 +197,7 @@ namespace WpfSpLib.Effects
             var partWatermark = ctrlBox?.Template.FindName("PART_Watermark", ctrlBox) as ContentControl;
             if (partWatermark == null)
             {
-                var ctrlBoxView = ctrlBox.GetVisualChildren().FirstOrDefault(a => a.GetType().Name == "TextBoxView") as FrameworkElement;
+                var ctrlBoxView = ctrlBox.GetVisualChildren<FrameworkElement>().FirstOrDefault(a => a.GetType().Name == "TextBoxView");
                 var layer = AdornerLayer.GetAdornerLayer(ctrlBoxView);
                 var adorners = layer?.GetAdorners(ctrlBoxView) ?? new Adorner[0];
                 foreach (var adorner in adorners.OfType<AdornerControl>().Where(a => a.Child.Name == "Watermark"))

@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Runtime.Versioning;
 using System.Text;
 using DGCore.Common;
 
 namespace DGCore.Helpers
 {
-    [SupportedOSPlatform("windows")]
     public static class SaveData
     {
         #region ===========  Excel file  ================

@@ -1,11 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Data.OleDb;
 using System.Diagnostics;
-using System.Runtime.Versioning;
 
 namespace Tests.Data
 {
-    [SupportedOSPlatform("windows")]
     [TestClass]
     public class DbParameter
     {

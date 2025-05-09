@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.OleDb;
-using System.Runtime.Versioning;
 
 namespace TestsConsole.DataTests
 {
-    [SupportedOSPlatform("windows")]
     class MdbMetaData
     {
         public static void Run()

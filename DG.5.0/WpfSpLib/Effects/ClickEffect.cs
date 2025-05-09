@@ -47,7 +47,7 @@ namespace WpfSpLib.Effects
                         fe.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             // Suppress 'Pressed' VisualState for ripple FlatButton
-                            foreach (var o in fe.GetVisualChildren().OfType<FrameworkElement>())
+                            foreach (var o in fe.GetVisualChildren<FrameworkElement>())
                             {
                                 var groups = VisualStateManager.GetVisualStateGroups(o);
                                 if (groups != null)
@@ -100,7 +100,7 @@ namespace WpfSpLib.Effects
         #region =============  Private methods  ================
         private static void OnElementPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var content = (sender as FrameworkElement).GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault() ?? sender as FrameworkElement;
+            var content = (sender as FrameworkElement).GetVisualChildren<ContentPresenter>().FirstOrDefault() ?? sender as FrameworkElement;
             if (content != null && content.RenderTransform is TranslateTransform transform && !Tips.AreEqual(0.0, transform.Y))
                 transform.Y = 0.0;
         }
@@ -116,7 +116,7 @@ namespace WpfSpLib.Effects
             var shiftOffsetOnClick = GetShiftOffsetOnClick(element);
             if (!Tips.AreEqual(0.0, shiftOffsetOnClick))
             {
-                var content = element.GetVisualChildren().OfType<ContentPresenter>().FirstOrDefault() ?? element;
+                var content = element.GetVisualChildren<ContentPresenter>().FirstOrDefault() ?? element;
                 if (!(content.RenderTransform is TranslateTransform))
                     content.RenderTransform = new TranslateTransform();
 

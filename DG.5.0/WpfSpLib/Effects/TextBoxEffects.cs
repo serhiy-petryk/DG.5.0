@@ -71,10 +71,10 @@ namespace WpfSpLib.Effects
         #region ===============  Private methods  ===================
         private static void RemoveButtons(TextBox textBox)
         {
-            var grid = textBox.GetVisualChildren().OfType<Grid>().FirstOrDefault();
+            var grid = textBox.GetVisualChildren<Grid>().FirstOrDefault();
             if (grid != null)
             {
-                foreach (var element in grid.GetVisualChildren().OfType<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
+                foreach (var element in grid.GetVisualChildren<FrameworkElement>().Where(c => c.Name.StartsWith(ElementPrefix)).ToArray())
                 {
                     if (element.Name.Contains("Clear"))
                         element.PreviewMouseLeftButtonDown -= ClearButton_OnClick;
@@ -95,7 +95,7 @@ namespace WpfSpLib.Effects
             var buttons = GetVisibleButtons(textBox);
             if (!buttons.HasValue) return;
 
-            var grid = textBox.GetVisualChildren().OfType<Grid>().FirstOrDefault();
+            var grid = textBox.GetVisualChildren<Grid>().FirstOrDefault();
             if (grid != null)
             {
                 if ((buttons.Value & Buttons.Separator1px) == Buttons.Separator1px || (buttons.Value & Buttons.Separator) == Buttons.Separator)

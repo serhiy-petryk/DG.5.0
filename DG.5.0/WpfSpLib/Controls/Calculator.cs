@@ -42,7 +42,7 @@ namespace WpfSpLib.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+            foreach (var textBox in this.GetVisualChildren<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
             {
                 textBox.LostFocus -= TextBox_LostFocus;
                 textBox.LostFocus += TextBox_LostFocus;
@@ -50,7 +50,7 @@ namespace WpfSpLib.Controls
         }
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
-            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
+            foreach (var textBox in this.GetVisualChildren<TextBox>().Where(t => t.IsReadOnly && t.Focusable))
                 textBox.LostFocus -= TextBox_LostFocus;
         }
 

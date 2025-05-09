@@ -140,7 +140,7 @@ namespace DGView.Views
         private void MwiChildOnBeforeClose(object sender, EventArgs e)
         {
             // Minimized memory leak
-            var btn = this.GetVisualChildren().OfType<ToggleButton>().First();
+            var btn = this.GetVisualChildren<ToggleButton>().First();
             btn.IsChecked = true;
             var contextMenu = btn.Resources.Values.OfType<ContextMenu>().First();
             contextMenu.Width = 0;
@@ -228,13 +228,13 @@ namespace DGView.Views
         private void OnSetSettingsContextMenuOpened(object sender, RoutedEventArgs e)
         {
             var cm = (ContextMenu)sender;
-            foreach (var mi in cm.GetVisualChildren().OfType<MenuItem>())
+            foreach (var mi in cm.GetVisualChildren<MenuItem>())
                 mi.IsChecked = Equals(mi.Header, ViewModel.LastAppliedLayoutName);
         }
         private void OnRowViewModeContextMenuOpened(object sender, RoutedEventArgs e)
         {
             var cm = (ContextMenu)sender;
-            foreach (var mi in cm.GetVisualChildren().OfType<MenuItem>())
+            foreach (var mi in cm.GetVisualChildren<MenuItem>())
             {
                 var rowViewMode = (DGCore.Common.Enums.DGRowViewMode)Enum.Parse(typeof(DGCore.Common.Enums.DGRowViewMode), (string)mi.CommandParameter);
                 mi.IsChecked = Equals(rowViewMode, ViewModel.RowViewMode);

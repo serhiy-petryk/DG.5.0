@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Versioning;
 
 namespace DGCore.Filters
 {
-    [SupportedOSPlatform("windows")]
     public class DbWhereFilter
     {
 

@@ -13,13 +13,11 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using System.Text;
 
 namespace DGCore.Helpers
 {
 
-    [SupportedOSPlatform("windows")]
     public class ExcelApp : IDisposable
     {
         /* Values of Workbook.colors (Office 2003) (56 colors)

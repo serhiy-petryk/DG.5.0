@@ -97,7 +97,7 @@ namespace WpfSpLib.Effects
 
         private static void AddClearButton(DatePicker dp)
         {
-            if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
+            if (dp.GetVisualChildren<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) != null)
                 return;
             if (!(dp.Template.FindName("PART_Button", dp) is Button button)) return;
 
@@ -121,7 +121,7 @@ namespace WpfSpLib.Effects
 
         private static void RemoveClearButton(DatePicker dp)
         {
-            if (dp.GetVisualChildren().OfType<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) is Button clearButton)
+            if (dp.GetVisualChildren<Button>().FirstOrDefault(btn => btn.Name == ClearButtonName) is Button clearButton)
             {
                 clearButton.Click -= ClearButton_Click;
                 var grid = VisualTreeHelper.GetParent(clearButton) as Grid;
@@ -131,7 +131,7 @@ namespace WpfSpLib.Effects
 
         private static void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            if (((DependencyObject)sender).GetVisualParents().OfType<DatePicker>().FirstOrDefault() is DatePicker dp)
+            if (((DependencyObject)sender).GetVisualParents<DatePicker>().FirstOrDefault() is DatePicker dp)
             {
                 var isNullable = GetIsNullable(dp) ?? false;
                 dp.SelectedDate = isNullable ? (DateTime?)null : DateTime.Today;

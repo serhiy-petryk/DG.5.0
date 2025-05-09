@@ -14,6 +14,7 @@ namespace DGView.Helpers
     {
         public static void DataGrid_OnRowEditEnding(DataGrid dataGrid, DataGridRowEditEndingEventArgs e)
         {
+            return;
             if (e.Cancel || e.EditAction != DataGridEditAction.Commit) return;
 
             if (e.Row.DataContext is DGCore.Common.IIsEmptySupport item && dataGrid.ItemsSource is IList itemList)

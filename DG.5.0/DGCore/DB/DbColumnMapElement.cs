@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Versioning;
 
 namespace DGCore.DB
 {
-    [SupportedOSPlatform("windows")]
     public class DbColumnMapElement
     {
         //=============  Static section  ==================

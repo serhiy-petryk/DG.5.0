@@ -54,7 +54,7 @@ namespace WpfSpLib.Controls
                 tc.SelectionChanged += OnTabControlSelectionChanged;
             }
 
-            foreach (var slider in this.GetVisualChildren().OfType<Canvas>().Where(c => c.DataContext is ColorControl_XYSlider))
+            foreach (var slider in this.GetVisualChildren<Canvas>().Where(c => c.DataContext is ColorControl_XYSlider))
             {
                 slider.MouseDown -= Slider_MouseDown;
                 slider.MouseUp -= Slider_MouseUp;
@@ -64,7 +64,7 @@ namespace WpfSpLib.Controls
                 slider.MouseMove += Slider_MouseMove;
             }
 
-            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(c => c.Name == "ComponentValue"))
+            foreach (var textBox in this.GetVisualChildren<TextBox>().Where(c => c.Name == "ComponentValue"))
             {
                 textBox.PreviewTextInput -= ValueEditor_OnPreviewTextInput;
                 textBox.PreviewTextInput += ValueEditor_OnPreviewTextInput;
@@ -95,14 +95,14 @@ namespace WpfSpLib.Controls
             if (GetTemplateChild("TabControl") is TabControl tc)
                 tc.SelectionChanged -= OnTabControlSelectionChanged;
 
-            foreach (var slider in this.GetVisualChildren().OfType<Canvas>().Where(c => c.DataContext is ColorControl_XYSlider))
+            foreach (var slider in this.GetVisualChildren<Canvas>().Where(c => c.DataContext is ColorControl_XYSlider))
             {
                 slider.MouseDown -= Slider_MouseDown;
                 slider.MouseUp -= Slider_MouseUp;
                 slider.MouseMove -= Slider_MouseMove;
             }
 
-            foreach (var textBox in this.GetVisualChildren().OfType<TextBox>().Where(c => c.Name == "ComponentValue"))
+            foreach (var textBox in this.GetVisualChildren<TextBox>().Where(c => c.Name == "ComponentValue"))
                 textBox.PreviewTextInput -= ValueEditor_OnPreviewTextInput;
 
             if (GetTemplateChild("LeftPanel") is Panel leftPanel)
@@ -123,7 +123,7 @@ namespace WpfSpLib.Controls
         private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var fe = sender as FrameworkElement;
-            foreach (var cc in fe.GetVisualChildren().OfType<Canvas>().Where(cc => cc.DataContext is ColorControl_XYSlider))
+            foreach (var cc in fe.GetVisualChildren<Canvas>().Where(cc => cc.DataContext is ColorControl_XYSlider))
                 ((ColorControl_XYSlider)cc.DataContext).SetSizeOfControl(cc);
 
             VM.UpdateUI();

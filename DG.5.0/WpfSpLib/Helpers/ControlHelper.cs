@@ -105,7 +105,7 @@ namespace WpfSpLib.Helpers
 
         public static void AddIconToControl(string iconId, ContentControl control, bool iconBeforeContent, Geometry icon, Thickness iconMargin, double iconWidth = double.NaN)
         {
-            var oldViewBox = control.GetVisualChildren().OfType<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(iconId));
+            var oldViewBox = control.GetVisualChildren<Viewbox>().FirstOrDefault(vb => vb.Resources.Contains(iconId));
             if (oldViewBox != null)
             {
                 // wrong Margin/Width, якщо повторно виконуємо метод => потрібно ускладнити обробку (??? чи це потрібно)
@@ -161,7 +161,7 @@ namespace WpfSpLib.Helpers
 
         #region  ==========  Control Border  =============
         public static IEnumerable<T> GetMainElements<T>(FrameworkElement element) where T: FrameworkElement =>
-            VisualHelper.GetVisualChildren(element).OfType<T>().Where(b =>
+            VisualHelper.GetVisualChildren<T>(element).Where(b =>
                 Math.Abs(b.ActualWidth + b.Margin.Left + b.Margin.Right - element.ActualWidth) < 1.1 &&
                 Math.Abs(b.ActualHeight + b.Margin.Top + b.Margin.Bottom - element.ActualHeight) < 1.1);
 
@@ -193,11 +193,11 @@ namespace WpfSpLib.Helpers
         {
             Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                foreach (var textBox in fe.GetVisualChildren().OfType<DatePickerTextBox>())
+                foreach (var textBox in fe.GetVisualChildren<DatePickerTextBox>())
                 {
                     const string name1 = "watermark_decorator", name2 = "ContentElement";
                     var newBorderThickness = new Thickness(toHide ? 0 : 1);
-                    var borders = textBox.GetVisualChildren().OfType<Border>().Where(c => c.Name == name1 || c.Name == name2);
+                    var borders = textBox.GetVisualChildren<Border>().Where(c => c.Name == name1 || c.Name == name2);
                     foreach (var x in borders)
                         x.BorderThickness = newBorderThickness;
                 }
@@ -212,7 +212,7 @@ namespace WpfSpLib.Helpers
             // Set border of comboboxes inside of toolbar (default is white)
             foreach (var comboBox in toolBar.Items.OfType<ComboBox>())
             {
-                var toggleButton = VisualHelper.GetVisualChildren(comboBox).OfType<ToggleButton>().FirstOrDefault();
+                var toggleButton = VisualHelper.GetVisualChildren<ToggleButton>(comboBox).FirstOrDefault();
                 if (toggleButton != null)
                 {
                     var b = new Binding("BorderBrush")
