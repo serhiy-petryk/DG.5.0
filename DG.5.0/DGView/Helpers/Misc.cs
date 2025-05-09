@@ -31,7 +31,7 @@ namespace DGView.Helpers
 
         public static void OpenDGDialog(DataGrid dataGrid, FrameworkElement dialogView, string titleResourceName, Geometry icon)
         {
-            var owner = dataGrid.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+            var owner = dataGrid.GetVisualParents<MwiChild>().FirstOrDefault();
             var host = owner.GetDialogHost();
             var transforms = host.GetActualLayoutTransforms();
             var width = Math.Max(200, Window.GetWindow(host).ActualWidth * 2 / 3 / transforms.Value.M11);

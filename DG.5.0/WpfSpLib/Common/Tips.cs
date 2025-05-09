@@ -35,7 +35,7 @@ namespace WpfSpLib.Common
         public static Brush GetActualBackgroundBrush(DependencyObject d)
         {
             // valid only for SolidColorBrush
-            foreach (var c in d.GetVisualParents().Where(a1 => a1 is Control || a1 is Panel))
+            foreach (var c in d.GetVisualParents<FrameworkElement>().Where(a1 => a1 is Control || a1 is Panel))
             {
                 var brush = c is Control ? ((Control)c).Background : ((Panel)c).Background;
                 if (brush is SolidColorBrush)
@@ -52,7 +52,7 @@ namespace WpfSpLib.Common
         public static Brush GetActualForegroundBrush(DependencyObject d)
         {
             // valid only for SolidColorBrush
-            foreach (var o in d.GetVisualParents().Where(a1 => a1 is Control))
+            foreach (var o in d.GetVisualParents<Control>())
             {
                 var c = (Control)o;
                 var brush = c.Foreground;

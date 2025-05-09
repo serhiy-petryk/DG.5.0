@@ -169,7 +169,7 @@ namespace WpfSpLib.Helpers
                 if (element is HeaderedItemsControl control) // TreeViewItem
                 {
                     var aa1 = control.GetVisualChildren<ContentPresenter>().Where(o => o.ContentSource == "Header");
-                    var aa2 = aa1.Where(o => o.GetVisualParents().OfType<ItemsControl>().FirstOrDefault() == element).ToArray();
+                    var aa2 = aa1.Where(o => o.GetVisualParents<ItemsControl>().FirstOrDefault() == element).ToArray();
                     if (aa2.Length == 1)
                         VisualElement = aa2[0];
                 }

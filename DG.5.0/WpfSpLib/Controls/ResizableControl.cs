@@ -121,7 +121,7 @@ namespace WpfSpLib.Controls
             SetCurrentValue(PositionProperty, new Point(newX, newY));
             e.Handled = true;
 
-            var sv = HostPanel.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault();
+            var sv = HostPanel.GetVisualParents<ScrollViewer>().FirstOrDefault();
             if (sv != null)
             {
                 // Smooth scrolling

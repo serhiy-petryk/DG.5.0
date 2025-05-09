@@ -32,14 +32,14 @@ namespace WpfSpLib.Controls
                 DefaultTheme = _target?.ActualTheme;
                 if (_target?.Theme != null)
                 {
-                    var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.Theme != null);
+                    var a1 = d.GetVisualParents<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.Theme != null);
                     DefaultTheme = a1?.Theme ?? MwiThemeInfo.DefaultTheme;
                 }
 
                 DefaultThemeColor = _target?.ActualThemeColor ?? MwiThemeInfo.DefaultThemeColor;
                 if (_target?.ThemeColor != null)
                 {
-                    var a1 = d.GetVisualParents().OfType<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.ThemeColor != null);
+                    var a1 = d.GetVisualParents<IColorThemeSupport>().FirstOrDefault(a => !Equals(a, _target) && a.ThemeColor != null);
                     DefaultThemeColor = a1?.ThemeColor ?? MwiThemeInfo.DefaultThemeColor;
                 }
 

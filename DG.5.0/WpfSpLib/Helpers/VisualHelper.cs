@@ -29,15 +29,6 @@ namespace WpfSpLib.Helpers
             }
         }
 
-        public static IEnumerable<DependencyObject> GetVisualParents(this DependencyObject current)
-        {
-            while (current != null)
-            {
-                yield return current;
-                current = VisualTreeHelper.GetParent(current) ?? (current as FrameworkElement)?.Parent;
-            }
-        }
-
         #region ======  DoEvents  =========
         // see https://docs.microsoft.com/ru-ru/dotnet/api/system.windows.threading.dispatcherframe?view=windowsdesktop-5.0
         public static void DoEvents(DispatcherPriority priority)

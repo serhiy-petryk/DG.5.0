@@ -236,7 +236,7 @@ namespace WpfSpLib.Controls
                         }
                     }
 
-                    var popup = this.GetVisualParents().OfType<Popup>().FirstOrDefault();
+                    var popup = this.GetVisualParents<Popup>().FirstOrDefault();
                     if (popup != null && popup.IsOpen)
                         popup.IsOpen = false;
 

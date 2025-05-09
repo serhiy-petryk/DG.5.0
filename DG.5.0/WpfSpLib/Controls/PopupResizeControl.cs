@@ -45,7 +45,7 @@ namespace WpfSpLib.Controls
 
             if (!string.IsNullOrEmpty(SettingId) && _settings.ContainsKey(SettingId) && IsVisible)
             {
-                if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
+                if (this.GetVisualParents<Popup>().FirstOrDefault() is Popup popup)
                 {
                     popup.Width = _settings[SettingId].Width;
                     popup.Height = _settings[SettingId].Height;
@@ -56,7 +56,7 @@ namespace WpfSpLib.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (this.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
+            if (this.GetVisualParents<Popup>().FirstOrDefault() is Popup popup)
             {
                 if (double.IsNaN(popup.Width)) popup.Width = ActualWidth;
                 if (double.IsNaN(popup.Height)) popup.Height = ActualHeight;
@@ -73,7 +73,7 @@ namespace WpfSpLib.Controls
         private void ThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             var thumb = (Thumb) sender;
-            var popup = this.GetVisualParents().OfType<Popup>().FirstOrDefault();
+            var popup = this.GetVisualParents<Popup>().FirstOrDefault();
             if (popup == null) return;
 
             if (thumb.Cursor == Cursors.SizeWE || thumb.Cursor == Cursors.SizeNWSE)

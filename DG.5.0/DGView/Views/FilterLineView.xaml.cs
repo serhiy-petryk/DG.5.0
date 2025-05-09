@@ -36,7 +36,7 @@ namespace DGView.Views
                 return;
 
             var view = new FilterLineView(filterLine);
-            var container = cell.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
+            var container = cell.GetVisualParents<MwiContainer>().FirstOrDefault();
             var geometry = (Geometry)Application.Current.Resources["FilterGeometry"];
             var transforms = WpfSpLib.Helpers.ControlHelper.GetActualLayoutTransforms(container);
             var height = Math.Max(200, Window.GetWindow(cell).ActualHeight * 2 / 3 / transforms.Value.M22);
@@ -46,7 +46,7 @@ namespace DGView.Views
                 child.Theme = container?.ActualTheme;
                 child.ThemeColor = container?.ActualThemeColor;
                 child.SetResourceReference(MwiChild.TitleProperty, "Loc:FilterLineView.Title");
-                var parentDataGrid = cell.GetVisualParents().OfType<DataGrid>().FirstOrDefault();
+                var parentDataGrid = cell.GetVisualParents<DataGrid>().FirstOrDefault();
                 var b = new Binding { Path = new PropertyPath("Background"), Source = parentDataGrid, Converter = ColorHslBrush.Instance, ConverterParameter = "+10%:+0%" };
                 child.SetBinding(MwiChild.ThemeColorProperty, b);
             });
@@ -57,7 +57,7 @@ namespace DGView.Views
         public FilterLineSubitemCollection Clone_FilterLines { get; }
         public bool Clone_Not { get; set; }
 
-        private MwiChild ParentWindow => this.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+        private MwiChild ParentWindow => this.GetVisualParents<MwiChild>().FirstOrDefault();
 
         public FilterLineView(FilterLineBase filterLine)
         {
@@ -111,7 +111,7 @@ namespace DGView.Views
             {
                 var dataGridCell = inputHitTest as DataGridCell;
                 if (dataGridCell != null &&
-                    dataGrid.Equals(dataGridCell.GetVisualParents().OfType<DataGrid>().FirstOrDefault()))
+                    dataGrid.Equals(dataGridCell.GetVisualParents<DataGrid>().FirstOrDefault()))
                 {
                     if (dataGridCell.IsReadOnly) return;
                     ComboBox comboBox;

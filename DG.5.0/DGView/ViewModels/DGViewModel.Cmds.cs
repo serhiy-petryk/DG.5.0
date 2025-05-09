@@ -37,7 +37,7 @@ namespace DGView.ViewModels
         public RelayCommand CmdSaveAsPdfFile { get; private set; }
         public RelayCommand CmdTest { get; private set; }
 
-        public string Title => DGControl.GetVisualParents().OfType<MwiChild>().First().Title;
+        public string Title => DGControl.GetVisualParents<MwiChild>().First().Title;
 
         private void InitCommands()
         {
@@ -69,7 +69,7 @@ namespace DGView.ViewModels
 
         private void cmdEditSetting(object p)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
+            var dgView = DGControl.GetVisualParents<DataGridView>().First();
             var geometry = (Geometry) dgView.Resources["SettingsGeometry"];
             Misc.OpenDGDialog(DGControl, new DGEditSettingsView(this), "Loc:Common.EditSetting", geometry);
         }
@@ -83,13 +83,13 @@ namespace DGView.ViewModels
         }
         private void cmdSaveSetting(object p)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
+            var dgView = DGControl.GetVisualParents<DataGridView>().First();
             var geometry = (Geometry)dgView.Resources["SaveGeometry"];
             Misc.OpenDGDialog(DGControl, new DGSaveSettingView(this, LastAppliedLayoutName), "Loc:Common.SaveSetting", geometry);
         }
         private void cmdSetFont(object o)
         {
-            var dgView = DGControl.GetVisualParents().OfType<DataGridView>().First();
+            var dgView = DGControl.GetVisualParents<DataGridView>().First();
             var btns = dgView.GetVisualChildren<ToggleButton>().ToArray();
             var cm = btns[0].Resources.Values.OfType<ContextMenu>().First();
             btns[0].IsChecked = true;
@@ -100,7 +100,7 @@ namespace DGView.ViewModels
 
             cm.IsOpen = false;
             cm.Visibility = Visibility.Visible;
-            var mwiChild = DGControl.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+            var mwiChild = DGControl.GetVisualParents<MwiChild>().FirstOrDefault();
             mwiChild?.CmdClose.Execute(null);
         }
 
@@ -117,7 +117,7 @@ namespace DGView.ViewModels
         }
         private void cmdSetSortAsc(object p)
         {
-            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item1)
+            if (DGControl.GetVisualParents<DataGridView>().First().GetStatusOfSortButtons().Item1)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 Data.A_ApplySorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item, ListSortDirection.Ascending);
@@ -125,7 +125,7 @@ namespace DGView.ViewModels
         }
         private void cmdSetSortDesc(object p)
         {
-            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item2)
+            if (DGControl.GetVisualParents<DataGridView>().First().GetStatusOfSortButtons().Item2)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 Data.A_ApplySorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item, ListSortDirection.Descending);
@@ -133,7 +133,7 @@ namespace DGView.ViewModels
         }
         private void cmdClearSortings(object p)
         {
-            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item3)
+            if (DGControl.GetVisualParents<DataGridView>().First().GetStatusOfSortButtons().Item3)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 Data.A_RemoveSorting(_lastCurrentCellInfo.Column.SortMemberPath, _lastCurrentCellInfo.Item);
@@ -141,7 +141,7 @@ namespace DGView.ViewModels
         }
         private void cmdSetFilterOnValue(object p)
         {
-            if (DGControl.GetVisualParents().OfType<DataGridView>().First().GetStatusOfSortButtons().Item4)
+            if (DGControl.GetVisualParents<DataGridView>().First().GetStatusOfSortButtons().Item4)
             {
                 _lastCurrentCellInfo = DGControl.SelectedCells[0];
                 var pd = Data.Properties[_lastCurrentCellInfo.Column.SortMemberPath];
@@ -162,7 +162,7 @@ namespace DGView.ViewModels
         private DGFindTextView _findTextView;
         private void cmdSearch(object p)
         {
-            var mwiChild = DGControl.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+            var mwiChild = DGControl.GetVisualParents<MwiChild>().FirstOrDefault();
             if (mwiChild == null) return;
 
             if (_findTextView == null)
@@ -172,7 +172,7 @@ namespace DGView.ViewModels
         }
         private void cmdClone(object p)
         {
-            var mwiChild = DGControl.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+            var mwiChild = DGControl.GetVisualParents<MwiChild>().FirstOrDefault();
             if (mwiChild == null) return;
 
             var dgView = CreateDataGrid(mwiChild.MwiContainer, Title);

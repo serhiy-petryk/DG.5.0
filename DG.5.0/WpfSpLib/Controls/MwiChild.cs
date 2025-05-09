@@ -390,7 +390,7 @@ namespace WpfSpLib.Controls
         #region ==========  IHasDialogHost  =========
         public FrameworkElement GetDialogHost()
         {
-            var parentMwiChild = this.GetVisualParents().OfType<MwiChild>().FirstOrDefault(a => a != this);
+            var parentMwiChild = this.GetVisualParents<MwiChild>().FirstOrDefault(a => a != this);
             if (parentMwiChild?.Template.FindName("ContentBorder", parentMwiChild) is FrameworkElement fe)
                 return fe;
             return !IsWindowed && MwiContainer != null ? (FrameworkElement)MwiContainer : Window.GetWindow(this);

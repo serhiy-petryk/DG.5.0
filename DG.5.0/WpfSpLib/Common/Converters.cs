@@ -30,7 +30,7 @@ namespace WpfSpLib.Common
         {
             if (value is DependencyObject @do && parameter is Type type)
             {
-                var parent = @do.GetVisualParents().FirstOrDefault(o => type.IsInstanceOfType(o));
+                var parent = @do.GetVisualParents<DependencyObject>().FirstOrDefault(o => type.IsInstanceOfType(o));
                 return parent;
             }
             throw new ArgumentException($"GetParentOfTypeConverter error! Argument 'value' must be 'DependencyObject type' and argument 'parameter' must be 'Type' type");

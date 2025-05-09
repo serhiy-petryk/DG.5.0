@@ -222,7 +222,7 @@ namespace WpfSpLib.Effects
         {
             var vk = (VirtualKeyboard)sender;
 
-            if (vk.GetVisualParents().OfType<Popup>().FirstOrDefault() is Popup popup)
+            if (vk.GetVisualParents<Popup>().FirstOrDefault() is Popup popup)
                 popup.IsOpen = false;
 
             if (Keyboard.FocusedElement is FrameworkElement element)

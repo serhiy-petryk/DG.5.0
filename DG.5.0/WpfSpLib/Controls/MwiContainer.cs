@@ -208,7 +208,7 @@ namespace WpfSpLib.Controls
         #region ===============  IColorThemeSupport  =================
         public MwiThemeInfo ActualTheme => this.GetActualTheme();
         public Color ActualThemeColor => this.GetActualThemeColor();
-        public IColorThemeSupport ColorThemeParent => this.GetVisualParents().OfType<MwiChild>().FirstOrDefault();
+        public IColorThemeSupport ColorThemeParent => this.GetVisualParents<MwiChild>().FirstOrDefault();
         //=================
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme",
             typeof(MwiThemeInfo), typeof(MwiContainer),

@@ -173,7 +173,7 @@ namespace WpfSpLib.Controls
             {
                 _isFirst = false;
 
-                var panel = this.GetVisualParents().OfType<Panel>().FirstOrDefault(p => p.ActualHeight > (ActualHeight + 0.5) || p.ActualWidth > (ActualWidth + 0.5));
+                var panel = this.GetVisualParents<Panel>().FirstOrDefault(p => p.ActualHeight > (ActualHeight + 0.5) || p.ActualWidth > (ActualWidth + 0.5));
                 if (panel != null)
                 {
                     MaxWidth = panel.ActualWidth;

@@ -97,7 +97,7 @@ namespace DGView.Views
                 if (!string.IsNullOrEmpty(rootMenu.ApplicationTitle) && Window.GetWindow(this) is MwiStartup app)
                     app.Title = rootMenu.ApplicationTitle;
 
-                var mwiContainer = this.GetVisualParents().OfType<MwiContainer>().FirstOrDefault();
+                var mwiContainer = this.GetVisualParents<MwiContainer>().FirstOrDefault();
                 var resizeThumb = mwiContainer?.GetVisualChildren<Control>().FirstOrDefault(a => a.Name == "LeftPanelDragThumb");
                 if (resizeThumb != null)
                 {
@@ -116,7 +116,7 @@ namespace DGView.Views
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     // BringIntoView for TreeViewItem
-                    var scrollViewer = item.GetVisualParents().OfType<ScrollViewer>().FirstOrDefault();
+                    var scrollViewer = item.GetVisualParents<ScrollViewer>().FirstOrDefault();
                     if (scrollViewer != null)
                     {
                         var upPoint = item.TransformToVisual(scrollViewer).Transform(new Point(0, 0)).Y + scrollViewer.VerticalOffset;
@@ -299,7 +299,7 @@ namespace DGView.Views
         {
             var grid = (Grid)sender;
             var topGrid = (Grid)grid.Parent;
-            var leftPanel = this.GetVisualParents().OfType<FrameworkElement>().FirstOrDefault(a => a.Name == "LeftPanelContainer");
+            var leftPanel = this.GetVisualParents<FrameworkElement>().FirstOrDefault(a => a.Name == "LeftPanelContainer");
             leftPanel?.SetCurrentValueSmart(MinWidthProperty, grid.ActualWidth + topGrid.ColumnDefinitions[2].MinWidth + 14);
         }
 
